@@ -1,0 +1,97 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Setup Environment (PR)
+        if: ${{ github.event_name == 'pull_request' }}
+        shell: bash
+        run: echo "sha_short=$(git rev-parse --short ${{ github.event.pull_request.base.sha }})" >> $GITHUB_OUTPUT
+      - name: Setup Environment (Push)
+        if: ${{ github.event_name == 'push' }}
+        shell: bash
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          packager: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate build files
+        run:
+          npx expo prebuild --platform android
+          cd android
+
+      - name: Sync Version
+        run: eas build:version:sync
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run:
+          ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        id: upload-debug
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-${{ env.sha_short }}
+          path: app/build/outputs/apk/debug/*.apk
+
+      - name: Build Release APK
+        run:
+            ./gradlew assembleRelease
+
+      - name: Upload Release APK
+        id: upload-release
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-${{ env.sha_short }}
+          path: app/build/outputs/apk/release/*.apk
+
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            [Download Debug APK](${{ steps.upload-debug.outputs.artifact_url }})
+            
+            [Download Release APK](${{ steps.upload-release.outputs.artifact_url }})
+            
+            > Latest commit: [${{ env.sha_short }}](https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.base.sha }})            

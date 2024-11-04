@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gplr.tausendundeinskilometer"
+      "package": "com.gplr.tausendundeinskilometer",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",

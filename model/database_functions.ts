@@ -1,16 +1,17 @@
 import { database } from "./createDatabase";
-import { BoardGame } from "./model";
+import { Journey } from "./model";
 
-const createBoardGame = (title: string, minPlayers: number) =>
+const createJourney = (title: string) =>
   database.write(() =>
-    database.get<BoardGame>("board_games").create((boardGame) => {
-      boardGame.title = title;
-      boardGame.minPlayers = minPlayers;
+    database.get<Journey>("journeys").create((journey) => {
+      journey.title = title;
     }),
   );
-const gamesQuery = database.get<BoardGame>("board_games").query();
-const deleteAllBoardGames = () => {
-  database.write(gamesQuery.destroyAllPermanently);
+
+const journeyQuery = database.get<Journey>("journeys").query();
+
+const deleteAllJourneys = () => {
+  database.write(journeyQuery.destroyAllPermanently);
 };
 
-export { createBoardGame, gamesQuery, deleteAllBoardGames };
+export { createJourney, journeyQuery, deleteAllJourneys };

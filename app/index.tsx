@@ -1,24 +1,23 @@
 import React from "react";
-import { Button, Text, ScrollView } from "react-native";
+import { Button, Text, ScrollView, TextInput } from "react-native";
 import {
-  createBoardGame,
-  gamesQuery,
-  deleteAllBoardGames,
+  createJourney,
+  journeyQuery,
+  deleteAllJourneys,
 } from "@/model/database_functions";
-import { GameList } from "@/model/gameList";
-let i = 1;
+import JourneyList from "@/components/Journey/JourneyList";
+let journeyText = "Journey";
 export default function Index() {
   return (
     <ScrollView>
       <Text>Games:</Text>
-      <GameList games={gamesQuery} />
-      <Button
-        onPress={() => createBoardGame("My Board Game" + iii(), iii())}
-        title="Create Game"
+      <JourneyList journeys={journeyQuery} />
+      <TextInput
+        placeholder="Game Title"
+        onChangeText={(newText) => (journeyText = newText)}
       />
-      <Button onPress={deleteAllBoardGames} title="Delete All Games" />
+      <Button onPress={() => createJourney(journeyText)} title="Create Game" />
+      <Button onPress={deleteAllJourneys} title="Delete All Games" />
     </ScrollView>
   );
 }
-
-const iii = () => i++;

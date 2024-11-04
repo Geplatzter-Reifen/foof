@@ -8,6 +8,7 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
       {journeys.map((journey) => (
         <View key={journey.id}>
           <Text>Reisetitel: {journey.title}</Text>
+          <Text>ID: {journey.id}</Text>
         </View>
       ))}
     </View>

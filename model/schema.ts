@@ -20,5 +20,14 @@ export const schema = appSchema({
         { name: "journey_id", type: "string", isIndexed: true },
       ],
     }),
+    tableSchema({
+      name: "locations",
+      columns: [
+        { name: "latitude", type: "number" },
+        { name: "longitude", type: "number" },
+        { name: "recorded_at", type: "number", isOptional: true },
+        { name: "trip_id", type: "string", isIndexed: true },
+      ],
+    }),
   ],
 });

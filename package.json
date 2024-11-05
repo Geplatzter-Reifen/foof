@@ -1,11 +1,11 @@
 {
   "name": "1001km",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
@@ -15,10 +15,14 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@morrowdigital/watermelondb-expo-plugin": "^2.3.3",
+    "@nozbe/watermelondb": "^0.27.1",
     "@react-navigation/native": "^6.0.2",
     "date-fns": "^4.1.0",
     "expo": "~51.0.28",
+    "expo-build-properties": "~0.12.5",
     "expo-constants": "~16.0.2",
+    "expo-dev-client": "~4.0.28",
     "expo-font": "~12.0.9",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.23",

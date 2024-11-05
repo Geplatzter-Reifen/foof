@@ -13,7 +13,7 @@ const requestPermissions = async () => {
         if (backgroundStatus === 'granted') {
             console.log('Background status: ', backgroundStatus);
             await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-                accuracy: Location.Accuracy.Lowest,
+                accuracy: Location.Accuracy.Balanced,
             });
         }
     }
@@ -28,6 +28,7 @@ const PermissionsButton = () => (
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
     if (error) {
         // Error occurred - check `error.message` for more details.
+        console.log(error.message)
         return;
     }
     if (data) {

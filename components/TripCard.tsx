@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {DATE_TIME, dateFormat} from "@/utils/dateFormatter";
+import {DATE_TIME, dateFormat} from "@/utils/datUtil";
 
 export type StreckeData = {
   startLoc: string,
@@ -9,7 +9,7 @@ export type StreckeData = {
   endTime: Date,
 }
 
-export default function StreckeCard(props: StreckeData) {
+export default function TripCard(props: StreckeData) {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Strecke</Text>

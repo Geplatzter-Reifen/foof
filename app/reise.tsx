@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from "react-native";
-import StreckeCard, {StreckeData} from "../components/StreckeCard"
-import {DATE, dateFormat} from "@/utils/dateFormatter";
+import TripCard, {StreckeData} from "../components/TripCard"
+import {DATE, dateFormat} from "@/utils/datUtil";
 
 export default function Reise() {
   return (
@@ -8,10 +8,10 @@ export default function Reise() {
       <View style={styles.overview}>
         <Text>Start der Reise: {dateFormat(getStreckeData().startTime, DATE)}</Text>
       </View>
-      <StreckeCard startLoc={getStreckeData().startLoc} endLoc={getStreckeData().endLoc}
-                   startTime={getStreckeData().startTime} endTime={getStreckeData().endTime}/>
-      <StreckeCard startLoc={getStreckeData().startLoc} endLoc={getStreckeData().endLoc}
-                   startTime={getStreckeData().startTime} endTime={getStreckeData().endTime}/>
+      <TripCard startLoc={getStreckeData().startLoc} endLoc={getStreckeData().endLoc}
+                startTime={getStreckeData().startTime} endTime={getStreckeData().endTime}/>
+      <TripCard startLoc={getStreckeData().startLoc} endLoc={getStreckeData().endLoc}
+                startTime={getStreckeData().startTime} endTime={getStreckeData().endTime}/>
     </View>
   );
 }

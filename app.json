@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "foof",
-    "slug": "foof",
-    "version": "1.0.0",
+    "name": "1001km",
+    "slug": "1001km",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "com.gplr.tausendundeinskilometer",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -13,13 +13,16 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gplr.tausendundeinskilometer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gplr.tausendundeinskilometer",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +34,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cc39d6cf-ea90-45a3-aea8-14cdbc9093bb"
+      }
+    },
+    "owner": "marcocoreduo"
   }
 }

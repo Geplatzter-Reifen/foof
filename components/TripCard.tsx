@@ -1,13 +1,13 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {DATE_TIME, dateFormat} from "@/utils/datUtil";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { DATE_TIME, dateFormat } from "@/utils/datUtil";
 
 export type StreckeData = {
-  startLoc: string,
-  endLoc: string,
-  startTime: Date,
-  endTime: Date,
-}
+  startLoc: string;
+  endLoc: string;
+  startTime: Date;
+  endTime: Date;
+};
 
 export default function TripCard(props: StreckeData) {
   return (
@@ -23,35 +23,35 @@ export default function TripCard(props: StreckeData) {
       <Text style={styles.info}>{dateFormat(props.endTime, DATE_TIME)}</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#f5f5f5',
-    width: '90%',
+    backgroundColor: "#f5f5f5",
+    width: "90%",
     padding: 20,
     marginVertical: 10,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'green',
+    fontWeight: "bold",
+    color: "green",
     marginBottom: 10,
   },
   label: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
     marginTop: 5,
   },
   info: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
 });

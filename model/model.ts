@@ -1,5 +1,5 @@
-import { Model, Q } from "@nozbe/watermelondb";
-import { field, text, writer, relation } from "@nozbe/watermelondb/decorators";
+import { Model } from "@nozbe/watermelondb";
+import { field, relation, text, writer } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
 class Journey extends Model {
@@ -16,12 +16,11 @@ class Journey extends Model {
 
   //@ts-ignore
   @writer async addTrip(title: string) {
-    const newTrip = await this.collections.get<Trip>("trips").create((trip) => {
+    return await this.collections.get<Trip>("trips").create((trip) => {
       trip.title = title;
       trip.startedAt = Date.now();
       trip.journey.set(this);
     });
-    return newTrip;
   }
 
   get trips() {
@@ -45,7 +44,7 @@ class Trip extends Model {
   @relation("journey", "journey_id") journey;
   // @ts-ignore
   @writer async addLocation(latitude: number, longitude: number) {
-    const newLocation = await this.collections
+    return await this.collections
       .get<Location>("locations")
       .create((location) => {
         location.latitude = latitude;
@@ -53,7 +52,6 @@ class Trip extends Model {
         location.recordedAt = Date.now();
         location.trip.set(this);
       });
-    return newLocation;
   }
 }
 

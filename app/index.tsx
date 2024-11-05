@@ -1,5 +1,10 @@
 import React from "react";
-import { Button, StyleSheet, ScrollView, TextInput } from "react-native";
+import {ScrollView, TextInput, StyleSheet} from "react-native";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, Text, Button } from "@ui-kitten/components";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   createJourney,
   allJourneys,
@@ -9,9 +14,12 @@ import {
 import JourneyList from "@/components/Journey/JourneyList";
 import {Link} from "expo-router";
 
+library.add(far);
+
 let journeyText = "Journey";
 export default function Index() {
   return (
+    <ApplicationProvider {...eva} theme={eva.light}>
       <ScrollView
         style={{
           flex: 1,
@@ -33,7 +41,10 @@ export default function Index() {
         <Link href='/reise' style={styles.button}>
           zur Reiseübersicht
         </Link>
+        <Button>BUTTON</Button>
+        <FontAwesomeIcon icon="bicycle" />
       </ScrollView>
+    </ApplicationProvider>
   );
 }
 

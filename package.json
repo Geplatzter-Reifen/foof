@@ -1,11 +1,11 @@
 {
   "name": "1001km",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
@@ -25,6 +25,7 @@
     "@ui-kitten/components": "^5.3.1",
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
+    "expo-dev-client": "~4.0.28",
     "expo-font": "~12.0.9",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.23",

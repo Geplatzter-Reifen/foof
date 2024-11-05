@@ -9,6 +9,9 @@ export const schema = appSchema({
         { name: "title", type: "string" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
+        { name: "average_speed", type: "number", isOptional: true },
+        { name: "average_distance_per_trip", type: "number", isOptional: true },
+        { name: "distance", type: "number", isOptional: true },
       ],
     }),
     tableSchema({
@@ -17,6 +20,8 @@ export const schema = appSchema({
         { name: "title", type: "string" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
+        { name: "distance", type: "number", isOptional: true },
+        { name: "average_speed", type: "number", isOptional: true },
         { name: "journey_id", type: "string", isIndexed: true },
       ],
     }),

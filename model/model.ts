@@ -1,4 +1,4 @@
-import { Model, Q } from "@nozbe/watermelondb";
+import { Model } from "@nozbe/watermelondb";
 import { field, text, writer, relation } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
@@ -10,9 +10,15 @@ class Journey extends Model {
   // @ts-ignore
   @text("title") title: string;
   // @ts-ignore
-  @field("started_at") startedAt: number;
+  @field("started_at") startedAt?: number;
   // @ts-ignore
-  @field("finished_at") finishedAt: number;
+  @field("finished_at") finishedAt?: number;
+  // @ts-ignore
+  @field("average_speed") averageSpeed?: number;
+  // @ts-ignore
+  @field("average_distance_per_trip") averageDistancePerTrip?: number;
+  // @ts-ignore
+  @field("distance") distance?: number;
 
   //@ts-ignore
   @writer async addTrip(title: string) {
@@ -38,9 +44,13 @@ class Trip extends Model {
   // @ts-ignore
   @text("title") title: string;
   // @ts-ignore
-  @field("started_at") startedAt: number;
+  @field("started_at") startedAt?: number;
   // @ts-ignore
-  @field("finished_at") finishedAt: number;
+  @field("finished_at") finishedAt?: number;
+  // @ts-ignore
+  @field("distance") distance?: number;
+  // @ts-ignore
+  @field("average_speed") averageSpeed?: number;
   // @ts-ignore
   @relation("journey", "journey_id") journey;
   // @ts-ignore
@@ -67,7 +77,7 @@ class Location extends Model {
   // @ts-ignore
   @field("longitude") longitude: number;
   // @ts-ignore
-  @field("recorded_at") recordedAt: number;
+  @field("recorded_at") recordedAt?: number;
   // @ts-ignore
   @relation("trip", "trip_id") trip;
 }

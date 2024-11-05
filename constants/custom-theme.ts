@@ -1,4 +1,4 @@
-import {light, dark} from '@eva-design/eva';
+import { light, dark } from "@eva-design/eva";
 
 const colorTheme = {
   "color-primary-100": "#FFEDD0",
@@ -49,8 +49,8 @@ const colorTheme = {
   "color-danger-600": "#DB413E",
   "color-danger-700": "#B72B33",
   "color-danger-800": "#931B2C",
-  "color-danger-900": "#7A1028"
+  "color-danger-900": "#7A1028",
 };
 
-export const lightTheme = {...light, ...colorTheme}
-export const darkTheme = {...dark, ...colorTheme}
+export const lightTheme = { ...light, ...colorTheme };
+export const darkTheme = { ...dark, ...colorTheme };

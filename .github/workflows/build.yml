@@ -24,6 +24,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         shell: bash
         run: echo "SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Check out Git repository
         uses: actions/checkout@v4
 
@@ -102,7 +103,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+          cache-read-only: ${{ github.ref != 'refs/heads/develop' }}
 
       - name: Build Release APK
         working-directory: android

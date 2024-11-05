@@ -16,7 +16,7 @@ const startTracking = async () => {
                 console.log('Tracking already started.');
             } else {
                     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-                        accuracy: Location.Accuracy.Balanced,
+                        accuracy: Location.Accuracy.Highest,
                     });
                     console.log('Tracking started.')
             }

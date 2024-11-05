@@ -3,7 +3,7 @@ import { Button, ScrollView, TextInput } from "react-native";
 import {
   createJourney,
   deleteAllJourneys,
-  getAllJourneys
+  getAllJourneys,
 } from "@/model/database_functions";
 import JourneyList from "@/components/Journey/JourneyList";
 
@@ -11,7 +11,7 @@ let journeyText = "Journey";
 export default function Index() {
   return (
     <ScrollView>
-       <TextInput
+      <TextInput
         placeholder="Journey Title"
         onChangeText={(newText) => (journeyText = newText)}
       />

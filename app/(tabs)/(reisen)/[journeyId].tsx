@@ -1,11 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
-import TripCard, { StreckeData } from "@/components/TripCard";
+import React from "react";
+import { StyleSheet, Text } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { DATE, dateFormat } from "@/utils/datUtil";
-import { getJourneyByJourneyId } from "@/model/database_functions";
+import { DATE, dateFormat } from "@/utils/dateUtil";
+import {
+  createTrip,
+  getAllTripsByJourneyIdQuery,
+  getJourneyByJourneyId,
+} from "@/model/database_functions";
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
-import { Button } from "@ui-kitten/components";
+import { Stack } from "expo-router";
+import { Layout, Button } from "@ui-kitten/components";
+import TripList from "@/components/Journey/TripList";
 
 export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
@@ -18,39 +24,27 @@ export default function Reiseuebersicht() {
   }, [journey, journeyId]);
 
   return (
-    <View style={styles.page}>
-      <View style={styles.overview}>
+    <Layout style={styles.page}>
+      <Stack.Screen
+        options={{
+          title: journey?.title,
+          headerTitle: journey?.title,
+        }}
+      />
+      <Layout style={styles.overview}>
         <Text>
           Start der Reise:{" "}
           {journey?.startedAt
             ? dateFormat(new Date(journey?.startedAt), DATE)
             : ""}
         </Text>
-        <Button>Tkljfksdf</Button>
-      </View>
-      <TripCard
-        startLoc={getStreckeData().startLoc}
-        endLoc={getStreckeData().endLoc}
-        startTime={getStreckeData().startTime}
-        endTime={getStreckeData().endTime}
-      />
-      <TripCard
-        startLoc={getStreckeData().startLoc}
-        endLoc={getStreckeData().endLoc}
-        startTime={getStreckeData().startTime}
-        endTime={getStreckeData().endTime}
-      />
-    </View>
+      </Layout>
+      <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
+      <Button onPress={async () => await createTrip(journeyId, "Neue Strecke")}>
+        +
+      </Button>
+    </Layout>
   );
-}
-
-function getStreckeData(): StreckeData {
-  return {
-    startLoc: "50.7019264,7.1303168",
-    endLoc: "50.6285290,7.2064826",
-    startTime: new Date("2024-11-04T09:12"),
-    endTime: new Date("2024-11-04T16:46"),
-  };
 }
 
 const styles = StyleSheet.create({

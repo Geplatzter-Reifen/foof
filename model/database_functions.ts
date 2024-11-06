@@ -2,7 +2,7 @@ import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 
 const createJourney = async (title: string): Promise<Journey> => {
-  return await database.write(async () => {
+  return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
     });
@@ -10,13 +10,12 @@ const createJourney = async (title: string): Promise<Journey> => {
 };
 
 const createTrip = async (journeyId: string, title: string): Promise<Trip> => {
-  return await database.write(async () => {
+  return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
-    const trip = await database.get<Trip>("trips").create((trip) => {
+    return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;
     });
-    return trip;
   });
 };
 
@@ -37,6 +36,7 @@ const createLocation = async (
 };
 
 const getAllJourneysQuery = database.get<Journey>("journeys").query();
+const getAllJourneys = () => getAllJourneysQuery.fetch();
 
 const getAllTripsByJourneyId = (journeyId: string) => {
   return database.get<Trip>("trips").find(journeyId);
@@ -46,8 +46,8 @@ const getAllLocationsByTripId = (tripId: string) => {
 };
 
 const deleteAllJourneys = () => {
-  database.write(async () => {
-    const journeys = await getAllJourneysQuery.fetch();
+  void database.write(async () => {
+    const journeys = await getAllJourneys();
     journeys.forEach((journey) => journey.destroyPermanently());
   });
 };

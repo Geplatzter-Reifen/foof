@@ -1,32 +1,31 @@
 import { StyleSheet, Text, View } from "react-native";
-import { DATE, dateFormat } from "@/utils/datUtil";
 import TripCard, { StreckeData } from "@/components/TripCard";
 import { useLocalSearchParams } from "expo-router";
-import { Journey } from "@/model/model";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { DATE, dateFormat } from "@/utils/datUtil";
 import { getJourneyByJourneyId } from "@/model/database_functions";
 import { useEffect, useState } from "react";
+import { Journey } from "@/model/model";
 
-const ReiseUebersicht = () => {
+export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
 
-  // console.log("ich versuche jetzt useState");
-  // const [journey, setJourney] = useState(null);
-  //
-  // useEffect(() => {
-  //   (async () => {
-  //     const journeyToUse = await getJourneyByJourneyId(journeyId);
-  //     console.log(journeyToUse);
-  //     setJourney(journeyToUse);
-  //     console.log(journey);
-  //   })();
-  // }, [journey, journeyId]);
+  console.log("ich versuche jetzt useState");
+  const [journey, setJourney] = useState<Journey>();
+
+  useEffect(() => {
+    (async () => {
+      const journeyToUse = await getJourneyByJourneyId(journeyId);
+      console.log(journeyToUse);
+      setJourney(journeyToUse);
+      console.log(journey);
+    })();
+  }, [journey, journeyId]);
 
   return (
     <View style={styles.page}>
       <View style={styles.overview}>
         <Text>
-          {/*Start der Reise: {dateFormat(new Date(journey?.startedAt), DATE)}*/}
+          {/*Start der Reise: {dateFormat(new Date(journey?.startedAt!), DATE)}*/}
         </Text>
       </View>
       <TripCard
@@ -43,7 +42,7 @@ const ReiseUebersicht = () => {
       />
     </View>
   );
-};
+}
 
 function getStreckeData(): StreckeData {
   return {

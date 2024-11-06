@@ -66,6 +66,12 @@
         "projectId": "cc39d6cf-ea90-45a3-aea8-14cdbc9093bb"
       }
     },
-    "owner": "marcocoreduo"
+    "owner": "marcocoreduo",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cc39d6cf-ea90-45a3-aea8-14cdbc9093bb"
+    }
   }
 }

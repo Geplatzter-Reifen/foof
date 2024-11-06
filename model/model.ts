@@ -22,12 +22,11 @@ class Journey extends Model {
 
   //@ts-ignore
   @writer async addTrip(title: string) {
-    const newTrip = await this.collections.get<Trip>("trips").create((trip) => {
+    return this.collections.get<Trip>("trips").create((trip) => {
       trip.title = title;
       trip.startedAt = Date.now();
       trip.journey.set(this);
     });
-    return newTrip;
   }
 
   get trips() {
@@ -55,15 +54,12 @@ class Trip extends Model {
   @relation("journey", "journey_id") journey;
   // @ts-ignore
   @writer async addLocation(latitude: number, longitude: number) {
-    const newLocation = await this.collections
-      .get<Location>("locations")
-      .create((location) => {
-        location.latitude = latitude;
-        location.longitude = longitude;
-        location.recordedAt = Date.now();
-        location.trip.set(this);
-      });
-    return newLocation;
+    return this.collections.get<Location>("locations").create((location) => {
+      location.latitude = latitude;
+      location.longitude = longitude;
+      location.recordedAt = Date.now();
+      location.trip.set(this);
+    });
   }
 }
 

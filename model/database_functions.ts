@@ -2,24 +2,20 @@ import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 
 const createJourney = async (title: string): Promise<Journey> => {
-  return await database.write(async () => {
-    const journey = await database
-      .get<Journey>("journeys")
-      .create((journey) => {
-        journey.title = title;
-      });
-    return journey;
+  return database.write(async () => {
+    return database.get<Journey>("journeys").create((journey) => {
+      journey.title = title;
+    });
   });
 };
 
 const createTrip = async (journeyId: string, title: string): Promise<Trip> => {
-  return await database.write(async () => {
+  return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
-    const trip = await database.get<Trip>("trips").create((trip) => {
+    return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;
     });
-    return trip;
   });
 };
 
@@ -28,21 +24,20 @@ const createLocation = async (
   latitude: number,
   longitude: number,
 ): Promise<Location> => {
-  return await database.write(async () => {
+  return database.write(async () => {
     const trip = await database.get<Trip>("trips").find(tripId);
-    const location = await database
-      .get<Location>("locations")
-      .create((location) => {
-        location.trip.set(trip);
-        location.latitude = latitude;
-        location.longitude = longitude;
-        location.recordedAt = Date.now();
-      });
-    return location;
+    return database.get<Location>("locations").create((location) => {
+      location.trip.set(trip);
+      location.latitude = latitude;
+      location.longitude = longitude;
+      location.recordedAt = Date.now();
+    });
   });
 };
 
-const getAllJourneys = database.get<Journey>("journeys").query();
+const getAllJourneysQuery = database.get<Journey>("journeys").query();
+const getAllJourneys = () => getAllJourneysQuery.fetch();
+
 const getAllTripsByJourneyId = (journeyId: string) => {
   return database.get<Trip>("trips").find(journeyId);
 };
@@ -51,8 +46,8 @@ const getAllLocationsByTripId = (tripId: string) => {
 };
 
 const deleteAllJourneys = () => {
-  database.write(async () => {
-    const journeys = await getAllJourneys.fetch();
+  void database.write(async () => {
+    const journeys = await getAllJourneys();
     journeys.forEach((journey) => journey.destroyPermanently());
   });
 };
@@ -61,7 +56,7 @@ export {
   createJourney,
   createTrip,
   createLocation,
-  getAllJourneys,
+  getAllJourneysQuery,
   getAllTripsByJourneyId,
   getAllLocationsByTripId,
   deleteAllJourneys,

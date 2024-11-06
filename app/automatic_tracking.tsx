@@ -1,14 +1,18 @@
 import {StyleSheet, View} from "react-native";
-import {ApplicationProvider, Button, Layout} from "@ui-kitten/components";
+import {ApplicationProvider, Button, Layout, Select} from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import {useState} from "react";
+import {getAllJourneys, getAllJourneysQuery} from "@/model/database_functions";
+import JourneySelector from "@/components/Journey/JourneySelector";
+
 
 const LOCATION_TASK_NAME = 'background-location-task';
 
 
 export default function App() {
+    const [selectedJourney, setSelectedJourney] = useState(null);
     const [isTracking, setIsTracking] = useState(false)
 
     const startTracking = async () => {
@@ -42,10 +46,11 @@ export default function App() {
         }
     };
 
-
     return(
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.container}>
+                <JourneySelector journeys={getAllJourneysQuery} onJourneySelect={setSelectedJourney}></JourneySelector>
+
                 <View style={styles.buttonContainer}>
                     <Button style={styles.button} onPress={startTracking} status={"primary"}>Start</Button>
                     <Button style={styles.button} onPress={stopTracking} status={"primary"}>Stop</Button>
@@ -84,7 +89,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
     }
     if (data) {
         const { locations } = data;
-        console.log('New background location: ', locations)
+        console.log('New background location: ', locations);
+        console.log(useJourney());
         // do something with the locations captured in the background
     }
 });

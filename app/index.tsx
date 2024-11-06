@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Link } from "expo-router";
+import {createTrip} from "@/model/database_functions";
 
 library.add(fas);
 
@@ -19,6 +20,7 @@ export default function Index() {
           alignItems: "center",
         }}
       >
+          <Link href={"/database_testsite"}>Zur Database Testsite</Link>
           <Link href={"/automatic_tracking"}>Zum automatischen Tracking</Link>
       </View>
     </ApplicationProvider>

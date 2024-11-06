@@ -75,6 +75,7 @@ export {
   getAllJourneysQuery,
   getJourneyByJourneyId,
   getJourneyByJourneyIdQuery,
+  getAllJourneys,
   getAllTripsByJourneyId,
   getAllLocationsByTripId,
   deleteAllJourneys,

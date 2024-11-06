@@ -38,8 +38,6 @@ const createLocation = async (
 
 const getAllJourneysQuery = database.get<Journey>("journeys").query();
 
-const getAllJourneys = getAllJourneysQuery.fetch;
-
 const getAllTripsByJourneyId = (journeyId: string) => {
   return database.get<Trip>("trips").find(journeyId);
 };
@@ -49,7 +47,7 @@ const getAllLocationsByTripId = (tripId: string) => {
 
 const deleteAllJourneys = () => {
   database.write(async () => {
-    const journeys = await getAllJourneys();
+    const journeys = await getAllJourneysQuery.fetch();
     journeys.forEach((journey) => journey.destroyPermanently());
   });
 };

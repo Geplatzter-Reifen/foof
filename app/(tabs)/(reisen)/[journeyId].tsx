@@ -5,19 +5,15 @@ import { DATE, dateFormat } from "@/utils/datUtil";
 import { getJourneyByJourneyId } from "@/model/database_functions";
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
+import { Button } from "@ui-kitten/components";
 
 export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
-
-  console.log("ich versuche jetzt useState");
   const [journey, setJourney] = useState<Journey>();
 
   useEffect(() => {
     (async () => {
-      const journeyToUse = await getJourneyByJourneyId(journeyId);
-      console.log(journeyToUse);
-      setJourney(journeyToUse);
-      console.log(journey);
+      setJourney(await getJourneyByJourneyId(journeyId));
     })();
   }, [journey, journeyId]);
 
@@ -25,8 +21,12 @@ export default function Reiseuebersicht() {
     <View style={styles.page}>
       <View style={styles.overview}>
         <Text>
-          {/*Start der Reise: {dateFormat(new Date(journey?.startedAt!), DATE)}*/}
+          Start der Reise:{" "}
+          {journey?.startedAt
+            ? dateFormat(new Date(journey?.startedAt), DATE)
+            : ""}
         </Text>
+        <Button>Tkljfksdf</Button>
       </View>
       <TripCard
         startLoc={getStreckeData().startLoc}

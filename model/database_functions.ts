@@ -6,6 +6,7 @@ const createJourney = async (title: string): Promise<Journey> => {
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
+      journey.startedAt = Date.now();
     });
   });
 };

@@ -1,5 +1,6 @@
 import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
+import { Q } from "@nozbe/watermelondb";
 
 const createJourney = async (title: string): Promise<Journey> => {
   return database.write(async () => {
@@ -38,11 +39,25 @@ const createLocation = async (
 const getAllJourneysQuery = database.get<Journey>("journeys").query();
 const getAllJourneys = () => getAllJourneysQuery.fetch();
 
+const getJourneyByJourneyIdQuery = (journeyId: string) => {
+  return database.get<Journey>("journeys").query(Q.where("id", journeyId));
+};
+
+const getJourneyByJourneyId = (journeyId: string) => {
+  return database.get<Journey>("journeys").find(journeyId);
+};
+
 const getAllTripsByJourneyId = (journeyId: string) => {
-  return database.get<Trip>("trips").find(journeyId);
+  return database
+    .get<Trip>("trips")
+    .query(Q.where("journey_id", journeyId))
+    .fetch();
 };
 const getAllLocationsByTripId = (tripId: string) => {
-  return database.get<Location>("locations").find(tripId);
+  return database
+    .get<Location>("locations")
+    .query(Q.where("trip_id", tripId))
+    .fetch();
 };
 
 const deleteAllJourneys = () => {
@@ -57,6 +72,8 @@ export {
   createTrip,
   createLocation,
   getAllJourneysQuery,
+  getJourneyByJourneyId,
+  getJourneyByJourneyIdQuery,
   getAllTripsByJourneyId,
   getAllLocationsByTripId,
   deleteAllJourneys,

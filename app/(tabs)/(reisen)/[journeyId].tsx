@@ -1,14 +1,32 @@
 import { StyleSheet, Text, View } from "react-native";
 import { DATE, dateFormat } from "@/utils/datUtil";
 import TripCard, { StreckeData } from "@/components/TripCard";
+import { useLocalSearchParams } from "expo-router";
 import { Journey } from "@/model/model";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { getJourneyByJourneyId } from "@/model/database_functions";
+import { useEffect, useState } from "react";
 
-export default function ReiseUebersicht({ journey }: { journey: Journey }) {
+const ReiseUebersicht = () => {
+  const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
+
+  // console.log("ich versuche jetzt useState");
+  // const [journey, setJourney] = useState(null);
+  //
+  // useEffect(() => {
+  //   (async () => {
+  //     const journeyToUse = await getJourneyByJourneyId(journeyId);
+  //     console.log(journeyToUse);
+  //     setJourney(journeyToUse);
+  //     console.log(journey);
+  //   })();
+  // }, [journey, journeyId]);
+
   return (
     <View style={styles.page}>
       <View style={styles.overview}>
         <Text>
-          Start der Reise: {dateFormat(new Date(journey.startedAt), DATE)}
+          {/*Start der Reise: {dateFormat(new Date(journey?.startedAt), DATE)}*/}
         </Text>
       </View>
       <TripCard
@@ -25,7 +43,7 @@ export default function ReiseUebersicht({ journey }: { journey: Journey }) {
       />
     </View>
   );
-}
+};
 
 function getStreckeData(): StreckeData {
   return {

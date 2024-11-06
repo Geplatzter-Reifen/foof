@@ -5,7 +5,7 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="reisen/(stack)"
+        name="(reisen)"
         options={{
           title: "Reisen",
           headerShown: false,

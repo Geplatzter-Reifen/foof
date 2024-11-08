@@ -1,3 +1,4 @@
+import { Q } from "@nozbe/watermelondb";
 import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 
@@ -26,6 +27,18 @@ const setJourneyInactive = async (journeyId: string) => {
       journey.isActive = false;
     });
   });
+};
+
+const getActiveJourney = async (): Promise<Journey | null> => {
+  const activeJourneys = await database
+    .get<Journey>("journeys")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeJourneys.length === 0) {
+    return null;
+  } else {
+    return activeJourneys[0];
+  }
 };
 
 const createTrip = async (journeyId: string, title: string): Promise<Trip> => {

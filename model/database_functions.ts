@@ -73,3 +73,16 @@ export const deleteAllJourneys = () => {
     journeys.forEach((journey) => journey.destroyPermanently());
   });
 };
+
+export {
+  createJourney,
+  setJourneyActive,
+  setJourneyInactive,
+  createTrip,
+  createLocation,
+  getAllJourneysQuery,
+  getAllJourneys,
+  getAllTripsByJourneyId,
+  getAllLocationsByTripId,
+  deleteAllJourneys,
+};

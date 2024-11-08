@@ -1,7 +1,7 @@
 import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 
-export const createJourney = async (title: string): Promise<Journey> => {
+const createJourney = async (title: string): Promise<Journey> => {
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
@@ -10,8 +10,8 @@ export const createJourney = async (title: string): Promise<Journey> => {
   });
 };
 
-export const setJourneyActive = async (journeyId: string) => {
-  database.write(async () => {
+const setJourneyActive = async (journeyId: string) => {
+  await database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
     journey.update(() => {
       journey.isActive = true;
@@ -19,7 +19,7 @@ export const setJourneyActive = async (journeyId: string) => {
   });
 };
 
-export const setJourneyInactive = async (journeyId: string) => {
+const setJourneyInactive = async (journeyId: string) => {
   database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
     journey.update(() => {
@@ -28,10 +28,7 @@ export const setJourneyInactive = async (journeyId: string) => {
   });
 };
 
-export const createTrip = async (
-  journeyId: string,
-  title: string,
-): Promise<Trip> => {
+const createTrip = async (journeyId: string, title: string): Promise<Trip> => {
   return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
     return database.get<Trip>("trips").create((trip) => {
@@ -41,7 +38,7 @@ export const createTrip = async (
   });
 };
 
-export const createLocation = async (
+const createLocation = async (
   tripId: string,
   latitude: number,
   longitude: number,
@@ -57,17 +54,17 @@ export const createLocation = async (
   });
 };
 
-export const getAllJourneysQuery = database.get<Journey>("journeys").query();
-export const getAllJourneys = () => getAllJourneysQuery.fetch();
+const getAllJourneysQuery = database.get<Journey>("journeys").query();
+const getAllJourneys = () => getAllJourneysQuery.fetch();
 
-export const getAllTripsByJourneyId = (journeyId: string) => {
+const getAllTripsByJourneyId = (journeyId: string) => {
   return database.get<Trip>("trips").find(journeyId);
 };
-export const getAllLocationsByTripId = (tripId: string) => {
+const getAllLocationsByTripId = (tripId: string) => {
   return database.get<Location>("locations").find(tripId);
 };
 
-export const deleteAllJourneys = () => {
+const deleteAllJourneys = () => {
   void database.write(async () => {
     const journeys = await getAllJourneys();
     journeys.forEach((journey) => journey.destroyPermanently());

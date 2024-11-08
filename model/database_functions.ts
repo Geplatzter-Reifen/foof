@@ -10,21 +10,21 @@ export const createJourney = async (title: string): Promise<Journey> => {
   });
 };
 
-export const setJourneyActive = async (journeyId: string): Promise<Journey> => {
-  return database.write(async () => {
+export const setJourneyActive = async (journeyId: string) => {
+  database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
-    journey.isActive = true;
-    return journey;
+    journey.update(() => {
+      journey.isActive = true;
+    });
   });
 };
 
-export const setJourneyInactive = async (
-  journeyId: string,
-): Promise<Journey> => {
-  return database.write(async () => {
+export const setJourneyInactive = async (journeyId: string) => {
+  database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
-    journey.isActive = false;
-    return journey;
+    journey.update(() => {
+      journey.isActive = false;
+    });
   });
 };
 

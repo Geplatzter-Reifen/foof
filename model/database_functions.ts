@@ -18,6 +18,16 @@ export const setJourneyActive = async (journeyId: string): Promise<Journey> => {
   });
 };
 
+export const setJourneyInactive = async (
+  journeyId: string,
+): Promise<Journey> => {
+  return database.write(async () => {
+    const journey = await database.get<Journey>("journeys").find(journeyId);
+    journey.isActive = false;
+    return journey;
+  });
+};
+
 export const createTrip = async (
   journeyId: string,
   title: string,

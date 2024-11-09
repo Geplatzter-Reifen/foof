@@ -5,7 +5,7 @@ import {
   deleteAllJourneys,
 } from "@/model/database_functions";
 import JourneyList from "@/components/Journey/JourneyList";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import {
   Layout,
   Button,
@@ -19,28 +19,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function MeineReisen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [journeyName, setJourneyName] = useState("Meine Reise");
+  const [journeyName, setJourneyName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <Layout style={styles.container}>
-      <Layout level="2">
-        <JourneyList journeys={getAllJourneysQuery} />
-        <Button
-          status="basic"
-          onPress={() => setModalVisible(true)}
-          style={{}}
-          accessoryLeft={<FontAwesomeIcon icon="plus" />}
-        >
-          Neue Reise
-        </Button>
-        <Button
-          status="basic"
-          onPress={() => deleteAllJourneys()}
-          accessoryLeft={<FontAwesomeIcon icon="trash" />}
-        >
-          Alle Reisen löschen
-        </Button>
-      </Layout>
+    <Layout style={styles.container} level="2">
+      <ScrollView>
+        <Layout level="1">
+          <JourneyList journeys={getAllJourneysQuery} />
+        </Layout>
+      </ScrollView>
+      <Button
+        status="basic"
+        onPress={() => setModalVisible(true)}
+        style={{}}
+        accessoryLeft={<FontAwesomeIcon icon="plus" />}
+      >
+        Neue Reise
+      </Button>
+      <Button
+        status="basic"
+        onPress={() => deleteAllJourneys()}
+        accessoryLeft={<FontAwesomeIcon icon="trash" />}
+      >
+        Alle Reisen löschen
+      </Button>
 
       <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
         <Card disabled={true}>
@@ -59,6 +61,7 @@ export default function MeineReisen() {
             onPress={() => {
               createJourney(journeyName, startDate.getTime());
               setModalVisible(false);
+              setJourneyName("");
             }}
           >
             Speichern
@@ -72,7 +75,7 @@ export default function MeineReisen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
   },
   backdrop: {

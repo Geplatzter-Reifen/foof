@@ -7,6 +7,7 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView, Platform, StatusBar } from "react-native";
+import TabLayout from "./(tabs)/_layout";
 
 library.add(far, fas, fab);
 
@@ -16,7 +17,7 @@ export default function RootLayout() {
       <SafeAreaView
         style={{
           flex: 1,
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+          paddingTop: 0,
         }}
       >
         <Stack>

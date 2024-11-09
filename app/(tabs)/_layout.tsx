@@ -1,22 +1,49 @@
 import { Tabs } from "expo-router";
+import { foofDarkTheme } from "@/constants/custom-theme";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: true,
+        tabBarStyle: {
+          backgroundColor: foofDarkTheme["color-basic-500"],
+        },
+        tabBarActiveTintColor: foofDarkTheme["color-primary-500"],
+      }}
+    >
       <Tabs.Screen
         name="(reisen)"
         options={{
           title: "Reisen",
           headerShown: false,
-          tabBarIcon: () => <FontAwesomeIcon icon="map" />,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesomeIcon
+              icon="map"
+              color={
+                focused
+                  ? foofDarkTheme["color-primary-500"]
+                  : foofDarkTheme["color-basic-100"]
+              }
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: () => <FontAwesomeIcon icon="home" />,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesomeIcon
+              icon="home"
+              color={
+                focused
+                  ? foofDarkTheme["color-primary-500"]
+                  : foofDarkTheme["color-basic-100"]
+              }
+            />
+          ),
         }}
       />
     </Tabs>

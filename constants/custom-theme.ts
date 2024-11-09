@@ -75,6 +75,6 @@ export const foofDarkTheme = {
   "background-basic-color-4": "$color-basic-1000",
 
   // Custom text colors
-  //"text-basic-color": "#FFFFFF",
+  "text-basic-color": "#FFFFFF",
   "text-hint-color": "$color-basic-400",
 };

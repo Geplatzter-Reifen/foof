@@ -18,7 +18,6 @@ export default function ReiseStackLayout() {
           title: "Meine Reisen",
         }}
       />
-      <Stack.Screen name="[journeyId]" options={{ headerShown: true }} />
     </Stack>
   );
 }

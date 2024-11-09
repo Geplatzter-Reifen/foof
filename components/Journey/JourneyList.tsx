@@ -22,7 +22,7 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
           }}
         >
           <TouchableOpacity>
-            <Text category="h2">{journey.title}</Text>
+            <Text category="h3">{journey.title}</Text>
           </TouchableOpacity>
         </Link>
       ))}

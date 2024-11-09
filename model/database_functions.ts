@@ -2,7 +2,7 @@ import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 import { Q } from "@nozbe/watermelondb";
 
-const createJourney = async (
+export const createJourney = async (
   title: string,
   started_at?: number,
 ): Promise<Journey> => {

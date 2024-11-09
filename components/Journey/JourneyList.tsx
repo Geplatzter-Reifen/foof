@@ -11,6 +11,7 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
           style={{
             padding: 10,
             marginVertical: 10,
+            width: 400,
           }}
           key={journey.id}
           href={{

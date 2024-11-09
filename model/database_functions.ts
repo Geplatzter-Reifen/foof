@@ -28,6 +28,22 @@ export const createTrip = async (
   });
 };
 
+export const deleteTrip = async (tripId: string) => {
+  void database.write(async () => {
+    const tripToDelete = await getTripByTripId(tripId);
+    await tripToDelete.destroyPermanently();
+  });
+};
+
+export const finishTrip = async (tripId: string, finishTime: number) => {
+  void database.write(async () => {
+    const tripToFinish = await getTripByTripId(tripId);
+    await tripToFinish.update(() => {
+      tripToFinish.finishedAt = finishTime;
+    });
+  });
+};
+
 export const createLocation = async (
   tripId: string,
   latitude: number,
@@ -59,6 +75,10 @@ export const getAllTripsByJourneyIdQuery = (journeyId: string) => {
 };
 export const getAllTripsByJourneyId = (journeyId: string) => {
   return getAllTripsByJourneyIdQuery(journeyId).fetch();
+};
+
+export const getTripByTripId = (tripId: string) => {
+  return database.get<Trip>("trips").find(tripId);
 };
 
 export const getAllLocationsByTripIdQuery = (tripId: string) => {

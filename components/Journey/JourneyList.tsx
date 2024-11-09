@@ -19,7 +19,9 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
             params: { journeyId: journey.id },
           }}
         >
-          <Text category="h2">{journey.title}</Text>
+          <Text category="h3" status="primary">
+            {journey.title}
+          </Text>
         </Link>
       ))}
     </>

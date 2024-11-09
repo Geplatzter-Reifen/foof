@@ -12,3 +12,16 @@ export function dateFormat(date: Date | number, formatString: string): string {
 
   return format(date, formatString);
 }
+
+export function getDuration(
+  start: Date,
+  end: Date,
+  formatString: string,
+): string {
+  const startMs = start.getTime();
+  const endMs = end.getTime();
+
+  const durationMs = endMs - startMs;
+
+  return dateFormat(durationMs, formatString);
+}

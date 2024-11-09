@@ -1,15 +1,15 @@
 import { Trip } from "@/model/model";
-import { Layout } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import TripCard from "@/components/Journey/TripCard";
+import { ScrollView } from "react-native";
 
 const TripList = ({ trips }: { trips: Trip[] }) => {
   return (
-    <Layout>
+    <ScrollView>
       {trips.map((trip) => (
         <TripCard key={trip.id} trip={trip} />
       ))}
-    </Layout>
+    </ScrollView>
   );
 };
 

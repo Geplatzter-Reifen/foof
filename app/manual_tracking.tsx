@@ -9,7 +9,6 @@ export default function ManualTracking() {
     const [startingCoordinates, setStartingCoordinates] = React.useState();
     const [endCoordinates, setEndCoordinates] = React.useState();
 
-
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.container}>
@@ -26,7 +25,7 @@ export default function ManualTracking() {
                     value={endCoordinates}
                     onChangeText={nextValue => setEndCoordinates(nextValue)}
                 />
-                <Button onPress={createManualTrip}>Strecke eintragen.</Button>
+                <Button onPress={() => createManualTrip(startingCoordinates, endCoordinates)}>Strecke eintragen.</Button>
             </Layout>
         </ApplicationProvider>
     );
@@ -42,9 +41,27 @@ const styles = StyleSheet.create({
 });
 
 
-async function createManualTrip() {
+async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
     // TODO Fehlerbehandlung, falls keine Journey vorhanden
     let journeys = await getAllJourneys();
     let firstJourney = journeys.at(0);
-    createTrip(firstJourney.id, 'Strecke');
+    let trip = await createTrip(firstJourney.id, 'Strecke');
+    let startingCoordinates = parseCoordinates(startingCoordinatesString);
+    let endCoordinates = parseCoordinates(endCoordinatesString);
+    trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
+    trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+}
+
+function parseCoordinates(coordinateString: string): { latitude: number; longitude: number } | null {
+    const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
+    const match = coordinateString.match(regex);
+
+    if (!match) {
+        return null;
+    }
+
+    const latitude = parseFloat(match[1]);
+    const longitude = parseFloat(match[2]);
+
+    return { latitude, longitude };
 }

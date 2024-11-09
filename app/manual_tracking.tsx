@@ -2,12 +2,13 @@ import {ApplicationProvider, Layout, Input, Text, Button} from "@ui-kitten/compo
 import * as eva from "@eva-design/eva";
 import {StyleSheet} from "react-native";
 import React from "react";
-import {getAllJourneysQuery} from "@/model/database_functions";
+import {createTrip, getAllJourneys, getAllJourneysQuery} from "@/model/database_functions";
 import JourneySelector from "@/components/Journey/JourneySelector";
 
 export default function ManualTracking() {
     const [startingCoordinates, setStartingCoordinates] = React.useState();
     const [endCoordinates, setEndCoordinates] = React.useState();
+
 
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
@@ -25,7 +26,7 @@ export default function ManualTracking() {
                     value={endCoordinates}
                     onChangeText={nextValue => setEndCoordinates(nextValue)}
                 />
-                <Button>Strecke eintragen.</Button>
+                <Button onPress={createManualTrip}>Strecke eintragen.</Button>
             </Layout>
         </ApplicationProvider>
     );
@@ -39,3 +40,11 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 });
+
+
+async function createManualTrip() {
+    // TODO Fehlerbehandlung, falls keine Journey vorhanden
+    let journeys = await getAllJourneys();
+    let firstJourney = journeys.at(0);
+    createTrip(firstJourney.id, 'Strecke');
+}

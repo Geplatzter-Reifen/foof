@@ -7,6 +7,10 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: true,
+        headerTintColor: foofDarkTheme["color-basic-100"],
+        headerStyle: {
+          backgroundColor: foofDarkTheme["color-basic-500"],
+        },
         tabBarStyle: {
           backgroundColor: foofDarkTheme["color-basic-500"],
         },
@@ -31,7 +35,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="(home)/index"
         options={{
           title: "Home",
           tabBarIcon: ({ focused }) => (

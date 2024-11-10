@@ -1,17 +1,30 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useState, useEffect } from "react";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, Button, Text } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  Button,
+  Layout,
+  Text,
+} from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import * as SplashScreen from "expo-splash-screen";
 
 library.add(fas);
 
 export default function Index() {
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
+
+  useEffect(() => {
+    if (layoutLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [layoutLoaded]);
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <View
+      <Layout
+        onLayout={() => setLayoutLoaded(true)}
         style={{
           flex: 1,
           justifyContent: "center",
@@ -21,7 +34,7 @@ export default function Index() {
         <Text>Edit app/index.tsx to edit this screen.</Text>
         <Button>BUTTON</Button>
         <FontAwesomeIcon icon="bicycle" />
-      </View>
+      </Layout>
     </ApplicationProvider>
   );
 }

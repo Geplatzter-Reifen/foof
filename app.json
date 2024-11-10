@@ -7,6 +7,9 @@
     "icon": "./assets/images/icon.png",
     "scheme": "com.gplr.tausendundeinskilometer",
     "userInterfaceStyle": "automatic",
+    "androidStatusBar": {
+      "translucent": true
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.gplr.tausendundeinskilometer",

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DATE, dateFormat, getDuration, TIME } from "@/utils/dateUtil";
 import { Trip } from "@/model/model";
-import { Button, Card, Text } from "@ui-kitten/components";
+import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { deleteTrip, finishTrip } from "@/model/database_functions";
+import {
+  deleteTrip,
+  getAllLocationsByTripId,
+} from "@/model/database_functions";
 import { View } from "react-native";
+import { Location } from "@/model/model";
 
 export default function TripCard({ trip }: { trip: Trip }) {
   const startedAt: Date | undefined = trip.startedAt
@@ -23,13 +27,15 @@ export default function TripCard({ trip }: { trip: Trip }) {
       ? getDuration(startedAt, finishedAt, TIME)
       : undefined;
 
-  async function setFinishedAt() {
-    const finishTime = Date.now();
-    await finishTrip(trip.id, Date.now());
+  const [locations, setLocations] = useState<Location[]>([]);
 
-    finishedAt = new Date(finishTime);
-    duration = startedAt ? getDuration(startedAt, finishedAt, TIME) : undefined;
-  }
+  useEffect(() => {
+    (async () => {
+      setLocations(await getAllLocationsByTripId(trip.id));
+    })();
+  }, [trip]);
+
+  console.log(locations);
 
   return (
     <Card>
@@ -38,12 +44,13 @@ export default function TripCard({ trip }: { trip: Trip }) {
       </Text>
       <Text>{date}</Text>
       {duration && <Text>Dauer: {duration}</Text>}
+      {locations.map((loc) => (
+        <Layout key={loc.id}>
+          <Text>{"Lat: " + loc.latitude}</Text>
+          <Text>{"Lon: " + loc.longitude}</Text>
+        </Layout>
+      ))}
       <View>
-        {!finishedAt && (
-          <Button status="basic" onPress={() => setFinishedAt()}>
-            <FontAwesomeIcon icon="flag" />
-          </Button>
-        )}
         <Button status="basic" onPress={() => deleteTrip(trip.id)}>
           <FontAwesomeIcon icon="trash" />
         </Button>

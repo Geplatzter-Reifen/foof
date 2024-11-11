@@ -3,28 +3,37 @@ import { StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
-  createTrip,
   getAllTripsByJourneyIdQuery,
   getJourneyByJourneyId,
 } from "@/model/database_functions";
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
 import { Stack } from "expo-router";
-import { Layout, Button, Card, Input, Modal } from "@ui-kitten/components";
+import {
+  Layout,
+  Button,
+  Card,
+  Input,
+  Modal,
+  Datepicker,
+} from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { createManualTrip } from "@/services/tracking";
 
 export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
   const [journey, setJourney] = useState<Journey>();
   const [modalVisible, setModalVisible] = useState(false);
   const [tripName, setTripName] = useState("");
+  const [startCoords, setStartCoords] = useState("");
+  const [endCoords, setEndCoords] = useState("");
 
   useEffect(() => {
     (async () => {
       setJourney(await getJourneyByJourneyId(journeyId));
     })();
-  }, [journey, journeyId]);
+  }, [journeyId]);
 
   return (
     <Layout level="2" style={styles.page}>
@@ -35,7 +44,7 @@ export default function Reiseuebersicht() {
         }}
       />
       <Layout level="1" style={styles.overview}>
-        <Text>
+        <Text style={{ color: "white" }}>
           Start der Reise:{" "}
           {journey?.startedAt
             ? dateFormat(new Date(journey?.startedAt), DATE)
@@ -54,26 +63,40 @@ export default function Reiseuebersicht() {
       </View>
       <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
         <Card disabled={true}>
-          <Text style={{ color: "white" }}>
-            Bitte geben Sie den Namen der Strecke ein:
-          </Text>
           <Input
-            status="primary"
             placeholder="Streckenname"
             value={tripName}
-            onChangeText={(journeyText) => setTripName(journeyText)}
+            onChangeText={(tripText) => setTripName(tripText)}
+          />
+          <Input
+            placeholder="Startkoordinaten"
+            value={startCoords}
+            onChangeText={(coordsText) => setStartCoords(coordsText)}
+          />
+          <Input
+            placeholder="Endkoordinaten"
+            value={endCoords}
+            onChangeText={(coordsText) => setEndCoords(coordsText)}
           />
           <Button
             status="basic"
             onPress={() => {
               setModalVisible(false);
+              setTripName("");
+              setStartCoords("");
+              setEndCoords("");
             }}
           >
             Abbrechen
           </Button>
           <Button
             onPress={async () => {
-              await createTrip(journeyId, tripName);
+              await createManualTrip(
+                tripName,
+                startCoords,
+                endCoords,
+                journeyId,
+              );
               setModalVisible(false);
               setTripName("");
             }}

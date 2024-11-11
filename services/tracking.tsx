@@ -1,27 +1,50 @@
-import {createTrip, getActiveJourney} from "@/model/database_functions";
-import exp from "node:constants";
+import {
+  createTrip,
+  getActiveJourney,
+  getJourneyByJourneyId,
+} from "@/model/database_functions";
 
-export async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
-    // TODO Fehlerbehandlung, falls keine Journey vorhanden
-    let activeJourney = await getActiveJourney();
-    let trip = await createTrip(activeJourney.id, 'Strecke');
-    let startingCoordinates = parseCoordinates(startingCoordinatesString);
-    let endCoordinates = parseCoordinates(endCoordinatesString);
-    trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
-    trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+export async function createManualTrip(
+  tripName: string,
+  startingCoordinatesString: string,
+  endCoordinatesString: string,
+  journeyId?: string,
+) {
+  const journey = journeyId
+    ? await getJourneyByJourneyId(journeyId)
+    : await getActiveJourney();
+
+  if (journey === null) {
+    throw new Error("Keine Aktive Reise gesetzt");
+  }
+
+  let trip = await createTrip(journey.id, tripName);
+  let startingCoordinates = parseCoordinates(startingCoordinatesString);
+  let endCoordinates = parseCoordinates(endCoordinatesString);
+
+  if (startingCoordinates === null || endCoordinates === null) {
+    throw new Error("Ungültiges Koordinatenformat");
+  }
+
+  await trip.addLocation(
+    startingCoordinates?.latitude,
+    startingCoordinates?.longitude,
+  );
+  await trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
 }
 
-function parseCoordinates(coordinateString: string): { latitude: number; longitude: number } | null {
-    const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
-    const match = coordinateString.match(regex);
+function parseCoordinates(
+  coordinateString: string,
+): { latitude: number; longitude: number } | null {
+  const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
+  const match = coordinateString.match(regex);
 
-    if (!match) {
-        return null;
-    }
+  if (!match) {
+    return null;
+  }
 
-    const latitude = parseFloat(match[1]);
-    const longitude = parseFloat(match[2]);
+  const latitude = parseFloat(match[1]);
+  const longitude = parseFloat(match[2]);
 
-    return { latitude, longitude };
+  return { latitude, longitude };
 }
-

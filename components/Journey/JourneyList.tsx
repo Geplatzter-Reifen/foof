@@ -2,7 +2,7 @@ import { Journey } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Text } from "@ui-kitten/components";
 import { Link } from "expo-router";
-import { Pressable, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
   return (

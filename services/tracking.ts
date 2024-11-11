@@ -96,7 +96,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     console.log("New background location: ", locations[0]);
     console.log("New background location: ", data);
     let activeTrip = await getActiveTrip();
-    createLocation(
+    await createLocation(
       activeTrip?.id,
       locations[0].coords.latitude,
       locations[0].coords.longitude,

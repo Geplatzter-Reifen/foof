@@ -59,8 +59,8 @@ export default function MeineReisen() {
             onSelect={(selectedDate) => setStartDate(selectedDate)}
           />
           <Button
-            onPress={() => {
-              createJourney(journeyName, startDate.getTime());
+            onPress={async () => {
+              await createJourney(journeyName, startDate.getTime());
               setModalVisible(false);
               setJourneyName("Reisename");
             }}

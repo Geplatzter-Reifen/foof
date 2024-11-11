@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
+  createTrip,
   getAllTripsByJourneyIdQuery,
   getJourneyByJourneyId,
   setJourneyActive,

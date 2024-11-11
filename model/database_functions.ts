@@ -75,9 +75,9 @@ export const setTripActive = async (tripId: string) => {
 
 export const getActiveTrip = async (): Promise<Trip | null> => {
   const activeTrips = await database
-      .get<Trip>("trips")
-      .query(Q.where("is_active", true), Q.take(1))
-      .fetch();
+    .get<Trip>("trips")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
   if (activeTrips.length === 0) {
     return null;
   } else {

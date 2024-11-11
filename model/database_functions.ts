@@ -9,7 +9,7 @@ export const createJourney = async (
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
-      journey.startedAt = started_at
+      journey.startedAt = started_at ?? Date.now();
       journey.isActive = false;
     });
   });

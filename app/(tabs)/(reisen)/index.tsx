@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function MeineReisen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [journeyName, setJourneyName] = useState("");
+  const [journeyName, setJourneyName] = useState("Reisename");
   const [startDate, setStartDate] = useState(new Date());
   return (
     <Layout style={styles.container} level="2">
@@ -31,7 +31,7 @@ export default function MeineReisen() {
       <Button
         status="basic"
         onPress={() => setModalVisible(true)}
-        style={{}}
+        style={{ width: 400, marginVertical: 5 }}
         accessoryLeft={<FontAwesomeIcon icon="plus" />}
       >
         Neue Reise
@@ -40,6 +40,7 @@ export default function MeineReisen() {
         status="basic"
         onPress={() => deleteAllJourneys()}
         accessoryLeft={<FontAwesomeIcon icon="trash" />}
+        style={{ width: 400, marginBottom: 5 }}
       >
         Alle Reisen löschen
       </Button>
@@ -61,7 +62,7 @@ export default function MeineReisen() {
             onPress={() => {
               createJourney(journeyName, startDate.getTime());
               setModalVisible(false);
-              setJourneyName("");
+              setJourneyName("Reisename");
             }}
           >
             Speichern

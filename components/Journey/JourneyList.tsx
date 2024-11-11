@@ -2,16 +2,18 @@ import { Journey } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Text } from "@ui-kitten/components";
 import { Link } from "expo-router";
+import { Pressable, TouchableOpacity } from "react-native";
 
 const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
   return (
     <>
       {journeys.map((journey) => (
         <Link
+          asChild
           style={{
             padding: 10,
             marginVertical: 10,
-            width: 400,
+            width: 400, // soll später dynamisch werden
           }}
           key={journey.id}
           href={{
@@ -19,9 +21,9 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
             params: { journeyId: journey.id },
           }}
         >
-          <Text category="h3" status="primary">
-            {journey.title}
-          </Text>
+          <TouchableOpacity>
+            <Text category="h3">{journey.title}</Text>
+          </TouchableOpacity>
         </Link>
       ))}
     </>

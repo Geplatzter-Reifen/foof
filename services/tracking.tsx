@@ -1,7 +1,14 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 
-import { createTrip, getActiveJourney } from "@/model/database_functions";
+import {
+  createLocation,
+  createTrip,
+  getActiveJourney,
+  getActiveTrip,
+  setTripActive,
+  setTripInactive
+} from "@/model/database_functions";
 
 const LOCATION_TASK_NAME = "background-location-task";
 
@@ -39,6 +46,10 @@ export async function startAutomaticTracking() {
       if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
         console.log("Tracking already started.");
       } else {
+        let activeJourney = await getActiveJourney();
+        let trip = await createTrip(activeJourney?.id, "Strecke");
+        await setTripActive(trip.id);
+
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,
         });
@@ -51,6 +62,8 @@ export async function startAutomaticTracking() {
 export async function stopAutomaticTracking() {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+    let trip = await getActiveTrip();
+    await setTripInactive(trip?.id);
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");
@@ -73,13 +86,16 @@ function parseCoordinates(
   return { latitude, longitude };
 }
 
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({data, error}) => {
   if (error) {
     console.log(error.message);
     return;
   }
   if (data) {
-    const { locations } = data;
-    console.log("New background location: ", locations);
+    const {locations} = data;
+    console.log("New background location: ", locations[0]);
+    console.log("New background location: ", data);
+    let activeTrip = await getActiveTrip();
+    createLocation(activeTrip?.id, locations[0].coords.latitude, locations[0].coords.longitude);
   }
 });

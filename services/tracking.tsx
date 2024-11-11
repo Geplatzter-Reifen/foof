@@ -3,6 +3,9 @@ import {createTrip, getActiveJourney} from "@/model/database_functions";
 export async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
     // TODO Fehlerbehandlung, falls keine Journey vorhanden
     let activeJourney = await getActiveJourney();
+    if(activeJourney === null) {
+        throw Error("No active journey retrieved");
+    }
     let trip = await createTrip(activeJourney.id, 'Strecke');
     let startingCoordinates = parseCoordinates(startingCoordinatesString);
     let endCoordinates = parseCoordinates(endCoordinatesString);

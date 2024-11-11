@@ -57,6 +57,12 @@
             "deploymentTarget": "13.4"
           }
         }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox"
+        }
       ]
     ],
     "experiments": {

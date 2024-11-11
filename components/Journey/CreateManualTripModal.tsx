@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
 import { createManualTrip } from "@/services/tracking";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 interface CreateManualTripModalProps {
   isVisible: boolean;
@@ -19,60 +19,51 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
   const [endCoords, setEndCoords] = useState("");
   const [errorText, setErrorText] = useState("");
 
+  const reset = () => {
+    onClose();
+    setTripName("");
+    setStartCoords("");
+    setEndCoords("");
+    setErrorText("");
+  };
+
+  const onSave = async () => {
+    try {
+      await createManualTrip(tripName, startCoords, endCoords, journeyId);
+      reset();
+    } catch (err) {
+      if (err instanceof Error) {
+        setErrorText(err.message);
+      }
+    }
+  };
+
   return (
     <Modal visible={isVisible} backdropStyle={styles.backdrop}>
-      <Card disabled={true}>
+      <Card disabled={true} style={styles.dialog}>
         <Input
           placeholder="Streckenname"
           value={tripName}
           onChangeText={(tripText) => setTripName(tripText)}
+          style={styles.input}
         />
         <Input
           placeholder="Startkoordinaten"
           value={startCoords}
           onChangeText={(coordsText) => setStartCoords(coordsText)}
+          style={styles.input}
         />
         <Input
           placeholder="Endkoordinaten"
           value={endCoords}
           onChangeText={(coordsText) => setEndCoords(coordsText)}
+          style={styles.input}
         />
         {errorText && <Text>{errorText}</Text>}
-        <Button
-          status="basic"
-          onPress={() => {
-            onClose();
-            setTripName("");
-            setErrorText("");
-            setStartCoords("");
-            setEndCoords("");
-          }}
-        >
+        <Button status="basic" onPress={reset} style={styles.input}>
           Abbrechen
         </Button>
-        <Button
-          onPress={async () => {
-            try {
-              await createManualTrip(
-                tripName,
-                startCoords,
-                endCoords,
-                journeyId,
-              );
-              onClose();
-              setTripName("");
-              setStartCoords("");
-              setEndCoords("");
-              setErrorText("");
-            } catch (err) {
-              if (err instanceof Error) {
-                setErrorText(err.message);
-              }
-            }
-          }}
-        >
-          Speichern
-        </Button>
+        <Button onPress={onSave}>Speichern</Button>
       </Card>
     </Modal>
   );
@@ -80,6 +71,14 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
 
 const styles = StyleSheet.create({
   backdrop: {
+    width: "100%",
     backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  dialog: {
+    padding: 0,
+    width: 360,
+  },
+  input: {
+    marginBottom: 5,
   },
 });

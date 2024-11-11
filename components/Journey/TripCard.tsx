@@ -7,7 +7,7 @@ import {
   deleteTrip,
   getAllLocationsByTripId,
 } from "@/model/database_functions";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Location } from "@/model/model";
 
 export default function TripCard({ trip }: { trip: Trip }) {
@@ -36,23 +36,33 @@ export default function TripCard({ trip }: { trip: Trip }) {
   }, [trip]);
 
   return (
-    <Card>
-      <Text category="h4" status="primary">
-        {trip.title}
-      </Text>
-      <Text>{date}</Text>
-      {duration && <Text>Dauer: {duration}</Text>}
-      {locations.map((loc) => (
-        <Layout key={loc.id}>
-          <Text>{"Lat: " + loc.latitude}</Text>
-          <Text>{"Lon: " + loc.longitude}</Text>
-        </Layout>
-      ))}
-      <View>
-        <Button status="basic" onPress={() => deleteTrip(trip.id)}>
-          <FontAwesomeIcon icon="trash" />
-        </Button>
-      </View>
-    </Card>
+    <Layout level="3">
+      <Card style={styles.card}>
+        <Text category="h4" status="primary">
+          {trip.title}
+        </Text>
+        <Text>{date}</Text>
+        {duration && <Text>Dauer: {duration}</Text>}
+        {locations.map((loc) => (
+          <Layout key={loc.id}>
+            <Text>{"Lat: " + loc.latitude}</Text>
+            <Text>{"Lon: " + loc.longitude}</Text>
+          </Layout>
+        ))}
+        <View>
+          <Button status="basic" onPress={() => deleteTrip(trip.id)}>
+            <FontAwesomeIcon icon="trash" />
+          </Button>
+        </View>
+      </Card>
+    </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    marginBottom: 15,
+    borderRadius: 8,
+    borderWidth: 0,
+  },
+});

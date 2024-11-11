@@ -54,10 +54,10 @@ export const foofDarkTheme = {
   "color-basic-300": "#C3C3C3",
   "color-basic-400": "#AAAAAA",
   "color-basic-500": "#373737",
-  "color-basic-600": "#303030 ",
+  "color-basic-600": "#303030",
   "color-basic-700": "#282828",
   "color-basic-800": "#202020",
-  "color-basic-900": "#1A1A1A",
+  "color-basic-900": "#171717",
   "color-basic-1000": "#101010",
   "color-basic-1100": "#000000",
 

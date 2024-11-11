@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
@@ -28,7 +28,7 @@ export default function Reiseuebersicht() {
   }, [journeyId]);
 
   return (
-    <Layout level="2" style={styles.page}>
+    <Layout style={styles.container} level="3">
       <Stack.Screen
         options={{
           title: journey?.title,
@@ -48,21 +48,25 @@ export default function Reiseuebersicht() {
             deaktivieren
           </Button>
         ) : (
-          <Button status="success" onPress={() => setJourneyActive(journeyId)}>
+          <Button status="info" onPress={() => setJourneyActive(journeyId)}>
             Zur Aktiven Reise Machen
           </Button>
         )}
       </Layout>
-      <Layout level="2" style={styles.content}>
-        <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
-        <Button
-          status="basic"
-          onPress={() => setModalVisible(true)}
-          accessoryLeft={<FontAwesomeIcon icon="add" />}
-        >
-          Neue Strecke
-        </Button>
-      </Layout>
+      <ScrollView style={styles.scrollView}>
+        <Layout>
+          <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
+        </Layout>
+      </ScrollView>
+      <Button
+        status="basic"
+        onPress={() => setModalVisible(true)}
+        accessoryLeft={<FontAwesomeIcon icon="add" />}
+        style={styles.button}
+      >
+        Strecke Manuell Eintragen
+      </Button>
+      {/*</Layout>*/}
 
       <CreateManualTripModal
         isVisible={modalVisible}
@@ -74,21 +78,19 @@ export default function Reiseuebersicht() {
 }
 
 const styles = StyleSheet.create({
-  page: {
+  container: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "flex-start",
-  },
-  content: {
-    paddingHorizontal: "10%",
+    alignItems: "stretch",
   },
   overview: {
-    width: "100%",
-    padding: 20,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    padding: 15,
+  },
+  scrollView: {
+    padding: 15,
+  },
+  button: {
+    margin: 15,
   },
 });

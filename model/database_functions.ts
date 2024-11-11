@@ -62,6 +62,7 @@ export const createTrip = async (
     return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;
+      trip.isActive = false;
       trip.startedAt = Date.now();
     });
   });
@@ -90,6 +91,36 @@ export const finishTrip = async (tripId: string, finishTime: number) => {
       tripToFinish.finishedAt = finishTime;
     });
   });
+};
+
+export const setTripInactive = async (tripId: string) => {
+  await database.write(async () => {
+    const trip = await database.get<Trip>("trips").find(tripId);
+    await trip.update(() => {
+      trip.isActive = false;
+    });
+  });
+};
+
+export const setTripActive = async (tripId: string) => {
+  await database.write(async () => {
+    const trip = await database.get<Trip>("trips").find(tripId);
+    await trip.update(() => {
+      trip.isActive = true;
+    });
+  });
+};
+
+export const getActiveTrip = async (): Promise<Trip | null> => {
+  const activeTrips = await database
+    .get<Trip>("trips")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeTrips.length === 0) {
+    return null;
+  } else {
+    return activeTrips[0];
+  }
 };
 
 export const createLocation = async (

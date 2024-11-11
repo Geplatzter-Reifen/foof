@@ -9,9 +9,40 @@ export const createJourney = async (
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
-      journey.startedAt = started_at ?? Date.now();
+      journey.startedAt = started_at
+      journey.isActive = false;
     });
   });
+};
+
+export const setJourneyActive = async (journeyId: string) => {
+  await database.write(async () => {
+    const journey = await database.get<Journey>("journeys").find(journeyId);
+    await journey.update(() => {
+      journey.isActive = true;
+    });
+  });
+};
+
+export const setJourneyInactive = async (journeyId: string) => {
+  await database.write(async () => {
+    const journey = await database.get<Journey>("journeys").find(journeyId);
+    await journey.update(() => {
+      journey.isActive = false;
+    });
+  });
+};
+
+export const getActiveJourney = async (): Promise<Journey | null> => {
+  const activeJourneys = await database
+    .get<Journey>("journeys")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeJourneys.length === 0) {
+    return null;
+  } else {
+    return activeJourneys[0];
+  }
 };
 
 export const createTrip = async (

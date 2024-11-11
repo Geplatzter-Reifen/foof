@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import MapView from "react-native-maps";
 import MapboxGL from "@rnmapbox/maps";
-import { Layout, Text, Button } from "@ui-kitten/components";
+import { Layout, Button } from "@ui-kitten/components";
 import * as Location from "expo-location";
 import {
   startAutomaticTracking,

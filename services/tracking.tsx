@@ -13,8 +13,8 @@ import {
 const LOCATION_TASK_NAME = "background-location-task";
 
 export async function createManualTrip(
-  startingCoordinatesString,
-  endCoordinatesString,
+  startingCoordinatesString: string,
+  endCoordinatesString: string,
 ) {
   // TODO Fehlerbehandlung, falls keine Journey vorhanden
   let activeJourney = await getActiveJourney();

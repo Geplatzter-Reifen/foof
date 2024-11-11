@@ -1,0 +1,27 @@
+import {createTrip, getActiveJourney} from "@/model/database_functions";
+import exp from "node:constants";
+
+export async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
+    // TODO Fehlerbehandlung, falls keine Journey vorhanden
+    let activeJourney = await getActiveJourney();
+    let trip = await createTrip(activeJourney.id, 'Strecke');
+    let startingCoordinates = parseCoordinates(startingCoordinatesString);
+    let endCoordinates = parseCoordinates(endCoordinatesString);
+    trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
+    trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+}
+
+function parseCoordinates(coordinateString: string): { latitude: number; longitude: number } | null {
+    const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
+    const match = coordinateString.match(regex);
+
+    if (!match) {
+        return null;
+    }
+
+    const latitude = parseFloat(match[1]);
+    const longitude = parseFloat(match[2]);
+
+    return { latitude, longitude };
+}
+

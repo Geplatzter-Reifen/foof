@@ -1,14 +1,18 @@
-import React, { useState, useEffect }  from "react";
-import { View, StyleSheet, Alert  } from "react-native";
-import MapView  from 'react-native-maps';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Alert } from "react-native";
+import MapView from "react-native-maps";
 import MapboxGL from "@rnmapbox/maps";
-import { Layout, Text, Button } from '@ui-kitten/components';
-import * as Location from 'expo-location';
-import { startAutomaticTracking, stopAutomaticTracking } from "@/services/tracking";
+import { Layout, Text, Button } from "@ui-kitten/components";
+import * as Location from "expo-location";
+import {
+  startAutomaticTracking,
+  stopAutomaticTracking,
+} from "@/services/tracking";
 // import * as TaskManager from "expo-task-manager";
 
-
-MapboxGL.setAccessToken("pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg");
+MapboxGL.setAccessToken(
+  "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
+);
 
 export default function Index() {
   // const latitude = 50.0826;
@@ -28,16 +32,16 @@ export default function Index() {
   //       </Layout>
   //     </View>
   // );
-  const [tracking, setTracking]= useState(false)//TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
+  const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
-  const [longitude, setLongitude] = useState(8.24);  // Default to Wiesbaden
-  const [locationServicesEnabled, setLocationServicesEnabled] = useState(false)
-  useEffect(()=>{
+  const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
+  const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
+  useEffect(() => {
     checkIfLocationEnabled();
     getCurrentLocation();
-  },[])
+  }, []);
 
-  const changeButton =()=>{
+  const changeButton = () => {
     if (!tracking) {
       startAutomaticTracking();
       setTracking(true);
@@ -45,37 +49,42 @@ export default function Index() {
       stopAutomaticTracking();
       setTracking(false);
     }
-  }
+  };
   //check if location is enable or not
-  const checkIfLocationEnabled= async ()=>{
-    let enabled = await Location.hasServicesEnabledAsync();       //returns true or false
-    if(!enabled){                     //if not enable
-      Alert.alert('Location not enabled', 'Please enable your Location', [
+  const checkIfLocationEnabled = async () => {
+    let enabled = await Location.hasServicesEnabledAsync(); //returns true or false
+    if (!enabled) {
+      //if not enable
+      Alert.alert("Location not enabled", "Please enable your Location", [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-    }else{
-      setLocationServicesEnabled(enabled)         //store true into state
+    } else {
+      setLocationServicesEnabled(enabled); //store true into state
     }
-  }
+  };
   //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     console.log(status);
 
-    if (status !== 'granted') {
-      Alert.alert('Permission denied', 'Allow the app to use location services', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission denied",
+        "Allow the app to use location services",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ],
+      );
       return; // Exit the function if permission is not granted
     }
 
@@ -85,55 +94,52 @@ export default function Index() {
 
       if (coords) {
         setLatitude(coords.latitude);
-        setLongitude(coords.longitude)
-        console.log(coords)
+        setLongitude(coords.longitude);
+        console.log(coords);
       }
     } catch (error) {
-      console.log('Error getting location:', error);
+      console.log("Error getting location:", error);
     }
   };
 
-  return <View style={styles.container}>
-    <Layout style={styles.layout} level="1">
-      <MapboxGL.MapView style={styles.map}>
-        <MapboxGL.Camera
+  return (
+    <View style={styles.container}>
+      <Layout style={styles.layout} level="1">
+        <MapboxGL.MapView style={styles.map}>
+          <MapboxGL.Camera
             zoomLevel={13}
             centerCoordinate={[longitude, latitude]}
             animationMode="flyTo"
             animationDuration={2000}
-        />
-      </MapboxGL.MapView>
-    </Layout>
+          />
+        </MapboxGL.MapView>
+      </Layout>
 
-    <Button style={styles.button} onPress={changeButton}>
-      {tracking?"stop":"start"}
-    </Button>
-  </View>;
+      <Button style={styles.button} onPress={changeButton}>
+        {tracking ? "stop" : "start"}
+      </Button>
+    </View>
+  );
 }
-
-
-
 
 // Define the styles here
 const styles = StyleSheet.create({
   map: {
     flex: 1,
-    flexDirection: 'row',
-    margin:5,
-    marginBottom:45,
-    borderRadius:20,
+    flexDirection: "row",
+    margin: 5,
+    marginBottom: 45,
+    borderRadius: 20,
     height: 600,
   },
   container: {
-
     flex: 1,
-    flexDirection: 'column',
-
+    flexDirection: "column",
   },
   layout: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     position: "absolute",
@@ -141,7 +147,6 @@ const styles = StyleSheet.create({
     alignSelf: "center", // Center the button horizontally
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 90
+    borderRadius: 90,
   },
 });
-

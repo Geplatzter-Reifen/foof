@@ -17,6 +17,14 @@ export const createJourney = async (
 
 export const setJourneyActive = async (journeyId: string) => {
   await database.write(async () => {
+    const allJourneys = await database.get<Journey>("journeys").query().fetch();
+    for (const journey of allJourneys) {
+      if (journey.isActive) {
+        await journey.update(() => {
+          journey.isActive = false;
+        });
+      }
+    }
     const journey = await database.get<Journey>("journeys").find(journeyId);
     await journey.update(() => {
       journey.isActive = true;
@@ -64,6 +72,15 @@ export const deleteTrip = async (tripId: string) => {
   void database.write(async () => {
     const tripToDelete = await getTripByTripId(tripId);
     await tripToDelete.destroyPermanently();
+  });
+};
+
+export const setTripDistance = async (tripId: string, distance: number) => {
+  void database.write(async () => {
+    const tripToFinish = await getTripByTripId(tripId);
+    await tripToFinish.update(() => {
+      tripToFinish.distance = distance;
+    });
   });
 };
 
@@ -123,13 +140,11 @@ export const createLocation = async (
 };
 
 export const getAllJourneysQuery = database.get<Journey>("journeys").query();
-
 export const getAllJourneys = () => getAllJourneysQuery.fetch();
 
 export const getJourneyByJourneyIdQuery = (journeyId: string) => {
   return database.get<Journey>("journeys").query(Q.where("id", journeyId));
 };
-
 export const getJourneyByJourneyId = (journeyId: string) => {
   return database.get<Journey>("journeys").find(journeyId);
 };

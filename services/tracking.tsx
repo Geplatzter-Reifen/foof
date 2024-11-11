@@ -6,8 +6,11 @@ export async function createManualTrip(startingCoordinatesString, endCoordinates
     let trip = await createTrip(activeJourney.id, 'Strecke');
     let startingCoordinates = parseCoordinates(startingCoordinatesString);
     let endCoordinates = parseCoordinates(endCoordinatesString);
-    trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
-    trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+    if(startingCoordinates === null || endCoordinates === null) {
+        throw Error("Coordinates could not be parsed");
+    }
+    await trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
+    await trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
 }
 
 function parseCoordinates(coordinateString: string): { latitude: number; longitude: number } | null {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
 import { Stack } from "expo-router";
-import { Layout, Button } from "@ui-kitten/components";
+import { Layout, Button, Text } from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
@@ -36,15 +36,13 @@ export default function Reiseuebersicht() {
         }}
       />
       <Layout level="1" style={styles.overview}>
-        <Text style={{ color: "white" }}>
+        <Text>
           Start der Reise:{" "}
           {journey?.startedAt
             ? dateFormat(new Date(journey?.startedAt), DATE)
             : ""}
         </Text>
-        <Text style={{ color: "white" }}>
-          {"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}
-        </Text>
+        <Text>{"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}</Text>
         {journey?.isActive ? (
           <Button status="danger" onPress={() => setJourneyInactive(journeyId)}>
             deaktivieren
@@ -55,7 +53,7 @@ export default function Reiseuebersicht() {
           </Button>
         )}
       </Layout>
-      <View style={styles.content}>
+      <Layout level="2" style={styles.content}>
         <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
         <Button
           status="basic"
@@ -64,7 +62,7 @@ export default function Reiseuebersicht() {
         >
           Neue Strecke
         </Button>
-      </View>
+      </Layout>
 
       <CreateManualTripModal
         isVisible={modalVisible}

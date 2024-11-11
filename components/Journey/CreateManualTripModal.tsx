@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Card, Input, Modal } from "@ui-kitten/components";
+import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
 import { createManualTrip } from "@/services/tracking";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 interface CreateManualTripModalProps {
   isVisible: boolean;
@@ -37,7 +37,7 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
           value={endCoords}
           onChangeText={(coordsText) => setEndCoords(coordsText)}
         />
-        {errorText && <Text style={{ color: "white" }}>{errorText}</Text>}
+        {errorText && <Text>{errorText}</Text>}
         <Button
           status="basic"
           onPress={() => {

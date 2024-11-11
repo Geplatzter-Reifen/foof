@@ -20,8 +20,12 @@ export default function Index() {
           alignItems: "center",
         }}
       >
-          <Link href={"/database_testsite"}>Zur Database Testsite</Link>
-          <Link href={"/automatic_tracking"}>Zum automatischen Tracking</Link>
+        <Text>Edit app/index.tsx to edit this screen.</Text>
+        <Button>BUTTON</Button>
+        <Link href={"/automatic_tracking"}>Go to automatic tracking screen.</Link>
+        <Link href={"/manual_tracking"}>Go to manual tracking screen.</Link>
+        <Link href={"/database_testsite"}>Go to database testsite.</Link>
+        <FontAwesomeIcon icon="bicycle" />
       </View>
     </ApplicationProvider>
   );

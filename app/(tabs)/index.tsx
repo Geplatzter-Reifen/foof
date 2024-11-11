@@ -4,7 +4,8 @@ import MapView  from 'react-native-maps';
 import MapboxGL from "@rnmapbox/maps";
 import { Layout, Text, Button } from '@ui-kitten/components';
 import * as Location from 'expo-location';
-
+import { startAutomaticTracking, stopAutomaticTracking } from "@/services/tracking";
+// import * as TaskManager from "expo-task-manager";
 
 
 MapboxGL.setAccessToken("pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg");
@@ -27,6 +28,7 @@ export default function Index() {
   //       </Layout>
   //     </View>
   // );
+  const [tracking, setTracking]= useState(false)//TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24);  // Default to Wiesbaden
   const [locationServicesEnabled, setLocationServicesEnabled] = useState(false)
@@ -34,6 +36,16 @@ export default function Index() {
     checkIfLocationEnabled();
     getCurrentLocation();
   },[])
+
+  const changeButton =()=>{
+    if (!tracking) {
+      startAutomaticTracking();
+      setTracking(true);
+    } else {
+      stopAutomaticTracking();
+      setTracking(false);
+    }
+  }
   //check if location is enable or not
   const checkIfLocationEnabled= async ()=>{
     let enabled = await Location.hasServicesEnabledAsync();       //returns true or false
@@ -93,7 +105,9 @@ export default function Index() {
       </MapboxGL.MapView>
     </Layout>
 
-      <Button style={styles.button}>Start</Button>
+      <Button style={styles.button} onPress={changeButton}>
+        {tracking?"stop":"start"}
+      </Button>
   </View>;
 }
 

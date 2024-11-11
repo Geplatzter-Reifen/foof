@@ -19,6 +19,7 @@ export const schema = appSchema({
       name: "trips",
       columns: [
         { name: "title", type: "string" },
+        { name: "is_active", type: "boolean" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
         { name: "distance", type: "number", isOptional: true },

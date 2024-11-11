@@ -10,6 +10,8 @@ class Journey extends Model {
   // @ts-ignore
   @text("title") title: string;
   // @ts-ignore
+  @field("is_active") isActive: boolean;
+  // @ts-ignore
   @field("started_at") startedAt?: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
@@ -42,6 +44,8 @@ class Trip extends Model {
   };
   // @ts-ignore
   @text("title") title: string;
+  // @ts-ignore
+  @field("is_active") isActive: boolean;
   // @ts-ignore
   @field("started_at") startedAt?: number;
   // @ts-ignore

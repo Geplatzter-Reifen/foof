@@ -1,12 +1,13 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const schema = appSchema({
-  version: 1,
+  version: 3,
   tables: [
     tableSchema({
       name: "journeys",
       columns: [
         { name: "title", type: "string" },
+        { name: "is_active", type: "boolean" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
         { name: "average_speed", type: "number", isOptional: true },
@@ -18,6 +19,7 @@ export const schema = appSchema({
       name: "trips",
       columns: [
         { name: "title", type: "string" },
+        { name: "is_active", type: "boolean" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
         { name: "distance", type: "number", isOptional: true },

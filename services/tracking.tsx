@@ -7,7 +7,7 @@ import {
   getActiveJourney,
   getActiveTrip,
   setTripActive,
-  setTripInactive
+  setTripInactive,
 } from "@/model/database_functions";
 
 const LOCATION_TASK_NAME = "background-location-task";
@@ -86,16 +86,20 @@ function parseCoordinates(
   return { latitude, longitude };
 }
 
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({data, error}) => {
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
     console.log(error.message);
     return;
   }
   if (data) {
-    const {locations} = data;
+    const { locations } = data;
     console.log("New background location: ", locations[0]);
     console.log("New background location: ", data);
     let activeTrip = await getActiveTrip();
-    createLocation(activeTrip?.id, locations[0].coords.latitude, locations[0].coords.longitude);
+    createLocation(
+      activeTrip?.id,
+      locations[0].coords.latitude,
+      locations[0].coords.longitude,
+    );
   }
 });

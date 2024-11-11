@@ -24,7 +24,7 @@ export default function Reiseuebersicht() {
     (async () => {
       setJourney(await getJourneyByJourneyId(journeyId));
     })();
-  }, [journey, journeyId]);
+  }, [journeyId]);
 
   return (
     <Layout level="2" style={styles.page}>

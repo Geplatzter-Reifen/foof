@@ -40,11 +40,11 @@ export default function TripCard({ trip }: { trip: Trip }) {
       {duration && <Text>Dauer: {duration}</Text>}
       <View>
         {!finishedAt && (
-          <Button status="basic" onPress={() => setFinishedAt()}>
+          <Button status="basic" onPress={async () => await setFinishedAt()}>
             <FontAwesomeIcon icon="flag" />
           </Button>
         )}
-        <Button status="basic" onPress={() => deleteTrip(trip.id)}>
+        <Button status="basic" onPress={async () => await deleteTrip(trip.id)}>
           <FontAwesomeIcon icon="trash" />
         </Button>
       </View>

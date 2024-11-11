@@ -9,6 +9,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 
 library.add(far, fas, fab);
+import * as TaskManager from "expo-task-manager";
 
 export default function RootLayout() {
   return (

@@ -9,7 +9,6 @@ export function hexToRgb(hex: string) {
 }
 
 export function hexToRgba(hex: string, alpha: number) {
-  console.log(hex);
   const { r, g, b } = hexToRgb(hex);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }

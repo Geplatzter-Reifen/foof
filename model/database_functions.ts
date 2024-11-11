@@ -74,6 +74,15 @@ export const deleteTrip = async (tripId: string) => {
   });
 };
 
+export const setTripDistance = async (tripId: string, distance: number) => {
+  void database.write(async () => {
+    const tripToFinish = await getTripByTripId(tripId);
+    await tripToFinish.update(() => {
+      tripToFinish.distance = distance;
+    });
+  });
+};
+
 export const finishTrip = async (tripId: string, finishTime: number) => {
   void database.write(async () => {
     const tripToFinish = await getTripByTripId(tripId);

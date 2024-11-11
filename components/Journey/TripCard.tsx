@@ -27,6 +27,10 @@ export default function TripCard({ trip }: { trip: Trip }) {
       ? getDuration(startedAt, finishedAt, TIME)
       : undefined;
 
+  const distance: string | undefined = trip.distance
+    ? trip.distance.toFixed(1)
+    : undefined;
+
   const [locations, setLocations] = useState<Location[]>([]);
 
   useEffect(() => {
@@ -42,7 +46,8 @@ export default function TripCard({ trip }: { trip: Trip }) {
           {trip.title}
         </Text>
         <Text>{date}</Text>
-        {duration && <Text>Dauer: {duration}</Text>}
+        {duration && <Text>{"Dauer: " + duration}</Text>}
+        {distance && <Text>Distanz: {distance} km</Text>}
         {locations.map((loc) => (
           <Layout key={loc.id}>
             <Text>{"Lat: " + loc.latitude}</Text>

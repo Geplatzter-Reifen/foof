@@ -1,6 +1,7 @@
-import { Location } from "@/model/model";
-
-function calculateDistance(location1: Location, location2: Location): number {
+export function calculateDistance(
+  location1: { latitude: number; longitude: number },
+  location2: { latitude: number; longitude: number },
+): number {
   const R = 6371; // Erdradius in Kilometern
 
   const lat1 = location1.latitude * (Math.PI / 180); // Umrechnung in Bogenmaß

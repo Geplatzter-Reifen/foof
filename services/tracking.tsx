@@ -2,7 +2,9 @@ import {
   createTrip,
   getActiveJourney,
   getJourneyByJourneyId,
+  setTripDistance,
 } from "@/model/database_functions";
+import { calculateDistance } from "@/utils/locationUtil";
 
 export async function createManualTrip(
   tripName: string,
@@ -36,6 +38,10 @@ export async function createManualTrip(
     startingCoordinates?.longitude,
   );
   await trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+  await setTripDistance(
+    trip.id,
+    calculateDistance(startingCoordinates, endCoordinates),
+  );
 }
 
 function parseCoordinates(

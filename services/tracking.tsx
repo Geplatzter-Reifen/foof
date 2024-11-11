@@ -1,8 +1,8 @@
 import { createTrip, getActiveJourney } from "@/model/database_functions";
 
 export async function createManualTrip(
-  startingCoordinatesString,
-  endCoordinatesString,
+  startingCoordinatesString: string,
+  endCoordinatesString: string,
 ) {
   // TODO Fehlerbehandlung, falls keine Journey vorhanden
   let activeJourney = await getActiveJourney();

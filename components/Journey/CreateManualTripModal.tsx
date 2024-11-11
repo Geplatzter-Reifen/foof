@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal } from "@ui-kitten/components";
 import { createManualTrip } from "@/services/tracking";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 interface CreateManualTripModalProps {
   isVisible: boolean;
@@ -14,10 +14,10 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
   onClose,
   journeyId,
 }) => {
-  //const [modalVisible, setModalVisible] = useState(false);
   const [tripName, setTripName] = useState("");
   const [startCoords, setStartCoords] = useState("");
   const [endCoords, setEndCoords] = useState("");
+  const [errorText, setErrorText] = useState("");
 
   return (
     <Modal visible={isVisible} backdropStyle={styles.backdrop}>
@@ -37,6 +37,7 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
           value={endCoords}
           onChangeText={(coordsText) => setEndCoords(coordsText)}
         />
+        {errorText && <Text style={{ color: "white" }}>{errorText}</Text>}
         <Button
           status="basic"
           onPress={() => {
@@ -50,9 +51,23 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
         </Button>
         <Button
           onPress={async () => {
-            await createManualTrip(tripName, startCoords, endCoords, journeyId);
-            onClose();
-            setTripName("");
+            try {
+              await createManualTrip(
+                tripName,
+                startCoords,
+                endCoords,
+                journeyId,
+              );
+              onClose();
+              setTripName("");
+              setStartCoords("");
+              setEndCoords("");
+              setErrorText("");
+            } catch (err) {
+              if (err instanceof Error) {
+                setErrorText(err.message);
+              }
+            }
           }}
         >
           Speichern

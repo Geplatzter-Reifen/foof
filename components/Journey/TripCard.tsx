@@ -35,8 +35,6 @@ export default function TripCard({ trip }: { trip: Trip }) {
     })();
   }, [trip]);
 
-  console.log(locations);
-
   return (
     <Card>
       <Text category="h4" status="primary">

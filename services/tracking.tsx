@@ -10,6 +10,10 @@ export async function createManualTrip(
   endCoordinatesString: string,
   journeyId?: string,
 ) {
+  if (!tripName || tripName.trim() === "") {
+    throw new Error("Bitte gib einen Streckennamen an");
+  }
+
   const journey = journeyId
     ? await getJourneyByJourneyId(journeyId)
     : await getActiveJourney();
@@ -18,13 +22,14 @@ export async function createManualTrip(
     throw new Error("Keine Aktive Reise gesetzt");
   }
 
-  let trip = await createTrip(journey.id, tripName);
   let startingCoordinates = parseCoordinates(startingCoordinatesString);
   let endCoordinates = parseCoordinates(endCoordinatesString);
 
   if (startingCoordinates === null || endCoordinates === null) {
     throw new Error("Ungültiges Koordinatenformat");
   }
+
+  let trip = await createTrip(journey.id, tripName);
 
   await trip.addLocation(
     startingCoordinates?.latitude,

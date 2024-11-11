@@ -13,14 +13,12 @@ import { Layout, Button, Card, Input, Modal } from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { createManualTrip } from "@/services/tracking";
+import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
 
 export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
   const [journey, setJourney] = useState<Journey>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [tripName, setTripName] = useState("");
-  const [startCoords, setStartCoords] = useState("");
-  const [endCoords, setEndCoords] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -54,50 +52,12 @@ export default function Reiseuebersicht() {
           Neue Strecke
         </Button>
       </View>
-      <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
-        <Card disabled={true}>
-          <Input
-            placeholder="Streckenname"
-            value={tripName}
-            onChangeText={(tripText) => setTripName(tripText)}
-          />
-          <Input
-            placeholder="Startkoordinaten"
-            value={startCoords}
-            onChangeText={(coordsText) => setStartCoords(coordsText)}
-          />
-          <Input
-            placeholder="Endkoordinaten"
-            value={endCoords}
-            onChangeText={(coordsText) => setEndCoords(coordsText)}
-          />
-          <Button
-            status="basic"
-            onPress={() => {
-              setModalVisible(false);
-              setTripName("");
-              setStartCoords("");
-              setEndCoords("");
-            }}
-          >
-            Abbrechen
-          </Button>
-          <Button
-            onPress={async () => {
-              await createManualTrip(
-                tripName,
-                startCoords,
-                endCoords,
-                journeyId,
-              );
-              setModalVisible(false);
-              setTripName("");
-            }}
-          >
-            Speichern
-          </Button>
-        </Card>
-      </Modal>
+
+      <CreateManualTripModal
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        journeyId={journeyId}
+      />
     </Layout>
   );
 }
@@ -119,8 +79,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-  },
-  backdrop: {
-    backgroundColor: "rgba(0,0,0,0.5)",
   },
 });

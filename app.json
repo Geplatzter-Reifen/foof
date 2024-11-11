@@ -43,6 +43,10 @@
             "packagingOptions": {
               "pickFirst": [
                 "**/libc++_shared.so"
+              ],
+              "permissions": [
+                "ACCESS_FINE_LOCATION",
+                "ACCESS_COARSE_LOCATION"
               ]
             }
           },
@@ -50,7 +54,18 @@
             "deploymentTarget": "13.4"
           }
         }
-      ]
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox"
+        }
+      ],
+      ["expo-location",
+      {
+        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+      }
+    ]
     ],
     "experiments": {
       "typedRoutes": true

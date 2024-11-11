@@ -1,5 +1,9 @@
 import {createTrip, getActiveJourney} from "@/model/database_functions";
-import exp from "node:constants";
+import * as Location from "expo-location";
+import * as TaskManager from "expo-task-manager";
+
+const LOCATION_TASK_NAME = 'background-location-task';
+
 
 export async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
     // TODO Fehlerbehandlung, falls keine Journey vorhanden
@@ -9,6 +13,34 @@ export async function createManualTrip(startingCoordinatesString, endCoordinates
     let endCoordinates = parseCoordinates(endCoordinatesString);
     trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);
     trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+}
+
+export async function startAutomaticTracking() {
+    const { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
+    if (foregroundStatus === 'granted') {
+        console.log('Foreground status: ', foregroundStatus);
+        const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
+        if (backgroundStatus === 'granted') {
+            console.log('Background status: ', backgroundStatus);
+            if(await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
+                console.log('Tracking already started.');
+            } else {
+                await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+                    accuracy: Location.Accuracy.Highest,
+                });
+                console.log('Tracking started.')
+            }
+        }
+    }
+}
+
+export async function stopAutomaticTracking() {
+    if(await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
+        await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+        console.log('Tracking stopped.');
+    } else {
+        console.log('Tracking already stopped.');
+    }
 }
 
 function parseCoordinates(coordinateString: string): { latitude: number; longitude: number } | null {
@@ -25,3 +57,13 @@ function parseCoordinates(coordinateString: string): { latitude: number; longitu
     return { latitude, longitude };
 }
 
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+    if (error) {
+        console.log(error.message)
+        return;
+    }
+    if (data) {
+        const { locations } = data;
+        console.log('New background location: ', locations);
+    }
+});

@@ -5,6 +5,8 @@ import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
   getAllTripsByJourneyIdQuery,
   getJourneyByJourneyId,
+  setJourneyActive,
+  setJourneyInactive,
 } from "@/model/database_functions";
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
@@ -40,6 +42,18 @@ export default function Reiseuebersicht() {
             ? dateFormat(new Date(journey?.startedAt), DATE)
             : ""}
         </Text>
+        <Text style={{ color: "white" }}>
+          {"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}
+        </Text>
+        {journey?.isActive ? (
+          <Button status="danger" onPress={() => setJourneyInactive(journeyId)}>
+            deaktivieren
+          </Button>
+        ) : (
+          <Button status="success" onPress={() => setJourneyActive(journeyId)}>
+            Zur Aktiven Reise Machen
+          </Button>
+        )}
       </Layout>
       <View style={styles.content}>
         <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />

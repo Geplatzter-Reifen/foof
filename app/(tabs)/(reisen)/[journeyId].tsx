@@ -23,7 +23,7 @@ export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
   const [journey, setJourney] = useState<Journey>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [, setRefreshTrigger] = useState(0);
 
   const reloadScreen = () => setRefreshTrigger((prev) => prev + 1);
 

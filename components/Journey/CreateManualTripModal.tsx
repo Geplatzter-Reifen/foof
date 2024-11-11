@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
 import { createManualTrip } from "@/services/tracking";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 interface CreateManualTripModalProps {
   isVisible: boolean;

@@ -1,5 +1,4 @@
 import {createTrip, getActiveJourney} from "@/model/database_functions";
-import exp from "node:constants";
 
 export async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
     // TODO Fehlerbehandlung, falls keine Journey vorhanden

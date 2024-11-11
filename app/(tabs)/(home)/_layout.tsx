@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { foofDarkTheme } from "@/constants/custom-theme";
 
-export default function ReiseStackLayout() {
+export default function HomeStackLayout() {
   return (
     <Stack
       screenOptions={{
@@ -12,13 +12,7 @@ export default function ReiseStackLayout() {
         },
       }}
     >
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: true,
-          title: "Meine Reisen",
-        }}
-      />
+      <Stack.Screen name="index" options={{ title: "Home" }} />
     </Stack>
   );
 }

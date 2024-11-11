@@ -10,8 +10,47 @@ export const createJourney = async (
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
       journey.startedAt = started_at ?? Date.now();
+      journey.isActive = false;
     });
   });
+};
+
+export const setJourneyActive = async (journeyId: string) => {
+  await database.write(async () => {
+    const allJourneys = await database.get<Journey>("journeys").query().fetch();
+    for (const journey of allJourneys) {
+      if (journey.isActive) {
+        await journey.update(() => {
+          journey.isActive = false;
+        });
+      }
+    }
+    const journey = await database.get<Journey>("journeys").find(journeyId);
+    await journey.update(() => {
+      journey.isActive = true;
+    });
+  });
+};
+
+export const setJourneyInactive = async (journeyId: string) => {
+  await database.write(async () => {
+    const journey = await database.get<Journey>("journeys").find(journeyId);
+    await journey.update(() => {
+      journey.isActive = false;
+    });
+  });
+};
+
+export const getActiveJourney = async (): Promise<Journey | null> => {
+  const activeJourneys = await database
+    .get<Journey>("journeys")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeJourneys.length === 0) {
+    return null;
+  } else {
+    return activeJourneys[0];
+  }
 };
 
 export const createTrip = async (
@@ -23,6 +62,7 @@ export const createTrip = async (
     return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;
+      trip.isActive = false;
       trip.startedAt = Date.now();
     });
   });
@@ -35,6 +75,15 @@ export const deleteTrip = async (tripId: string) => {
   });
 };
 
+export const setTripDistance = async (tripId: string, distance: number) => {
+  void database.write(async () => {
+    const tripToFinish = await getTripByTripId(tripId);
+    await tripToFinish.update(() => {
+      tripToFinish.distance = distance;
+    });
+  });
+};
+
 export const finishTrip = async (tripId: string, finishTime: number) => {
   void database.write(async () => {
     const tripToFinish = await getTripByTripId(tripId);
@@ -42,6 +91,36 @@ export const finishTrip = async (tripId: string, finishTime: number) => {
       tripToFinish.finishedAt = finishTime;
     });
   });
+};
+
+export const setTripInactive = async (tripId: string) => {
+  await database.write(async () => {
+    const trip = await database.get<Trip>("trips").find(tripId);
+    await trip.update(() => {
+      trip.isActive = false;
+    });
+  });
+};
+
+export const setTripActive = async (tripId: string) => {
+  await database.write(async () => {
+    const trip = await database.get<Trip>("trips").find(tripId);
+    await trip.update(() => {
+      trip.isActive = true;
+    });
+  });
+};
+
+export const getActiveTrip = async (): Promise<Trip | null> => {
+  const activeTrips = await database
+    .get<Trip>("trips")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeTrips.length === 0) {
+    return null;
+  } else {
+    return activeTrips[0];
+  }
 };
 
 export const createLocation = async (

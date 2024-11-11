@@ -2,8 +2,7 @@ import {ApplicationProvider, Layout, Input, Text, Button} from "@ui-kitten/compo
 import * as eva from "@eva-design/eva";
 import {StyleSheet} from "react-native";
 import React from "react";
-import {createTrip, getAllJourneys, getAllJourneysQuery} from "@/model/database_functions";
-import JourneySelector from "@/components/Journey/JourneySelector";
+import {createTrip, getActiveJourney} from "@/model/database_functions";
 
 export default function ManualTracking() {
     const [startingCoordinates, setStartingCoordinates] = React.useState();
@@ -12,9 +11,6 @@ export default function ManualTracking() {
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.container}>
-                <Text>{startingCoordinates}</Text>
-                <Text>{endCoordinates}</Text>
-                <JourneySelector journeys={getAllJourneysQuery}></JourneySelector>
                 <Input
                     placeholder={"Startkoordinaten"}
                     value={startingCoordinates}
@@ -43,9 +39,8 @@ const styles = StyleSheet.create({
 
 async function createManualTrip(startingCoordinatesString, endCoordinatesString) {
     // TODO Fehlerbehandlung, falls keine Journey vorhanden
-    let journeys = await getAllJourneys();
-    let firstJourney = journeys.at(0);
-    let trip = await createTrip(firstJourney.id, 'Strecke');
+    let activeJourney = await getActiveJourney();
+    let trip = await createTrip(activeJourney.id, 'Strecke');
     let startingCoordinates = parseCoordinates(startingCoordinatesString);
     let endCoordinates = parseCoordinates(endCoordinatesString);
     trip.addLocation(startingCoordinates?.latitude, startingCoordinates?.longitude);

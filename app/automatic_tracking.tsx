@@ -5,7 +5,6 @@ import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import {useState} from "react";
 import {getAllJourneys, getAllJourneysQuery} from "@/model/database_functions";
-import JourneySelector from "@/components/Journey/JourneySelector";
 
 
 const LOCATION_TASK_NAME = 'background-location-task';
@@ -49,7 +48,6 @@ export default function App() {
     return(
         <ApplicationProvider {...eva} theme={eva.light}>
             <Layout style={styles.container}>
-                <JourneySelector journeys={getAllJourneysQuery} onJourneySelect={setSelectedJourney}></JourneySelector>
 
                 <View style={styles.buttonContainer}>
                     <Button style={styles.button} onPress={startTracking} status={"primary"}>Start</Button>

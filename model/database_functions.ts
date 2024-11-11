@@ -1,11 +1,15 @@
-import { Q } from "@nozbe/watermelondb";
 import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
+import { Q } from "@nozbe/watermelondb";
 
-export const createJourney = async (title: string): Promise<Journey> => {
+export const createJourney = async (
+  title: string,
+  started_at?: number,
+): Promise<Journey> => {
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
+      journey.startedAt = started_at ?? Date.now();
       journey.isActive = false;
     });
   });
@@ -50,6 +54,23 @@ export const createTrip = async (
     return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;
+      trip.startedAt = Date.now();
+    });
+  });
+};
+
+export const deleteTrip = async (tripId: string) => {
+  void database.write(async () => {
+    const tripToDelete = await getTripByTripId(tripId);
+    await tripToDelete.destroyPermanently();
+  });
+};
+
+export const finishTrip = async (tripId: string, finishTime: number) => {
+  void database.write(async () => {
+    const tripToFinish = await getTripByTripId(tripId);
+    await tripToFinish.update(() => {
+      tripToFinish.finishedAt = finishTime;
     });
   });
 };
@@ -71,13 +92,33 @@ export const createLocation = async (
 };
 
 export const getAllJourneysQuery = database.get<Journey>("journeys").query();
-const getAllJourneys = () => getAllJourneysQuery.fetch();
 
+export const getAllJourneys = () => getAllJourneysQuery.fetch();
+
+export const getJourneyByJourneyIdQuery = (journeyId: string) => {
+  return database.get<Journey>("journeys").query(Q.where("id", journeyId));
+};
+
+export const getJourneyByJourneyId = (journeyId: string) => {
+  return database.get<Journey>("journeys").find(journeyId);
+};
+
+export const getAllTripsByJourneyIdQuery = (journeyId: string) => {
+  return database.get<Trip>("trips").query(Q.where("journey_id", journeyId));
+};
 export const getAllTripsByJourneyId = (journeyId: string) => {
-  return database.get<Trip>("trips").find(journeyId);
+  return getAllTripsByJourneyIdQuery(journeyId).fetch();
+};
+
+export const getTripByTripId = (tripId: string) => {
+  return database.get<Trip>("trips").find(tripId);
+};
+
+export const getAllLocationsByTripIdQuery = (tripId: string) => {
+  return database.get<Location>("locations").query(Q.where("trip_id", tripId));
 };
 export const getAllLocationsByTripId = (tripId: string) => {
-  return database.get<Location>("locations").find(tripId);
+  return getAllLocationsByTripIdQuery(tripId).fetch();
 };
 
 export const deleteAllJourneys = () => {

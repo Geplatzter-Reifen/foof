@@ -43,6 +43,7 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
           onPress={() => {
             onClose();
             setTripName("");
+            setErrorText("");
             setStartCoords("");
             setEndCoords("");
           }}

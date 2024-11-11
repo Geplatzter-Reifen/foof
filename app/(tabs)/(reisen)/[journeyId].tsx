@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
@@ -15,6 +15,9 @@ import { Layout, Button, Text } from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
+import RNFadedScrollView from "rn-faded-scrollview";
+import { foofDarkTheme } from "@/constants/custom-theme";
+import { hexToRgba } from "@/utils/colorUtil";
 
 export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
@@ -53,11 +56,22 @@ export default function Reiseuebersicht() {
           </Button>
         )}
       </Layout>
-      <ScrollView style={styles.scrollView}>
+      <RNFadedScrollView
+        allowStartFade={true}
+        horizontal={false}
+        fadeSize={10}
+        style={styles.scrollView}
+        fadeColors={[
+          hexToRgba(foofDarkTheme["color-basic-900"], 0.18),
+          hexToRgba(foofDarkTheme["color-basic-900"], 0.9),
+        ]}
+        startFadeStyle={styles.fadeStyle}
+        endFadeStyle={styles.fadeStyle}
+      >
         <Layout>
           <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
         </Layout>
-      </ScrollView>
+      </RNFadedScrollView>
       <Button
         status="basic"
         onPress={() => setModalVisible(true)}
@@ -88,7 +102,12 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   scrollView: {
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+  },
+  fadeStyle: {
+    color: foofDarkTheme["background-basic-color-3"],
+    backgroundColor: foofDarkTheme["background-basic-color-3"],
   },
   button: {
     margin: 15,

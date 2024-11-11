@@ -17,14 +17,14 @@ export const createJourney = async (
 
 export const setJourneyActive = async (journeyId: string) => {
   await database.write(async () => {
-    // alle Reisen inaktiv setzen
     const allJourneys = await database.get<Journey>("journeys").query().fetch();
     for (const journey of allJourneys) {
-      await journey.update(() => {
-        journey.isActive = false;
-      });
+      if (journey.isActive) {
+        await journey.update(() => {
+          journey.isActive = false;
+        });
+      }
     }
-    // gewünschte Reise aktiv setzen
     const journey = await database.get<Journey>("journeys").find(journeyId);
     await journey.update(() => {
       journey.isActive = true;

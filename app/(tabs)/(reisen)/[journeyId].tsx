@@ -61,11 +61,11 @@ export default function Reiseuebersicht() {
         </Text>
         <Text>{"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}</Text>
         {journey?.isActive ? (
-          <Button status="basic" onPress={() => toggleJourneyStatus()}>
+          <Button status="basic" onPress={toggleJourneyStatus}>
             deaktivieren
           </Button>
         ) : (
-          <Button status="info" onPress={() => toggleJourneyStatus()}>
+          <Button status="info" onPress={toggleJourneyStatus}>
             Zur Aktiven Reise Machen
           </Button>
         )}

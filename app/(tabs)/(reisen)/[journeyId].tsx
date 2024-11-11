@@ -9,14 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
 import { Stack } from "expo-router";
-import {
-  Layout,
-  Button,
-  Card,
-  Input,
-  Modal,
-  Datepicker,
-} from "@ui-kitten/components";
+import { Layout, Button, Card, Input, Modal } from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { createManualTrip } from "@/services/tracking";

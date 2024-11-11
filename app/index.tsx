@@ -5,7 +5,7 @@ import { ApplicationProvider, Button, Text } from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {Link} from "expo-router";
+import { Link } from "expo-router";
 
 library.add(fas);
 
@@ -21,7 +21,9 @@ export default function Index() {
       >
         <Text>Edit app/index.tsx to edit this screen.</Text>
         <Button>BUTTON</Button>
-        <Link href={"/automatic_tracking"}>Go to automatic tracking screen.</Link>
+        <Link href={"/automatic_tracking"}>
+          Go to automatic tracking screen.
+        </Link>
         <Link href={"/manual_tracking"}>Go to manual tracking screen.</Link>
         <Link href={"/database_testsite"}>Go to database testsite.</Link>
         <FontAwesomeIcon icon="bicycle" />

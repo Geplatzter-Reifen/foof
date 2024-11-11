@@ -23,12 +23,26 @@ export default function Reiseuebersicht() {
   const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
   const [journey, setJourney] = useState<Journey>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const reloadScreen = () => setRefreshTrigger((prev) => prev + 1);
 
   useEffect(() => {
     (async () => {
       setJourney(await getJourneyByJourneyId(journeyId));
     })();
   }, [journeyId]);
+
+  const toggleJourneyStatus = async () => {
+    if (journey) {
+      if (journey.isActive) {
+        await setJourneyInactive(journeyId);
+      } else {
+        await setJourneyActive(journeyId);
+      }
+    }
+    reloadScreen();
+  };
 
   return (
     <Layout style={styles.container} level="3">
@@ -47,11 +61,11 @@ export default function Reiseuebersicht() {
         </Text>
         <Text>{"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}</Text>
         {journey?.isActive ? (
-          <Button status="danger" onPress={() => setJourneyInactive(journeyId)}>
+          <Button status="basic" onPress={() => toggleJourneyStatus()}>
             deaktivieren
           </Button>
         ) : (
-          <Button status="info" onPress={() => setJourneyActive(journeyId)}>
+          <Button status="info" onPress={() => toggleJourneyStatus()}>
             Zur Aktiven Reise Machen
           </Button>
         )}
@@ -80,7 +94,6 @@ export default function Reiseuebersicht() {
       >
         Strecke Manuell Eintragen
       </Button>
-      {/*</Layout>*/}
 
       <CreateManualTripModal
         isVisible={modalVisible}

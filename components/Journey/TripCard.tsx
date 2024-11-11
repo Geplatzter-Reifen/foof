@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DATE, dateFormat, getDuration, TIME } from "@/utils/dateUtil";
 import { Trip } from "@/model/model";
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  deleteTrip,
-  getAllLocationsByTripId,
-} from "@/model/database_functions";
+import { deleteTrip } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
-import { Location } from "@/model/model";
 
 export default function TripCard({ trip }: { trip: Trip }) {
   const startedAt: Date | undefined = trip.startedAt
@@ -31,14 +27,6 @@ export default function TripCard({ trip }: { trip: Trip }) {
     ? trip.distance.toFixed(1)
     : undefined;
 
-  const [locations, setLocations] = useState<Location[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      setLocations(await getAllLocationsByTripId(trip.id));
-    })();
-  }, [trip]);
-
   return (
     <Layout level="3">
       <Card style={styles.card}>
@@ -48,12 +36,6 @@ export default function TripCard({ trip }: { trip: Trip }) {
         <Text>{date}</Text>
         {duration && <Text>{"Dauer: " + duration}</Text>}
         {distance && <Text>Distanz: {distance} km</Text>}
-        {locations.map((loc) => (
-          <Layout key={loc.id}>
-            <Text>{"Lat: " + loc.latitude}</Text>
-            <Text>{"Lon: " + loc.longitude}</Text>
-          </Layout>
-        ))}
         <View>
           <Button status="basic" onPress={() => deleteTrip(trip.id)}>
             <FontAwesomeIcon icon="trash" />

@@ -34,7 +34,7 @@ export default function Reiseuebersicht() {
           headerTitle: journey?.title,
         }}
       />
-      <Layout style={styles.overview}>
+      <Layout level="1" style={styles.overview}>
         <Text>
           Start der Reise:{" "}
           {journey?.startedAt
@@ -64,6 +64,14 @@ export default function Reiseuebersicht() {
             onChangeText={(journeyText) => setTripName(journeyText)}
           />
           <Button
+            status="basic"
+            onPress={() => {
+              setModalVisible(false);
+            }}
+          >
+            Abbrechen
+          </Button>
+          <Button
             onPress={async () => {
               await createTrip(journeyId, tripName);
               setModalVisible(false);
@@ -87,7 +95,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "10%",
   },
   overview: {
-    backgroundColor: "#f5f5f5",
     width: "100%",
     padding: 20,
     marginBottom: 10,

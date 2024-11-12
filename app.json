@@ -7,19 +7,37 @@
     "icon": "./assets/images/icon.png",
     "scheme": "com.gplr.tausendundeinskilometer",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "androidStatusBar": {
+      "translucent": true
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gplr.tausendundeinskilometer"
+      "bundleIdentifier": "com.gplr.tausendundeinskilometer",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff",
+        "dark": {
+          "image": "./assets/images/splash-dark.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "contain"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff",
+        "dark": {
+          "image": "./assets/images/splash-dark.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "contain"
+        }
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",

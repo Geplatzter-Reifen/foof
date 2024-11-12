@@ -7,6 +7,7 @@ import {
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
+import * as TaskManager from "expo-task-manager";
 // import * as TaskManager from "expo-task-manager";
 
 MapboxGL.setAccessToken(
@@ -38,6 +39,9 @@ export default function Index() {
   useEffect(() => {
     checkIfLocationEnabled();
     getCurrentLocation();
+    TaskManager.isTaskRegisteredAsync("background-location-task").then(
+      (result) => setTracking(result),
+    );
   }, []);
 
   const changeButton = () => {

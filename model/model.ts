@@ -49,11 +49,15 @@ class Trip extends Model {
   // @ts-ignore
   @relation("journey", "journey_id") journey;
   // @ts-ignore
-  @writer async addLocation(latitude: number, longitude: number) {
+  @writer async addLocation(
+    latitude: number,
+    longitude: number,
+    recordedAt?: number,
+  ) {
     return this.collections.get<Location>("locations").create((location) => {
       location.latitude = latitude;
       location.longitude = longitude;
-      location.recordedAt = Date.now();
+      location.recordedAt = recordedAt ?? Date.now();
       location.trip.set(this);
     });
   }

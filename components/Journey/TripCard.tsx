@@ -7,25 +7,19 @@ import { deleteTrip } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
 
 export default function TripCard({ trip }: { trip: Trip }) {
-  const startedAt: Date | undefined = trip.startedAt
-    ? new Date(trip.startedAt)
-    : undefined;
+  const startedAt: Date = new Date(trip.startedAt);
   let finishedAt: Date | undefined = trip.finishedAt
     ? new Date(trip.finishedAt)
     : undefined;
 
-  const date: string | undefined = startedAt
-    ? dateFormat(startedAt, DATE)
-    : undefined;
+  const date: string = dateFormat(startedAt, DATE);
 
   let duration: string | undefined =
     startedAt && finishedAt
       ? getDuration(startedAt, finishedAt, TIME)
       : undefined;
 
-  const distance: string | undefined = trip.distance
-    ? trip.distance.toFixed(1)
-    : undefined;
+  const distance: string = trip.distance.toFixed(1);
 
   return (
     <Layout level="3">
@@ -35,7 +29,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
         </Text>
         <Text>{date}</Text>
         {duration && <Text>{"Dauer: " + duration}</Text>}
-        {distance && <Text>Distanz: {distance} km</Text>}
+        <Text>Distanz: {distance} km</Text>
         <View>
           <Button status="basic" onPress={() => deleteTrip(trip.id)}>
             <FontAwesomeIcon icon="trash" />

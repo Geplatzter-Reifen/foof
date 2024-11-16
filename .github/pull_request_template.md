@@ -1,0 +1,5 @@
+- [ ] Wenn nötig, refactored? (Pfadfinderregel)
+- [ ] Tests ausreichend vorhanden?
+- [ ] Code ausreichend kommentiert / dokumentiert?
+- [ ] Dark-Mode beachtet?
+- [ ] PR in Discord gepostet?

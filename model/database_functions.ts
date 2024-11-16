@@ -2,14 +2,10 @@ import { database } from "./createDatabase";
 import { Journey, Trip, Location } from "./model";
 import { Q } from "@nozbe/watermelondb";
 
-export const createJourney = async (
-  title: string,
-  started_at?: number,
-): Promise<Journey> => {
+export const createJourney = async (title: string): Promise<Journey> => {
   return database.write(async () => {
     return database.get<Journey>("journeys").create((journey) => {
       journey.title = title;
-      journey.startedAt = started_at ?? Date.now();
       journey.isActive = false;
     });
   });
@@ -59,6 +55,16 @@ export const createTrip = async (
 ): Promise<Trip> => {
   return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
+    const trips = await getAllTripsByJourneyId(journeyId);
+
+    // If this is the first trip, set the journey start date to today
+    if (trips.length === 0) {
+      const journey = await database.get<Journey>("journeys").find(journeyId);
+      await journey.update(() => {
+        journey.startedAt = Date.now();
+      });
+    }
+
     return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);
       trip.title = title;

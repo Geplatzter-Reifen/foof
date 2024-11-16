@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { differenceInMilliseconds, format } from "date-fns";
 
 export const DATE: string = "dd.MM.yyyy";
 export const TIME: string = "HH:mm";
@@ -13,15 +13,14 @@ export function dateFormat(date: Date | number, formatString: string): string {
   return format(date, formatString);
 }
 
-export function getDuration(
+export function getDurationInMs(start: Date, end: Date) {
+  return differenceInMilliseconds(end, start);
+}
+
+export function getDurationFormatted(
   start: Date,
   end: Date,
   formatString: string,
 ): string {
-  const startMs = start.getTime();
-  const endMs = end.getTime();
-
-  const durationMs = endMs - startMs;
-
-  return dateFormat(durationMs, formatString);
+  return dateFormat(getDurationInMs(start, end), formatString);
 }

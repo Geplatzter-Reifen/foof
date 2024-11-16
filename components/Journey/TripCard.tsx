@@ -1,5 +1,5 @@
 import React from "react";
-import { DATE, dateFormat, getDuration, TIME } from "@/utils/dateUtil";
+import { DATE, dateFormat, getDurationFormatted, TIME } from "@/utils/dateUtil";
 import { Trip } from "@/model/model";
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -16,7 +16,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
 
   let duration: string | undefined =
     startedAt && finishedAt
-      ? getDuration(startedAt, finishedAt, TIME)
+      ? getDurationFormatted(startedAt, finishedAt, TIME)
       : undefined;
 
   const distance: string = trip.distance.toFixed(1);

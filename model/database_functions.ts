@@ -139,6 +139,14 @@ export const createLocation = async (
   });
 };
 
+export const initializeDatabase = async () => {
+  let existingJourney = await getAllJourneys();
+  if (existingJourney.length === 0) {
+    let initial_journey = await createJourney("Meine Reise");
+    await setJourneyActive(initial_journey.id);
+  }
+};
+
 export const getAllJourneysQuery = database.get<Journey>("journeys").query();
 export const getAllJourneys = () => getAllJourneysQuery.fetch();
 

@@ -15,18 +15,12 @@ class Journey extends Model {
   @field("started_at") startedAt?: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
-  // @ts-ignore
-  @field("average_speed") averageSpeed?: number;
-  // @ts-ignore
-  @field("average_distance_per_trip") averageDistancePerTrip?: number;
-  // @ts-ignore
-  @field("distance") distance?: number;
 
   //@ts-ignore
-  @writer async addTrip(title: string) {
+  @writer async addTrip(title: string, startedAt?: number) {
     return this.collections.get<Trip>("trips").create((trip) => {
       trip.title = title;
-      trip.startedAt = Date.now();
+      trip.startedAt = startedAt ? startedAt : Date.now();
       trip.journey.set(this);
     });
   }
@@ -47,13 +41,11 @@ class Trip extends Model {
   // @ts-ignore
   @field("is_active") isActive: boolean;
   // @ts-ignore
-  @field("started_at") startedAt?: number;
+  @field("started_at") startedAt: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
   // @ts-ignore
-  @field("distance") distance?: number;
-  // @ts-ignore
-  @field("average_speed") averageSpeed?: number;
+  @field("distance") distance: number;
   // @ts-ignore
   @relation("journey", "journey_id") journey;
   // @ts-ignore

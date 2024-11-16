@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const schema = appSchema({
-  version: 3,
+  version: 4,
   tables: [
     tableSchema({
       name: "journeys",
@@ -10,9 +10,6 @@ export const schema = appSchema({
         { name: "is_active", type: "boolean" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
-        { name: "average_speed", type: "number", isOptional: true },
-        { name: "average_distance_per_trip", type: "number", isOptional: true },
-        { name: "distance", type: "number", isOptional: true },
       ],
     }),
     tableSchema({
@@ -20,10 +17,9 @@ export const schema = appSchema({
       columns: [
         { name: "title", type: "string" },
         { name: "is_active", type: "boolean" },
-        { name: "started_at", type: "number", isOptional: true },
+        { name: "started_at", type: "number" },
         { name: "finished_at", type: "number", isOptional: true },
-        { name: "distance", type: "number", isOptional: true },
-        { name: "average_speed", type: "number", isOptional: true },
+        { name: "distance", type: "number" },
         { name: "journey_id", type: "string", isIndexed: true },
       ],
     }),

@@ -18,9 +18,9 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="(reisen)"
+        name="(touren)"
         options={{
-          title: "Reisen",
+          title: "Touren",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <FontAwesomeIcon

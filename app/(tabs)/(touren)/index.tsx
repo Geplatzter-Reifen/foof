@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
-  getAllJourneysQuery,
-  createJourney,
-  deleteAllJourneys,
+  getAllToursQuery,
+  createTour,
+  deleteAllTours,
 } from "@/model/database_functions";
-import JourneyList from "@/components/Journey/JourneyList";
+import TourList from "@/components/Tour/TourList";
 import { ScrollView, StyleSheet } from "react-native";
 import {
   Layout,
@@ -17,15 +17,15 @@ import {
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-export default function MeineReisen() {
+export default function MeineTouren() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [journeyName, setJourneyName] = useState("Reisename");
+  const [tourName, setTourName] = useState("Tourenname");
   const [startDate, setStartDate] = useState(new Date());
   return (
     <Layout style={styles.container} level="2">
       <ScrollView>
         <Layout level="1">
-          <JourneyList journeys={getAllJourneysQuery} />
+          <TourList tours={getAllToursQuery} />
         </Layout>
       </ScrollView>
       <Button
@@ -34,25 +34,25 @@ export default function MeineReisen() {
         style={{ width: 400, marginVertical: 5 }}
         accessoryLeft={<FontAwesomeIcon icon="plus" />}
       >
-        Neue Reise
+        Neue Tour
       </Button>
       <Button
         status="basic"
-        onPress={() => deleteAllJourneys()}
+        onPress={() => deleteAllTours()}
         accessoryLeft={<FontAwesomeIcon icon="trash" />}
         style={{ width: 400, marginBottom: 5 }}
       >
-        Alle Reisen löschen
+        Alle Touren löschen
       </Button>
 
       <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
         <Card disabled={true}>
-          <Text>Bitte geben Sie ihren Reisenamen ein:</Text>
+          <Text>Bitte geben Sie ihren Tourennamen ein:</Text>
           <Input
             status="primary"
-            placeholder="Reisename"
-            value={journeyName}
-            onChangeText={(journeyText) => setJourneyName(journeyText)}
+            placeholder="Tourenname"
+            value={tourName}
+            onChangeText={(tourText) => setTourName(tourText)}
           />
           <Datepicker
             date={startDate}
@@ -60,9 +60,9 @@ export default function MeineReisen() {
           />
           <Button
             onPress={async () => {
-              await createJourney(journeyName, startDate.getTime());
+              await createTour(tourName, startDate.getTime());
               setModalVisible(false);
-              setJourneyName("Reisename");
+              setTourName("Tourenname");
             }}
           >
             Speichern

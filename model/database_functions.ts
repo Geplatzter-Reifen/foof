@@ -140,15 +140,15 @@ export const createLocation = async (
 };
 
 export const initializeDatabase = async () => {
-  let existingJourney = await getAllJourneys();
-  if (existingJourney.length === 0) {
-    let initial_journey = await createJourney("Meine Reise");
-    await setJourneyActive(initial_journey.id);
+  let existingTour = await getAllTours();
+  if (existingTour.length === 0) {
+    let initial_tour = await createTour("Meine Tour");
+    await setTourActive(initial_tour.id);
   }
 };
 
-export const getAllJourneysQuery = database.get<Journey>("journeys").query();
-export const getAllJourneys = () => getAllJourneysQuery.fetch();
+export const getAllToursQuery = database.get<Tour>("tours").query();
+export const getAllTours = () => getAllToursQuery.fetch();
 
 export const getTourByTourIdQuery = (tourId: string) => {
   return database.get<Tour>("tours").query(Q.where("id", tourId));

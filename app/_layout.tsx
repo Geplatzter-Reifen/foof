@@ -8,6 +8,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
+import { initializeDatabase } from "@/model/database_functions";
 
 library.add(far, fas, fab);
 
@@ -22,6 +23,7 @@ export default function RootLayout() {
     async function prepare() {
       try {
         // Pre-load fonts, make any API calls you need to do here
+        initializeDatabase();
       } catch (e) {
         console.warn(e);
       } finally {

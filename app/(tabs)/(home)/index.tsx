@@ -8,7 +8,6 @@ import {
   stopAutomaticTracking,
 } from "@/services/tracking";
 import * as TaskManager from "expo-task-manager";
-import { initializeDatabase } from "@/model/database_functions";
 // import * as TaskManager from "expo-task-manager";
 
 MapboxGL.setAccessToken(
@@ -38,7 +37,6 @@ export default function Index() {
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
   useEffect(() => {
-    initializeDatabase();
     checkIfLocationEnabled();
     getCurrentLocation();
     TaskManager.isTaskRegisteredAsync("background-location-task").then(

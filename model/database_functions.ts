@@ -52,6 +52,7 @@ export const getActiveJourney = async (): Promise<Journey | null> => {
 export const createTrip = async (
   journeyId: string,
   title: string,
+  startedAt?: number,
 ): Promise<Trip> => {
   return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
@@ -61,7 +62,8 @@ export const createTrip = async (
     if (trips.length === 0) {
       const journey = await database.get<Journey>("journeys").find(journeyId);
       await journey.update(() => {
-        journey.startedAt = Date.now();
+        // If a start datetime is provided, use that. Else, use the current datetime.
+        journey.startedAt = startedAt ? startedAt : Date.now();
       });
     }
 

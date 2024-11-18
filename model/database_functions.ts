@@ -56,16 +56,25 @@ export const createTrip = async (
 ): Promise<Trip> => {
   return database.write(async () => {
     const journey = await database.get<Journey>("journeys").find(journeyId);
-    const trips = await getAllTripsByJourneyId(journeyId);
 
-    // If this is the first trip, set the journey start date
-    if (trips.length === 0) {
-      const journey = await database.get<Journey>("journeys").find(journeyId);
-      await journey.update(() => {
-        // If a start datetime is provided, use that. Else, use the current datetime.
-        journey.startedAt = startedAt ? startedAt : Date.now();
-      });
+    // Determine the start date for the journey
+    let updatedStartedAt: number;
+    // If the journey has no start date, set it to the provided start date or the current datetime
+    if (!journey.startedAt) {
+      updatedStartedAt = startedAt ?? Date.now();
     }
+    // If a start date is provided, and it is earlier than the current start date, update it
+    else if (startedAt && startedAt < journey.startedAt) {
+      updatedStartedAt = startedAt;
+    }
+    // Otherwise, keep the existing start date
+    else {
+      updatedStartedAt = journey.startedAt;
+    }
+    // Update the journey's start date
+    await journey.update(() => {
+      journey.startedAt = updatedStartedAt;
+    });
 
     return database.get<Trip>("trips").create((trip) => {
       trip.journey.set(journey);

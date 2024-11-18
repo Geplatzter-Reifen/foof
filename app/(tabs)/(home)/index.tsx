@@ -35,7 +35,7 @@ export default function Index() {
   const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
-  const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
+  const [, setLocationServicesEnabled] = useState(false);
   useEffect(() => {
     checkIfLocationEnabled();
     getCurrentLocation();

@@ -23,7 +23,7 @@ export default function RootLayout() {
     async function prepare() {
       try {
         // Pre-load fonts, make any API calls you need to do here
-        initializeDatabase();
+        await initializeDatabase();
       } catch (e) {
         console.warn(e);
       } finally {

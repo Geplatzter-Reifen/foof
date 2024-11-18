@@ -15,7 +15,7 @@ export default function ReiseStackLayout() {
       <Stack.Screen
         name="index"
         options={{
-          headerShown: true,
+          headerShown: false,
           title: "Meine Touren",
         }}
       />

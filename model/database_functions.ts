@@ -58,7 +58,7 @@ export const createTrip = async (
     const journey = await database.get<Journey>("journeys").find(journeyId);
     const trips = await getAllTripsByJourneyId(journeyId);
 
-    // If this is the first trip, set the journey start date to today
+    // If this is the first trip, set the journey start date
     if (trips.length === 0) {
       const journey = await database.get<Journey>("journeys").find(journeyId);
       await journey.update(() => {

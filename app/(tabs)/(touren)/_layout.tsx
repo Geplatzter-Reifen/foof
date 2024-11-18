@@ -16,7 +16,7 @@ export default function ReiseStackLayout() {
         name="index"
         options={{
           headerShown: true,
-          title: "Meine Reisen",
+          title: "Meine Touren",
         }}
       />
     </Stack>

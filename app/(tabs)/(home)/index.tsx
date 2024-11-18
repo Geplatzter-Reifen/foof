@@ -8,7 +8,6 @@ import {
   stopAutomaticTracking,
 } from "@/services/tracking";
 import * as TaskManager from "expo-task-manager";
-// import * as TaskManager from "expo-task-manager";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -35,9 +34,7 @@ export default function Index() {
   const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
-  const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
   useEffect(() => {
-    checkIfLocationEnabled();
     getCurrentLocation();
     TaskManager.isTaskRegisteredAsync("background-location-task").then(
       (result) => setTracking(result),
@@ -53,23 +50,7 @@ export default function Index() {
       setTracking(false);
     }
   };
-  //check if location is enable or not
-  const checkIfLocationEnabled = async () => {
-    let enabled = await Location.hasServicesEnabledAsync(); //returns true or false
-    if (!enabled) {
-      //if not enable
-      Alert.alert("Location not enabled", "Please enable your Location", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-    } else {
-      setLocationServicesEnabled(enabled); //store true into state
-    }
-  };
+
   //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();

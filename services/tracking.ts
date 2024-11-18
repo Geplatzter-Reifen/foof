@@ -21,7 +21,7 @@ export async function createManualStage(
   tourId?: string,
 ) {
   if (!stageName || stageName.trim() === "") {
-    throw new Error("Bitte gib einen Tourennamen an");
+    throw new Error("Bitte gib einen Tournamen an");
   }
 
   const tour = tourId ? await getTourByTourId(tourId) : await getActiveTour();

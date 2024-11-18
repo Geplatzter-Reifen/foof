@@ -42,7 +42,7 @@ export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
     <Modal visible={isVisible} backdropStyle={styles.backdrop}>
       <Card disabled={true} style={styles.dialog}>
         <Input
-          placeholder="Tourenname"
+          placeholder="Tourname"
           value={stageName}
           onChangeText={(stageText) => setStageName(stageText)}
           style={styles.input}

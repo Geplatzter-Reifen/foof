@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function MeineTouren() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [tourName, setTourName] = useState("Tourenname");
+  const [tourName, setTourName] = useState("Tourname");
   const [startDate, setStartDate] = useState(new Date());
   return (
     <Layout style={styles.container} level="2">
@@ -47,10 +47,10 @@ export default function MeineTouren() {
 
       <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
         <Card disabled={true}>
-          <Text>Bitte geben Sie ihren Tourennamen ein:</Text>
+          <Text>Bitte geben Sie ihren Tournamen ein:</Text>
           <Input
             status="primary"
-            placeholder="Tourenname"
+            placeholder="Tourname"
             value={tourName}
             onChangeText={(tourText) => setTourName(tourText)}
           />
@@ -62,7 +62,7 @@ export default function MeineTouren() {
             onPress={async () => {
               await createTour(tourName, startDate.getTime());
               setModalVisible(false);
-              setTourName("Tourenname");
+              setTourName("Tourname");
             }}
           >
             Speichern

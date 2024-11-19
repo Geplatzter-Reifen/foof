@@ -46,7 +46,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ApplicationProvider {...eva} theme={{ ...eva.light }}>
+    <ApplicationProvider {...eva} theme={{ ...eva.dark, ...foofDarkTheme }}>
       <SafeAreaView
         onLayout={() => setLayoutLoaded(true)}
         style={{

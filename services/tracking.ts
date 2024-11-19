@@ -48,6 +48,8 @@ export async function createManualStage(
     stage.id,
     calculateDistance(startingCoordinates, endCoordinates),
   );
+  // TODO: avgSpeed setzen
+  //await setStageAvgSpeed(...)
 }
 
 export async function startAutomaticTracking() {

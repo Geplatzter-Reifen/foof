@@ -9,12 +9,11 @@ import {
   stopAutomaticTracking,
 } from "@/services/tracking";
 
-import BigRoundButton from "@/components/Buttons/BigButton";
-
 import MapboxGL from "@rnmapbox/maps";
 
 import { Layout, ButtonGroup } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import BigRoundButton from "@/components/Buttons/BigRoundButton";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",

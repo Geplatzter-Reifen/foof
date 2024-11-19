@@ -170,8 +170,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
 
-    bottom: 50,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    bottom: 75,
   },
 });

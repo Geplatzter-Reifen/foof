@@ -20,6 +20,7 @@ export const schema = appSchema({
         { name: "started_at", type: "number" },
         { name: "finished_at", type: "number", isOptional: true },
         { name: "distance", type: "number" },
+        { name: "avg_speed", type: "number" },
         { name: "tour_id", type: "string", isIndexed: true },
       ],
     }),

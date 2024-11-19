@@ -122,7 +122,7 @@ export const setStageInactive = async (stageId: string) => {
 export const setStageActive = async (stageId: string) => {
   await database.write(async () => {
     const allStages = await database.get<Stage>("stages").query().fetch();
-    for(const stage of allStages) {
+    for (const stage of allStages) {
       if (stage.isActive) {
         await stage.update(() => {
           stage.isActive = false;

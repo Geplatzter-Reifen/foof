@@ -47,7 +47,7 @@ class Stage extends Model {
   // @ts-ignore
   @field("distance") distance: number;
   // @ts-ignore
-  @field("distance") avgSpeed: number;
+  @field("avg_speed") avgSpeed: number;
   // @ts-ignore
   @relation("tour", "tour_id") tour;
   // @ts-ignore

@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 
 import * as Location from "expo-location";
+import * as TaskManager from "expo-task-manager";
+
+import {
+  startAutomaticTracking,
+  stopAutomaticTracking,
+} from "@/services/tracking";
 
 import BigRoundButton from "@/components/Buttons/BigButton";
 
 import MapboxGL from "@rnmapbox/maps";
 
-import { Layout, Button, ButtonGroup } from "@ui-kitten/components";
+import { Layout, ButtonGroup } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 MapboxGL.setAccessToken(
@@ -20,16 +26,68 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
-  const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
+  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const buttonSize = 60;
 
+  useEffect(() => {
+    getCurrentLocation();
+    TaskManager.isTaskRegisteredAsync("background-location-task").then(
+      (result) => setTracking(result),
+    );
+  }, []);
+
+  //get current location
+  const getCurrentLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log(status);
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission denied",
+        "Allow the app to use location services",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ],
+      );
+      return; // Exit the function if permission is not granted
+    }
+
+    try {
+      const { coords } = await Location.getCurrentPositionAsync();
+      console.log(coords);
+
+      if (coords) {
+        setLatitude(coords.latitude);
+        setLongitude(coords.longitude);
+        console.log(coords);
+      }
+    } catch (error) {
+      console.log("Error getting location:", error);
+    }
+  };
   const StartButton = () => {
     return (
       <BigRoundButton
-        icon={<FontAwesomeIcon icon="play" size={50} />}
-        onPress={() => setButtonState(ButtonStates.Cycling)}
+        icon={
+          <FontAwesomeIcon
+            transform="right-1"
+            icon="play"
+            size={buttonSize}
+            color="white"
+          />
+        }
+        onPress={() => {
+          setButtonState(ButtonStates.Cycling);
+          startAutomaticTracking();
+        }}
       />
     );
   };
@@ -37,7 +95,7 @@ export default function HomeScreen() {
   const PauseButton = () => {
     return (
       <BigRoundButton
-        icon={<FontAwesomeIcon icon="pause" size={50} />}
+        icon={<FontAwesomeIcon icon="pause" size={buttonSize} color="white" />}
         onPress={() => setButtonState(ButtonStates.Paused)}
       />
     );
@@ -46,8 +104,11 @@ export default function HomeScreen() {
   function StopButton() {
     return (
       <BigRoundButton
-        icon={<FontAwesomeIcon icon="stop" size={50} />}
-        onPress={() => setButtonState(ButtonStates.NotCycling)}
+        icon={<FontAwesomeIcon icon="stop" size={buttonSize} color="white" />}
+        onPress={() => {
+          setButtonState(ButtonStates.NotCycling);
+          stopAutomaticTracking();
+        }}
       />
     );
   }
@@ -61,8 +122,8 @@ export default function HomeScreen() {
       case ButtonStates.Paused:
         return (
           <ButtonGroup>
-            {StartButton()}
             {StopButton()}
+            {StartButton()}
           </ButtonGroup>
         );
     }
@@ -112,9 +173,5 @@ const styles = StyleSheet.create({
     bottom: 50,
     paddingHorizontal: 20,
     paddingVertical: 10,
-  },
-  button: {
-    borderRadius: 360,
-    alignSelf: "center",
   },
 });

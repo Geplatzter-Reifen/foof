@@ -16,7 +16,7 @@ import StageList from "@/components/Tour/StageList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal";
 import RNFadedScrollView from "rn-faded-scrollview";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { foofTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";
 
 export default function Touruebersicht() {
@@ -45,7 +45,7 @@ export default function Touruebersicht() {
   };
 
   return (
-    <Layout style={styles.container} level="3">
+    <Layout style={styles.container} level="2">
       <Stack.Screen
         options={{
           title: tour?.title,
@@ -74,13 +74,13 @@ export default function Touruebersicht() {
         fadeSize={10}
         style={styles.scrollView}
         fadeColors={[
-          hexToRgba(foofDarkTheme["color-basic-900"], 0.18),
-          hexToRgba(foofDarkTheme["color-basic-900"], 0.9),
+          hexToRgba(foofTheme["color-basic-200"], 0.18),
+          hexToRgba(foofTheme["color-basic-200"], 0.9),
         ]}
-        startFadeStyle={styles.fadeStyle}
-        endFadeStyle={styles.fadeStyle}
+        // startFadeStyle={styles.fadeStyle}
+        // endFadeStyle={styles.fadeStyle}
       >
-        <Layout>
+        <Layout level="2">
           <StageList stages={getAllStagesByTourIdQuery(tourId)} />
         </Layout>
       </RNFadedScrollView>
@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 15,
   },
-  fadeStyle: {
-    color: foofDarkTheme["background-basic-color-3"],
-    backgroundColor: foofDarkTheme["background-basic-color-3"],
-  },
+  // fadeStyle: {
+  //   color: foofDarkTheme["background-basic-color-3"],
+  //   backgroundColor: foofDarkTheme["background-basic-color-3"],
+  // },
   button: {
     margin: 15,
   },

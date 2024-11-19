@@ -111,6 +111,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     return;
   }
   if (data) {
+    //@ts-ignore
     const { locations } = data;
     console.log("New background location: ", locations[0]);
     console.log("New background location: ", data);

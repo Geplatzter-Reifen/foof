@@ -10,13 +10,6 @@ export const schema = appSchema({
         { name: "is_active", type: "boolean" },
         { name: "started_at", type: "number", isOptional: true },
         { name: "finished_at", type: "number", isOptional: true },
-        { name: "average_speed", type: "number", isOptional: true },
-        {
-          name: "average_distance_per_stage",
-          type: "number",
-          isOptional: true,
-        },
-        { name: "distance", type: "number", isOptional: true },
       ],
     }),
     tableSchema({
@@ -24,10 +17,10 @@ export const schema = appSchema({
       columns: [
         { name: "title", type: "string" },
         { name: "is_active", type: "boolean" },
-        { name: "started_at", type: "number", isOptional: true },
+        { name: "started_at", type: "number" },
         { name: "finished_at", type: "number", isOptional: true },
-        { name: "distance", type: "number", isOptional: true },
-        { name: "average_speed", type: "number", isOptional: true },
+        { name: "distance", type: "number" },
+        { name: "avg_speed", type: "number" },
         { name: "tour_id", type: "string", isIndexed: true },
       ],
     }),

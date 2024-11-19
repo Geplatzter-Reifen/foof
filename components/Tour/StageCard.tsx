@@ -1,16 +1,16 @@
 import React from "react";
 import { DATE, dateFormat, getDurationFormatted, TIME } from "@/utils/dateUtil";
-import { Trip } from "@/model/model";
+import { Stage } from "@/model/model";
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { deleteTrip } from "@/model/database_functions";
+import { deleteStage } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 
-export default function TripCard({ trip }: { trip: Trip }) {
-  const startedAt: Date = new Date(trip.startedAt);
-  let finishedAt: Date | undefined = trip.finishedAt
-    ? new Date(trip.finishedAt)
+export default function StageCard({ stage }: { stage: Stage }) {
+  const startedAt: Date = new Date(stage.startedAt);
+  let finishedAt: Date | undefined = stage.finishedAt
+    ? new Date(stage.finishedAt)
     : undefined;
 
   const date: string = dateFormat(startedAt, DATE);
@@ -20,7 +20,7 @@ export default function TripCard({ trip }: { trip: Trip }) {
       ? getDurationFormatted(startedAt, finishedAt, TIME)
       : undefined;
 
-  const distance: string = trip.distance.toFixed(1);
+  const distance: string = stage.distance.toFixed(1);
 
   return (
     <Layout level="3">
@@ -30,13 +30,13 @@ export default function TripCard({ trip }: { trip: Trip }) {
           ...customStyles.basicShadow,
           ...styles.card,
         }}
-        header={<Text category="h6">{trip.title}</Text>}
+        header={<Text category="h6">{stage.title}</Text>}
       >
         <Text>{date}</Text>
         {duration && <Text>{"Dauer: " + duration}</Text>}
         <Text>Distanz: {distance} km</Text>
         <View>
-          <Button status="basic" onPress={() => deleteTrip(trip.id)}>
+          <Button status="basic" onPress={() => deleteStage(stage.id)}>
             <FontAwesomeIcon icon="trash" />
           </Button>
         </View>

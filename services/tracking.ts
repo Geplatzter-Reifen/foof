@@ -5,6 +5,7 @@ import {
   createTrip,
   getActiveJourney,
   getActiveTrip,
+  getAllLocationsByTripId,
   getJourneyByJourneyId,
   setTripActive,
   setTripDistance,
@@ -115,7 +116,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (data) {
     const { locations } = data;
     console.log("New background location: ", locations[0]);
-    console.log("New background location: ", data);
     let activeTrip = await getActiveTrip();
     if (!activeTrip) {
       throw new Error("No active trip set");
@@ -125,5 +125,25 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
       locations[0].coords.latitude,
       locations[0].coords.longitude,
     );
+
+    let currentLocation = {
+      latitude: locations[0].coords.latitude,
+      longitude: locations[0].coords.longitude,
+    };
+
+    let locationsForActiveTrip = await getAllLocationsByTripId(activeTrip.id);
+    console.log(locationsForActiveTrip[0]);
+    let latestLocation = {
+      latitude:
+        locationsForActiveTrip[locationsForActiveTrip.length - 2]._raw.latitude,
+      longitude:
+        locationsForActiveTrip[locationsForActiveTrip.length - 2]._raw
+          .longitude,
+    };
+    console.log(currentLocation, latestLocation);
+    let updatedDistance =
+      activeTrip.distance + calculateDistance(latestLocation, currentLocation);
+    console.log(updatedDistance);
+    await setTripDistance(activeTrip.id, updatedDistance);
   }
 });

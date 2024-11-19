@@ -79,7 +79,6 @@ export const createStage = async (
     return database.get<Stage>("stages").create((stage) => {
       stage.tour.set(tour);
       stage.title = title;
-      stage.distance = 0;
       stage.isActive = false;
       stage.startedAt = Date.now();
     });
@@ -95,9 +94,18 @@ export const deleteStage = async (stageId: string) => {
 
 export const setStageDistance = async (stageId: string, distance: number) => {
   void database.write(async () => {
-    const stageToFinish = await getStageByStageId(stageId);
-    await stageToFinish.update(() => {
-      stageToFinish.distance = distance;
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.distance = distance;
+    });
+  });
+};
+
+export const setStageAvgSpeed = async (stageId: string, speed: number) => {
+  void database.write(async () => {
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.avgSpeed = speed;
     });
   });
 };
@@ -130,7 +138,7 @@ export const setStageActive = async (stageId: string) => {
         });
       }
     }
-    const stage = await database.get<Stage>("stages").find(tripId);
+    const stage = await database.get<Stage>("stages").find(stageId);
     await stage.update(() => {
       stage.isActive = true;
     });

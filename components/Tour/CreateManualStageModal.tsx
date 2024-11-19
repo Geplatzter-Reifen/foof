@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
-import { createManualTrip } from "@/services/tracking";
+import { createManualStage } from "@/services/tracking";
 import { StyleSheet } from "react-native";
 
-interface CreateManualTripModalProps {
+interface CreateManualStageModalProps {
   isVisible: boolean;
   onClose: () => void;
-  journeyId: string;
+  tourId: string;
 }
 
-export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
+export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
   isVisible,
   onClose,
-  journeyId,
+  tourId,
 }) => {
-  const [tripName, setTripName] = useState("");
+  const [stageName, setStageName] = useState("");
   const [startCoords, setStartCoords] = useState("");
   const [endCoords, setEndCoords] = useState("");
   const [errorText, setErrorText] = useState("");
 
   const reset = () => {
     onClose();
-    setTripName("");
+    setStageName("");
     setStartCoords("");
     setEndCoords("");
     setErrorText("");
@@ -29,7 +29,7 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
 
   const onSave = async () => {
     try {
-      await createManualTrip(tripName, startCoords, endCoords, journeyId);
+      await createManualStage(stageName, startCoords, endCoords, tourId);
       reset();
     } catch (err) {
       if (err instanceof Error) {
@@ -42,9 +42,9 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
     <Modal visible={isVisible} backdropStyle={styles.backdrop}>
       <Card disabled={true} style={styles.dialog}>
         <Input
-          placeholder="Streckenname"
-          value={tripName}
-          onChangeText={(tripText) => setTripName(tripText)}
+          placeholder="Tourname"
+          value={stageName}
+          onChangeText={(stageText) => setStageName(stageText)}
           style={styles.input}
         />
         <Input

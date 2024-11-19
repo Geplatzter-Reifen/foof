@@ -2,10 +2,10 @@ import { Model } from "@nozbe/watermelondb";
 import { field, text, writer, relation } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
-class Journey extends Model {
-  static table = "journeys"; // bind the model to specific table
+class Tour extends Model {
+  static table = "tours"; // bind the model to specific table
   static associations: Associations = {
-    trips: { type: "has_many", foreignKey: "journey_id" },
+    stages: { type: "has_many", foreignKey: "tour_id" },
   };
   // @ts-ignore
   @text("title") title: string;
@@ -17,24 +17,24 @@ class Journey extends Model {
   @field("finished_at") finishedAt?: number;
 
   //@ts-ignore
-  @writer async addTrip(title: string, startedAt?: number) {
-    return this.collections.get<Trip>("trips").create((trip) => {
-      trip.title = title;
-      trip.startedAt = startedAt ? startedAt : Date.now();
-      trip.journey.set(this);
+  @writer async addStage(title: string, startedAt?: number) {
+    return this.collections.get<Stage>("stages").create((stage) => {
+      stage.title = title;
+      stage.startedAt = startedAt ?? Date.now();
+      stage.tour.set(this);
     });
   }
 
-  get trips() {
-    return this.collections.get<Trip>("trips").query();
+  get stages() {
+    return this.collections.get<Stage>("stages").query();
   }
 }
 
-class Trip extends Model {
-  static table = "trips";
+class Stage extends Model {
+  static table = "stages";
   static associations: Associations = {
-    journeys: { type: "belongs_to", key: "journey_id" },
-    locations: { type: "has_many", foreignKey: "trip_id" },
+    tours: { type: "belongs_to", key: "tour_id" },
+    locations: { type: "has_many", foreignKey: "stage_id" },
   };
   // @ts-ignore
   @text("title") title: string;
@@ -47,7 +47,7 @@ class Trip extends Model {
   // @ts-ignore
   @field("distance") distance: number;
   // @ts-ignore
-  @relation("journey", "journey_id") journey;
+  @relation("tour", "tour_id") tour;
   // @ts-ignore
   @writer async addLocation(
     latitude: number,
@@ -58,7 +58,7 @@ class Trip extends Model {
       location.latitude = latitude;
       location.longitude = longitude;
       location.recordedAt = recordedAt ?? Date.now();
-      location.trip.set(this);
+      location.stage.set(this);
     });
   }
 }
@@ -66,7 +66,7 @@ class Trip extends Model {
 class Location extends Model {
   static table = "locations";
   static associations: Associations = {
-    trips: { type: "belongs_to", key: "trip_id" },
+    stages: { type: "belongs_to", key: "stage_id" },
   };
   // @ts-ignore
   @field("latitude") latitude: number;
@@ -75,7 +75,7 @@ class Location extends Model {
   // @ts-ignore
   @field("recorded_at") recordedAt?: number;
   // @ts-ignore
-  @relation("trip", "trip_id") trip;
+  @relation("stage", "stage_id") stage;
 }
 
-export { Journey, Trip, Location };
+export { Tour, Stage, Location };

@@ -1,15 +1,22 @@
 import React from "react";
-import { Button } from "@ui-kitten/components";
+import { Button, ButtonProps } from "@ui-kitten/components";
 import { ImageProps, StyleSheet } from "react-native";
 import { RenderProp } from "@ui-kitten/components/devsupport";
 
-type BigButtonProps = {
-  icon?: RenderProp<ImageProps>;
-  onPress?: () => void;
-};
-export default function BigRoundButton(props: BigButtonProps) {
+/**
+ * Button that takes in an icon and displays it in a big round button.
+ *
+ * @extends ui-kitten/components/Button
+ * @property {RenderProp<Partial<ImageProps>>} icon - Icon to display in the button.
+ */
+type BigButtonType = Omit<
+  React.PropsWithChildren<ButtonProps>,
+  "accessoryLeft"
+> & { icon: RenderProp<Partial<ImageProps>> | undefined };
+export default function BigRoundButton(props: BigButtonType) {
   return (
     <Button
+      {...props}
       style={styles.button}
       accessoryLeft={props.icon}
       onPress={props.onPress}
@@ -19,9 +26,11 @@ export default function BigRoundButton(props: BigButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    margin: 10,
-    width: 100, // Adjust the width as needed
-    height: 100, // Adjust the height as needed
+    marginHorizontal: 25,
+    marginVertical: 10,
+    width: 100,
+    height: 100,
     borderRadius: 50,
+    elevation: 3,
   },
 });

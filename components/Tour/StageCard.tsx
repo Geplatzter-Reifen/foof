@@ -22,7 +22,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
   const distance: string = stage.distance.toFixed(1);
 
   return (
-    <Layout level="3">
+    <Layout level="2">
       <Card style={styles.card}>
         <Text category="h4" status="primary">
           {stage.title}

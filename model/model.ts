@@ -15,18 +15,12 @@ class Tour extends Model {
   @field("started_at") startedAt?: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
-  // @ts-ignore
-  @field("average_speed") averageSpeed?: number;
-  // @ts-ignore
-  @field("average_distance_per_stage") averageDistancePerStage?: number;
-  // @ts-ignore
-  @field("distance") distance?: number;
 
   //@ts-ignore
-  @writer async addStage(title: string) {
+  @writer async addStage(title: string, startedAt?: number) {
     return this.collections.get<Stage>("stages").create((stage) => {
       stage.title = title;
-      stage.startedAt = Date.now();
+      stage.startedAt = startedAt ?? Date.now();
       stage.tour.set(this);
     });
   }
@@ -47,21 +41,25 @@ class Stage extends Model {
   // @ts-ignore
   @field("is_active") isActive: boolean;
   // @ts-ignore
-  @field("started_at") startedAt?: number;
+  @field("started_at") startedAt: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
   // @ts-ignore
-  @field("distance") distance?: number;
+  @field("distance") distance: number;
   // @ts-ignore
-  @field("average_speed") averageSpeed?: number;
+  @field("avg_speed") avgSpeed: number;
   // @ts-ignore
   @relation("tour", "tour_id") tour;
   // @ts-ignore
-  @writer async addLocation(latitude: number, longitude: number) {
+  @writer async addLocation(
+    latitude: number,
+    longitude: number,
+    recordedAt?: number,
+  ) {
     return this.collections.get<Location>("locations").create((location) => {
       location.latitude = latitude;
       location.longitude = longitude;
-      location.recordedAt = Date.now();
+      location.recordedAt = recordedAt ?? Date.now();
       location.stage.set(this);
     });
   }

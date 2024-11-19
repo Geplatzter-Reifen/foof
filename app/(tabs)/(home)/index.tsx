@@ -14,23 +14,6 @@ MapboxGL.setAccessToken(
 );
 
 export default function Index() {
-  // const latitude = 50.0826;
-  // const longitude = 8.24;
-  //
-  // return (
-  //     <View style={styles.container}>
-  //       <Layout style={styles.layout}>
-  //         <MapboxGL.MapView style={styles.map}>
-  //           <MapboxGL.Camera
-  //               zoomLevel={12}
-  //               centerCoordinate={[longitude, latitude]}
-  //               animationMode="flyTo"
-  //               animationDuration={2000}
-  //           />
-  //         </MapboxGL.MapView>
-  //       </Layout>
-  //     </View>
-  // );
   const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden

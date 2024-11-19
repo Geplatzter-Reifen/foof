@@ -94,9 +94,18 @@ export const deleteStage = async (stageId: string) => {
 
 export const setStageDistance = async (stageId: string, distance: number) => {
   void database.write(async () => {
-    const stageToFinish = await getStageByStageId(stageId);
-    await stageToFinish.update(() => {
-      stageToFinish.distance = distance;
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.distance = distance;
+    });
+  });
+};
+
+export const setStageAvgSpeed = async (stageId: string, speed: number) => {
+  void database.write(async () => {
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.avgSpeed = speed;
     });
   });
 };
@@ -121,6 +130,14 @@ export const setStageInactive = async (stageId: string) => {
 
 export const setStageActive = async (stageId: string) => {
   await database.write(async () => {
+    const allStages = await database.get<Stage>("stages").query().fetch();
+    for (const stage of allStages) {
+      if (stage.isActive) {
+        await stage.update(() => {
+          stage.isActive = false;
+        });
+      }
+    }
     const stage = await database.get<Stage>("stages").find(stageId);
     await stage.update(() => {
       stage.isActive = true;

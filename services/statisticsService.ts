@@ -1,5 +1,5 @@
 import { Stage } from "@/model/model";
-import { getDurationFormatted, getDurationInMs, TIME } from "@/utils/dateUtil";
+import { getDurationFormatted, getDurationInMs } from "@/utils/dateUtil";
 
 // Distance //
 export function getStageDistanceString(
@@ -20,7 +20,7 @@ export function getStageDurationString(stage: Stage): string {
   const start = new Date(stage.startedAt);
   const end = new Date(stage.finishedAt ?? Date.now());
 
-  return getDurationFormatted(start, end, TIME);
+  return getDurationFormatted(start, end);
 }
 
 // Average Speed //

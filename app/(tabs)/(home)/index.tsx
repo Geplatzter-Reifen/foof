@@ -29,7 +29,7 @@ export default function HomeScreen() {
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
-  const buttonSize = 60;
+  const buttonIconSize = 60;
 
   useEffect(() => {
     getCurrentLocation();
@@ -79,7 +79,7 @@ export default function HomeScreen() {
           <FontAwesomeIcon
             transform="right-1"
             icon="play"
-            size={buttonSize}
+            size={buttonIconSize}
             color="white"
           />
         }
@@ -94,7 +94,9 @@ export default function HomeScreen() {
   const PauseButton = () => {
     return (
       <BigRoundButton
-        icon={<FontAwesomeIcon icon="pause" size={buttonSize} color="white" />}
+        icon={
+          <FontAwesomeIcon icon="pause" size={buttonIconSize} color="white" />
+        }
         onPress={() => setButtonState(ButtonStates.Paused)}
       />
     );
@@ -103,7 +105,9 @@ export default function HomeScreen() {
   function StopButton() {
     return (
       <BigRoundButton
-        icon={<FontAwesomeIcon icon="stop" size={buttonSize} color="white" />}
+        icon={
+          <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
+        }
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
           stopAutomaticTracking();

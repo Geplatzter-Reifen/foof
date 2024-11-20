@@ -1,6 +1,7 @@
 import { database } from "@/model/createDatabase";
 import { Q } from "@nozbe/watermelondb";
 import { Stage, Tour } from "@/model/model";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
 
 export const getAllStagesByTourIdQuery = (tourId: string) => {
   return database.get<Stage>("stages").query(Q.where("tour_id", tourId));
@@ -58,13 +59,6 @@ export const createStage = async (
   return tour.addStage(title, startedAt, finishedAt, active);
 };
 
-export const deleteStage = async (stageId: string) => {
-  void database.write(async () => {
-    const stageToDelete = await getStageByStageId(stageId);
-    await stageToDelete.destroyPermanently();
-  });
-};
-
 export const startStage = async (tourId: string) => {
   const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
   console.log(title);
@@ -111,5 +105,17 @@ const setActiveStageInactive = async () => {
         stage.isActive = false;
       });
     }
+  });
+};
+
+export const deleteStage = async (stageId: string) => {
+  void database.write(async () => {
+    const stage = await getStageByStageId(stageId);
+    const locations = await getAllLocationsByStageId(stage.id);
+    for (const location of locations) {
+      await location.destroyPermanently();
+    }
+    await stage.destroyPermanently();
+    await stage.destroyPermanently();
   });
 };

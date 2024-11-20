@@ -1,6 +1,8 @@
 import { Q } from "@nozbe/watermelondb";
 import { database } from "@/model/createDatabase";
 import { Tour } from "@/model/model";
+import { getAllStagesByTourId } from "@/services/data/stageService";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
 
 export const getAllToursQuery = database.get<Tour>("tours").query();
 export const getAllTours = () => getAllToursQuery.fetch();
@@ -65,9 +67,34 @@ export const setTourInactive = async (tourId: string) => {
   });
 };
 
+export const deleteTour = (tourId: string) => {
+  void database.write(async () => {
+    const tour = await getTourByTourId(tourId);
+    const stages = await getAllStagesByTourId(tour.id);
+    for (const stage of stages) {
+      const locations = await getAllLocationsByStageId(stage.id);
+      for (const location of locations) {
+        await location.destroyPermanently();
+      }
+      await stage.destroyPermanently();
+    }
+    await tour.destroyPermanently();
+  });
+};
+
 export const deleteAllTours = () => {
   void database.write(async () => {
     const tours = await getAllTours();
-    tours.forEach((tour) => tour.destroyPermanently());
+    for (const tour of tours) {
+      const stages = await getAllStagesByTourId(tour.id);
+      for (const stage of stages) {
+        const locations = await getAllLocationsByStageId(stage.id);
+        for (const location of locations) {
+          await location.destroyPermanently();
+        }
+        await stage.destroyPermanently();
+      }
+      await tour.destroyPermanently();
+    }
   });
 };

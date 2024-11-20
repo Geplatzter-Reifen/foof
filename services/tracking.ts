@@ -130,8 +130,10 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     throw new Error("No active stage set");
   }
 
-  // Fetch all locations for the active trip
-  const locationsForActiveTrip = await getAllLocationsByStageId(activeStage.id);
+  // Fetch all locations for the active stage
+  const locationsForActiveStage = await getAllLocationsByStageId(
+    activeStage.id,
+  );
 
   const currentLocation = {
     latitude: locations[0].coords.latitude,
@@ -145,12 +147,13 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     currentLocation.longitude,
   );
 
-  if (locationsForActiveTrip.length >= 1) {
+  if (locationsForActiveStage.length >= 1) {
     const latestLocation = {
       latitude:
-        locationsForActiveTrip[locationsForActiveTrip.length - 1]._raw.latitude,
+        locationsForActiveStage[locationsForActiveStage.length - 1]._raw
+          .latitude,
       longitude:
-        locationsForActiveTrip[locationsForActiveTrip.length - 1]._raw
+        locationsForActiveStage[locationsForActiveStage.length - 1]._raw
           .longitude,
     };
 

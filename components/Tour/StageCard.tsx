@@ -1,9 +1,16 @@
 import React from "react";
-import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
+import {
+  DATE,
+  DATE_TIME,
+  dateFormat,
+  getDurationFormatted,
+} from "@/utils/dateUtil";
+
 import { Stage } from "@/model/model";
+import { deleteStage } from "@/services/data/stageService";
+
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { deleteStage } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
@@ -82,6 +89,10 @@ export default function StageCard({ stage }: { stage: Stage }) {
         </View>
         <Text appearance="hint" style={styles.date}>
           {date}
+        </Text>
+        <Text>Start: {dateFormat(startedAt, DATE_TIME)}</Text>
+        <Text>
+          Ende: {finishedAt ? dateFormat(finishedAt, DATE_TIME) : "running"}
         </Text>
       </Card>
     </Layout>

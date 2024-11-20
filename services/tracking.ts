@@ -1,15 +1,14 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import { getTourByTourId, getActiveTour } from "@/services/data/tourService";
 import {
-  createLocation,
-  createStage,
-  getActiveTour,
   getActiveStage,
-  getTourByTourId,
-  setStageDistance,
+  createStage,
   startStage,
+  setStageDistance,
   finishStage,
-} from "@/model/database_functions";
+} from "@/services/data/stageService";
+import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 
 const LOCATION_TASK_NAME = "background-location-task";

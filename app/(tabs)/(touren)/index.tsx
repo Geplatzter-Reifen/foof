@@ -3,7 +3,7 @@ import {
   getAllToursQuery,
   createTour,
   deleteAllTours,
-} from "@/model/database_functions";
+} from "@/services/data/tourService";
 import TourList from "@/components/Tour/TourList";
 import { ScrollView, StyleSheet } from "react-native";
 import {

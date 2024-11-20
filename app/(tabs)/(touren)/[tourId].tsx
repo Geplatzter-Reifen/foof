@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
-  getAllStagesByTourIdQuery,
   getTourByTourId,
   setTourActive,
   setTourInactive,
-} from "@/model/database_functions";
+} from "@/services/data/tourService";
+import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { useEffect, useState } from "react";
 import { Tour } from "@/model/model";
 import { Stack } from "expo-router";

@@ -107,42 +107,60 @@ function parseCoordinates(
 }
 
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
+  // Handle errors first
   if (error) {
-    console.log(error.message);
-    return;
+    console.error("Error in location task:", error.message);
+    throw error;
   }
-  if (data) {
-    //@ts-ignore
-    const { locations } = data;
-    console.log("New background location: ", locations[0]);
-    let activeStage = await getActiveStage();
-    if (!activeStage) {
-      throw new Error("No active stage set");
-    }
-    await createLocation(
-      activeStage.id,
-      locations[0].coords.latitude,
-      locations[0].coords.longitude,
-    );
 
-    let currentLocation = {
-      latitude: locations[0].coords.latitude,
-      longitude: locations[0].coords.longitude,
-    };
+  // Proceed if there is data
+  if (!data) {
+    console.warn("No data received in location task.");
+    throw new Error("No data received in location task.");
+  }
 
-    let locationsForActiveTrip = await getAllLocationsByStageId(activeStage.id);
-    console.log(locationsForActiveTrip[0]);
-    let latestLocation = {
+  // Extract locations from the data (ignoring TypeScript warning)
+  //@ts-ignore
+  const { locations } = data;
+  console.log("New background location received:", locations[0]);
+
+  // Fetch the active stage
+  const activeStage = await getActiveStage();
+  if (!activeStage) {
+    throw new Error("No active stage set");
+  }
+
+  // Fetch all locations for the active trip
+  const locationsForActiveTrip = await getAllLocationsByStageId(activeStage.id);
+
+  const currentLocation = {
+    latitude: locations[0].coords.latitude,
+    longitude: locations[0].coords.longitude,
+  };
+
+  // Add the new location to the database
+  await createLocation(
+    activeStage.id,
+    currentLocation.latitude,
+    currentLocation.longitude,
+  );
+
+  if (locationsForActiveTrip.length >= 1) {
+    const latestLocation = {
       latitude:
-        locationsForActiveTrip[locationsForActiveTrip.length - 2]._raw.latitude,
+        locationsForActiveTrip[locationsForActiveTrip.length - 1]._raw.latitude,
       longitude:
-        locationsForActiveTrip[locationsForActiveTrip.length - 2]._raw
+        locationsForActiveTrip[locationsForActiveTrip.length - 1]._raw
           .longitude,
     };
-    console.log(currentLocation, latestLocation);
-    let updatedDistance =
+
+    // Calculate the updated distance for the active stage
+    const updatedDistance =
       activeStage.distance + calculateDistance(latestLocation, currentLocation);
-    console.log(updatedDistance);
+
+    console.log("Updated distance for active stage:", updatedDistance);
+
+    // Update the stage distance in the database
     await setStageDistance(activeStage.id, updatedDistance);
   }
 });

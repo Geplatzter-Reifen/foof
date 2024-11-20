@@ -10,7 +10,7 @@ interface cardProps{
 }
 
 const cardHeder = ({ title }: { title: string }): React.ReactElement => {
-    return <Text style={{textAlign:"center"}} category="h4">{title}</Text>
+    return <Text style={{textAlign:"center", padding:5}} category="h4">{title}</Text>
 }
     
 function CardComponent(props:cardProps) {

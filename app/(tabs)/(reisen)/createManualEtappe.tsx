@@ -3,15 +3,24 @@ import { Text, Layout, Card, Button } from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Etappe/ButtonGroup"
 import { StyleSheet } from 'react-native';
 import CardComponent from "../../../components/Etappe/CardComponent"
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const createManualEtappe: React.FC = () => {
     return <Layout style={ styles.layout} level="3">
             <ButtonGroup>
-                <Button style={styles.button} onPress={()=>{}}>Koordineten </Button>
-                <Button style={styles.button} onPress={()=>{}}>Address </Button>
-                <Button style={styles.button} onPress={()=>{}}>Karte </Button>
+                <Button style={styles.button} onPress={()=>{}}>
+
+                        <FontAwesomeIcon icon="compass" size={25} />
+
+                </Button>
+                <Button style={styles.button} onPress={()=>{}}>
+
+                        <FontAwesomeIcon icon="map-pin" size={25} />
+
+                </Button>
+                <Button style={styles.button} onPress={()=>{}}>
+                    <FontAwesomeIcon icon="city" size={25} />
+                </Button>
             </ButtonGroup>
 
             <Layout style={ styles.cardsContainer} level="3">
@@ -21,8 +30,12 @@ const createManualEtappe: React.FC = () => {
 
             </Layout>
             <ButtonGroup>
-                <Button style={styles.button}>Abbrechen</Button>
-                <Button style={styles.button}>Erstellen</Button>
+                <Button style={styles.button} >
+                    <Text category="h1">abbrechen</Text>
+                </Button>
+                <Button style={styles.button} >
+                    <Text category="h1">erstellen</Text>
+                </Button>
             </ButtonGroup>
     </Layout>;
 };

@@ -17,10 +17,11 @@ export function getDurationInMs(start: Date, end: Date) {
   return differenceInMilliseconds(end, start);
 }
 
-export function getDurationFormatted(
-  start: Date,
-  end: Date,
-  formatString: string,
-): string {
-  return dateFormat(getDurationInMs(start, end), formatString);
+export function getDurationFormatted(start: Date, end: Date): string {
+  const totalMinutes = Math.ceil(getDurationInMs(start, end) / 60000);
+
+  const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
+  const minutes = String(totalMinutes % 60).padStart(2, "0");
+
+  return `${hours}:${minutes} h`;
 }

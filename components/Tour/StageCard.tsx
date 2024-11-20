@@ -1,5 +1,5 @@
 import React from "react";
-import { DATE, dateFormat, getDurationFormatted, TIME } from "@/utils/dateUtil";
+import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
 import { Stage } from "@/model/model";
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -17,8 +17,8 @@ export default function StageCard({ stage }: { stage: Stage }) {
   const date: string = dateFormat(startedAt, DATE);
 
   let duration: string | undefined = finishedAt
-    ? getDurationFormatted(startedAt, finishedAt, TIME)
-    : getDurationFormatted(startedAt, new Date(Date.now()), TIME);
+    ? getDurationFormatted(startedAt, finishedAt)
+    : getDurationFormatted(startedAt, new Date(Date.now()));
 
   const distance: string = stage.distance.toFixed(1);
 

@@ -10,20 +10,24 @@ import {
 } from "@/model/database_functions";
 import { useEffect, useState } from "react";
 import { Journey } from "@/model/model";
-import { Stack } from "expo-router";
+import { Stack, Link} from "expo-router";
 import { Layout, Button, Text } from "@ui-kitten/components";
 import TripList from "@/components/Journey/TripList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
+// import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { foofDarkTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";
+import { useRouter } from "expo-router";
+
 
 export default function Reiseuebersicht() {
-  const { journeyId } = useLocalSearchParams<{ journeyId: string }>();
+    const router = useRouter();
+  const { journeyId, journeysAmount } = useLocalSearchParams<{ journeyId: string; journeysAmount: string }>();
   const [journey, setJourney] = useState<Journey>();
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [modalVisible, setModalVisible] = useState(false);
   const [, setRefreshTrigger] = useState(0);
+
 
   const reloadScreen = () => setRefreshTrigger((prev) => prev + 1);
 
@@ -88,18 +92,21 @@ export default function Reiseuebersicht() {
       </RNFadedScrollView>
       <Button
         status="basic"
-        onPress={() => setModalVisible(true)}
         accessoryLeft={<FontAwesomeIcon icon="add" />}
         style={styles.button}
+        onPress={() => router.push("./createManualEtappe?reiseId=`${journeyID}`")}
       >
-        Strecke Manuell Eintragen
+
+              Ettape Manuell Eintragen
+
+
       </Button>
 
-      <CreateManualTripModal
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        journeyId={journeyId}
-      />
+      {/*<CreateManualTripModal*/}
+      {/*  isVisible={modalVisible}*/}
+      {/*  onClose={() => setModalVisible(false)}*/}
+      {/*  journeyId={journeyId}*/}
+      {/*/>*/}
     </Layout>
   );
 }

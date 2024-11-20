@@ -17,7 +17,7 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
           key={journey.id}
           href={{
             pathname: "/(tabs)/(reisen)/[journeyId]",
-            params: { journeyId: journey.id },
+            params: { journeyId: journey.id,  journeysAmount:journeys.length },
           }}
         >
           <Card header={<Text category="h3">{journey.title}</Text>}>

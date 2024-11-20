@@ -15,27 +15,27 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
   journeyId,
 }) => {
   const [tripName, setTripName] = useState("");
-  const [startCoords, setStartCoords] = useState("");
-  const [endCoords, setEndCoords] = useState("");
+  // const [startCoords, setStartCoords] = useState("");
+  // const [endCoords, setEndCoords] = useState("");
   const [errorText, setErrorText] = useState("");
 
   const reset = () => {
     onClose();
     setTripName("");
-    setStartCoords("");
-    setEndCoords("");
+    // setStartCoords("");
+    // setEndCoords("");
     setErrorText("");
   };
 
   const onSave = async () => {
-    try {
-      await createManualTrip(tripName, startCoords, endCoords, journeyId);
-      reset();
-    } catch (err) {
-      if (err instanceof Error) {
-        setErrorText(err.message);
-      }
-    }
+    // try {
+    //   await createManualTrip(tripName, startCoords, endCoords, journeyId);
+    //   reset();
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     setErrorText(err.message);
+    //   }
+    // }
   };
 
   return (
@@ -47,18 +47,18 @@ export const CreateManualTripModal: React.FC<CreateManualTripModalProps> = ({
           onChangeText={(tripText) => setTripName(tripText)}
           style={styles.input}
         />
-        <Input
-          placeholder="Startkoordinaten"
-          value={startCoords}
-          onChangeText={(coordsText) => setStartCoords(coordsText)}
-          style={styles.input}
-        />
-        <Input
-          placeholder="Endkoordinaten"
-          value={endCoords}
-          onChangeText={(coordsText) => setEndCoords(coordsText)}
-          style={styles.input}
-        />
+        {/*<Input*/}
+        {/*  placeholder="Startkoordinaten"*/}
+        {/*  value={startCoords}*/}
+        {/*  onChangeText={(coordsText) => setStartCoords(coordsText)}*/}
+        {/*  style={styles.input}*/}
+        {/*/>*/}
+        {/*<Input*/}
+        {/*  placeholder="Endkoordinaten"*/}
+        {/*  value={endCoords}*/}
+        {/*  onChangeText={(coordsText) => setEndCoords(coordsText)}*/}
+        {/*  style={styles.input}*/}
+        {/*/>*/}
         {errorText && <Text>{errorText}</Text>}
         <Button status="basic" onPress={reset} style={styles.input}>
           Abbrechen

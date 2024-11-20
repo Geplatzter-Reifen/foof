@@ -1,14 +1,14 @@
 import { Stack } from "expo-router";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { foofLightTheme } from "@/constants/custom-theme";
 
 export default function ReiseStackLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTintColor: foofDarkTheme["color-basic-100"],
+        headerTintColor: foofLightTheme["color-basic-100"],
         headerShown: true,
         headerStyle: {
-          backgroundColor: foofDarkTheme["color-basic-500"],
+          backgroundColor: foofLightTheme["color-basic-500"],
         },
       }}
     >

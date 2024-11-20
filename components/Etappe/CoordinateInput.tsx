@@ -60,19 +60,20 @@ function CoordinateInput(props:CoordinateInputProps) {
             {/* Datepicker Row */}
             <Layout style={styles.row}>
                 {/* Button to open date picker */}
-                <Button    appearance="outline" style={styles.input} onPress={() => setShowDatePicker(true)}>
-                    <Text style={styles.row}>
+                <Button    appearance="outline" style={styles.input} onPress={() => setShowDatePicker(true)}
+                accessoryRight={<FontAwesomeIcon style={styles.icon}  size={20} icon="clock"/>}
+                >
                     {date.toLocaleDateString()}
-                    <FontAwesomeIcon style={styles.icon}  size={20} icon="clock"/>
-                    </Text>
                 </Button>
 
                 {/* Button to open time picker */}
-                <Button  appearance="outline"  style={styles.input} onPress={() => setShowTimePicker(true)}>
-                    <Text style={styles.row}>
+                <Button  appearance="outline"  style={styles.input} onPress={() => setShowTimePicker(true)}
+                accessoryRight={<FontAwesomeIcon style={styles.icon} size={20} icon="calendar"/>}
+                >
+                
                         {date.toLocaleTimeString()}
-                        <FontAwesomeIcon style={styles.icon} size={20} icon="calendar"/>
-                    </Text>
+
+
 
                 </Button>
 

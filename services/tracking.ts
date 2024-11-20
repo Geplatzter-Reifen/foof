@@ -6,9 +6,9 @@ import {
   getActiveTour,
   getActiveStage,
   getTourByTourId,
-  setStageActive,
   setStageDistance,
-  setStageInactive,
+  startStage,
+  finishStage,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
 
@@ -37,7 +37,7 @@ export async function createManualStage(
     throw new Error("Ungültiges Koordinatenformat");
   }
 
-  let stage = await createStage(tour.id, stageName);
+  let stage = await createStage(tour.id, stageName, Date.now(), Date.now());
 
   await stage.addLocation(
     startingCoordinates?.latitude,
@@ -66,8 +66,15 @@ export async function startAutomaticTracking() {
         if (!activeTour) {
           throw new Error("No active tour set");
         }
-        let stage = await createStage(activeTour.id, "Etappe");
-        await setStageActive(stage.id);
+
+        await startStage(activeTour.id);
+        //let stage = await createStage(
+        //  activeTour.id,
+        //  "Etappe",
+        //  Date.now(),
+        //  true,
+        //);
+        //await setStageActive(stage.id);
 
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,
@@ -82,7 +89,7 @@ export async function stopAutomaticTracking() {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
-    await setStageInactive(stage!.id);
+    await finishStage(stage!.id);
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");

@@ -24,12 +24,12 @@ export default function Index() {
     );
   }, []);
 
-  const changeButton = () => {
+  const changeButton = async () => {
     if (!tracking) {
-      startAutomaticTracking();
+      await startAutomaticTracking();
       setTracking(true);
     } else {
-      stopAutomaticTracking();
+      await stopAutomaticTracking();
       setTracking(false);
     }
   };

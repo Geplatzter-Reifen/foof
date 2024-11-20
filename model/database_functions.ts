@@ -53,42 +53,56 @@ export const createStage = async (
   tourId: string,
   title: string,
   startedAt?: number,
+  finishedAt?: number,
+  active: boolean = false,
 ): Promise<Stage> => {
-  return database.write(async () => {
-    const tour = await database.get<Tour>("tours").find(tourId);
+  // if stage to be active, deactivate all active stages
+  if (active) {
+    await setActiveStageInactive();
+  }
 
-    // Determine the start date for the tour
-    let updatedStartedAt: number;
-    // If the tour has no start date, set it to the provided start date or the current datetime
-    if (!tour.startedAt) {
-      updatedStartedAt = startedAt ?? Date.now();
-    }
-    // If a start date is provided, and it is earlier than the current start date, update it
-    else if (startedAt && startedAt < tour.startedAt) {
-      updatedStartedAt = startedAt;
-    }
-    // Otherwise, keep the existing start date
-    else {
-      updatedStartedAt = tour.startedAt;
-    }
-    // Update the tour's start date
-    await tour.update(() => {
-      tour.startedAt = updatedStartedAt;
-    });
+  const tour = await database.get<Tour>("tours").find(tourId);
 
-    return database.get<Stage>("stages").create((stage) => {
-      stage.tour.set(tour);
-      stage.title = title;
-      stage.isActive = false;
-      stage.startedAt = Date.now();
+  // Update Tour Start if necessary
+  if (!tour.startedAt) {
+    await database.write(async () => {
+      await tour.update(() => {
+        tour.startedAt = startedAt ?? Date.now();
+      });
     });
-  });
+  } else if (startedAt && startedAt < tour.startedAt) {
+    await database.write(async () => {
+      await tour.update(() => {
+        tour.startedAt = startedAt;
+      });
+    });
+  }
+
+  // Create Stage
+  return tour.addStage(title, startedAt, finishedAt, active);
 };
 
 export const deleteStage = async (stageId: string) => {
   void database.write(async () => {
     const stageToDelete = await getStageByStageId(stageId);
     await stageToDelete.destroyPermanently();
+  });
+};
+
+export const startStage = async (tourId: string) => {
+  const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
+  console.log(title);
+
+  return createStage(tourId, title, Date.now(), undefined, true);
+};
+
+export const finishStage = async (stageId: string, finishTime?: number) => {
+  void database.write(async () => {
+    const stageToFinish = await getStageByStageId(stageId);
+    await stageToFinish.update(() => {
+      stageToFinish.finishedAt = finishTime ?? Date.now();
+      stageToFinish.isActive = false;
+    });
   });
 };
 
@@ -110,16 +124,21 @@ export const setStageAvgSpeed = async (stageId: string, speed: number) => {
   });
 };
 
-export const finishStage = async (stageId: string, finishTime: number) => {
-  void database.write(async () => {
-    const stageToFinish = await getStageByStageId(stageId);
-    await stageToFinish.update(() => {
-      stageToFinish.finishedAt = finishTime;
-    });
+const setActiveStageInactive = async () => {
+  await database.write(async () => {
+    const allStages = await database
+      .get<Stage>("stages")
+      .query(Q.where("is_active", true))
+      .fetch();
+    for (const stage of allStages) {
+      await stage.update(() => {
+        stage.isActive = false;
+      });
+    }
   });
 };
 
-export const setStageInactive = async (stageId: string) => {
+const setStageInactive = async (stageId: string) => {
   await database.write(async () => {
     const stage = await database.get<Stage>("stages").find(stageId);
     await stage.update(() => {
@@ -128,7 +147,7 @@ export const setStageInactive = async (stageId: string) => {
   });
 };
 
-export const setStageActive = async (stageId: string) => {
+const setStageActive = async (stageId: string) => {
   await database.write(async () => {
     const allStages = await database.get<Stage>("stages").query().fetch();
     for (const stage of allStages) {

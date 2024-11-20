@@ -61,14 +61,14 @@ function CoordinateInput(props:CoordinateInputProps) {
             <Layout style={styles.row}>
                 {/* Button to open date picker */}
                 <Button    appearance="outline" style={styles.input} onPress={() => setShowDatePicker(true)}
-                accessoryRight={<FontAwesomeIcon style={styles.icon}  size={20}  color={theme["color-primary-500"]} icon="clock"/>}
+                accessoryRight={<FontAwesomeIcon style={styles.icon}  size={20}  color={theme["color-primary-500"]} icon="calendar"/>}
                 >
                     {date.toLocaleDateString()}
                 </Button>
 
                 {/* Button to open time picker */}
                 <Button  appearance="outline"  style={styles.input} onPress={() => setShowTimePicker(true)}
-                accessoryRight={<FontAwesomeIcon style={styles.icon} size={20}  color={theme["color-primary-500"]} icon="calendar"/>}
+                accessoryRight={<FontAwesomeIcon style={styles.icon} size={20}  color={theme["color-primary-500"]} icon="clock"/>}
                 >
 
                         {date.toLocaleTimeString()}

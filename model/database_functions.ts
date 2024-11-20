@@ -110,20 +110,12 @@ export const setStageAvgSpeed = async (stageId: string, speed: number) => {
   });
 };
 
-export const finishStage = async (stageId: string, finishTime: number) => {
+export const finishStage = async (stageId: string, finishTime?: number) => {
   void database.write(async () => {
     const stageToFinish = await getStageByStageId(stageId);
     await stageToFinish.update(() => {
-      stageToFinish.finishedAt = finishTime;
-    });
-  });
-};
-
-export const setStageInactive = async (stageId: string) => {
-  await database.write(async () => {
-    const stage = await database.get<Stage>("stages").find(stageId);
-    await stage.update(() => {
-      stage.isActive = false;
+      stageToFinish.finishedAt = finishTime ?? Date.now();
+      stageToFinish.isActive = false;
     });
   });
 };

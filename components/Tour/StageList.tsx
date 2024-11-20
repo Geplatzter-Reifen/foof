@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 
 const StageList = ({ stages }: { stages: Stage[] }) => {
   return (
-    <Layout level="3">
+    <Layout level="2">
       <Text status="primary" category="h5" style={styles.heading}>
         Etappen
       </Text>

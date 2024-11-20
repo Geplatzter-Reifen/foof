@@ -42,7 +42,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
   };
 
   return (
-    <Layout level="3">
+    <Layout level="2">
       <Card
         style={{
           ...customStyles.basicCard,

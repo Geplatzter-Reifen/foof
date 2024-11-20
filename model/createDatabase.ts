@@ -1,7 +1,7 @@
 import { Database } from "@nozbe/watermelondb";
 import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 
-import { Journey, Trip, Location } from "./model";
+import { Tour, Stage, Location } from "./model";
 import { schema } from "./schema";
 import { Platform } from "react-native";
 
@@ -14,6 +14,6 @@ const adapter = new SQLiteAdapter({
 
 export const database = new Database({
   adapter,
-  modelClasses: [Journey, Trip, Location],
+  modelClasses: [Tour, Stage, Location],
 });
 // database.write(() => database.unsafeResetDatabase()); // Für Troubleshooting mit der Datenbank

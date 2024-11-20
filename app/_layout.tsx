@@ -1,6 +1,6 @@
 import { Stack, SplashScreen } from "expo-router";
 import * as eva from "@eva-design/eva";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
 import { ApplicationProvider } from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
@@ -12,6 +12,8 @@ import { initializeDatabase } from "@/model/database_functions";
 
 library.add(far, fas, fab);
 
+const USE_DARK_THEME = false;
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -19,11 +21,15 @@ export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
   const [LayoutLoaded, setLayoutLoaded] = useState(false);
 
+  const theme = USE_DARK_THEME
+    ? { ...eva.dark, ...foofDarkTheme }
+    : { ...eva.light, ...foofLightTheme };
+
   useEffect(() => {
     async function prepare() {
       try {
         // Pre-load fonts, make any API calls you need to do here
-        initializeDatabase();
+        await initializeDatabase();
       } catch (e) {
         console.warn(e);
       } finally {
@@ -46,7 +52,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ApplicationProvider {...eva} theme={{ ...eva.dark, ...foofDarkTheme }}>
+    <ApplicationProvider {...eva} theme={theme}>
       <SafeAreaView
         onLayout={() => setLayoutLoaded(true)}
         style={{

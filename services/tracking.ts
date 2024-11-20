@@ -2,35 +2,33 @@ import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import {
   createLocation,
-  createTrip,
-  getActiveJourney,
-  getActiveTrip,
-  getAllLocationsByTripId,
-  getJourneyByJourneyId,
-  setTripActive,
-  setTripDistance,
-  setTripInactive,
+  createStage,
+  getActiveStage,
+  setStageActive,
+  setStageDistance,
+  setStageInactive,
+  getAllLocationsByStageId,
+  getTourByTourId,
+  getActiveTour,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
 
 const LOCATION_TASK_NAME = "background-location-task";
 
-export async function createManualTrip(
-  tripName: string,
+export async function createManualStage(
+  stageName: string,
   startingCoordinatesString: string,
   endCoordinatesString: string,
-  journeyId?: string,
+  tourId?: string,
 ) {
-  if (!tripName || tripName.trim() === "") {
-    throw new Error("Bitte gib einen Streckennamen an");
+  if (!stageName || stageName.trim() === "") {
+    throw new Error("Bitte gib einen Tournamen an");
   }
 
-  const journey = journeyId
-    ? await getJourneyByJourneyId(journeyId)
-    : await getActiveJourney();
+  const tour = tourId ? await getTourByTourId(tourId) : await getActiveTour();
 
-  if (journey === null) {
-    throw new Error("Keine Aktive Reise gesetzt");
+  if (tour === null) {
+    throw new Error("Keine Aktive Tour gesetzt");
   }
 
   let startingCoordinates = parseCoordinates(startingCoordinatesString);
@@ -40,15 +38,15 @@ export async function createManualTrip(
     throw new Error("Ungültiges Koordinatenformat");
   }
 
-  let trip = await createTrip(journey.id, tripName);
+  let stage = await createStage(tour.id, stageName);
 
-  await trip.addLocation(
+  await stage.addLocation(
     startingCoordinates?.latitude,
     startingCoordinates?.longitude,
   );
-  await trip.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
-  await setTripDistance(
-    trip.id,
+  await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+  await setStageDistance(
+    stage.id,
     calculateDistance(startingCoordinates, endCoordinates),
   );
 }
@@ -65,12 +63,12 @@ export async function startAutomaticTracking() {
       if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
         console.log("Tracking already started.");
       } else {
-        let activeJourney = await getActiveJourney();
-        if (!activeJourney) {
-          throw new Error("No active journey set");
+        let activeTour = await getActiveTour();
+        if (!activeTour) {
+          throw new Error("No active tour set");
         }
-        let trip = await createTrip(activeJourney.id, "Strecke");
-        await setTripActive(trip.id);
+        let stage = await createStage(activeTour.id, "Etappe");
+        await setStageActive(stage.id);
 
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,
@@ -84,8 +82,8 @@ export async function startAutomaticTracking() {
 export async function stopAutomaticTracking() {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-    let trip = await getActiveTrip();
-    await setTripInactive(trip!.id);
+    let stage = await getActiveStage();
+    await setStageInactive(stage!.id);
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");
@@ -114,14 +112,15 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     return;
   }
   if (data) {
+    //@ts-ignore
     const { locations } = data;
     console.log("New background location: ", locations[0]);
-    let activeTrip = await getActiveTrip();
-    if (!activeTrip) {
-      throw new Error("No active trip set");
+    let activeStage = await getActiveStage();
+    if (!activeStage) {
+      throw new Error("No active stage set");
     }
     await createLocation(
-      activeTrip.id,
+      activeStage.id,
       locations[0].coords.latitude,
       locations[0].coords.longitude,
     );
@@ -131,7 +130,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
       longitude: locations[0].coords.longitude,
     };
 
-    let locationsForActiveTrip = await getAllLocationsByTripId(activeTrip.id);
+    let locationsForActiveTrip = await getAllLocationsByStageId(activeStage.id);
     console.log(locationsForActiveTrip[0]);
     let latestLocation = {
       latitude:
@@ -142,8 +141,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     };
     console.log(currentLocation, latestLocation);
     let updatedDistance =
-      activeTrip.distance + calculateDistance(latestLocation, currentLocation);
+      activeStage.distance + calculateDistance(latestLocation, currentLocation);
     console.log(updatedDistance);
-    await setTripDistance(activeTrip.id, updatedDistance);
+    await setStageDistance(activeStage.id, updatedDistance);
   }
 });

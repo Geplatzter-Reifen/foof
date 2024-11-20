@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import {Platform, StyleSheet } from "react-native";
-import { Input, Layout, Button } from "@ui-kitten/components";
+import { Input, Layout, Button, Text, useTheme } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 
@@ -16,6 +16,7 @@ interface CoordinateInputProps {
 
 
 function CoordinateInput(props:CoordinateInputProps) {
+    const theme = useTheme();
     const { lat, setLat, lon, setLon, date, setDate } = props;
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
@@ -60,12 +61,19 @@ function CoordinateInput(props:CoordinateInputProps) {
             <Layout style={styles.row}>
                 {/* Button to open date picker */}
                 <Button    appearance="outline" style={styles.input} onPress={() => setShowDatePicker(true)}>
-                    Select Date
+                    <Text style={styles.row}>
+                    {date.toLocaleDateString()}
+                    <FontAwesomeIcon style={styles.icon}  size={20} icon="clock"/>
+                    </Text>
                 </Button>
 
                 {/* Button to open time picker */}
                 <Button  appearance="outline"  style={styles.input} onPress={() => setShowTimePicker(true)}>
-                    Select Time
+                    <Text style={styles.row}>
+                        {date.toLocaleTimeString()}
+                        <FontAwesomeIcon style={styles.icon} size={20} icon="calendar"/>
+                    </Text>
+
                 </Button>
 
                 {showDatePicker && (
@@ -74,6 +82,8 @@ function CoordinateInput(props:CoordinateInputProps) {
                         mode="date"
                         display={Platform.OS === "ios" ? "spinner" : "default"}
                         onChange={onDateChange}
+                        textColor={theme["color-primary-500"]} // Primary color for text
+
                     />
                 )}
 
@@ -83,6 +93,8 @@ function CoordinateInput(props:CoordinateInputProps) {
                         mode="time"
                         display={Platform.OS === "ios" ? "spinner" : "default"}
                         onChange={onTimeChange}
+                        textColor={theme["color-primary-500"]} // Primary color for text
+
                     />
                 )}
             </Layout>
@@ -102,6 +114,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 8, // Add space between inputs
         marginVertical:3
     },
+    icon:{
+        alignSelf:"flex-end",
+
+    }
 });
 
 export default CoordinateInput;

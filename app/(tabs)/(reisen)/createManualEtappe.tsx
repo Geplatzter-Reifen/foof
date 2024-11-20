@@ -66,6 +66,8 @@ const createManualEtappe: React.FC = () => {
 
     ////coordinate start input
     const startCoordInput = <CoordinateInput lat={startLat} lon={startLon} setLat={setStartLat} setLon={setStartLon} date={startDate} setDate={setStartDate}/>
+    ////coordinate start input
+    const endCoordInput = <CoordinateInput lat={endLat} lon={endLon} setLat={setEndLat} setLon={setEndLon} date={endDate} setDate={setEndDate}/>
     return <Layout style={ styles.layout} level="3">
             <ButtonGroup>
                 <Button style={styles.button} onPress={()=>{}}>
@@ -86,7 +88,7 @@ const createManualEtappe: React.FC = () => {
             <Layout style={ styles.cardsContainer} level="3">
                 <CardComponent title="Start" form={startCoordInput}/>
 
-                <CardComponent title="Ende" form={startCoordInput}/>
+                <CardComponent title="Ende" form={endCoordInput}/>
 
             </Layout>
             <ButtonGroup>

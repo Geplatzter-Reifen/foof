@@ -1,6 +1,7 @@
 import React, {useState, useEffect}from "react";
 import { Text, Layout, Card, Button } from "@ui-kitten/components";
-import ButtonGroup from "../../../components/Etappe/ButtonGroup"
+import ButtonGroup from "../../../components/Etappe/ButtonGroup";
+import CoordinateInput from "../../../components/Etappe/CoordinateInput"
 import { StyleSheet } from 'react-native';
 import CardComponent from "../../../components/Etappe/CardComponent"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -12,13 +13,13 @@ const createManualEtappe: React.FC = () => {
  const [titleBeingChanged, setTitleBeingChanged] = useState(false)  //// switches title from plain text to the input field
  const [etappeTitle, setEtappeTitle] = useState("Etappe"); ///the name of the title
  ////////////compass input variant
- const [startLat, setStartLat]   = useState();
- const [startLon, setStartLon]   = useState();
- const [startTime, setStartTime] = useState();
+ const [startLat, setStartLat]   = useState("");
+ const [startLon, setStartLon]   = useState("");
+ const [startDate, setStartDate] = useState(new Date());
  
- const [endLat, setEndLat]   = useState();
- const [endLon, setEndLon]   = useState();
- const [endTime, setEndTime] = useState();
+ const [endLat, setEndLat]   = useState("");
+ const [endLon, setEndLon]   = useState("");
+ const [endDate, setEndDate] = useState(new Date());
 
  ////////////address input variant
     
@@ -63,7 +64,8 @@ const createManualEtappe: React.FC = () => {
         });
     }, [navigation, titleBeingChanged, etappeTitle]);
 
-    
+    ////coordinate start input
+    const startCoordInput = <CoordinateInput lat={startLat} lon={startLon} setLat={setStartLat} setLon={setStartLon} date={startDate} setDate={setStartDate}/>
     return <Layout style={ styles.layout} level="3">
             <ButtonGroup>
                 <Button style={styles.button} onPress={()=>{}}>
@@ -82,9 +84,9 @@ const createManualEtappe: React.FC = () => {
             </ButtonGroup>
 
             <Layout style={ styles.cardsContainer} level="3">
-                <CardComponent title="Start" form={<Text>djbhwefbdewe</Text>}/>
+                <CardComponent title="Start" form={startCoordInput}/>
 
-                <CardComponent title="Ende" form={<Text>djbhwefbdewe</Text>}/>
+                <CardComponent title="Ende" form={startCoordInput}/>
 
             </Layout>
             <ButtonGroup>
@@ -105,8 +107,8 @@ const styles = StyleSheet.create({
     cardsContainer: {
         flex: 7, // Takes up the majority of the remaining space
         flexDirection: 'column', // Arrange cards in a column
-        justifyContent: 'space-around', // Space cards evenly
-        alignItems: 'center', // Center cards horizontally
+
+
 
     },
     layout: {

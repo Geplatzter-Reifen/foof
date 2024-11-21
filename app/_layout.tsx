@@ -10,6 +10,8 @@ import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/model/database_functions";
 import { FontAwesomeIconsPack } from "@/app/fontAwesome";
+import * as Font from "expo-font";
+import Icon from "@expo/vector-icons/FontAwesome6";
 
 library.add(far, fas, fab);
 
@@ -30,7 +32,12 @@ export default function RootLayout() {
     async function prepare() {
       try {
         // Pre-load fonts, make any API calls you need to do here
-        await initializeDatabase();
+        const dbPromise = initializeDatabase();
+        const fontPromise = Font.loadAsync({
+          ...Icon.font,
+        });
+
+        await Promise.allSettled([dbPromise, fontPromise]);
       } catch (e) {
         console.warn(e);
       } finally {

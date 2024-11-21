@@ -153,6 +153,7 @@ export const createLocation = async (
   stageId: string,
   latitude: number,
   longitude: number,
+  speed: number,
 ): Promise<Location> => {
   return database.write(async () => {
     const stage = await database.get<Stage>("stages").find(stageId);
@@ -160,6 +161,7 @@ export const createLocation = async (
       location.stage.set(stage);
       location.latitude = latitude;
       location.longitude = longitude;
+      location.speed = speed;
       location.recordedAt = Date.now();
     });
   });

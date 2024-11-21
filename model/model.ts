@@ -75,6 +75,8 @@ class Location extends Model {
   // @ts-ignore
   @field("longitude") longitude: number;
   // @ts-ignore
+  @field("speed") speed: number;
+  // @ts-ignore
   @field("recorded_at") recordedAt?: number;
   // @ts-ignore
   @relation("stage", "stage_id") stage;

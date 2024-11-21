@@ -150,11 +150,9 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (locationsForActiveStage.length >= 1) {
     const latestLocation = {
       latitude:
-        locationsForActiveStage[locationsForActiveStage.length - 1]._raw
-          .latitude,
+        locationsForActiveStage[locationsForActiveStage.length - 1].latitude,
       longitude:
-        locationsForActiveStage[locationsForActiveStage.length - 1]._raw
-          .longitude,
+        locationsForActiveStage[locationsForActiveStage.length - 1].longitude,
     };
 
     // Calculate the updated distance for the active stage

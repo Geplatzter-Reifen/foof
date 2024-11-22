@@ -9,7 +9,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/model/database_functions";
-import { FontAwesomeIconsPack } from "@/app/fontAwesome";
+import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
 

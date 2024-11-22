@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
   getAllStagesByTourIdQuery,
   getTourByTourId,
@@ -11,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { Tour } from "@/model/model";
 import { Stack } from "expo-router";
-import { Layout, Button, Text } from "@ui-kitten/components";
+import { Layout, Button } from "@ui-kitten/components";
 import StageList from "@/components/Tour/StageList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal";
@@ -35,12 +34,10 @@ export default function Touruebersicht() {
   }, [tourId]);
 
   const toggleTourStatus = async () => {
-    if (tour) {
-      if (tour.isActive) {
-        await setTourInactive(tourId);
-      } else {
-        await setTourActive(tourId);
-      }
+    if (tour && tour.isActive) {
+      await setTourInactive(tourId);
+    } else {
+      await setTourActive(tourId);
     }
     reloadScreen();
   };
@@ -57,10 +54,10 @@ export default function Touruebersicht() {
         <TourStats
           startDate={tour?.startedAt}
           endDate={tour?.finishedAt}
-          distance={0}
-          elevation={0}
-          speed={0}
-          calories={0}
+          distance={200}
+          elevation={200}
+          speed={20}
+          calories={20}
         />
       ) : null}
       <RNFadedScrollView

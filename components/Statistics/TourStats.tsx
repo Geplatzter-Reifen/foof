@@ -25,10 +25,12 @@ export default function TourStats(props: TourStatsProps) {
             {props.startDate ? dateFormat(props.startDate, DATE) : "--"}
           </Text>
         </View>
-        <View style={styles.stat_row}>
-          <Icon name="calendar-check" style={styles.icon_style} />
-          <Text>{props.endDate ? dateFormat(props.endDate, DATE) : "--"}</Text>
-        </View>
+        {props.endDate && (
+          <View style={styles.stat_row}>
+            <Icon name="calendar-check" style={styles.icon_style} />
+            <Text>{dateFormat(props.endDate, DATE)}</Text>
+          </View>
+        )}
       </View>
       <View style={styles.stat_column}>
         <View style={styles.stat_row}>
@@ -37,62 +39,20 @@ export default function TourStats(props: TourStatsProps) {
         </View>
         <View style={styles.stat_row}>
           <Icon name="arrow-up-right-dots" style={styles.icon_style} />
-          <Text>Elevation</Text>
+          <Text>{props.elevation ? props.elevation + " m" : "--"}</Text>
         </View>
         <View style={styles.stat_row}>
           <Icon name="gauge-high" style={styles.icon_style} />
-          <Text>Geschwindigkeit</Text>
+          <Text>{props.speed ? props.speed + " km/h" : "--"}</Text>
         </View>
         <View style={styles.stat_row}>
           <Icon name="bolt" style={styles.icon_style} />
-          <Text>Kalorien</Text>
+          <Text>{props.calories ? props.calories + " kcal" : "--"}</Text>
         </View>
       </View>
     </View>
-    /*<Layout style={styles.container}>
-      <View style={styles.stat_row}>
-        <Icon name="calendar-day" style={styles.icon_style} />
-        <Text>Start</Text>
-
-        <Icon name="calendar-check" style={styles.icon_style} />
-        <Text>Start</Text>
-
-        <Icon
-          name="up-right-and-down-left-from-center"
-          style={styles.icon_style}
-        />
-        <Text>Text</Text>
-
-        <Icon name="bolt" style={styles.icon_style} />
-        <Text>Text</Text>
-
-        <View style={styles.stat_row}>
-          <Text>Text</Text>
-          <Text>Text</Text>
-        </View>
-      </View>
-    </Layout>*/
   );
 }
-
-/*
-<Layout>
-        <Text>
-          Start der Tour:{" "}
-          {tour?.startedAt ? dateFormat(new Date(tour?.startedAt), DATE) : ""}
-        </Text>
-        <Text>{"Status: " + (tour?.isActive ? "aktiv" : "inaktiv")}</Text>
-        {tour?.isActive ? (
-          <Button status="basic" onPress={toggleTourStatus}>
-            deaktivieren
-          </Button>
-        ) : (
-          <Button status="info" onPress={toggleTourStatus}>
-            Zur Aktiven Tour Machen
-          </Button>
-        )}
-      </Layout>
-*/
 
 const makeStyles = (theme: ThemeType): any => {
   return StyleSheet.create({
@@ -114,8 +74,11 @@ const makeStyles = (theme: ThemeType): any => {
     },
 
     icon_style: {
+      alignSelf: "center",
       marginHorizontal: 4,
       height: 15,
+      width: "100%",
+      minWidth: 17,
     },
   });
 };

@@ -53,6 +53,7 @@ export const createStage = async (
   tourId: string,
   title: string,
   startedAt?: number,
+  finishedAt?: number,
 ): Promise<Stage> => {
   return database.write(async () => {
     const tour = await database.get<Tour>("tours").find(tourId);
@@ -81,6 +82,7 @@ export const createStage = async (
       stage.title = title;
       stage.isActive = false;
       stage.startedAt = Date.now();
+      stage.finishedAt = finishedAt;
     });
   });
 };

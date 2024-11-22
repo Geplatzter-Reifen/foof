@@ -37,7 +37,7 @@ export async function createManualStage(
     throw new Error("Ungültiges Koordinatenformat");
   }
 
-  let stage = await createStage(tour.id, stageName);
+  let stage = await createStage(tour.id, stageName, Date.now(), Date.now());
 
   await stage.addLocation(
     startingCoordinates?.latitude,

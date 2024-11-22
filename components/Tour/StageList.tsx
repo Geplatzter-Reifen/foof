@@ -24,7 +24,8 @@ export default enhance(StageList);
 
 const styles = StyleSheet.create({
   heading: {
-    marginBottom: 10,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   noStageText: {
     marginTop: 15,

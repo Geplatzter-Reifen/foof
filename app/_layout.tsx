@@ -1,7 +1,11 @@
 import { Stack, SplashScreen } from "expo-router";
 import * as eva from "@eva-design/eva";
 import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  IconRegistry,
+  ModalService,
+} from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +18,8 @@ import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
 
 library.add(far, fas, fab);
+
+ModalService.setShouldUseTopInsets = true;
 
 const USE_DARK_THEME = false;
 

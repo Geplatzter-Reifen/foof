@@ -34,6 +34,14 @@ export default function Touruebersicht() {
     />
   );
 
+  const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="plus"
+      style={[props?.style, { height: 40, width: "100%" }]}
+    />
+  );
+
   if (!activeTour) {
     return null;
   }
@@ -41,9 +49,14 @@ export default function Touruebersicht() {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.header}>
-        <Button appearance={"ghost"} accessoryRight={MapIcon} />
+        <Button
+          status={"basic"}
+          appearance={"ghost"}
+          accessoryRight={MapIcon}
+        />
         <EnhancedHeader tour={activeTour}></EnhancedHeader>
         <Button
+          status={"basic"}
           appearance={"ghost"}
           accessoryRight={EditIcon}
           onPress={() =>
@@ -60,15 +73,16 @@ export default function Touruebersicht() {
       <Layout style={[styles.box, { zIndex: -1 }]}>
         <Text>This is a text box</Text>
       </Layout>
-      <Text category="h4" style={styles.header2}>
+      <Text status={"primary"} category="h4" style={styles.header2}>
         Etappen
       </Text>
+      <Button style={styles.button} accessoryLeft={PlusIcon}></Button>
     </Layout>
   );
 }
 
 const Header = ({ tour }: { tour: Tour }) => (
-  <Text category="h3" style={styles.headerText}>
+  <Text category="h4" status={"primary"} style={styles.headerText}>
     {tour.title}
   </Text>
 );
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flexDirection: "row",
     alignItems: "center",
-    elevation: 8,
+    elevation: 6,
   },
   headerText: {
     flex: 1,
@@ -95,11 +109,20 @@ const styles = StyleSheet.create({
   box: {
     padding: 40,
     backgroundColor: "#EDCBB4",
-    elevation: 4,
+    elevation: 3,
   },
   header2: {
     paddingHorizontal: 10,
     paddingVertical: 5,
     textAlign: "left",
+  },
+  button: {
+    position: "absolute",
+    bottom: 35,
+    right: 15,
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    elevation: 3,
   },
 });

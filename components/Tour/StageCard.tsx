@@ -1,46 +1,88 @@
 import React from "react";
-import { DATE, dateFormat, getDuration, TIME } from "@/utils/dateUtil";
+import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
 import { Stage } from "@/model/model";
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { deleteStage } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
+import customStyles from "../../constants/styles";
+import { foofDarkTheme } from "@/constants/custom-theme";
 
 export default function StageCard({ stage }: { stage: Stage }) {
-  const startedAt: Date | undefined = stage.startedAt
-    ? new Date(stage.startedAt)
-    : undefined;
+  const startedAt: Date = new Date(stage.startedAt);
   let finishedAt: Date | undefined = stage.finishedAt
     ? new Date(stage.finishedAt)
     : undefined;
 
-  const date: string | undefined = startedAt
-    ? dateFormat(startedAt, DATE)
-    : undefined;
+  const date: string = dateFormat(startedAt, DATE);
 
-  let duration: string | undefined =
-    startedAt && finishedAt
-      ? getDuration(startedAt, finishedAt, TIME)
-      : undefined;
+  let duration: string | undefined = finishedAt
+    ? getDurationFormatted(startedAt, finishedAt)
+    : getDurationFormatted(startedAt, new Date(Date.now()));
 
-  const distance: string | undefined = stage.distance
-    ? stage.distance.toFixed(1)
-    : undefined;
+  const distance: string = stage.distance.toFixed(1);
 
-  return (
-    <Layout level="3">
-      <Card style={styles.card}>
-        <Text category="h4" status="primary">
+  const avgSpeed: string = stage.avgSpeed.toFixed(1);
+
+  const Header = () => {
+    return (
+      <View style={styles.header}>
+        <Text category="h6" style={styles.title}>
           {stage.title}
         </Text>
-        <Text>{date}</Text>
-        {duration && <Text>{"Dauer: " + duration}</Text>}
-        {distance && <Text>Distanz: {distance} km</Text>}
-        <View>
-          <Button status="basic" onPress={() => deleteStage(stage.id)}>
-            <FontAwesomeIcon icon="trash" />
-          </Button>
+        <Button
+          status="basic"
+          appearance="ghost"
+          onPress={() => deleteStage(stage.id)}
+        >
+          <FontAwesomeIcon icon="trash" />
+        </Button>
+      </View>
+    );
+  };
+
+  return (
+    <Layout level="2">
+      <Card
+        style={{
+          ...customStyles.basicCard,
+          ...customStyles.basicShadow,
+          ...styles.card,
+        }}
+        header={<Header />}
+      >
+        <View style={styles.stat}>
+          <FontAwesomeIcon
+            icon="arrows-left-right"
+            size={19}
+            color={foofDarkTheme["color-primary-500"]}
+            style={styles.icon}
+          />
+          <Text style={styles.statLabel}>{distance} km</Text>
         </View>
+        {duration && (
+          <View style={styles.stat}>
+            <FontAwesomeIcon
+              icon="clock"
+              size={19}
+              color={foofDarkTheme["color-primary-500"]}
+              style={styles.icon}
+            />
+            <Text style={styles.statLabel}>{duration}</Text>
+          </View>
+        )}
+        <View style={styles.stat}>
+          <FontAwesomeIcon
+            icon="gauge-high"
+            size={19}
+            color={foofDarkTheme["color-primary-500"]}
+            style={styles.icon}
+          />
+          <Text style={styles.statLabel}>{avgSpeed} km/h</Text>
+        </View>
+        <Text appearance="hint" style={styles.date}>
+          {date}
+        </Text>
       </Card>
     </Layout>
   );
@@ -49,7 +91,28 @@ export default function StageCard({ stage }: { stage: Stage }) {
 const styles = StyleSheet.create({
   card: {
     marginBottom: 15,
-    borderRadius: 8,
-    borderWidth: 0,
+  },
+  header: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  title: {
+    marginTop: 10,
+    marginLeft: 15,
+  },
+  stat: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  statLabel: {
+    fontSize: 17,
+  },
+  date: {
+    marginTop: 5,
   },
 });

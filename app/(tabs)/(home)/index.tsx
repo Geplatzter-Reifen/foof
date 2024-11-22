@@ -1,75 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import MapboxGL from "@rnmapbox/maps";
-import { Layout, Button } from "@ui-kitten/components";
+
 import * as Location from "expo-location";
+import * as TaskManager from "expo-task-manager";
+
 import {
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
-import * as TaskManager from "expo-task-manager";
-// import * as TaskManager from "expo-task-manager";
+
+import MapboxGL from "@rnmapbox/maps";
+
+import { Layout, ButtonGroup } from "@ui-kitten/components";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import BigRoundButton from "@/components/Buttons/BigRoundButton";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
 );
+enum ButtonStates {
+  NotCycling,
+  Cycling,
+  Paused,
+}
 
-export default function Index() {
-  // const latitude = 50.0826;
-  // const longitude = 8.24;
-  //
-  // return (
-  //     <View style={styles.container}>
-  //       <Layout style={styles.layout}>
-  //         <MapboxGL.MapView style={styles.map}>
-  //           <MapboxGL.Camera
-  //               zoomLevel={12}
-  //               centerCoordinate={[longitude, latitude]}
-  //               animationMode="flyTo"
-  //               animationDuration={2000}
-  //           />
-  //         </MapboxGL.MapView>
-  //       </Layout>
-  //     </View>
-  // );
-  const [tracking, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
+export default function HomeScreen() {
+  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
-  const [, setLocationServicesEnabled] = useState(false);
+  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const buttonIconSize = 60;
+
   useEffect(() => {
-    checkIfLocationEnabled();
     getCurrentLocation();
     TaskManager.isTaskRegisteredAsync("background-location-task").then(
       (result) => setTracking(result),
     );
   }, []);
 
-  const changeButton = () => {
-    if (!tracking) {
-      startAutomaticTracking();
-      setTracking(true);
-    } else {
-      stopAutomaticTracking();
-      setTracking(false);
-    }
-  };
-  //check if location is enable or not
-  const checkIfLocationEnabled = async () => {
-    let enabled = await Location.hasServicesEnabledAsync(); //returns true or false
-    if (!enabled) {
-      //if not enable
-      Alert.alert("Location not enabled", "Please enable your Location", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-    } else {
-      setLocationServicesEnabled(enabled); //store true into state
-    }
-  };
   //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -104,10 +72,69 @@ export default function Index() {
       console.log("Error getting location:", error);
     }
   };
+  const StartButton = () => {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon
+            transform="right-1"
+            icon="play"
+            size={buttonIconSize}
+            color="white"
+          />
+        }
+        onPress={() => {
+          setButtonState(ButtonStates.Cycling);
+          startAutomaticTracking();
+        }}
+      />
+    );
+  };
+
+  const PauseButton = () => {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon icon="pause" size={buttonIconSize} color="white" />
+        }
+        onPress={() => setButtonState(ButtonStates.Paused)}
+      />
+    );
+  };
+
+  function StopButton() {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
+        }
+        onPress={() => {
+          setButtonState(ButtonStates.NotCycling);
+          stopAutomaticTracking();
+        }}
+      />
+    );
+  }
+
+  function toggleButtons(buttonState: ButtonStates) {
+    switch (buttonState) {
+      case ButtonStates.NotCycling:
+        return StartButton();
+      case ButtonStates.Cycling:
+        return PauseButton();
+      case ButtonStates.Paused:
+        return (
+          <ButtonGroup>
+            {StopButton()}
+            {StartButton()}
+          </ButtonGroup>
+        );
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      <Layout style={styles.layout} level="1">
+    <Layout style={styles.container}>
+      <Layout style={styles.layout}>
         <MapboxGL.MapView style={styles.map}>
           <MapboxGL.Camera
             zoomLevel={13}
@@ -117,11 +144,8 @@ export default function Index() {
           />
         </MapboxGL.MapView>
       </Layout>
-
-      <Button style={styles.button} onPress={changeButton}>
-        {tracking ? "stop" : "start"}
-      </Button>
-    </View>
+      <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
+    </Layout>
   );
 }
 
@@ -144,12 +168,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  button: {
+  button_container: {
     position: "absolute",
-    bottom: 30, // Position from the bottom of the screen
-    alignSelf: "center", // Center the button horizontally
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 90,
+    flexDirection: "row",
+    alignSelf: "center",
+
+    bottom: 75,
   },
 });

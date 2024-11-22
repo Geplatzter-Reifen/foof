@@ -1,4 +1,4 @@
-export const foofDarkTheme = {
+export const foofTheme = {
   "color-primary-100": "#FFEDD0",
   "color-primary-200": "#FFD5A1",
   "color-primary-300": "#FFB872",
@@ -49,17 +49,42 @@ export const foofDarkTheme = {
   "color-danger-800": "#931B2C",
   "color-danger-900": "#7A1028",
 
-  "color-basic-100": "#F5F5F5",
-  "color-basic-200": "#EBEBEB",
-  "color-basic-300": "#C3C3C3",
-  "color-basic-400": "#AAAAAA",
-  "color-basic-500": "#373737",
-  "color-basic-600": "#303030",
+  "color-basic-100": "#FFFFFF",
+  "color-basic-200": "#eaeaea",
+  "color-basic-300": "#b8b8b8",
+  "color-basic-400": "#7e7e7e",
+  "color-basic-500": "#494949",
+  "color-basic-600": "#373737",
   "color-basic-700": "#282828",
   "color-basic-800": "#202020",
   "color-basic-900": "#171717",
   "color-basic-1000": "#101010",
   "color-basic-1100": "#000000",
+};
+
+export const foofLightTheme = {
+  ...foofTheme,
+
+  "color-basic-transparent-100": "rgba(126, 126, 126, 0.08)",
+  "color-basic-transparent-200": "rgba(126, 126, 126, 0.16)",
+  "color-basic-transparent-300": "rgba(126, 126, 126, 0.24)",
+  "color-basic-transparent-400": "rgba(126, 126, 126, 0.32)",
+  "color-basic-transparent-500": "rgba(126, 126, 126, 0.4)",
+  "color-basic-transparent-600": "rgba(126, 126, 126, 0.48)",
+
+  // Custom background color
+  "background-basic-color-1": "$color-basic-100",
+  "background-basic-color-2": "$color-basic-200",
+  "background-basic-color-3": "$color-basic-300",
+  "background-basic-color-4": "$color-basic-400",
+
+  // Custom text colors
+  "text-basic-color": "#000000",
+  "text-hint-color": "$color-basic-600",
+};
+
+export const foofDarkTheme = {
+  ...foofTheme,
 
   "color-basic-transparent-100": "rgba(47, 40, 40, 0.08)",
   "color-basic-transparent-200": "rgba(47, 40, 40, 0.16)",
@@ -69,12 +94,12 @@ export const foofDarkTheme = {
   "color-basic-transparent-600": "rgba(47, 40, 40, 0.48)",
 
   // Custom background color
-  "background-basic-color-1": "$color-basic-700",
-  "background-basic-color-2": "$color-basic-800",
-  "background-basic-color-3": "$color-basic-900",
-  "background-basic-color-4": "$color-basic-1000",
+  "background-basic-color-1": "$color-basic-600",
+  "background-basic-color-2": "$color-basic-700",
+  "background-basic-color-3": "$color-basic-800",
+  "background-basic-color-4": "$color-basic-900",
 
   // Custom text colors
   "text-basic-color": "#FFFFFF",
-  "text-hint-color": "$color-basic-400",
+  "text-hint-color": "$color-basic-500",
 };

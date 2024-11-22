@@ -1,6 +1,6 @@
 import { Stack, SplashScreen } from "expo-router";
 import * as eva from "@eva-design/eva";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
@@ -9,11 +9,13 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/model/database_functions";
-import { FontAwesomeIconsPack } from "@/app/fontAwesome";
+import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
 
 library.add(far, fas, fab);
+
+const USE_DARK_THEME = false;
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,6 +23,10 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
   const [LayoutLoaded, setLayoutLoaded] = useState(false);
+
+  const theme = USE_DARK_THEME
+    ? { ...eva.dark, ...foofDarkTheme }
+    : { ...eva.light, ...foofLightTheme };
 
   useEffect(() => {
     async function prepare() {
@@ -56,7 +62,7 @@ export default function RootLayout() {
   return (
     <>
       <IconRegistry icons={FontAwesomeIconsPack} />
-      <ApplicationProvider {...eva} theme={{ ...eva.light }}>
+      <ApplicationProvider {...eva} theme={theme}>
         <SafeAreaView
           onLayout={() => setLayoutLoaded(true)}
           style={{

@@ -2,14 +2,10 @@ import { database } from "./createDatabase";
 import { Tour, Stage, Location } from "./model";
 import { Q } from "@nozbe/watermelondb";
 
-export const createTour = async (
-  title: string,
-  started_at?: number,
-): Promise<Tour> => {
+export const createTour = async (title: string): Promise<Tour> => {
   return database.write(async () => {
     return database.get<Tour>("tours").create((tour) => {
       tour.title = title;
-      tour.startedAt = started_at ?? Date.now();
       tour.isActive = false;
     });
   });
@@ -56,9 +52,30 @@ export const getActiveTour = async (): Promise<Tour | null> => {
 export const createStage = async (
   tourId: string,
   title: string,
+  startedAt?: number,
 ): Promise<Stage> => {
   return database.write(async () => {
     const tour = await database.get<Tour>("tours").find(tourId);
+
+    // Determine the start date for the tour
+    let updatedStartedAt: number;
+    // If the tour has no start date, set it to the provided start date or the current datetime
+    if (!tour.startedAt) {
+      updatedStartedAt = startedAt ?? Date.now();
+    }
+    // If a start date is provided, and it is earlier than the current start date, update it
+    else if (startedAt && startedAt < tour.startedAt) {
+      updatedStartedAt = startedAt;
+    }
+    // Otherwise, keep the existing start date
+    else {
+      updatedStartedAt = tour.startedAt;
+    }
+    // Update the tour's start date
+    await tour.update(() => {
+      tour.startedAt = updatedStartedAt;
+    });
+
     return database.get<Stage>("stages").create((stage) => {
       stage.tour.set(tour);
       stage.title = title;
@@ -77,33 +94,42 @@ export const deleteStage = async (stageId: string) => {
 
 export const setStageDistance = async (stageId: string, distance: number) => {
   void database.write(async () => {
-    const stageToFinish = await getStageByStageId(stageId);
-    await stageToFinish.update(() => {
-      stageToFinish.distance = distance;
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.distance = distance;
     });
   });
 };
 
-export const finishStage = async (stageId: string, finishTime: number) => {
+export const setStageAvgSpeed = async (stageId: string, speed: number) => {
+  void database.write(async () => {
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.avgSpeed = speed;
+    });
+  });
+};
+
+export const finishStage = async (stageId: string, finishTime?: number) => {
   void database.write(async () => {
     const stageToFinish = await getStageByStageId(stageId);
     await stageToFinish.update(() => {
-      stageToFinish.finishedAt = finishTime;
-    });
-  });
-};
-
-export const setStageInactive = async (stageId: string) => {
-  await database.write(async () => {
-    const stage = await database.get<Stage>("stages").find(stageId);
-    await stage.update(() => {
-      stage.isActive = false;
+      stageToFinish.finishedAt = finishTime ?? Date.now();
+      stageToFinish.isActive = false;
     });
   });
 };
 
 export const setStageActive = async (stageId: string) => {
   await database.write(async () => {
+    const allStages = await database.get<Stage>("stages").query().fetch();
+    for (const stage of allStages) {
+      if (stage.isActive) {
+        await stage.update(() => {
+          stage.isActive = false;
+        });
+      }
+    }
     const stage = await database.get<Stage>("stages").find(stageId);
     await stage.update(() => {
       stage.isActive = true;

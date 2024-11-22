@@ -8,7 +8,7 @@ import {
   getTourByTourId,
   setStageActive,
   setStageDistance,
-  setStageInactive,
+  finishStage,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
 
@@ -82,7 +82,7 @@ export async function stopAutomaticTracking() {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
-    await setStageInactive(stage!.id);
+    await finishStage(stage!.id);
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");
@@ -111,6 +111,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     return;
   }
   if (data) {
+    //@ts-ignore
     const { locations } = data;
     console.log("New background location: ", locations[0]);
     console.log("New background location: ", data);

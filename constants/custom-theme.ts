@@ -71,6 +71,7 @@ export const foofLightTheme = {
   "color-basic-transparent-400": "rgba(126, 126, 126, 0.32)",
   "color-basic-transparent-500": "rgba(126, 126, 126, 0.4)",
   "color-basic-transparent-600": "rgba(126, 126, 126, 0.48)",
+  "color-primary-transparent-500": "rgba(255, 110, 20, 0.26)",
 
   // Custom background color
   "background-basic-color-1": "$color-basic-100",

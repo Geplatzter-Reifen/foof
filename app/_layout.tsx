@@ -1,7 +1,7 @@
 import { Stack, SplashScreen } from "expo-router";
 import * as eva from "@eva-design/eva";
 import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
-import { ApplicationProvider } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,9 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/model/database_functions";
+import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
+import * as Font from "expo-font";
+import Icon from "@expo/vector-icons/FontAwesome6";
 
 library.add(far, fas, fab);
 
@@ -29,7 +32,12 @@ export default function RootLayout() {
     async function prepare() {
       try {
         // Pre-load fonts, make any API calls you need to do here
-        await initializeDatabase();
+        const dbPromise = initializeDatabase();
+        const fontPromise = Font.loadAsync({
+          ...Icon.font,
+        });
+
+        await Promise.allSettled([dbPromise, fontPromise]);
       } catch (e) {
         console.warn(e);
       } finally {
@@ -52,17 +60,20 @@ export default function RootLayout() {
   }
 
   return (
-    <ApplicationProvider {...eva} theme={theme}>
-      <SafeAreaView
-        onLayout={() => setLayoutLoaded(true)}
-        style={{
-          flex: 1,
-        }}
-      >
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-      </SafeAreaView>
-    </ApplicationProvider>
+    <>
+      <IconRegistry icons={FontAwesomeIconsPack} />
+      <ApplicationProvider {...eva} theme={theme}>
+        <SafeAreaView
+          onLayout={() => setLayoutLoaded(true)}
+          style={{
+            flex: 1,
+          }}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </SafeAreaView>
+      </ApplicationProvider>
+    </>
   );
 }

@@ -1,20 +1,21 @@
 import { Tabs } from "expo-router";
-import { foofLightTheme } from "@/constants/custom-theme";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { useTheme } from "@ui-kitten/components";
 
 export default function TabLayout() {
+  const theme = useTheme();
   return (
     <Tabs
       screenOptions={{
         headerShown: true,
-        headerTintColor: foofLightTheme["text-basic-color"],
+        headerTintColor: theme["text-basic-color"],
         headerStyle: {
-          backgroundColor: foofLightTheme["background-basic-color-1"],
+          backgroundColor: theme["background-basic-color-1"],
         },
         tabBarStyle: {
-          backgroundColor: foofLightTheme["color-basic-100"],
+          backgroundColor: theme["color-basic-100"],
         },
-        tabBarActiveTintColor: foofLightTheme["color-primary-500"],
+        tabBarActiveTintColor: theme["color-primary-500"],
       }}
     >
       <Tabs.Screen
@@ -26,9 +27,7 @@ export default function TabLayout() {
             <FontAwesomeIcon
               icon="map"
               color={
-                focused
-                  ? foofLightTheme["color-primary-500"]
-                  : foofLightTheme["color-basic-1100"]
+                focused ? theme["color-primary-500"] : theme["color-basic-1100"]
               }
             />
           ),
@@ -43,9 +42,7 @@ export default function TabLayout() {
             <FontAwesomeIcon
               icon="home"
               color={
-                focused
-                  ? foofLightTheme["color-primary-500"]
-                  : foofLightTheme["color-basic-1100"]
+                focused ? theme["color-primary-500"] : theme["color-basic-1100"]
               }
             />
           ),

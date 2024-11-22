@@ -86,6 +86,18 @@ export const foofLightTheme = {
 export const foofDarkTheme = {
   ...foofTheme,
 
+  "color-basic-1100": "#FFFFFF",
+  "color-basic-1000": "#eaeaea",
+  "color-basic-900": "#b8b8b8",
+  "color-basic-800": "#7e7e7e",
+  "color-basic-700": "#494949",
+  "color-basic-600": "#373737",
+  "color-basic-500": "#282828",
+  "color-basic-400": "#202020",
+  "color-basic-300": "#171717",
+  "color-basic-200": "#101010",
+  "color-basic-100": "#000000",
+
   "color-basic-transparent-100": "rgba(47, 40, 40, 0.08)",
   "color-basic-transparent-200": "rgba(47, 40, 40, 0.16)",
   "color-basic-transparent-300": "rgba(47, 40, 40, 0.24)",

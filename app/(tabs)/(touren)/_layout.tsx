@@ -5,10 +5,10 @@ export default function ReiseStackLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTintColor: foofLightTheme["color-basic-100"],
+        headerTintColor: foofLightTheme["text-basic-color"],
         headerShown: true,
         headerStyle: {
-          backgroundColor: foofLightTheme["color-basic-500"],
+          backgroundColor: foofLightTheme["color-basic-100"],
         },
       }}
     >

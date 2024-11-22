@@ -7,9 +7,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: true,
-        headerTintColor: foofLightTheme["color-basic-100"],
+        headerTintColor: foofLightTheme["text-basic-color"],
         headerStyle: {
-          backgroundColor: foofLightTheme["color-basic-100"],
+          backgroundColor: foofLightTheme["background-basic-color-1"],
         },
         tabBarStyle: {
           backgroundColor: foofLightTheme["color-basic-100"],

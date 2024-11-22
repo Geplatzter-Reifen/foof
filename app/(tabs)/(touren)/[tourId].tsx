@@ -18,6 +18,7 @@ import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal
 import RNFadedScrollView from "rn-faded-scrollview";
 import { foofTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";
+import TourStats from "@/components/Statistics/TourStats";
 
 export default function Touruebersicht() {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -52,22 +53,16 @@ export default function Touruebersicht() {
           headerTitle: tour?.title,
         }}
       />
-      <Layout level="1" style={styles.overview}>
-        <Text>
-          Start der Tour:{" "}
-          {tour?.startedAt ? dateFormat(new Date(tour?.startedAt), DATE) : ""}
-        </Text>
-        <Text>{"Status: " + (tour?.isActive ? "aktiv" : "inaktiv")}</Text>
-        {tour?.isActive ? (
-          <Button status="basic" onPress={toggleTourStatus}>
-            deaktivieren
-          </Button>
-        ) : (
-          <Button status="info" onPress={toggleTourStatus}>
-            Zur Aktiven Tour Machen
-          </Button>
-        )}
-      </Layout>
+      {tour ? (
+        <TourStats
+          startDate={tour?.startedAt}
+          endDate={tour?.finishedAt}
+          distance={0}
+          elevation={0}
+          speed={0}
+          calories={0}
+        />
+      ) : null}
       <RNFadedScrollView
         allowStartFade={true}
         horizontal={false}
@@ -109,9 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
-  overview: {
-    padding: 15,
-  },
+
   scrollView: {
     paddingHorizontal: 15,
     paddingTop: 15,

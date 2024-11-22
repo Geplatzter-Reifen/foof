@@ -20,7 +20,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(touren)"
         options={{
-          title: "Touren",
+          title: "Tour",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <FontAwesomeIcon

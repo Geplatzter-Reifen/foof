@@ -1,124 +1,105 @@
-import React, { useState } from "react";
-import {
-  getAllToursQuery,
-  createTour,
-  deleteAllTours,
-} from "@/model/database_functions";
-import TourList from "@/components/Tour/TourList";
-import {
-  ImageProps,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-} from "react-native";
-import {
-  Layout,
-  Button,
-  Modal,
-  Input,
-  Text,
-  Card,
-  Datepicker,
-  Icon,
-  IconElement,
-  Divider,
-} from "@ui-kitten/components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import { router } from "expo-router";
+import { getActiveTour } from "@/model/database_functions";
+import React, { useEffect, useState } from "react";
+import { Tour } from "@/model/model";
+import { Layout, Button, Text, IconElement, Icon } from "@ui-kitten/components";
+import { withObservables } from "@nozbe/watermelondb/react";
 
-export default function MeineTouren() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [tourName, setTourName] = useState("Tourname");
-  const [startDate, setStartDate] = useState(new Date());
+export default function Touruebersicht() {
+  const [activeTour, setActiveTour] = useState<Tour>();
+
+  useEffect(() => {
+    (async () => {
+      const activeTour = await getActiveTour();
+      if (activeTour) {
+        setActiveTour(activeTour);
+      }
+    })();
+  }, []);
+
+  const MapIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="map"
+      style={[props?.style, { height: 24, width: "100%" }]}
+    />
+  );
+
+  const EditIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="edit"
+      style={[props?.style, { height: 24, width: "100%" }]}
+    />
+  );
+
+  if (!activeTour) {
+    return null;
+  }
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Layout style={styles.container} level="2">
-        <Layout style={styles.header} level="2">
-          <MapIcon />
-          <Text category="h3" style={styles.headerText}>
-            Meine Touren
-          </Text>
-          <EditIcon />
-        </Layout>
-        <Divider />
-        <ScrollView>
-          <Layout level="1">
-            <TourList tours={getAllToursQuery} />
-          </Layout>
-        </ScrollView>
+    <Layout style={styles.container}>
+      <Layout style={styles.header}>
+        <Button appearance={"ghost"} accessoryRight={MapIcon} />
+        <EnhancedHeader tour={activeTour}></EnhancedHeader>
         <Button
-          status="basic"
-          onPress={() => setModalVisible(true)}
-          style={{ width: 400, marginVertical: 5 }}
-          accessoryLeft={<FontAwesomeIcon icon="plus" />}
-        >
-          Neue Tour
-        </Button>
-        <Button
-          status="basic"
-          onPress={() => deleteAllTours()}
-          accessoryLeft={<FontAwesomeIcon icon="trash" />}
-          style={{ width: 400, marginBottom: 5 }}
-        >
-          Alle Touren löschen
-        </Button>
-
-        <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
-          <Card disabled={true}>
-            <Text>Bitte geben Sie ihren Tournamen ein:</Text>
-            <Input
-              status="primary"
-              placeholder="Tourname"
-              value={tourName}
-              onChangeText={(tourText) => setTourName(tourText)}
-            />
-            <Datepicker
-              date={startDate}
-              onSelect={(selectedDate) => setStartDate(selectedDate)}
-            />
-            <Button
-              onPress={async () => {
-                await createTour(tourName, startDate.getTime());
-                setModalVisible(false);
-                setTourName("Tourname");
-              }}
-            >
-              Speichern
-            </Button>
-          </Card>
-        </Modal>
+          appearance={"ghost"}
+          accessoryRight={EditIcon}
+          onPress={() =>
+            router.push({
+              pathname: "./touren",
+              params: {
+                tourId: activeTour?.id,
+                tourTitle: activeTour?.title,
+              },
+            })
+          }
+        />
       </Layout>
-    </SafeAreaView>
+      <Layout style={[styles.box, { zIndex: -1 }]}>
+        <Text>This is a text box</Text>
+      </Layout>
+      <Text category="h4" style={styles.header2}>
+        Etappen
+      </Text>
+    </Layout>
   );
 }
 
-const MapIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="map" style={{ height: 24 }} />
+const Header = ({ tour }: { tour: Tour }) => (
+  <Text category="h3" style={styles.headerText}>
+    {tour.title}
+  </Text>
 );
 
-const EditIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="edit" style={{ height: 24 }} />
-);
+const enhance = withObservables(["tour"], ({ tour }) => ({
+  tour,
+}));
+const EnhancedHeader = enhance(Header);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  backdrop: {
-    backgroundColor: "rgba(0,0,0,0.5)",
   },
   header: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flexDirection: "row",
     alignItems: "center",
-    padding: 8,
-    paddingHorizontal: 16,
+    elevation: 8,
   },
   headerText: {
     flex: 1,
     textAlign: "center",
+  },
+  box: {
+    padding: 40,
+    backgroundColor: "#EDCBB4",
+    elevation: 4,
+  },
+  header2: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    textAlign: "left",
   },
 });

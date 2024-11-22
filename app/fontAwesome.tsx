@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import Icon from "@expo/vector-icons/FontAwesome6";
 
 export const FontAwesomeIconsPack = {
-  name: "FontAwesome",
+  name: "fontAwesome",
   icons: createIconsMap(),
 };
 

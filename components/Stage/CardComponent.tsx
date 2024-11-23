@@ -34,6 +34,13 @@ const style = StyleSheet.create({
         flex: 1, // Allow the element to grow
         borderRadius: 8,
         borderWidth: 0,
+        // Schatten für iOS
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        // Schatten für Android
+        elevation: 3,
     },
     flexContainer:{
         flex:1,

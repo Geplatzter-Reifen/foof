@@ -80,7 +80,8 @@ export const createStage = async (
       stage.tour.set(tour);
       stage.title = title;
       stage.isActive = false;
-      stage.startedAt = updatedStartedAt;
+      stage.startedAt = startedAt ?? Date.now();
+
     });
   });
 };

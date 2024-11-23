@@ -5,13 +5,14 @@ import CoordinateInput from "../../../components/Etappe/CoordinateInput"
 import { StyleSheet } from 'react-native';
 import CardComponent from "../../../components/Etappe/CardComponent"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { Input } from '@ui-kitten/components';
 
 const createManualEtappe: React.FC = () => {
- const navigation= useNavigation();
+ const navigation= useNavigation(); ///changing the title of the page
  const [titleBeingChanged, setTitleBeingChanged] = useState(false)  //// switches title from plain text to the input field
  const [etappeTitle, setEtappeTitle] = useState("Etappe"); ///the name of the title
+ const router = useRouter();
  ////////////compass input variant
  const [startLat, setStartLat]   = useState("");
  const [startLon, setStartLon]   = useState("");
@@ -68,6 +69,16 @@ const createManualEtappe: React.FC = () => {
     const startCoordInput = <CoordinateInput lat={startLat} lon={startLon} setLat={setStartLat} setLon={setStartLon} date={startDate} setDate={setStartDate}/>
     ////coordinate start input
     const endCoordInput = <CoordinateInput lat={endLat} lon={endLon} setLat={setEndLat} setLon={setEndLon} date={endDate} setDate={setEndDate}/>
+
+
+    const onSubmitEtappe=()=>{
+
+
+    }
+   
+
+
+
     return <Layout style={ styles.layout} level="3">
             <ButtonGroup>
                 <Button style={styles.button} onPress={()=>{}}>
@@ -92,10 +103,10 @@ const createManualEtappe: React.FC = () => {
 
             </Layout>
             <ButtonGroup>
-                <Button style={styles.button} >
+                <Button style={styles.button} onPress={()=>{router.back()}}>
                     <Text category="h1">abbrechen</Text>
                 </Button>
-                <Button style={styles.button} >
+                <Button style={styles.button}  onPress={()=>{onSubmitEtappe}}>
                     <Text category="h1">erstellen</Text>
                 </Button>
             </ButtonGroup>

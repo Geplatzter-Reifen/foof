@@ -133,10 +133,10 @@ const createManualStage: React.FC = () => {
             </Layout>
             <ButtonGroup>
                 <Button style={styles.button} onPress={()=>{router.back()}}>
-                    <Text category="h1">abbrechen</Text>
+                    <Text category="h1">ABBRECHEN</Text>
                 </Button>
                 <Button style={styles.button}  onPress={()=>{onSubmitEtappe()}}>
-                    <Text category="h1">erstellen</Text>
+                    <Text category="h1">ERSTELLEN</Text>
                 </Button>
             </ButtonGroup>
     </Layout>;

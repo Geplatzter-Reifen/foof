@@ -3,20 +3,20 @@ import { StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import {
-  getAllTripsByJourneyIdQuery,
-  getJourneyByJourneyId,
-  setJourneyActive,
-  setJourneyInactive,
+  getAllStagesByTourIdQuery,
+  getTourByTourId,
+  setTourActive,
+  setTourInactive,
 } from "@/model/database_functions";
 import { useEffect, useState } from "react";
-import { Journey } from "@/model/model";
-import { Stack, Link} from "expo-router";
+import { Tour } from "@/model/model";
+import { Stack } from "expo-router";
 import { Layout, Button, Text } from "@ui-kitten/components";
-import TripList from "@/components/Journey/TripList";
+import StageList from "@/components/Tour/StageList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import { CreateManualTripModal } from "@/components/Journey/CreateManualTripModal";
+import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal";
 import RNFadedScrollView from "rn-faded-scrollview";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { foofTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";
 import { useRouter } from "expo-router";
 
@@ -26,51 +26,52 @@ export default function Reiseuebersicht() {
   const { journeyId, journeysAmount } = useLocalSearchParams<{ journeyId: string; journeysAmount: string }>();
   const [journey, setJourney] = useState<Journey>();
   // const [modalVisible, setModalVisible] = useState(false);
+export default function Touruebersicht() {
+  const { tourId } = useLocalSearchParams<{ tourId: string }>();
+  const [tour, setTour] = useState<Tour>();
+  const [modalVisible, setModalVisible] = useState(false);
   const [, setRefreshTrigger] = useState(0);
-
 
   const reloadScreen = () => setRefreshTrigger((prev) => prev + 1);
 
   useEffect(() => {
     (async () => {
-      setJourney(await getJourneyByJourneyId(journeyId));
+      setTour(await getTourByTourId(tourId));
     })();
-  }, [journeyId]);
+  }, [tourId]);
 
-  const toggleJourneyStatus = async () => {
-    if (journey) {
-      if (journey.isActive) {
-        await setJourneyInactive(journeyId);
+  const toggleTourStatus = async () => {
+    if (tour) {
+      if (tour.isActive) {
+        await setTourInactive(tourId);
       } else {
-        await setJourneyActive(journeyId);
+        await setTourActive(tourId);
       }
     }
     reloadScreen();
   };
 
   return (
-    <Layout style={styles.container} level="3">
+    <Layout style={styles.container} level="2">
       <Stack.Screen
         options={{
-          title: journey?.title,
-          headerTitle: journey?.title,
+          title: tour?.title,
+          headerTitle: tour?.title,
         }}
       />
       <Layout level="1" style={styles.overview}>
         <Text>
-          Start der Reise:{" "}
-          {journey?.startedAt
-            ? dateFormat(new Date(journey?.startedAt), DATE)
-            : ""}
+          Start der Tour:{" "}
+          {tour?.startedAt ? dateFormat(new Date(tour?.startedAt), DATE) : ""}
         </Text>
-        <Text>{"Status: " + (journey?.isActive ? "aktiv" : "inaktiv")}</Text>
-        {journey?.isActive ? (
-          <Button status="basic" onPress={toggleJourneyStatus}>
+        <Text>{"Status: " + (tour?.isActive ? "aktiv" : "inaktiv")}</Text>
+        {tour?.isActive ? (
+          <Button status="basic" onPress={toggleTourStatus}>
             deaktivieren
           </Button>
         ) : (
-          <Button status="info" onPress={toggleJourneyStatus}>
-            Zur Aktiven Reise Machen
+          <Button status="info" onPress={toggleTourStatus}>
+            Zur Aktiven Tour Machen
           </Button>
         )}
       </Layout>
@@ -80,14 +81,14 @@ export default function Reiseuebersicht() {
         fadeSize={10}
         style={styles.scrollView}
         fadeColors={[
-          hexToRgba(foofDarkTheme["color-basic-900"], 0.18),
-          hexToRgba(foofDarkTheme["color-basic-900"], 0.9),
+          hexToRgba(foofTheme["color-basic-200"], 0.18),
+          hexToRgba(foofTheme["color-basic-200"], 0.9),
         ]}
-        startFadeStyle={styles.fadeStyle}
-        endFadeStyle={styles.fadeStyle}
+        // startFadeStyle={styles.fadeStyle}
+        // endFadeStyle={styles.fadeStyle}
       >
-        <Layout>
-          <TripList trips={getAllTripsByJourneyIdQuery(journeyId)} />
+        <Layout level="2">
+          <StageList stages={getAllStagesByTourIdQuery(tourId)} />
         </Layout>
       </RNFadedScrollView>
       <Button
@@ -96,10 +97,7 @@ export default function Reiseuebersicht() {
         style={styles.button}
         onPress={() => router.push("./createManualEtappe?reiseId=`${journeyID}`")}
       >
-
-              Ettape Manuell Eintragen
-
-
+        Etappe Manuell Eintragen
       </Button>
 
       {/*<CreateManualTripModal*/}
@@ -125,10 +123,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 15,
   },
-  fadeStyle: {
-    color: foofDarkTheme["background-basic-color-3"],
-    backgroundColor: foofDarkTheme["background-basic-color-3"],
-  },
+  // fadeStyle: {
+  //   color: foofDarkTheme["background-basic-color-3"],
+  //   backgroundColor: foofDarkTheme["background-basic-color-3"],
+  // },
   button: {
     margin: 15,
   },

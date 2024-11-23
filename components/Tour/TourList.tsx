@@ -1,37 +1,37 @@
-import { Journey } from "@/model/model";
+import { Tour } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Text, Card, Layout } from "@ui-kitten/components";
 import { Link } from "expo-router";
 import { DATE, dateFormat } from "@/utils/dateUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
+const TourList = ({ tours }: { tours: Tour[] }) => {
   return (
     <>
-      {journeys.map((journey) => (
+      {tours.map((tour) => (
         <Link
           asChild
           style={{
             width: 400, // soll später dynamisch werden
           }}
-          key={journey.id}
+          key={tour.id}
           href={{
-            pathname: "/(tabs)/(reisen)/[journeyId]",
-            params: { journeyId: journey.id,  journeysAmount:journeys.length },
+            pathname: "/(tabs)/(touren)/[tourId]",
+            params: { tourId: tour.id },
           }}
         >
-          <Card header={<Text category="h3">{journey.title}</Text>}>
+          <Card header={<Text category="h3">{tour.title}</Text>}>
             <Layout>
-              {journey.startedAt && (
+              {tour.startedAt && (
                 <Layout style={{ flexDirection: "row" }}>
                   <FontAwesomeIcon icon="clock" />
-                  <Text> {dateFormat(new Date(journey.startedAt), DATE)}</Text>
+                  <Text> {dateFormat(new Date(tour.startedAt), DATE)}</Text>
                 </Layout>
               )}
-              {journey.finishedAt && (
+              {tour.finishedAt && (
                 <Layout style={{ flexDirection: "row" }}>
                   <FontAwesomeIcon icon="flag" />
-                  <Text> {dateFormat(new Date(journey.finishedAt), DATE)}</Text>
+                  <Text> {dateFormat(new Date(tour.finishedAt), DATE)}</Text>
                 </Layout>
               )}
             </Layout>
@@ -42,5 +42,5 @@ const JourneyList = ({ journeys }: { journeys: Journey[] }) => {
   );
 };
 
-const enhance = withObservables(["journeys"], ({ journeys }) => ({ journeys }));
-export default enhance(JourneyList);
+const enhance = withObservables(["tours"], ({ tours }) => ({ tours }));
+export default enhance(TourList);

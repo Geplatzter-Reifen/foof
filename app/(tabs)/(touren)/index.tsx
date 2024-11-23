@@ -27,23 +27,19 @@ const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
     {...props}
     name="map"
-    style={[props?.style, { height: 24, width: "100%" }]}
+    style={[props?.style, { height: 24, width: "auto" }]}
   />
 );
 
 const EditIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon
-    {...props}
-    name="edit"
-    style={[props?.style, { height: 24, width: "100%" }]}
-  />
+  <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
 );
 
 const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
     {...props}
     name="plus"
-    style={[props?.style, { height: 40, width: "100%" }]}
+    style={[props?.style, { height: 40, width: "auto" }]}
   />
 );
 
@@ -145,11 +141,6 @@ const styles = StyleSheet.create({
   header2: {
     marginHorizontal: 15,
     marginVertical: 10,
-  },
-  box: {
-    padding: 40,
-    backgroundColor: "#EDCBB4",
-    elevation: 3,
   },
   button: {
     position: "absolute",

@@ -14,11 +14,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/model/database_functions";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon
-    {...props}
-    name="chevron-left"
-    style={[props?.style, { height: 24, width: "100%" }]}
-  />
+  <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
 );
 
 export default function Touren() {

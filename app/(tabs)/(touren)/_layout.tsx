@@ -10,6 +10,7 @@ export default function ReiseStackLayout() {
         headerStyle: {
           backgroundColor: foofDarkTheme["color-basic-500"],
         },
+        contentStyle: { backgroundColor: "#000000" },
       }}
     >
       <Stack.Screen
@@ -21,7 +22,7 @@ export default function ReiseStackLayout() {
       <Stack.Screen
         name={"touren"}
         options={{
-          headerTitle: "Touren",
+          headerShown: false,
         }}
       ></Stack.Screen>
     </Stack>

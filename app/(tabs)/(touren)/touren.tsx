@@ -1,8 +1,25 @@
-import { Input, Layout, Text } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
-import { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import {
+  Divider,
+  Icon,
+  IconElement,
+  Input,
+  Layout,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+} from "@ui-kitten/components";
+import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/model/database_functions";
+
+const BackIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon
+    {...props}
+    name="chevron-left"
+    style={[props?.style, { height: 24, width: "100%" }]}
+  />
+);
 
 export default function Touren() {
   const params = useLocalSearchParams() as {
@@ -18,14 +35,31 @@ export default function Touren() {
     });
   };
 
+  const renderBackAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={BackIcon}
+      hitSlop={15}
+      onPress={() => router.back()}
+    />
+  );
+
   return (
     <Layout style={styles.container}>
-      <Text category={"h4"}>Tourname ändern</Text>
-      <Text>Aktueller Tourname: {tourname}</Text>
-      <Input
-        placeholder={"Neuer Tourname"}
-        onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
-      ></Input>
+      <TopNavigation
+        title={() => <Text category={"h4"}>Touren</Text>}
+        accessoryLeft={renderBackAction}
+        style={styles.header}
+        alignment={"center"}
+      ></TopNavigation>
+      <Divider />
+      <Layout style={styles.body}>
+        <Text category={"h4"}>Tourname ändern</Text>
+        <Text>Aktueller Tourname: {tourname}</Text>
+        <Input
+          placeholder={"Neuer Tourname"}
+          onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
+        ></Input>
+      </Layout>
     </Layout>
   );
 }
@@ -33,6 +67,12 @@ export default function Touren() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  body: {
+    margin: 15,
     alignItems: "center",
   },
 });

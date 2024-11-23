@@ -61,9 +61,7 @@ export default function Touruebersicht() {
   }, []);
 
   const Header = ({ tour }: { tour: Tour }) => (
-    <Text status={"primary"} category="h4">
-      {tour.title}
-    </Text>
+    <Text category="h4">{tour.title}</Text>
   );
 
   const enhance = withObservables([], () => ({
@@ -72,12 +70,13 @@ export default function Touruebersicht() {
   const EnhancedHeader = enhance(Header);
 
   const renderMapAction = (): React.ReactElement => (
-    <TopNavigationAction icon={MapIcon} />
+    <TopNavigationAction icon={MapIcon} hitSlop={15} />
   );
 
   const renderEditAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={EditIcon}
+      hitSlop={15}
       onPress={() =>
         router.push({
           pathname: "./touren",
@@ -95,15 +94,20 @@ export default function Touruebersicht() {
   }
 
   return (
-    <Layout style={styles.container}>
-      <TopNavigation
-        title={EnhancedHeader}
-        accessoryLeft={renderMapAction}
-        accessoryRight={renderEditAction}
-        style={styles.header}
-        alignment={"center"}
-      ></TopNavigation>
-      <Divider />
+    <Layout level={"2"} style={styles.container}>
+      <Layout>
+        <TopNavigation
+          title={EnhancedHeader}
+          accessoryLeft={renderMapAction}
+          accessoryRight={renderEditAction}
+          style={styles.header}
+          alignment={"center"}
+        ></TopNavigation>
+        <Divider />
+      </Layout>
+      <Text category="h5" style={styles.header2}>
+        Etappen
+      </Text>
       <RNFadedScrollView
         allowStartFade={true}
         horizontal={false}
@@ -115,9 +119,7 @@ export default function Touruebersicht() {
         // startFadeStyle={styles.fadeStyle}
         // endFadeStyle={styles.fadeStyle}
       >
-        <Layout level="2">
-          <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
-        </Layout>
+        <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>
       <CreateManualStageModal
         isVisible={modalVisible}
@@ -139,6 +141,10 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  header2: {
+    marginHorizontal: 15,
+    marginVertical: 10,
   },
   box: {
     padding: 40,

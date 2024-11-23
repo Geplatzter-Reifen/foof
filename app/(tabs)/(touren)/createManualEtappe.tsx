@@ -79,7 +79,7 @@ const createManualEtappe: React.FC = () => {
 
 
 
-    return <Layout style={ styles.layout} level="3">
+    return <Layout style={ styles.layout} level="2">
             <ButtonGroup>
                 <Button style={styles.button} onPress={()=>{}}>
 
@@ -96,7 +96,7 @@ const createManualEtappe: React.FC = () => {
                 </Button>
             </ButtonGroup>
 
-            <Layout style={ styles.cardsContainer} level="3">
+            <Layout style={ styles.cardsContainer} level="2">
                 <CardComponent title="Start" form={startCoordInput}/>
 
                 <CardComponent title="Ende" form={endCoordInput}/>

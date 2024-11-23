@@ -8,7 +8,7 @@ interface ButtonGroupProps {
 
 function ButtonGroup({ children }: ButtonGroupProps) {
     return (
-        <Layout style={style.buttonsContainer} level="3">
+        <Layout style={style.buttonsContainer} level="2">
             {children}
         </Layout>
     );

@@ -21,12 +21,8 @@ import { hexToRgba } from "@/utils/colorUtil";
 import { useRouter } from "expo-router";
 
 
-export default function Reiseuebersicht() {
-    const router = useRouter();
-  const { journeyId, journeysAmount } = useLocalSearchParams<{ journeyId: string; journeysAmount: string }>();
-  const [journey, setJourney] = useState<Journey>();
-  // const [modalVisible, setModalVisible] = useState(false);
 export default function Touruebersicht() {
+  const router = useRouter();
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   const [tour, setTour] = useState<Tour>();
   const [modalVisible, setModalVisible] = useState(false);
@@ -95,7 +91,7 @@ export default function Touruebersicht() {
         status="basic"
         accessoryLeft={<FontAwesomeIcon icon="add" />}
         style={styles.button}
-        onPress={() => router.push("./createManualEtappe?reiseId=`${journeyID}`")}
+        onPress={() => router.push("./createManualEtappe?reiseId=`${tourID}`")}
       >
         Etappe Manuell Eintragen
       </Button>
@@ -108,6 +104,7 @@ export default function Touruebersicht() {
     </Layout>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

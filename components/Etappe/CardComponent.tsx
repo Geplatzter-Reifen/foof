@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Card, Text, Layout }from "@ui-kitten/components";
+import {Card, Text, Layout, useTheme }from "@ui-kitten/components";
 import { StyleSheet } from 'react-native';
 
 interface cardProps{
@@ -10,13 +10,14 @@ interface cardProps{
 }
 
 const cardHeder = ({ title }: { title: string }): React.ReactElement => {
-    return <Text style={{textAlign:"center", padding:5}} category="h4">{title}</Text>
+    const theme = useTheme();
+    return <Text style={{textAlign:"center", padding:5, borderBottomColor: theme['color-basic-500']}} category="h4">{title}</Text>
 }
     
 function CardComponent(props:cardProps) {
     const {form, title}= props
     return (
-        <Layout style={style.flexContainer} level="3">
+        <Layout style={style.flexContainer} level="2">
             <Card  style={style.card} header={() => cardHeder({ title })}>
                 {form}
             </Card>

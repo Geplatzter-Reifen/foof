@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import {getStageAvgSpeedInKmh} from "./statisticsService"
 import {
   createLocation,
   createStage,
@@ -8,6 +9,7 @@ import {
   getTourByTourId,
   setStageActive,
   setStageDistance,
+  setStageAvgSpeed,
   finishStage,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
@@ -18,7 +20,10 @@ export async function createManualStage(
   stageName: string,
   startingCoordinatesString: string,
   endCoordinatesString: string,
+  startTime:Date,
+  endTime:Date,
   tourId?: string,
+  
 ) {
   if (!stageName || stageName.trim() === "") {
     throw new Error("Bitte gib einen Tournamen an");
@@ -36,8 +41,12 @@ export async function createManualStage(
   if (startingCoordinates === null || endCoordinates === null) {
     throw new Error("Ungültiges Koordinatenformat");
   }
+  
+  if (endTime<startTime){
+    throw new Error("Start und Endzeit sind ungültig")
+  }
 
-  let stage = await createStage(tour.id, stageName);
+  let stage = await createStage(tour.id, stageName,startTime.getTime());
 
   await stage.addLocation(
     startingCoordinates?.latitude,
@@ -48,6 +57,13 @@ export async function createManualStage(
     stage.id,
     calculateDistance(startingCoordinates, endCoordinates),
   );
+  
+  let speed = getStageAvgSpeedInKmh(stage)
+  
+  await setStageAvgSpeed(stage.id,speed)
+  
+  finishStage(stage.id, endTime.getTime())
+  
 }
 
 export async function startAutomaticTracking() {

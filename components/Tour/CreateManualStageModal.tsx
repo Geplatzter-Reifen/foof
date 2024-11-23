@@ -28,14 +28,14 @@ export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
   };
 
   const onSave = async () => {
-    try {
-      await createManualStage(stageName, startCoords, endCoords, tourId);
-      reset();
-    } catch (err) {
-      if (err instanceof Error) {
-        setErrorText(err.message);
-      }
-    }
+    // try {
+    //   await createManualStage(stageName, startCoords, endCoords, tourId);
+    //   reset();
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     setErrorText(err.message);
+    //   }
+    // }
   };
 
   return (

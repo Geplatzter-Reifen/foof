@@ -45,14 +45,14 @@ function CoordinateInput(props:CoordinateInputProps) {
                     style={styles.input}
                     value={lat}
                     label="Latitude"
-                    onChangeText={(nextValue) => setLat(nextValue)}
+                    onChangeText={(nextValue) => setLat(nextValue.trim())}
                     maxLength={20}
                 />
                 <Input
                     style={styles.input}
                     value={lon}
                     label="Longitude"
-                    onChangeText={(nextValue) => setLon(nextValue)}
+                    onChangeText={(nextValue) => setLon(nextValue.trim())}
                     maxLength={20}
                 />
             </Layout>

@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { foofDarkTheme } from "@/constants/custom-theme";
-import createManualEtappe from "./createManualEtappe";
+import createManualEtappe from "./createManualStage";
 
 
 
@@ -23,10 +23,10 @@ export default function ReiseStackLayout() {
                 }}
             />
             <Stack.Screen
-                name="createManualEtappe"
+                name="createManualStage"
                 options={{
                     headerShown: true,
-                    title: "Etappe"
+                    title: "Stage"
                 }}
             />
         </Stack>

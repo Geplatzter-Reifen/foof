@@ -91,7 +91,7 @@ export default function Touruebersicht() {
         status="basic"
         accessoryLeft={<FontAwesomeIcon icon="add" />}
         style={styles.button}
-        onPress={() => router.push("./createManualEtappe?reiseId=`${tourID}`")}
+        onPress={() => router.push(`./createManualStage?tourId=${tourId}`)}
       >
         Etappe Manuell Eintragen
       </Button>

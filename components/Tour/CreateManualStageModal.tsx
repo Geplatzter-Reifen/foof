@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
-import { createManualStage } from "@/services/tracking";
 import { StyleSheet } from "react-native";
 
 interface CreateManualStageModalProps {

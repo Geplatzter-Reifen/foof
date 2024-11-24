@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Layout, Card, Button } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 
 interface ButtonGroupProps {

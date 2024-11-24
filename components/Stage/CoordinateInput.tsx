@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Platform, StyleSheet } from "react-native";
-import { Input, Layout, Button, Text, useTheme } from "@ui-kitten/components";
+import { Input, Layout, Button, useTheme } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import DateTimePicker, {
   DateTimePickerEvent,
@@ -33,13 +33,7 @@ function CoordinateInput(props: CoordinateInputProps) {
     setDate(currentTime);
   };
 
-  const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString(
-    [],
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-    },
-  )}`;
+ 
   return (
     <>
       {/* Latitude and Longitude Inputs */}

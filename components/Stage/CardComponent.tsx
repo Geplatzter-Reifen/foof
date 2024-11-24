@@ -8,7 +8,7 @@ interface cardProps {
   title: string;
 }
 
-const cardHeder = ({ title }: { title: string }): React.ReactElement => {
+const CardHeder = ({ title }: { title: string }): React.ReactElement => {
   const theme = useTheme();
   return (
     <Text
@@ -28,7 +28,7 @@ function CardComponent(props: cardProps) {
   const { form, title } = props;
   return (
     <Layout style={style.flexContainer} level="2">
-      <Card style={style.card} header={() => cardHeder({ title })}>
+      <Card style={style.card} header={() => CardHeder({ title })}>
         {form}
       </Card>
     </Layout>

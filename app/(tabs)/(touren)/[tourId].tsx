@@ -24,7 +24,6 @@ export default function Touruebersicht() {
   const router = useRouter();
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   const [tour, setTour] = useState<Tour>();
-  const [modalVisible, setModalVisible] = useState(false);
   const [, setRefreshTrigger] = useState(0);
 
   const reloadScreen = () => setRefreshTrigger((prev) => prev + 1);
@@ -50,6 +49,7 @@ export default function Touruebersicht() {
     <Layout style={styles.container} level="2">
       <Stack.Screen
         options={{
+          headerShown: true,
           title: tour?.title,
           headerTitle: tour?.title,
         }}
@@ -79,8 +79,6 @@ export default function Touruebersicht() {
           hexToRgba(foofTheme["color-basic-200"], 0.18),
           hexToRgba(foofTheme["color-basic-200"], 0.9),
         ]}
-        // startFadeStyle={styles.fadeStyle}
-        // endFadeStyle={styles.fadeStyle}
       >
         <Layout level="2">
           <StageList stages={getAllStagesByTourIdQuery(tourId)} />
@@ -94,12 +92,6 @@ export default function Touruebersicht() {
       >
         Etappe Manuell Eintragen
       </Button>
-
-      {/*<CreateManualTripModal*/}
-      {/*  isVisible={modalVisible}*/}
-      {/*  onClose={() => setModalVisible(false)}*/}
-      {/*  journeyId={journeyId}*/}
-      {/*/>*/}
     </Layout>
   );
 }
@@ -118,10 +110,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 15,
   },
-  // fadeStyle: {
-  //   color: foofDarkTheme["background-basic-color-3"],
-  //   backgroundColor: foofDarkTheme["background-basic-color-3"],
-  // },
   button: {
     margin: 15,
   },

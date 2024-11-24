@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
-import createManualEtappe from "./createManualStage";
 
 export default function ReiseStackLayout() {
   return (

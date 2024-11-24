@@ -9,7 +9,7 @@ import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 
-const createManualStage: React.FC = () => {
+const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   const navigation = useNavigation(); ///changing the title of the page
   const [titleBeingChanged, setTitleBeingChanged] = useState(false); //// switches title from plain text to the input field
@@ -170,7 +170,7 @@ const createManualStage: React.FC = () => {
   );
 };
 
-export default createManualStage;
+export default CreateManualStage;
 
 const styles = StyleSheet.create({
   cardsContainer: {

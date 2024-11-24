@@ -20,7 +20,6 @@ import { foofTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";
 import { useRouter } from "expo-router";
 
-
 export default function Touruebersicht() {
   const router = useRouter();
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -104,7 +103,6 @@ export default function Touruebersicht() {
     </Layout>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

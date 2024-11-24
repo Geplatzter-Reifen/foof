@@ -81,7 +81,6 @@ export const createStage = async (
       stage.title = title;
       stage.isActive = false;
       stage.startedAt = startedAt ?? Date.now();
-
     });
   });
 };

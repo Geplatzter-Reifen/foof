@@ -90,18 +90,18 @@ export default function Touruebersicht() {
   }
 
   return (
-    <Layout level={"2"} style={styles.container}>
+    <Layout level="2" style={styles.container}>
       <Layout>
         <TopNavigation
           title={EnhancedHeader}
           accessoryLeft={renderMapAction}
           accessoryRight={renderEditAction}
           style={styles.header}
-          alignment={"center"}
+          alignment="center"
         ></TopNavigation>
         <Divider />
       </Layout>
-      <Text category="h5" style={styles.header2}>
+      <Text category="h5" style={styles.stagesHeader}>
         Etappen
       </Text>
       <RNFadedScrollView
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
-  header2: {
+  stagesHeader: {
     marginHorizontal: 15,
     marginVertical: 10,
   },

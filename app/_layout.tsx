@@ -20,6 +20,7 @@ import { default as mapping } from "@/mapping.json";
 
 library.add(far, fas, fab);
 
+// enables additional status bar offset for UI Kitten measurable elements like Modal and Popover
 ModalService.setShouldUseTopInsets = true;
 
 const USE_DARK_THEME = false;

@@ -17,11 +17,13 @@ const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
 );
 
+type TourenParams = {
+  tourId: string;
+  tourTitle: string;
+};
+
 export default function Touren() {
-  const params = useLocalSearchParams() as {
-    tourId: string;
-    tourTitle: string;
-  };
+  const params = useLocalSearchParams() as TourenParams;
   const { tourId, tourTitle } = params;
   const [tourname, setTourname] = useState(tourTitle);
 

@@ -14,7 +14,6 @@ import { Stack } from "expo-router";
 import { Layout, Button, Text } from "@ui-kitten/components";
 import StageList from "@/components/Tour/StageList";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { foofTheme } from "@/constants/custom-theme";
 import { hexToRgba } from "@/utils/colorUtil";

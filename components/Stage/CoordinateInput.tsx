@@ -33,7 +33,6 @@ function CoordinateInput(props: CoordinateInputProps) {
     setDate(currentTime);
   };
 
- 
   return (
     <>
       {/* Latitude and Longitude Inputs */}

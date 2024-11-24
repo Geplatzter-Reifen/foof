@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Text, Layout, Card, Button } from "@ui-kitten/components";
+import React, { useState, useEffect, useMemo } from "react";
+import { Text, Layout, Button } from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Stage/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
 import { StyleSheet } from "react-native";
@@ -29,31 +29,38 @@ const CreateManualStage: React.FC = () => {
   ////////////on the map input variant
 
   // Title input field
-  const titleInput = (
-    <Layout style={styles.headerInput}>
-      <Input
-        value={stageTitle}
-        onChangeText={(nextValue) => setStageTitle(nextValue)} // Update title
-        maxLength={20} // Restrict input to 20 characters
-      />
-    </Layout>
+  const titleInput = useMemo(
+    () => (
+      <Layout style={styles.headerInput}>
+        <Input
+          value={stageTitle}
+          onChangeText={(nextValue) => setStageTitle(nextValue)}
+          maxLength={20}
+        />
+      </Layout>
+    ),
+    [stageTitle],
   );
 
-  // Button to toggle editing
-  const changingTitleButton = (
-    <Button
-      appearance="ghost"
-      onPress={() => setTitleBeingChanged((prevState) => !prevState)} // Toggle edit mode
-    >
-      {titleBeingChanged ? (
-        <FontAwesomeIcon icon="check" size={25} /> // Accept changes
-      ) : (
-        <FontAwesomeIcon icon="edit" size={25} /> // Edit title
-      )}
-    </Button>
+  //switching between done and edit
+
+  const changingTitleButton = useMemo(
+    () => (
+      <Button
+        appearance="ghost"
+        onPress={() => setTitleBeingChanged((prevState) => !prevState)}
+      >
+        {titleBeingChanged ? (
+          <FontAwesomeIcon icon="check" size={25} />
+        ) : (
+          <FontAwesomeIcon icon="edit" size={25} />
+        )}
+      </Button>
+    ),
+    [titleBeingChanged],
   );
 
-  // Update header options whenever the title or edit state changes
+  // Update header input ot text based on if  title or edit state changes
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () =>
@@ -67,7 +74,13 @@ const CreateManualStage: React.FC = () => {
       headerRight: () => changingTitleButton, // Set the button on the right
       headerTitleAlign: "center", // Keep the title centered
     });
-  }, [navigation, titleBeingChanged, stageTitle]);
+  }, [
+    navigation,
+    titleInput,
+    changingTitleButton,
+    titleBeingChanged,
+    stageTitle,
+  ]);
 
   ////coordinate start input
   const startCoordInput = (

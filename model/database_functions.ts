@@ -53,6 +53,7 @@ export const createStage = async (
   tourId: string,
   title: string,
   startedAt?: number,
+  finishedAt?: number,
 ): Promise<Stage> => {
   return database.write(async () => {
     const tour = await database.get<Tour>("tours").find(tourId);
@@ -81,6 +82,7 @@ export const createStage = async (
       stage.title = title;
       stage.isActive = false;
       stage.startedAt = Date.now();
+      stage.finishedAt = finishedAt;
     });
   });
 };
@@ -110,20 +112,12 @@ export const setStageAvgSpeed = async (stageId: string, speed: number) => {
   });
 };
 
-export const finishStage = async (stageId: string, finishTime: number) => {
+export const finishStage = async (stageId: string, finishTime?: number) => {
   void database.write(async () => {
     const stageToFinish = await getStageByStageId(stageId);
     await stageToFinish.update(() => {
-      stageToFinish.finishedAt = finishTime;
-    });
-  });
-};
-
-export const setStageInactive = async (stageId: string) => {
-  await database.write(async () => {
-    const stage = await database.get<Stage>("stages").find(stageId);
-    await stage.update(() => {
-      stage.isActive = false;
+      stageToFinish.finishedAt = finishTime ?? Date.now();
+      stageToFinish.isActive = false;
     });
   });
 };
@@ -187,8 +181,21 @@ export const getAllTours = () => getAllToursQuery.fetch();
 export const getTourByTourIdQuery = (tourId: string) => {
   return database.get<Tour>("tours").query(Q.where("id", tourId));
 };
+
 export const getTourByTourId = (tourId: string) => {
   return database.get<Tour>("tours").find(tourId);
+};
+
+export const updateTourNameById = async (
+  tourId: string,
+  newTourName: string,
+) => {
+  await database.write(async () => {
+    const tour = await getTourByTourId(tourId);
+    await tour.update(() => {
+      tour.title = newTourName;
+    });
+  });
 };
 
 export const getAllStagesByTourIdQuery = (tourId: string) => {

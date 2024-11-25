@@ -20,10 +20,6 @@ const enhance = withObservables(["stages"], ({ stages }) => ({ stages }));
 export default enhance(StageList);
 
 const styles = StyleSheet.create({
-  list: {
-    paddingHorizontal: 15,
-    paddingTop: 15,
-  },
   noStageText: {
     marginTop: 15,
     textAlign: "center",

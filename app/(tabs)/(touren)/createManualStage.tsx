@@ -156,12 +156,7 @@ const CreateManualStage: React.FC = () => {
         >
           <Text category="h1">ABBRECHEN</Text>
         </Button>
-        <Button
-          style={styles.button}
-          onPress={() => {
-            onSubmitEtappe();
-          }}
-        >
+        <Button style={styles.button} onPress={onSubmitStage}>
           <Text category="h1">ERSTELLEN</Text>
         </Button>
       </ButtonGroup>

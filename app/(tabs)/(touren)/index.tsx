@@ -21,7 +21,6 @@ import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtil";
 import { foofTheme } from "@/constants/custom-theme";
 import StageList from "@/components/Tour/StageList";
-import { CreateManualStageModal } from "@/components/Tour/CreateManualStageModal";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -45,7 +44,6 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 
 export default function Touruebersicht() {
   const [activeTour, setActiveTour] = useState<Tour>();
-  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -117,15 +115,17 @@ export default function Touruebersicht() {
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>
-      <CreateManualStageModal
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        tourId={activeTour.id}
-      />
       <Button
         style={styles.button}
         accessoryLeft={PlusIcon}
-        onPress={() => setModalVisible(true)}
+        onPress={() =>
+          router.push({
+            pathname: "./createManualStage",
+            params: {
+              tourId: activeTour?.id,
+            },
+          })
+        }
       ></Button>
     </Layout>
   );

@@ -9,7 +9,7 @@ export default function ReiseStackLayout() {
         headerTintColor: theme["text-basic-color"],
         headerShown: true,
         headerStyle: {
-          backgroundColor: theme["color-basic-100"],
+          backgroundColor: theme["background-basic-color-1"],
         },
       }}
     >

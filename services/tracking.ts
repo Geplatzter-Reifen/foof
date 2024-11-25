@@ -51,8 +51,8 @@ export async function createManualStage(
   let stage = await createStage(tour.id, stageName, startTime.getTime());
 
   await stage.addLocation(
-      startingCoordinates?.latitude,
-      startingCoordinates?.longitude,
+    startingCoordinates?.latitude,
+    startingCoordinates?.longitude,
   );
   await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
   await setStageDistance(

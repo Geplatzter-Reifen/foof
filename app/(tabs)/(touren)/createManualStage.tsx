@@ -69,9 +69,7 @@ const CreateManualStage: React.FC = () => {
         titleBeingChanged ? (
           titleInput
         ) : (
-          <Text category="h4" status="primary">
-            {stageTitle}
-          </Text>
+          <Text category="h4">{stageTitle}</Text>
         ), // Switch between input and title
       headerRight: () => changingTitleButton, // Set the button on the right
       headerTitleAlign: "center", // Keep the title centered

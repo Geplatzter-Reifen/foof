@@ -7,17 +7,18 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 
 interface CoordinateInputProps {
-  lat: string;
-  setLat: (coord: string) => void;
-  lon: string;
-  setLon: (coord: string) => void;
+  latitude: string;
+  setLatitude: (coord: string) => void;
+  longitude: string;
+  setLongitude: (coord: string) => void;
   date: Date;
   setDate: (dateInput: Date) => void;
 }
 
 function CoordinateInput(props: CoordinateInputProps) {
   const theme = useTheme();
-  const { lat, setLat, lon, setLon, date, setDate } = props;
+  const { latitude, setLatitude, longitude, setLongitude, date, setDate } =
+    props;
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -39,16 +40,16 @@ function CoordinateInput(props: CoordinateInputProps) {
       <Layout style={styles.row}>
         <Input
           style={styles.input}
-          value={lat}
+          value={latitude}
           label="Latitude"
-          onChangeText={(nextValue) => setLat(nextValue.trim())}
+          onChangeText={(nextValue) => setLatitude(nextValue.trim())}
           maxLength={20}
         />
         <Input
           style={styles.input}
-          value={lon}
+          value={longitude}
           label="Longitude"
-          onChangeText={(nextValue) => setLon(nextValue.trim())}
+          onChangeText={(nextValue) => setLongitude(nextValue.trim())}
           maxLength={20}
         />
       </Layout>

@@ -104,12 +104,6 @@ const CreateManualStage: React.FC = () => {
     />
   );
 
-  // stageName: string,
-  //     startingCoordinatesString: string,
-  //     endCoordinatesString: string,
-  //     startTime:Date,
-  //     endTime:Date,
-  //     tourId?: string,
   const onSubmitEtappe = async () => {
     try {
       await createManualStageFn(

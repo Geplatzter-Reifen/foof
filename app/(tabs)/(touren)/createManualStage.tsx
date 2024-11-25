@@ -84,10 +84,10 @@ const CreateManualStage: React.FC = () => {
 
   const startCoordInput = (
     <CoordinateInput
-      lat={startLat}
-      lon={startLon}
-      setLat={setStartLat}
-      setLon={setStartLon}
+      latitude={startLatitude}
+      longitude={startLongitude}
+      setLatitude={setStartLatitude}
+      setLongitude={setStartLongitude}
       date={startDate}
       setDate={setStartDate}
     />

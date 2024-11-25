@@ -12,8 +12,12 @@ import {
   finishStage,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
+import { LocationObject } from "expo-location";
 
 const LOCATION_TASK_NAME = "background-location-task";
+
+let lastLocation: LocationObject | undefined = undefined;
+let lastActiveStageId: string | undefined = undefined;
 
 export async function createManualStage(
   stageName: string,
@@ -130,11 +134,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     throw new Error("No active stage set");
   }
 
-  // Fetch all locations for the active stage
-  const locationsForActiveStage = await getAllLocationsByStageId(
-    activeStage.id,
-  );
-
   const currentLocation = {
     latitude: locations[0].coords.latitude,
     longitude: locations[0].coords.longitude,
@@ -147,12 +146,10 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     currentLocation.longitude,
   );
 
-  if (locationsForActiveStage.length >= 1) {
+  if (lastLocation && lastActiveStageId === activeStage.id) {
     const latestLocation = {
-      latitude:
-        locationsForActiveStage[locationsForActiveStage.length - 1].latitude,
-      longitude:
-        locationsForActiveStage[locationsForActiveStage.length - 1].longitude,
+      latitude: lastLocation.coords.latitude,
+      longitude: lastLocation.coords.longitude,
     };
 
     // Calculate the updated distance for the active stage
@@ -164,4 +161,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     // Update the stage distance in the database
     await setStageDistance(activeStage.id, updatedDistance);
   }
+  lastActiveStageId = activeStage.id;
+  lastLocation = locations[0];
 });

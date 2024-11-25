@@ -1,74 +1,143 @@
-import React, { useState } from "react";
+import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import { router } from "expo-router";
 import {
-  getAllToursQuery,
-  createTour,
-  deleteAllTours,
+  getActiveTour,
+  getAllStagesByTourIdQuery,
 } from "@/model/database_functions";
-import TourList from "@/components/Tour/TourList";
-import { ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Tour } from "@/model/model";
 import {
   Layout,
   Button,
-  Modal,
-  Input,
   Text,
-  Card,
-  Datepicker,
+  IconElement,
+  Icon,
+  TopNavigation,
+  TopNavigationAction,
+  Divider,
 } from "@ui-kitten/components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { withObservables } from "@nozbe/watermelondb/react";
+import RNFadedScrollView from "rn-faded-scrollview";
+import { hexToRgba } from "@/utils/colorUtil";
+import { foofTheme } from "@/constants/custom-theme";
+import StageList from "@/components/Tour/StageList";
+import TourStats from "@/components/Statistics/TourStats";
 
-export default function MeineTouren() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [tourName, setTourName] = useState("Tourname");
-  const [startDate, setStartDate] = useState(new Date());
+const MapIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon
+    {...props}
+    name="map"
+    style={[props?.style, { height: 24, width: "auto" }]}
+  />
+);
+
+const EditIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
+);
+
+const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon
+    {...props}
+    name="plus"
+    style={[props?.style, { height: 40, width: "auto" }]}
+  />
+);
+
+export default function Touruebersicht() {
+  const [activeTour, setActiveTour] = useState<Tour>();
+
+  useEffect(() => {
+    (async () => {
+      const activeTour = await getActiveTour();
+      if (activeTour) {
+        setActiveTour(activeTour);
+      }
+    })();
+  }, []);
+
+  const Header = ({ tour }: { tour: Tour }) => (
+    <Text category="h4">{tour.title}</Text>
+  );
+
+  const enhance = withObservables([], () => ({
+    tour: activeTour!,
+  }));
+  const EnhancedHeader = enhance(Header);
+
+  const renderMapAction = (): React.ReactElement => (
+    <TopNavigationAction icon={MapIcon} hitSlop={15} />
+  );
+
+  const renderEditAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={EditIcon}
+      hitSlop={15}
+      onPress={() =>
+        router.push({
+          pathname: "./touren",
+          params: {
+            tourId: activeTour?.id,
+            tourTitle: activeTour?.title,
+          },
+        })
+      }
+    />
+  );
+
+  if (!activeTour) {
+    return null;
+  }
+
   return (
-    <Layout style={styles.container} level="2">
-      <ScrollView>
-        <Layout level="1">
-          <TourList tours={getAllToursQuery} />
-        </Layout>
-      </ScrollView>
-      <Button
-        status="basic"
-        onPress={() => setModalVisible(true)}
-        style={{ width: 400, marginVertical: 5 }}
-        accessoryLeft={<FontAwesomeIcon icon="plus" />}
+    <Layout level="2" style={styles.container}>
+      <Layout>
+        <TopNavigation
+          title={EnhancedHeader}
+          accessoryLeft={renderMapAction}
+          accessoryRight={renderEditAction}
+          style={styles.header}
+          alignment="center"
+        ></TopNavigation>
+        <Divider />
+      </Layout>
+      {activeTour ? (
+        <TourStats
+          startDate={activeTour?.startedAt}
+          endDate={activeTour?.finishedAt}
+          distance={200}
+          elevation={200}
+          speed={20}
+          calories={20}
+        />
+      ) : null}
+      <Text category="h5" style={styles.stagesHeader}>
+        Etappen
+      </Text>
+      <RNFadedScrollView
+        allowStartFade={true}
+        horizontal={false}
+        fadeSize={10}
+        fadeColors={[
+          hexToRgba(foofTheme["color-basic-200"], 0.18),
+          hexToRgba(foofTheme["color-basic-200"], 0.9),
+        ]}
+        // startFadeStyle={styles.fadeStyle}
+        // endFadeStyle={styles.fadeStyle}
       >
-        Neue Tour
-      </Button>
+        <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
+      </RNFadedScrollView>
       <Button
-        status="basic"
-        onPress={() => deleteAllTours()}
-        accessoryLeft={<FontAwesomeIcon icon="trash" />}
-        style={{ width: 400, marginBottom: 5 }}
-      >
-        Alle Touren löschen
-      </Button>
-
-      <Modal visible={modalVisible} backdropStyle={styles.backdrop}>
-        <Card disabled={true}>
-          <Text>Bitte geben Sie ihren Tournamen ein:</Text>
-          <Input
-            status="primary"
-            placeholder="Tourname"
-            value={tourName}
-            onChangeText={(tourText) => setTourName(tourText)}
-          />
-          <Datepicker
-            date={startDate}
-            onSelect={(selectedDate) => setStartDate(selectedDate)}
-          />
-          <Button
-            onPress={async () => {
-              await createTour(tourName, startDate.getTime());
-              setModalVisible(false);
-              setTourName("Tourname");
-            }}
-          >
-            Speichern
-          </Button>
-        </Card>
-      </Modal>
+        style={styles.button}
+        accessoryLeft={PlusIcon}
+        onPress={() =>
+          router.push({
+            pathname: "./createManualStage",
+            params: {
+              tourId: activeTour?.id,
+            },
+          })
+        }
+      ></Button>
     </Layout>
   );
 }
@@ -76,10 +145,21 @@ export default function MeineTouren() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
-  backdrop: {
-    backgroundColor: "rgba(0,0,0,0.5)",
+  header: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  stagesHeader: {
+    marginHorizontal: 15,
+    marginVertical: 10,
+  },
+  button: {
+    position: "absolute",
+    bottom: 35,
+    right: 15,
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    elevation: 3,
   },
 });

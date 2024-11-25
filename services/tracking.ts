@@ -1,23 +1,31 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import { getStageAvgSpeedInKmh } from "./statisticsService";
 import {
   createLocation,
   createStage,
-  getActiveTour,
   getActiveStage,
-  getTourByTourId,
   setStageActive,
   setStageDistance,
+  getTourByTourId,
+  getActiveTour,
+  setStageAvgSpeed,
   finishStage,
 } from "@/model/database_functions";
 import { calculateDistance } from "@/utils/locationUtil";
+import { LocationObject } from "expo-location";
 
 const LOCATION_TASK_NAME = "background-location-task";
+
+let lastLocation: LocationObject | undefined = undefined;
+let lastActiveStageId: string | undefined = undefined;
 
 export async function createManualStage(
   stageName: string,
   startingCoordinatesString: string,
   endCoordinatesString: string,
+  startTime: Date,
+  endTime: Date,
   tourId?: string,
 ) {
   if (!stageName || stageName.trim() === "") {
@@ -36,8 +44,11 @@ export async function createManualStage(
   if (startingCoordinates === null || endCoordinates === null) {
     throw new Error("Ungültiges Koordinatenformat");
   }
+  if (endTime < startTime) {
+    throw new Error("Start und Endzeit sind ungültig");
+  }
 
-  let stage = await createStage(tour.id, stageName);
+  let stage = await createStage(tour.id, stageName, startTime.getTime());
 
   await stage.addLocation(
     startingCoordinates?.latitude,
@@ -48,6 +59,12 @@ export async function createManualStage(
     stage.id,
     calculateDistance(startingCoordinates, endCoordinates),
   );
+
+  let speed = getStageAvgSpeedInKmh(stage);
+
+  await setStageAvgSpeed(stage.id, speed);
+
+  finishStage(stage.id, endTime.getTime());
 }
 
 export async function startAutomaticTracking() {
@@ -83,6 +100,7 @@ export async function stopAutomaticTracking() {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
     await finishStage(stage!.id);
+    lastActiveStageId = undefined;
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");
@@ -106,23 +124,56 @@ function parseCoordinates(
 }
 
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
+  // Handle errors first
   if (error) {
-    console.log(error.message);
-    return;
+    console.error("Error in location task:", error.message);
+    throw error;
   }
-  if (data) {
-    //@ts-ignore
-    const { locations } = data;
-    console.log("New background location: ", locations[0]);
-    console.log("New background location: ", data);
-    let activeStage = await getActiveStage();
-    if (!activeStage) {
-      throw new Error("No active stage set");
-    }
-    await createLocation(
-      activeStage.id,
-      locations[0].coords.latitude,
-      locations[0].coords.longitude,
-    );
+
+  // Proceed if there is data
+  if (!data) {
+    console.warn("No data received in location task.");
+    throw new Error("No data received in location task.");
   }
+
+  // Extract locations from the data (ignoring TypeScript warning)
+  //@ts-ignore
+  const { locations } = data;
+  console.log("New background location received:", locations[0]);
+
+  // Fetch the active stage
+  const activeStage = await getActiveStage();
+  if (!activeStage) {
+    throw new Error("No active stage set");
+  }
+
+  const currentLocation = {
+    latitude: locations[0].coords.latitude,
+    longitude: locations[0].coords.longitude,
+  };
+
+  // Add the new location to the database
+  await createLocation(
+    activeStage.id,
+    currentLocation.latitude,
+    currentLocation.longitude,
+  );
+
+  if (lastLocation && lastActiveStageId === activeStage.id) {
+    const latestLocation = {
+      latitude: lastLocation.coords.latitude,
+      longitude: lastLocation.coords.longitude,
+    };
+
+    // Calculate the updated distance for the active stage
+    const updatedDistance =
+      activeStage.distance + calculateDistance(latestLocation, currentLocation);
+
+    console.log("Updated distance for active stage:", updatedDistance);
+
+    // Update the stage distance in the database
+    await setStageDistance(activeStage.id, updatedDistance);
+  }
+  lastActiveStageId = activeStage.id;
+  lastLocation = locations[0];
 });

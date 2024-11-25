@@ -11,7 +11,8 @@ import { createManualStage as createManualStageFn } from "@/services/tracking";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
-  const navigation = useNavigation(); ///changing the title of the page
+  // changing the title of the page
+  const navigation = useNavigation(); 
   const [titleBeingChanged, setTitleBeingChanged] = useState(false); //// switches title from plain text to the input field
   const [stageTitle, setStageTitle] = useState("Stage"); ///the name of the title
   const router = useRouter();

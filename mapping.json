@@ -1,0 +1,75 @@
+{
+  "components": {
+    "TopNavigationAction": {
+      "meta": {
+        "scope": "mobile",
+        "parameters": {
+          "iconWidth": {
+            "type": "number"
+          },
+          "iconHeight": {
+            "type": "number"
+          },
+          "iconTintColor": {
+            "type": "string"
+          },
+          "iconMarginHorizontal": {
+            "type": "number"
+          }
+        },
+        "appearances": {
+          "default": {
+            "default": true
+          },
+          "control": {
+            "default": false
+          }
+        },
+        "variantGroups": {},
+        "states": {
+          "hover": {
+            "default": false,
+            "priority": 0,
+            "scope": "all"
+          },
+          "active": {
+            "default": false,
+            "priority": 1,
+            "scope": "all"
+          },
+          "focused": {
+            "default": false,
+            "priority": 2,
+            "scope": "all"
+          },
+          "disabled": {
+            "default": false,
+            "priority": 3,
+            "scope": "all"
+          }
+        }
+      },
+      "appearances": {
+        "default": {
+          "mapping": {
+            "iconTintColor": "color-primary-default",
+            "state": {
+              "hover": {
+                "iconTintColor": "color-primary-600"
+              },
+              "focused": {
+                "iconTintColor": "color-primary-600"
+              },
+              "active": {
+                "iconTintColor": "color-primary-600"
+              },
+              "disabled": {
+                "iconTintColor": "color-primary-600"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -53,6 +53,7 @@ export const createStage = async (
   tourId: string,
   title: string,
   startedAt?: number,
+  finishedAt?: number,
 ): Promise<Stage> => {
   return database.write(async () => {
     const tour = await database.get<Tour>("tours").find(tourId);
@@ -80,7 +81,8 @@ export const createStage = async (
       stage.tour.set(tour);
       stage.title = title;
       stage.isActive = false;
-      stage.startedAt = startedAt ?? Date.now();
+      stage.startedAt = Date.now();
+      stage.finishedAt = finishedAt;
     });
   });
 };
@@ -179,8 +181,21 @@ export const getAllTours = () => getAllToursQuery.fetch();
 export const getTourByTourIdQuery = (tourId: string) => {
   return database.get<Tour>("tours").query(Q.where("id", tourId));
 };
+
 export const getTourByTourId = (tourId: string) => {
   return database.get<Tour>("tours").find(tourId);
+};
+
+export const updateTourNameById = async (
+  tourId: string,
+  newTourName: string,
+) => {
+  await database.write(async () => {
+    const tour = await getTourByTourId(tourId);
+    await tour.update(() => {
+      tour.title = newTourName;
+    });
+  });
 };
 
 export const getAllStagesByTourIdQuery = (tourId: string) => {

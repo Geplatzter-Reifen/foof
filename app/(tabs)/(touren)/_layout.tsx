@@ -1,22 +1,28 @@
 import { Stack } from "expo-router";
-import { foofLightTheme } from "@/constants/custom-theme";
+import { useTheme } from "@ui-kitten/components";
 
 export default function ReiseStackLayout() {
+  const theme = useTheme();
   return (
     <Stack
       screenOptions={{
-        headerTintColor: foofLightTheme["color-primary-500"],
+        headerTintColor: theme["text-basic-color"],
         headerShown: true,
         headerStyle: {
-          backgroundColor: foofLightTheme["color-basic-100"],
+          backgroundColor: theme["color-basic-100"],
         },
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          headerShown: true,
-          title: "Meine Touren",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={"touren"}
+        options={{
+          headerShown: false,
         }}
       />
       <Stack.Screen

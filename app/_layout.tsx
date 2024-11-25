@@ -1,7 +1,11 @@
 import { Stack, SplashScreen } from "expo-router";
 import * as eva from "@eva-design/eva";
 import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  IconRegistry,
+  ModalService,
+} from "@ui-kitten/components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +16,12 @@ import { initializeDatabase } from "@/model/database_functions";
 import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
+import { default as mapping } from "@/mapping.json";
 
 library.add(far, fas, fab);
+
+// enables additional status bar offset for UI Kitten measurable elements like Modal and Popover
+ModalService.setShouldUseTopInsets = true;
 
 const USE_DARK_THEME = false;
 
@@ -62,7 +70,7 @@ export default function RootLayout() {
   return (
     <>
       <IconRegistry icons={FontAwesomeIconsPack} />
-      <ApplicationProvider {...eva} theme={theme}>
+      <ApplicationProvider {...eva} customMapping={mapping} theme={theme}>
         <SafeAreaView
           onLayout={() => setLayoutLoaded(true)}
           style={{

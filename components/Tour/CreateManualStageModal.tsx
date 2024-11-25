@@ -59,10 +59,10 @@ export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
           style={styles.input}
         />
         {errorText && <Text>{errorText}</Text>}
+        <Button onPress={onSave}>Speichern</Button>
         <Button status="basic" onPress={reset} style={styles.input}>
           Abbrechen
         </Button>
-        <Button onPress={onSave}>Speichern</Button>
       </Card>
     </Modal>
   );

@@ -143,11 +143,7 @@ const CreateManualStage: React.FC = () => {
 
         <CardComponent title="Ende" form={endCoordInput} />
       </Layout>
-      <ButtonGroup
-        style={{
-          borderRadius: 10, // Add a group-level border radius
-        }}
-      >
+      <ButtonGroup>
         <Button
           style={styles.button}
           onPress={() => {

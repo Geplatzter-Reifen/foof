@@ -28,7 +28,15 @@ function CardComponent(props: cardProps) {
   const { form, title } = props;
   return (
     <Layout style={style.flexContainer} level="2">
-      <Card style={style.card} header={() => CardHeder({ title })}>
+      <Card
+        style={style.card}
+        header={() => CardHeder({ title })}
+        pointerEvents="none"
+        disabled={true}
+        pressableProps={{
+          android_ripple: { color: "transparent" }, // Remove ripple effect
+        }}
+      >
         {form}
       </Card>
     </Layout>

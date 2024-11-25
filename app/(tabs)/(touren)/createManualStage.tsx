@@ -8,16 +8,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
+import { Alert } from "react-native";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   // changing the title of the page
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
   //switches title from plain text to the input field
-  const [titleBeingChanged, setTitleBeingChanged] = useState(false); 
+  const [titleBeingChanged, setTitleBeingChanged] = useState(false);
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
   const router = useRouter();
-  // compass input variant
+  // compass input
   const [startLat, setStartLat] = useState("");
   const [startLon, setStartLon] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -26,11 +27,10 @@ const CreateManualStage: React.FC = () => {
   const [endLon, setEndLon] = useState("");
   const [endDate, setEndDate] = useState(new Date());
 
-  ////////////address input variant
+  ////////////address input
 
-  ////////////on the map input variant
+  ////////////on the map input
 
-  // Title input field
   const titleInput = useMemo(
     () => (
       <Layout style={styles.headerInput}>
@@ -84,7 +84,6 @@ const CreateManualStage: React.FC = () => {
     stageTitle,
   ]);
 
-  ////coordinate start input
   const startCoordInput = (
     <CoordinateInput
       lat={startLat}
@@ -95,7 +94,7 @@ const CreateManualStage: React.FC = () => {
       setDate={setStartDate}
     />
   );
-  ////coordinate start input
+
   const endCoordInput = (
     <CoordinateInput
       lat={endLat}
@@ -114,13 +113,6 @@ const CreateManualStage: React.FC = () => {
   //     endTime:Date,
   //     tourId?: string,
   const onSubmitEtappe = async () => {
-    console.log("button presed!");
-    console.log("title--> " + stageTitle);
-    console.log("start--> " + startLat + ", " + startLon);
-    console.log("end--> " + endLat + ", " + endLon);
-    console.log("startDate" + startDate);
-    console.log("endDate" + endDate);
-    console.log("tourID" + tourId);
     try {
       await createManualStageFn(
         stageTitle,
@@ -130,23 +122,23 @@ const CreateManualStage: React.FC = () => {
         endDate,
         tourId,
       );
+      router.back();
     } catch (err) {
       if (err instanceof Error) {
-        console.log(err);
+        Alert.alert("Error", err.message);
+      } else {
+        Alert.alert("Unknown Error", "An unexpected error occurred.");
       }
     }
-    console.log("title--> " + stageTitle);
-    console.log("start--> " + startLat + ", " + startLon);
-    console.log("end--> " + endLat + ", " + endLon);
-    console.log("startDate" + startDate);
-    console.log("endDate" + endDate);
-    console.log("tourID" + tourId);
-    router.back();
   };
 
   return (
     <Layout style={styles.layout} level="2">
-      <ButtonGroup>
+      <ButtonGroup
+        style={{
+          borderRadius: 10,
+        }}
+      >
         <Button style={styles.button} onPress={() => {}}>
           <FontAwesomeIcon icon="compass" size={25} />
         </Button>
@@ -163,7 +155,11 @@ const CreateManualStage: React.FC = () => {
 
         <CardComponent title="Ende" form={endCoordInput} />
       </Layout>
-      <ButtonGroup>
+      <ButtonGroup
+        style={{
+          borderRadius: 10, // Add a group-level border radius
+        }}
+      >
         <Button
           style={styles.button}
           onPress={() => {

@@ -29,7 +29,7 @@ export default function ReiseStackLayout() {
         name="createManualStage"
         options={{
           headerShown: true,
-          title: "Stage",
+          title: "Etappe",
         }}
       />
     </Stack>

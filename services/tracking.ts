@@ -6,7 +6,6 @@ import {
   getActiveStage,
   setStageActive,
   setStageDistance,
-  getAllLocationsByStageId,
   getTourByTourId,
   getActiveTour,
   finishStage,

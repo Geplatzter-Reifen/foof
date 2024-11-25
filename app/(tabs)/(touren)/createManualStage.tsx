@@ -95,10 +95,10 @@ const CreateManualStage: React.FC = () => {
 
   const endCoordInput = (
     <CoordinateInput
-      lat={endLat}
-      lon={endLon}
-      setLat={setEndLat}
-      setLon={setEndLon}
+      latitude={endLatitude}
+      longitude={endLongitude}
+      setLatitude={setEndLatitude}
+      setLongitude={setEndLongitude}
       date={endDate}
       setDate={setEndDate}
     />

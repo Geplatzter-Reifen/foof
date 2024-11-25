@@ -62,7 +62,7 @@ const CreateManualStage: React.FC = () => {
     [titleBeingChanged],
   );
 
-  // Update header input ot text based on if  title or edit state changes
+  // Update header input ot text based on if title or edit state changes
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () =>

@@ -1,14 +1,15 @@
 import { Stack } from "expo-router";
-import { foofDarkTheme } from "@/constants/custom-theme";
+import { useTheme } from "@ui-kitten/components";
 
 export default function ReiseStackLayout() {
+  const theme = useTheme();
   return (
     <Stack
       screenOptions={{
-        headerTintColor: foofDarkTheme["color-basic-100"],
+        headerTintColor: theme["text-basic-color"],
         headerShown: true,
         headerStyle: {
-          backgroundColor: foofDarkTheme["color-basic-500"],
+          backgroundColor: theme["color-basic-100"],
         },
       }}
     >

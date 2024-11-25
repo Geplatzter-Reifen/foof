@@ -1,5 +1,4 @@
 import { Tabs } from "expo-router";
-import { foofDarkTheme } from "@/constants/custom-theme";
 import {
   BottomNavigation,
   BottomNavigationTab,
@@ -9,6 +8,7 @@ import {
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { FC, useState } from "react";
 import { ImageProps } from "react-native";
+import { useTheme } from "@ui-kitten/components";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name={"map"} style={[props?.style, { width: "auto" }]} />
@@ -36,14 +36,15 @@ const BottomTabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
 };
 
 export default function TabLayout() {
+  const theme = useTheme();
   return (
     <Tabs
       tabBar={(props) => <BottomTabBar {...props} />}
       screenOptions={{
         headerShown: true,
-        headerTintColor: foofDarkTheme["color-basic-100"],
+        headerTintColor: theme["text-basic-color"],
         headerStyle: {
-          backgroundColor: foofDarkTheme["color-basic-500"],
+          backgroundColor: theme["background-basic-color-1"],
         },
       }}
     >

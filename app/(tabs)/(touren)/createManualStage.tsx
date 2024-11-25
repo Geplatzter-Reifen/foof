@@ -13,7 +13,8 @@ const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   // changing the title of the page
   const navigation = useNavigation(); 
-  const [titleBeingChanged, setTitleBeingChanged] = useState(false); //// switches title from plain text to the input field
+  //switches title from plain text to the input field
+  const [titleBeingChanged, setTitleBeingChanged] = useState(false); 
   const [stageTitle, setStageTitle] = useState("Stage"); ///the name of the title
   const router = useRouter();
   // compass input variant

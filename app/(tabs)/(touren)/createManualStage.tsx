@@ -126,11 +126,7 @@ const CreateManualStage: React.FC = () => {
 
   return (
     <Layout style={styles.layout} level="2">
-      <ButtonGroup
-        style={{
-          borderRadius: 10,
-        }}
-      >
+      <ButtonGroup>
         <Button style={styles.button} onPress={() => {}}>
           <FontAwesomeIcon icon="compass" size={25} />
         </Button>

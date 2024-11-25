@@ -19,8 +19,8 @@ const CreateManualStage: React.FC = () => {
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
   const router = useRouter();
   // compass input
-  const [startLat, setStartLat] = useState("");
-  const [startLon, setStartLon] = useState("");
+  const [startLatitude, setStartLatitude] = useState("");
+  const [startLongitude, setStartLongitude] = useState("");
   const [startDate, setStartDate] = useState(new Date());
 
   const [endLat, setEndLat] = useState("");

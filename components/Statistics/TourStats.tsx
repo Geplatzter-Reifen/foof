@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { dateFormat, DATE, TIME } from "@/utils/dateUtil";
+import { dateFormat, DATE, getTotalMillisecondsString } from "@/utils/dateUtil";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/model/model";
 import {
@@ -46,7 +46,7 @@ export default function TourStats(props: TourStatsProps) {
         )}
         <View style={styles.stat_row}>
           <Icon name="clock" style={styles.icon_style} />
-          <Text>{dateFormat(getTourDuration(stages), TIME)}</Text>
+          <Text>{getTotalMillisecondsString(getTourDuration(stages))}</Text>
         </View>
       </View>
       <View style={styles.stat_column}>

@@ -104,7 +104,7 @@ const CreateManualStage: React.FC = () => {
     />
   );
 
-  const onSubmitEtappe = async () => {
+  const onSubmitStage = async () => {
     try {
       await createManualStageFn(
         stageTitle,

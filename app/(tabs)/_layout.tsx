@@ -8,6 +8,7 @@ import {
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { FC, useState } from "react";
 import { ImageProps } from "react-native";
+import { useTheme } from "@ui-kitten/components";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name={"map"} style={[props?.style, { width: "auto" }]} />
@@ -33,8 +34,6 @@ const BottomTabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
     </BottomNavigation>
   );
 };
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { useTheme } from "@ui-kitten/components";
 
 export default function TabLayout() {
   const theme = useTheme();

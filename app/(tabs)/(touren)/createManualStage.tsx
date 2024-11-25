@@ -23,8 +23,8 @@ const CreateManualStage: React.FC = () => {
   const [startLongitude, setStartLongitude] = useState("");
   const [startDate, setStartDate] = useState(new Date());
 
-  const [endLat, setEndLat] = useState("");
-  const [endLon, setEndLon] = useState("");
+  const [endLatitude, setEndLatitude] = useState("");
+  const [endLongitude, setEndLongitude] = useState("");
   const [endDate, setEndDate] = useState(new Date());
 
   ////////////address input

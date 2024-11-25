@@ -15,7 +15,7 @@ const CreateManualStage: React.FC = () => {
   const navigation = useNavigation(); 
   //switches title from plain text to the input field
   const [titleBeingChanged, setTitleBeingChanged] = useState(false); 
-  const [stageTitle, setStageTitle] = useState("Stage"); ///the name of the title
+  const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
   const router = useRouter();
   // compass input variant
   const [startLat, setStartLat] = useState("");

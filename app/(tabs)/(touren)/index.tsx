@@ -100,16 +100,7 @@ export default function Touruebersicht() {
         ></TopNavigation>
         <Divider />
       </Layout>
-      {activeTour ? (
-        <TourStats
-          startDate={activeTour?.startedAt}
-          endDate={activeTour?.finishedAt}
-          distance={200}
-          elevation={200}
-          speed={20}
-          calories={20}
-        />
-      ) : null}
+      <TourStats tour={activeTour} />
       <Text category="h5" style={styles.stagesHeader}>
         Etappen
       </Text>

@@ -1,53 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { dateFormat, DATE } from "@/utils/dateUtil";
+import { dateFormat, DATE, TIME } from "@/utils/dateUtil";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
+import { Tour, Stage } from "@/model/model";
+import {
+  getTourDuration,
+  getTourDistance,
+  getTourAverageSpeed,
+} from "@/services/statisticsService";
 
 type TourStatsProps = {
-  // Startdate, Enddate (optional), Distance, Elevation, Speed, Calories
-  startDate?: number;
-  endDate?: number;
-  distance?: number;
-  elevation?: number;
-  speed?: number;
-  calories?: number;
+  tour: Tour;
 };
 
 export default function TourStats(props: TourStatsProps) {
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const [stages, setStages] = useState<Stage[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const getStages = await props.tour.stages.fetch();
+      if (getStages) {
+        setStages(getStages);
+      }
+    })();
+  }, [props.tour]);
+
   return (
     <View style={styles.container}>
       <View style={styles.stat_column}>
         <View style={styles.stat_row}>
           <Icon name="calendar-plus" style={styles.icon_style} />
           <Text>
-            {props.startDate ? dateFormat(props.startDate, DATE) : "--"}
+            {props.tour.startedAt
+              ? dateFormat(props.tour.startedAt, DATE)
+              : "--"}
           </Text>
         </View>
-        {props.endDate && (
+        {props.tour.finishedAt && (
           <View style={styles.stat_row}>
             <Icon name="calendar-check" style={styles.icon_style} />
-            <Text>{dateFormat(props.endDate, DATE)}</Text>
+            <Text>{dateFormat(props.tour.finishedAt, DATE)}</Text>
           </View>
         )}
+        <View style={styles.stat_row}>
+          <Icon name="clock" style={styles.icon_style} />
+          <Text>{dateFormat(getTourDuration(stages), TIME)}</Text>
+        </View>
       </View>
       <View style={styles.stat_column}>
         <View style={styles.stat_row}>
           <Icon name="arrows-left-right" style={styles.icon_style} />
-          <Text>{props.distance ? props.distance + " km/h" : "--"}</Text>
+          <Text>{getTourDistance(stages).toFixed(2) + " km"}</Text>
         </View>
         <View style={styles.stat_row}>
           <Icon name="arrow-up-right-dots" style={styles.icon_style} />
-          <Text>{props.elevation ? props.elevation + " m" : "--"}</Text>
+          <Text>{"0 m"}</Text>
         </View>
         <View style={styles.stat_row}>
           <Icon name="gauge-high" style={styles.icon_style} />
-          <Text>{props.speed ? props.speed + " km/h" : "--"}</Text>
+          <Text>{getTourAverageSpeed(stages).toFixed(1) + " km/h"}</Text>
         </View>
         <View style={styles.stat_row}>
           <Icon name="bolt" style={styles.icon_style} />
-          <Text>{props.calories ? props.calories + " kcal" : "--"}</Text>
+          <Text>{0 + " kcal"}</Text>
         </View>
       </View>
     </View>

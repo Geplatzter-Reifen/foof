@@ -108,8 +108,8 @@ const CreateManualStage: React.FC = () => {
     try {
       await createManualStageFn(
         stageTitle,
-        startLat + ", " + startLon,
-        endLat + ", " + endLon,
+        startLatitude + ", " + startLongitude,
+        endLatitude + ", " + endLongitude,
         startDate,
         endDate,
         tourId,

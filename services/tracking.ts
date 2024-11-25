@@ -88,6 +88,7 @@ export async function stopAutomaticTracking() {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
     await finishStage(stage!.id);
+    lastActiveStageId = undefined;
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");

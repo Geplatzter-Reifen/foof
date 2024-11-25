@@ -48,6 +48,10 @@ export const foofTheme = {
   "color-danger-700": "#B72B33",
   "color-danger-800": "#931B2C",
   "color-danger-900": "#7A1028",
+};
+
+export const foofLightTheme = {
+  ...foofTheme,
 
   "color-basic-100": "#FFFFFF",
   "color-basic-200": "#eaeaea",
@@ -60,10 +64,6 @@ export const foofTheme = {
   "color-basic-900": "#171717",
   "color-basic-1000": "#101010",
   "color-basic-1100": "#000000",
-};
-
-export const foofLightTheme = {
-  ...foofTheme,
 
   "color-basic-transparent-100": "rgba(126, 126, 126, 0.08)",
   "color-basic-transparent-200": "rgba(126, 126, 126, 0.16)",

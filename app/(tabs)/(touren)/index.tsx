@@ -21,6 +21,7 @@ import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtil";
 import { foofTheme } from "@/constants/custom-theme";
 import StageList from "@/components/Tour/StageList";
+import TourStats from "@/components/Statistics/TourStats";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -99,6 +100,7 @@ export default function Touruebersicht() {
         ></TopNavigation>
         <Divider />
       </Layout>
+      <TourStats tour={activeTour} />
       <Text category="h5" style={styles.stagesHeader}>
         Etappen
       </Text>

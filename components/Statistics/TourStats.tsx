@@ -77,7 +77,7 @@ const makeStyles = (theme: ThemeType): any => {
       flexDirection: "row",
       backgroundColor: theme["color-primary-transparent-500"],
       height: "auto",
-      paddingHorizontal: 10,
+      paddingHorizontal: 20,
       paddingVertical: 5,
     },
     stat_column: {
@@ -89,7 +89,6 @@ const makeStyles = (theme: ThemeType): any => {
       flexDirection: "row",
       alignItems: "center",
     },
-
     icon_style: {
       alignSelf: "center",
       marginHorizontal: 4,

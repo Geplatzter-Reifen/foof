@@ -48,7 +48,12 @@ export async function createManualStage(
     throw new Error("Start und Endzeit sind ungültig");
   }
 
-  let stage = await createStage(tour.id, stageName, startTime.getTime());
+  let stage = await createStage(
+    tour.id,
+    stageName,
+    startTime.getTime(),
+    endTime.getTime(),
+  );
 
   await stage.addLocation(
     startingCoordinates?.latitude,
@@ -63,8 +68,6 @@ export async function createManualStage(
   let speed = getStageAvgSpeedInKmh(stage);
 
   await setStageAvgSpeed(stage.id, speed);
-
-  finishStage(stage.id, endTime.getTime());
 }
 
 export async function startAutomaticTracking() {

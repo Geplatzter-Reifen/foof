@@ -20,6 +20,7 @@ import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
+import { share } from "@/services/sharingService";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -31,6 +32,10 @@ const MapIcon = (props?: Partial<ImageProps>): IconElement => (
 
 const EditIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
+);
+
+const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="share-nodes" style={[props?.style, { height: 24 }]} />
 );
 
 const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -66,6 +71,16 @@ export default function Touruebersicht() {
     <TopNavigationAction icon={MapIcon} hitSlop={15} />
   );
 
+  const renderShareAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ShareIcon}
+      hitSlop={15}
+      onPress={() => {
+        share();
+      }}
+    />
+  );
+
   const renderEditAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={EditIcon}
@@ -92,7 +107,7 @@ export default function Touruebersicht() {
         <TopNavigation
           title={EnhancedHeader}
           accessoryLeft={renderMapAction}
-          accessoryRight={renderEditAction}
+          accessoryRight={renderShareAction}
           style={styles.header}
           alignment="center"
         ></TopNavigation>

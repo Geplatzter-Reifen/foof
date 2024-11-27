@@ -11,7 +11,7 @@ import {
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { updateTourNameById } from "@/model/database_functions";
+import { updateTourNameById } from "@/services/data/tourService";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />

@@ -7,14 +7,12 @@ import {
   createStage,
   startStage,
   setStageDistance,
+  setStageAvgSpeed,
   finishStage,
 } from "@/services/data/stageService";
 import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
-import {
-  setStageAvgSpeed,
-} from "@/model/database_functions";
 
 const LOCATION_TASK_NAME = "background-location-task";
 

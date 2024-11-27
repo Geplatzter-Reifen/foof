@@ -3,6 +3,8 @@ import { Q } from "@nozbe/watermelondb";
 import { Stage, Tour } from "@/model/model";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 
+// READ
+
 export const getAllStagesByTourIdQuery = (tourId: string) => {
   return database.get<Stage>("stages").query(Q.where("tour_id", tourId));
 };
@@ -25,6 +27,8 @@ export const getActiveStage = async (): Promise<Stage | null> => {
     return activeStages[0];
   }
 };
+
+// CREATE
 
 export const createStage = async (
   tourId: string,
@@ -58,6 +62,8 @@ export const createStage = async (
   // Create Stage
   return tour.addStage(title, startedAt, finishedAt, active);
 };
+
+// UPDATE
 
 export const startStage = async (tourId: string) => {
   const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
@@ -107,6 +113,8 @@ const setActiveStageInactive = async () => {
     }
   });
 };
+
+// DELETE
 
 export const deleteStage = async (stageId: string) => {
   void database.write(async () => {

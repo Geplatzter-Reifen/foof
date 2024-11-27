@@ -2,6 +2,8 @@ import { database } from "@/model/createDatabase";
 import { Q } from "@nozbe/watermelondb";
 import { Location, Stage } from "@/model/model";
 
+// READ
+
 export const getAllLocationsByStageIdQuery = (stageId: string) => {
   return database
     .get<Location>("locations")
@@ -10,6 +12,8 @@ export const getAllLocationsByStageIdQuery = (stageId: string) => {
 export const getAllLocationsByStageId = (stageId: string) => {
   return getAllLocationsByStageIdQuery(stageId).fetch();
 };
+
+// CREATE
 
 export const createLocation = async (
   stageId: string,

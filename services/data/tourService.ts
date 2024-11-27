@@ -4,6 +4,8 @@ import { Tour } from "@/model/model";
 import { getAllStagesByTourId } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 
+// READ
+
 export const getAllToursQuery = database.get<Tour>("tours").query();
 export const getAllTours = () => getAllToursQuery.fetch();
 
@@ -26,6 +28,8 @@ export const getActiveTour = async (): Promise<Tour | null> => {
   }
 };
 
+// CREATE
+
 export const createTour = async (
   title: string,
   startedAt?: number,
@@ -40,6 +44,8 @@ export const createTour = async (
     });
   });
 };
+
+// UPDATE
 
 export const setTourActive = async (tourId: string) => {
   await database.write(async () => {
@@ -66,6 +72,20 @@ export const setTourInactive = async (tourId: string) => {
     });
   });
 };
+
+export const updateTourNameById = async (
+  tourId: string,
+  newTourName: string,
+) => {
+  await database.write(async () => {
+    const tour = await getTourByTourId(tourId);
+    await tour.update(() => {
+      tour.title = newTourName;
+    });
+  });
+};
+
+// DELETE
 
 export const deleteTour = (tourId: string) => {
   void database.write(async () => {

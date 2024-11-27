@@ -11,7 +11,7 @@ import {
 
 import MapboxGL from "@rnmapbox/maps";
 
-import { Layout, ButtonGroup } from "@ui-kitten/components";
+import { Layout, ButtonGroup, Spinner } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 
@@ -27,17 +27,23 @@ enum ButtonStates {
 
 export default function HomeScreen() {
   const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
-  const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
-  const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
+  const [loading, setLoading] = useState(true); // Ladezustand
+  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const buttonIconSize = 60;
 
   useEffect(() => {
-    getCurrentLocation();
-    TaskManager.isTaskRegisteredAsync("background-location-task").then(
-      (result) => setTracking(result),
-    );
-  }, []);
+    const prepare = async () => {
+      await getCurrentLocation();
+      TaskManager.isTaskRegisteredAsync("background-location-task").then(
+        (result) => setTracking(result),
+      );
+      setLoading(false);
+    };
+
+    prepare();
+  }, [latitude, longitude]);
 
   //get current location
   const getCurrentLocation = async () => {
@@ -133,6 +139,13 @@ export default function HomeScreen() {
     }
   }
 
+  if (loading) {
+    return (
+      <Layout level="2" style={styles.container}>
+        <Spinner size="giant" />
+      </Layout>
+    );
+  }
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout}>
@@ -140,8 +153,7 @@ export default function HomeScreen() {
           <MapboxGL.Camera
             zoomLevel={13}
             centerCoordinate={[longitude, latitude]}
-            animationMode="flyTo"
-            animationDuration={2000}
+            animationMode="moveTo"
           />
         </MapboxGL.MapView>
       </Layout>
@@ -150,15 +162,16 @@ export default function HomeScreen() {
   );
 }
 
-// Define the styles here
 const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-    flexDirection: "row",
-  },
   container: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  map: {
+    flex: 1,
+    flexDirection: "row",
   },
   layout: {
     flex: 1,

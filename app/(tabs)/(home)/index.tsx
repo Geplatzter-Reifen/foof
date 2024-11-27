@@ -146,7 +146,14 @@ export default function HomeScreen() {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout}>
-        <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.MapView
+          style={styles.map}
+          scaleBarEnabled={false}
+          compassEnabled
+          compassPosition={{ top: 8, right: 8 }}
+          logoPosition={{ top: 8, left: 8 }}
+          attributionPosition={{ top: 8, left: 96 }}
+        >
           <MapboxGL.Camera
             followZoomLevel={15}
             animationMode="moveTo"

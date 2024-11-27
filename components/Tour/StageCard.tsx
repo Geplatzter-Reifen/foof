@@ -93,6 +93,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
 const styles = StyleSheet.create({
   card: {
     marginBottom: 15,
+    marginHorizontal: 10,
   },
   header: {
     flex: 1,

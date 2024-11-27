@@ -25,3 +25,12 @@ export function getDurationFormatted(start: Date, end: Date): string {
 
   return `${hours}:${minutes} h`;
 }
+
+export function getTotalMillisecondsString(totalMilliseconds: number): string {
+  const totalMinutes = Math.ceil(totalMilliseconds / 60000);
+
+  const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
+  const minutes = String(totalMinutes % 60).padStart(2, "0");
+
+  return `${hours}:${minutes} h`;
+}

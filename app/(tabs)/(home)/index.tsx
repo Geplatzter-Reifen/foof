@@ -18,6 +18,7 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
 );
+
 enum ButtonStates {
   NotCycling,
   Cycling,
@@ -154,10 +155,6 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     flexDirection: "row",
-    margin: 5,
-    marginBottom: 45,
-    borderRadius: 20,
-    height: 600,
   },
   container: {
     flex: 1,
@@ -172,7 +169,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     alignSelf: "center",
-
-    bottom: 75,
+    bottom: 15,
   },
 });

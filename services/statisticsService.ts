@@ -9,7 +9,25 @@ export function getStageDistanceString(
   return stage.distance.toFixed(precision ?? 1) + " km";
 }
 
-// Duration //
+/** Returns the total distance of a tour in milliseconds.*/
+export function getTourDuration(stages: Stage[]): number {
+  return stages.reduce((acc, stage) => acc + getStageDuration(stage), 0);
+}
+
+/** Returns the total distance of a tour in km */
+export function getTourDistance(stages: Stage[]): number {
+  return stages.reduce((acc, stage) => acc + stage.distance, 0);
+}
+
+/** Returns the average speed of a tour in km/h */
+export function getTourAverageSpeed(stages: Stage[]): number {
+  const tourDuration = getTourDuration(stages);
+  if (tourDuration === 0) return 0;
+  const hours = tourDuration / (1000 * 60 * 60);
+  return getTourDistance(stages) / hours;
+}
+
+/** Duration */
 export function getStageDuration(stage: Stage): number {
   const start = new Date(stage.startedAt);
   const end = new Date(stage.finishedAt ?? Date.now());
@@ -23,12 +41,13 @@ export function getStageDurationString(stage: Stage): string {
   return getDurationFormatted(start, end);
 }
 
-// Average Speed //
+/** Average Speed */
 export function getStageAvgSpeedInKmh(stage: Stage): number {
   const hours = getStageDuration(stage) / (1000 * 60 * 60);
 
   return stage.distance / hours;
 }
+
 export function getStageAvgSpeedString(
   stage: Stage,
   precision?: number,

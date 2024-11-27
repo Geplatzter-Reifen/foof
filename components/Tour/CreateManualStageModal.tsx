@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
-import { createManualStage } from "@/services/tracking";
 import { StyleSheet } from "react-native";
 
 interface CreateManualStageModalProps {
@@ -28,14 +27,14 @@ export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
   };
 
   const onSave = async () => {
-    try {
-      await createManualStage(stageName, startCoords, endCoords, tourId);
-      reset();
-    } catch (err) {
-      if (err instanceof Error) {
-        setErrorText(err.message);
-      }
-    }
+    // try {
+    //   await createManualStage(stageName, startCoords, endCoords, tourId);
+    //   reset();
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     setErrorText(err.message);
+    //   }
+    // }
   };
 
   return (
@@ -60,10 +59,10 @@ export const CreateManualStageModal: React.FC<CreateManualStageModalProps> = ({
           style={styles.input}
         />
         {errorText && <Text>{errorText}</Text>}
+        <Button onPress={onSave}>Speichern</Button>
         <Button status="basic" onPress={reset} style={styles.input}>
           Abbrechen
         </Button>
-        <Button onPress={onSave}>Speichern</Button>
       </Card>
     </Modal>
   );

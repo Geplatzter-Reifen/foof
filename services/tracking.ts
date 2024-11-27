@@ -87,13 +87,6 @@ export async function startAutomaticTracking() {
         }
 
         await startStage(activeTour.id);
-        //let stage = await createStage(
-        //  activeTour.id,
-        //  "Etappe",
-        //  Date.now(),
-        //  true,
-        //);
-        //await setStageActive(stage.id);
 
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,

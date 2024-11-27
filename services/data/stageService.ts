@@ -63,14 +63,13 @@ export const createStage = async (
   return tour.addStage(title, startedAt, finishedAt, active);
 };
 
-// UPDATE
-
 export const startStage = async (tourId: string) => {
   const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
-  console.log(title);
 
   return createStage(tourId, title, Date.now(), undefined, true);
 };
+
+// UPDATE
 
 export const finishStage = async (stageId: string, finishTime?: number) => {
   void database.write(async () => {

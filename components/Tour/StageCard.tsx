@@ -89,6 +89,8 @@ function StageCard({ stage }: { stage: Stage }) {
     </Layout>
   );
 }
+
+// Observe die reingegebene Prop "stage"und reagiere auf änderungen
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
 export default enhance(StageCard);
 

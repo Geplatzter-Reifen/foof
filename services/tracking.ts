@@ -1,17 +1,16 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import { getTourByTourId, getActiveTour } from "@/services/data/tourService";
 import { getStageAvgSpeedInKmh } from "./statisticsService";
 import {
-  createLocation,
-  createStage,
   getActiveStage,
-  setStageActive,
+  createStage,
+  startStage,
   setStageDistance,
-  getTourByTourId,
-  getActiveTour,
   setStageAvgSpeed,
   finishStage,
-} from "@/model/database_functions";
+} from "@/services/data/stageService";
+import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
 
@@ -86,8 +85,8 @@ export async function startAutomaticTracking() {
         if (!activeTour) {
           throw new Error("No active tour set");
         }
-        let stage = await createStage(activeTour.id, "Etappe");
-        await setStageActive(stage.id);
+
+        await startStage(activeTour.id);
 
         await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
           accuracy: Location.Accuracy.Highest,

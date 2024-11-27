@@ -1,9 +1,5 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import {
-  getActiveTour,
-  getAllStagesByTourIdQuery,
-} from "@/model/database_functions";
 import React, { useEffect, useState } from "react";
 import { Tour } from "@/model/model";
 import {
@@ -22,6 +18,8 @@ import { hexToRgba } from "@/utils/colorUtil";
 import { foofTheme } from "@/constants/custom-theme";
 import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
+import { getActiveTour } from "@/services/data/tourService";
+import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -112,8 +110,6 @@ export default function Touruebersicht() {
           hexToRgba(foofTheme["color-basic-200"], 0.18),
           hexToRgba(foofTheme["color-basic-200"], 0.9),
         ]}
-        // startFadeStyle={styles.fadeStyle}
-        // endFadeStyle={styles.fadeStyle}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>

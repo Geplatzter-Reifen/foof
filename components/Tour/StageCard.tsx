@@ -1,9 +1,11 @@
 import React from "react";
 import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
+
 import { Stage } from "@/model/model";
+import { deleteStage } from "@/services/data/stageService";
+
 import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { deleteStage } from "@/model/database_functions";
 import { StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";

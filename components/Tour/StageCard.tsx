@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
+import { withObservables } from "@nozbe/watermelondb/react";
 
-export default function StageCard({ stage }: { stage: Stage }) {
+function StageCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
   let finishedAt: Date | undefined = stage.finishedAt
     ? new Date(stage.finishedAt)
@@ -89,6 +90,8 @@ export default function StageCard({ stage }: { stage: Stage }) {
     </Layout>
   );
 }
+const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
+export default enhance(StageCard);
 
 const styles = StyleSheet.create({
   card: {

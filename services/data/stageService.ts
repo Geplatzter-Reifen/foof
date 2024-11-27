@@ -3,31 +3,6 @@ import { Q } from "@nozbe/watermelondb";
 import { Stage, Tour } from "@/model/model";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 
-// READ
-
-export const getAllStagesByTourIdQuery = (tourId: string) => {
-  return database.get<Stage>("stages").query(Q.where("tour_id", tourId));
-};
-export const getAllStagesByTourId = (tourId: string) => {
-  return getAllStagesByTourIdQuery(tourId).fetch();
-};
-
-export const getStageByStageId = (stageId: string) => {
-  return database.get<Stage>("stages").find(stageId);
-};
-
-export const getActiveStage = async (): Promise<Stage | null> => {
-  const activeStages = await database
-    .get<Stage>("stages")
-    .query(Q.where("is_active", true), Q.take(1))
-    .fetch();
-  if (activeStages.length === 0) {
-    return null;
-  } else {
-    return activeStages[0];
-  }
-};
-
 // CREATE
 
 export const createStage = async (
@@ -63,10 +38,36 @@ export const createStage = async (
   return tour.addStage(title, startedAt, finishedAt, active);
 };
 
+// creates a Stage and sets it active
 export const startStage = async (tourId: string) => {
   const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
 
   return createStage(tourId, title, Date.now(), undefined, true);
+};
+
+// READ
+
+export const getAllStagesByTourIdQuery = (tourId: string) => {
+  return database.get<Stage>("stages").query(Q.where("tour_id", tourId));
+};
+export const getAllStagesByTourId = (tourId: string) => {
+  return getAllStagesByTourIdQuery(tourId).fetch();
+};
+
+export const getStageByStageId = (stageId: string) => {
+  return database.get<Stage>("stages").find(stageId);
+};
+
+export const getActiveStage = async (): Promise<Stage | null> => {
+  const activeStages = await database
+    .get<Stage>("stages")
+    .query(Q.where("is_active", true), Q.take(1))
+    .fetch();
+  if (activeStages.length === 0) {
+    return null;
+  } else {
+    return activeStages[0];
+  }
 };
 
 // UPDATE

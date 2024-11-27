@@ -4,6 +4,23 @@ import { Tour } from "@/model/model";
 import { getAllStagesByTourId } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 
+// CREATE
+
+export const createTour = async (
+  title: string,
+  startedAt?: number,
+): Promise<Tour> => {
+  return database.write(async () => {
+    return database.get<Tour>("tours").create((tour) => {
+      tour.title = title;
+      tour.isActive = false;
+      if (startedAt) {
+        tour.startedAt = startedAt;
+      }
+    });
+  });
+};
+
 // READ
 
 export const getAllToursQuery = database.get<Tour>("tours").query();
@@ -26,23 +43,6 @@ export const getActiveTour = async (): Promise<Tour | null> => {
   } else {
     return activeTours[0];
   }
-};
-
-// CREATE
-
-export const createTour = async (
-  title: string,
-  startedAt?: number,
-): Promise<Tour> => {
-  return database.write(async () => {
-    return database.get<Tour>("tours").create((tour) => {
-      tour.title = title;
-      tour.isActive = false;
-      if (startedAt) {
-        tour.startedAt = startedAt;
-      }
-    });
-  });
 };
 
 // UPDATE

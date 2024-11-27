@@ -2,17 +2,6 @@ import { database } from "@/model/createDatabase";
 import { Q } from "@nozbe/watermelondb";
 import { Location, Stage } from "@/model/model";
 
-// READ
-
-export const getAllLocationsByStageIdQuery = (stageId: string) => {
-  return database
-    .get<Location>("locations")
-    .query(Q.where("stage_id", stageId));
-};
-export const getAllLocationsByStageId = (stageId: string) => {
-  return getAllLocationsByStageIdQuery(stageId).fetch();
-};
-
 // CREATE
 
 export const createLocation = async (
@@ -29,4 +18,15 @@ export const createLocation = async (
       location.recordedAt = Date.now();
     });
   });
+};
+
+// READ
+
+export const getAllLocationsByStageIdQuery = (stageId: string) => {
+  return database
+    .get<Location>("locations")
+    .query(Q.where("stage_id", stageId));
+};
+export const getAllLocationsByStageId = (stageId: string) => {
+  return getAllLocationsByStageIdQuery(stageId).fetch();
 };

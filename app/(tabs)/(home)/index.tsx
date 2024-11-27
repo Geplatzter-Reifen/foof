@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
@@ -9,9 +9,9 @@ import {
   stopAutomaticTracking,
 } from "@/services/tracking";
 
-import MapboxGL from "@rnmapbox/maps";
+import MapboxGL, { UserTrackingMode } from "@rnmapbox/maps";
 
-import { Layout, ButtonGroup, Spinner } from "@ui-kitten/components";
+import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 
@@ -48,7 +48,6 @@ export default function HomeScreen() {
   //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log(status);
 
     if (status !== "granted") {
       Alert.alert(
@@ -68,12 +67,10 @@ export default function HomeScreen() {
 
     try {
       const { coords } = await Location.getCurrentPositionAsync();
-      console.log(coords);
 
       if (coords) {
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
-        console.log(coords);
       }
     } catch (error) {
       console.log("Error getting location:", error);
@@ -151,10 +148,12 @@ export default function HomeScreen() {
       <Layout style={styles.layout}>
         <MapboxGL.MapView style={styles.map}>
           <MapboxGL.Camera
-            zoomLevel={13}
-            centerCoordinate={[longitude, latitude]}
+            followZoomLevel={15}
             animationMode="moveTo"
+            followUserMode={UserTrackingMode.FollowWithCourse}
+            followUserLocation={true}
           />
+          <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

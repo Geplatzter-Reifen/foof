@@ -1,11 +1,18 @@
 import { Model } from "@nozbe/watermelondb";
-import { field, text, writer, relation } from "@nozbe/watermelondb/decorators";
+import {
+  field,
+  text,
+  writer,
+  relation,
+  children,
+} from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
 class Tour extends Model {
   static table = "tours"; // bind the model to specific table
   static associations: Associations = {
     stages: { type: "has_many", foreignKey: "tour_id" },
+    routes: { type: "has_many", foreignKey: "tour_id" },
   };
   // @ts-ignore
   @text("title") title: string;
@@ -15,6 +22,8 @@ class Tour extends Model {
   @field("started_at") startedAt?: number;
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
+  // @ts-ignore
+  @children("routes") routes;
 
   //@ts-ignore
   @writer async addStage(title: string, startedAt?: number) {
@@ -49,7 +58,7 @@ class Stage extends Model {
   // @ts-ignore
   @field("avg_speed") avgSpeed: number;
   // @ts-ignore
-  @relation("tour", "tour_id") tour;
+  @relation("tours", "tour_id") tour;
   // @ts-ignore
   @writer async addLocation(
     latitude: number,
@@ -77,7 +86,21 @@ class Location extends Model {
   // @ts-ignore
   @field("recorded_at") recordedAt?: number;
   // @ts-ignore
-  @relation("stage", "stage_id") stage;
+  @relation("stages", "stage_id") stage;
 }
 
-export { Tour, Stage, Location };
+class Route extends Model {
+  static table = "routes";
+  static associations: Associations = {
+    tours: { type: "belongs_to", key: "tour_id" },
+    stages: { type: "belongs_to", key: "stage_id" },
+  };
+  // @ts-ignore
+  @field("geoJson") geoJson: string;
+  // @ts-ignore
+  @relation("tours", "tour_id") tour;
+  // @ts-ignore
+  @relation("stages", "stage_id") stage;
+}
+
+export { Tour, Stage, Location, Route };

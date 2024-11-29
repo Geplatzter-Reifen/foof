@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const schema = appSchema({
-  version: 5,
+  version: 6,
   tables: [
     tableSchema({
       name: "tours",
@@ -31,6 +31,14 @@ export const schema = appSchema({
         { name: "longitude", type: "number" },
         { name: "recorded_at", type: "number", isOptional: true },
         { name: "stage_id", type: "string", isIndexed: true },
+      ],
+    }),
+    tableSchema({
+      name: "routes",
+      columns: [
+        { name: "geoJson", type: "string" },
+        { name: "tour_id", type: "string", isIndexed: true, isOptional: true },
+        { name: "stage_id", type: "string", isIndexed: true, isOptional: true },
       ],
     }),
   ],

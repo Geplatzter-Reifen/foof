@@ -1,5 +1,5 @@
 import { database } from "./createDatabase";
-import { Tour, Stage, Location } from "./model";
+import { Tour, Stage, Location, Route } from "./model";
 import { Q } from "@nozbe/watermelondb";
 
 export const createTour = async (title: string): Promise<Tour> => {
@@ -35,6 +35,40 @@ export const setTourInactive = async (tourId: string) => {
       tour.isActive = false;
     });
   });
+};
+
+/** Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise. */
+export const setTourRoute = async (tourId: string, geoJson: string) => {
+  return database.write(async () => {
+    const existingRoute = await database
+      .get<Route>("routes")
+      .query(Q.where("tour_id", tourId))
+      .fetch();
+
+    if (existingRoute.length === 0) {
+      const tour = await database.get<Tour>("tours").find(tourId);
+      return database.get<Route>("routes").create((route) => {
+        route.tour.set(tour);
+        route.geoJson = geoJson;
+      });
+    } else {
+      return existingRoute[0].update((route) => {
+        route.geoJson = geoJson;
+      });
+    }
+  });
+};
+
+/** Returns the route for a tour, or null if no route exists. */
+export const getTourRoute = async (tourId: string) => {
+  const route = await database
+    .get<Route>("routes")
+    .query(Q.where("tour_id", tourId))
+    .fetch();
+  if (route.length === 0) {
+    return null;
+  }
+  return route[0];
 };
 
 export const getActiveTour = async (): Promise<Tour | null> => {

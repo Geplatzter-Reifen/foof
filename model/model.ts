@@ -96,7 +96,7 @@ class Route extends Model {
     stages: { type: "belongs_to", key: "stage_id" },
   };
   // @ts-ignore
-  @field("geoJson") geoJson: string;
+  @field("geojson") geoJson: string;
   // @ts-ignore
   @relation("tours", "tour_id") tour;
   // @ts-ignore

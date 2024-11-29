@@ -114,7 +114,7 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking();
+          void startAutomaticTracking();
         }}
       />
     );
@@ -139,27 +139,55 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
-          stopAutomaticTracking();
+          void stopAutomaticTracking();
         }}
       />
     );
   };
 
-  const showRoute = () => {
+  const showRoute = async () => {
     if (geoJSON) {
-      const pointFeatures = geoJSON.features.filter(
-        (feature) => feature.geometry.type === "Point",
-      );
+      // Find the outermost coordinates
+      let minLat = Infinity,
+        maxLat = -Infinity,
+        minLng = Infinity,
+        maxLng = -Infinity;
+      geoJSON.features.forEach((feature) => {
+        if (feature.geometry.type === "LineString") {
+          (feature.geometry as GeoJSON.LineString).coordinates.forEach(
+            ([lng, lat]) => {
+              if (lat < minLat) minLat = lat;
+              if (lat > maxLat) maxLat = lat;
+              if (lng < minLng) minLng = lng;
+              if (lng > maxLng) maxLng = lng;
+            },
+          );
+        } else if (feature.geometry.type === "Point") {
+          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+          if (lat < minLat) minLat = lat;
+          if (lat > maxLat) maxLat = lat;
+          if (lng < minLng) minLng = lng;
+          if (lng > maxLng) maxLng = lng;
+        }
+      });
 
-      if (pointFeatures.length > 1) {
-        const startPoint = (pointFeatures[0].geometry as GeoJSON.Point)
-          .coordinates;
-        const endPoint = (
-          pointFeatures[pointFeatures.length - 1].geometry as GeoJSON.Point
-        ).coordinates;
+      const bounds = {
+        ne: [maxLng, maxLat],
+        sw: [minLng, minLat],
+      };
 
-        camera.current?.fitBounds(startPoint, endPoint, [25, 25], 1000);
-      }
+      camera.current?.setCamera({
+        bounds: bounds,
+        padding: {
+          paddingLeft: 30,
+          paddingRight: 30,
+          paddingTop: 30,
+          paddingBottom: 150,
+        },
+        animationDuration: 2000,
+        heading: 0,
+        animationMode: "flyTo",
+      });
     }
   };
 
@@ -194,21 +222,21 @@ export default function HomeScreen() {
   const ShapeSource = ({ route }: { route: Route }) => {
     geoJSON = JSON.parse(route.geoJson);
     return (
-      <MapboxGL.ShapeSource
-        id="route"
-        shape={geoJSON}
-        onPress={() => console.log("test")}
-      >
+      <MapboxGL.ShapeSource id="route" shape={geoJSON}>
         <MapboxGL.LineLayer
           id="route"
           belowLayerID="road-label"
-          style={{ lineColor: "blue", lineWidth: 5, lineJoin: "round" }}
+          style={{
+            lineColor: "#b8b8b8",
+            lineWidth: 5,
+            lineJoin: "round",
+          }}
         />
         <MapboxGL.CircleLayer
           id="pointLayer"
           filter={["==", "$type", "Point"]}
           style={{
-            circleColor: "gray",
+            circleColor: "black",
             circleRadius: 6,
           }}
         />

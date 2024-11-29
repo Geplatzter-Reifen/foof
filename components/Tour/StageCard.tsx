@@ -1,5 +1,5 @@
 import React from "react";
-import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
+import { DateFormat, formatDate, getDurationFormatted } from "@/utils/dateUtil";
 
 import { Stage } from "@/model/model";
 import { deleteStage } from "@/services/data/stageService";
@@ -39,7 +39,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
     ? new Date(stage.finishedAt)
     : undefined;
 
-  const date: string = dateFormat(startedAt, DATE);
+  const date: string = formatDate(startedAt, DateFormat.DATE);
 
   let duration: string | undefined = finishedAt
     ? getDurationFormatted(startedAt, finishedAt)

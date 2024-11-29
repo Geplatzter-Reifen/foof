@@ -55,7 +55,7 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 
 export default function Touruebersicht() {
   // Für die Screenshot Einbindung später
-  const viewRef = useRef<View>(null);
+  const viewRef = useRef<Layout>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function captureAndShare() {
     try {

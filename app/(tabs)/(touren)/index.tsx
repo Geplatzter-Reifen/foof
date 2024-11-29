@@ -1,6 +1,12 @@
-import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import {
+  ImageProps,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Tour } from "@/model/model";
 import {
   Layout,
@@ -21,6 +27,7 @@ import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { shareTour } from "@/services/sharingService";
+import { captureRef } from "react-native-view-shot";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -47,6 +54,23 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 export default function Touruebersicht() {
+  // Für die Screenshot Einbindung später
+  const viewRef = useRef<View>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function captureAndShare() {
+    try {
+      // Capture the screenshot of the element and store it into the uri variable
+      const uri = await captureRef(viewRef, {
+        format: "png",
+        quality: 1,
+      });
+      shareTour(uri);
+      // in der URI steht jetzt eine Refernce zum Bild, das geteilt werden kann.
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const [activeTour, setActiveTour] = useState<Tour>();
 
   useEffect(() => {
@@ -58,15 +82,7 @@ export default function Touruebersicht() {
     })();
   }, []);
 
-  const Header = ({ tour }: { tour: Tour }) => (
-    <Text category="h4">{tour.title}</Text>
-  );
-
-  const enhance = withObservables([], () => ({
-    tour: activeTour!,
-  }));
-  const EnhancedHeader = enhance(Header);
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderMapAction = (): React.ReactElement => (
     <TopNavigationAction icon={MapIcon} hitSlop={15} />
   );
@@ -97,17 +113,26 @@ export default function Touruebersicht() {
     />
   );
 
+  const Header = ({ tour }: { tour: Tour }) => (
+    <Text category="h4">{tour.title}</Text>
+  );
+
+  const enhance = withObservables([], () => ({
+    tour: activeTour!,
+  }));
+  const EnhancedHeader = enhance(Header);
+
   if (!activeTour) {
     return null;
   }
 
   return (
-    <Layout level="2" style={styles.container}>
+    <Layout level="2" style={styles.container} ref={viewRef}>
       <Layout>
         <TopNavigation
           title={EnhancedHeader}
-          accessoryLeft={renderMapAction}
-          accessoryRight={renderShareAction}
+          accessoryLeft={renderShareAction}
+          accessoryRight={renderEditAction}
           style={styles.header}
           alignment="center"
         ></TopNavigation>

@@ -88,7 +88,7 @@ export const shareStage = async (stage: Stage) => {
     .catch((err) => err && console.log(err));
 };
 
-export const shareTour = async () => {
+export const shareTour = async (uri?: string) => {
   const tour: Tour | null = await getActiveTour();
   if (!tour) throw new Error("No active Tour");
   const stages: Stage[] = await tour.stages.fetch();
@@ -120,6 +120,7 @@ export const shareTour = async () => {
       tourFinishedAtDate,
       tourFinishedAtTime,
     ),
+    url: uri,
   })
     .then()
     .catch((err) => err && console.log(err));

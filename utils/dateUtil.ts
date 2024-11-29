@@ -3,7 +3,6 @@ import { differenceInMilliseconds, format } from "date-fns";
 export enum DateFormat {
   DATE = "dd.MM.yyyy",
   TIME = "HH:mm",
-  TIME_UHR = "HH:mm Uhr",
   DATE_TIME = "dd.MM.yyyy HH:mm",
 }
 
@@ -23,6 +22,10 @@ export function getDurationInMs(start: Date, end: Date) {
 }
 
 export function getDurationFormatted(start: Date, end: Date): string {
+  if (end < start) {
+    throw new Error("End date is before start date");
+  }
+
   const totalMinutes = Math.ceil(getDurationInMs(start, end) / 60000);
 
   const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");

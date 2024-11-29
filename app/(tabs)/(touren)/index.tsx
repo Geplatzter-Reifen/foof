@@ -20,7 +20,7 @@ import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
-import { share } from "@/services/sharingService";
+import { shareTour } from "@/services/sharingService";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -76,7 +76,7 @@ export default function Touruebersicht() {
       icon={ShareIcon}
       hitSlop={15}
       onPress={() => {
-        share();
+        shareTour();
       }}
     />
   );

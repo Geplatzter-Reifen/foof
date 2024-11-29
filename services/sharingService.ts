@@ -11,7 +11,7 @@ const url = "https://awesome.contents.com/";
 const title = "Awesome Contents";
 const message = "Please check this out.";
 const icon = "data:<data_type>/<file_extension>;base64,<base64_data>";
-const shareTextConstructor = (
+const shareTourTextConstructor = (
   tour: Tour,
   tourDistance: number,
   tourAverageSpeed: number,
@@ -24,15 +24,20 @@ const shareTextConstructor = (
   return title + dates;
 };
 
-const options: ShareOptions = {
-  title: "Share file",
-  message: "Share file: " + url,
-  url: url,
-  subject: title, //  for email
-  filename: "test", // only for base64 file in Android
+const shareStageTextConstructor = (): string => {
+  return "Schau dir meine Stage an!";
 };
 
-export const share = async () => {
+export const shareStage = async (stage: Stage) => {
+  Share.open({
+    title: "Share Stage",
+    message: shareStageTextConstructor(),
+  })
+    .then((res) => console.log(res))
+    .catch((err) => err && console.log(err));
+};
+
+export const shareTour = async () => {
   const tour: Tour | null = await getActiveTour();
   if (!tour) return;
   const stages: Stage[] = await tour.stages.fetch();
@@ -40,7 +45,7 @@ export const share = async () => {
   const tourAverageSpeed = getTourAverageSpeed(stages);
   Share.open({
     title: "Share Tour",
-    message: shareTextConstructor(tour, tourDistance, tourAverageSpeed),
+    message: shareTourTextConstructor(tour, tourDistance, tourAverageSpeed),
   })
     .then((res) => console.log(res))
     .catch((err) => err && console.log(err));

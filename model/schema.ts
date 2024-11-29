@@ -36,7 +36,7 @@ export const schema = appSchema({
     tableSchema({
       name: "routes",
       columns: [
-        { name: "geoJson", type: "string" },
+        { name: "geojson", type: "string" },
         { name: "tour_id", type: "string", isIndexed: true, isOptional: true },
         { name: "stage_id", type: "string", isIndexed: true, isOptional: true },
       ],

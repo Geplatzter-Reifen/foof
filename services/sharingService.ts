@@ -68,7 +68,7 @@ export const shareStage = async (stage: Stage) => {
     ? formatDate(stage.finishedAt, DateFormat.DATE)
     : undefined;
   const stageFinishedAtTime = stage.finishedAt
-    ? formatDate(stage.finishedAt, DateFormat.DATE)
+    ? formatDate(stage.finishedAt, DateFormat.TIME)
     : undefined;
 
   Share.open({

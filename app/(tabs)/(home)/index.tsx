@@ -1,21 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
-
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ImageProps,
+  Platform,
+  StatusBar,
+} from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
-
 import {
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
-
-import MapboxGL from "@rnmapbox/maps";
-
-import { Layout, ButtonGroup } from "@ui-kitten/components";
+import MapboxGL, { Camera } from "@rnmapbox/maps";
+import {
+  Layout,
+  ButtonGroup,
+  IconElement,
+  Icon,
+  TopNavigation,
+  Divider,
+  TopNavigationAction,
+  Text,
+} from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
+import { getActiveTour } from "@/model/database_functions";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { Route, Tour } from "@/model/model";
 
-MapboxGL.setAccessToken(
+void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
 );
 
@@ -30,20 +45,35 @@ export default function HomeScreen() {
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [activeTour, setActiveTour] = useState<Tour>();
   const buttonIconSize = 60;
+  const camera = useRef<Camera>(null);
+
+  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
-    getCurrentLocation();
+    void getCurrentLocation();
     TaskManager.isTaskRegisteredAsync("background-location-task").then(
       (result) => setTracking(result),
     );
+    getActiveTour().then((tour) => {
+      if (tour) {
+        setActiveTour(tour);
+      }
+    });
   }, []);
 
-  //get current location
+  useEffect(() => {
+    camera.current?.setCamera({
+      centerCoordinate: [longitude, latitude],
+      zoomLevel: 13,
+      animationDuration: 2000,
+      animationMode: "flyTo",
+    });
+  }, [latitude, longitude]);
+
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log(status);
-
     if (status !== "granted") {
       Alert.alert(
         "Permission denied",
@@ -62,17 +92,15 @@ export default function HomeScreen() {
 
     try {
       const { coords } = await Location.getCurrentPositionAsync();
-      console.log(coords);
-
       if (coords) {
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
-        console.log(coords);
       }
     } catch (error) {
       console.log("Error getting location:", error);
     }
   };
+
   const StartButton = () => {
     return (
       <BigRoundButton
@@ -103,7 +131,7 @@ export default function HomeScreen() {
     );
   };
 
-  function StopButton() {
+  const StopButton = () => {
     return (
       <BigRoundButton
         icon={
@@ -115,9 +143,39 @@ export default function HomeScreen() {
         }}
       />
     );
-  }
+  };
 
-  function toggleButtons(buttonState: ButtonStates) {
+  const showRoute = () => {
+    if (geoJSON) {
+      const pointFeatures = geoJSON.features.filter(
+        (feature) => feature.geometry.type === "Point",
+      );
+
+      if (pointFeatures.length > 1) {
+        const startPoint = (pointFeatures[0].geometry as GeoJSON.Point)
+          .coordinates;
+        const endPoint = (
+          pointFeatures[pointFeatures.length - 1].geometry as GeoJSON.Point
+        ).coordinates;
+
+        camera.current?.fitBounds(startPoint, endPoint, [25, 25], 1000);
+      }
+    }
+  };
+
+  const RouteIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="route"
+      style={[props?.style, { height: 40, width: "auto" }]}
+    />
+  );
+
+  const renderRouteAction = (): React.ReactElement => (
+    <TopNavigationAction icon={RouteIcon} onPress={showRoute} hitSlop={15} />
+  );
+
+  const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
         return StartButton();
@@ -131,18 +189,67 @@ export default function HomeScreen() {
           </ButtonGroup>
         );
     }
-  }
+  };
+
+  const ShapeSource = ({ route }: { route: Route }) => {
+    geoJSON = JSON.parse(route.geoJson);
+    return (
+      <MapboxGL.ShapeSource
+        id="route"
+        shape={geoJSON}
+        onPress={() => console.log("test")}
+      >
+        <MapboxGL.LineLayer
+          id="route"
+          belowLayerID="road-label"
+          style={{ lineColor: "blue", lineWidth: 5, lineJoin: "round" }}
+        />
+        <MapboxGL.CircleLayer
+          id="pointLayer"
+          filter={["==", "$type", "Point"]}
+          style={{
+            circleColor: "gray",
+            circleRadius: 6,
+          }}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  };
+
+  // observe the route (tracks updates to the route)
+  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
+    route,
+  }));
+
+  const EnhancedShapeSource = enhance(ShapeSource);
+
+  // observe routes of a tour (only tracks create and delete in the routes table)
+  const Bridge = ({ routes }: { routes: Route[] }) => {
+    if (routes.length === 0) return null;
+    return <EnhancedShapeSource route={routes[0]} />;
+  };
+
+  const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routes: tour.routes,
+  }));
+
+  const EnhancedShapeSourceV2 = enhanceV2(Bridge);
 
   return (
     <Layout style={styles.container}>
+      <Layout>
+        <TopNavigation
+          title={() => <Text category="h4">Home</Text>}
+          accessoryRight={renderRouteAction}
+          style={styles.header}
+          alignment="center"
+        ></TopNavigation>
+        <Divider />
+      </Layout>
       <Layout style={styles.layout}>
         <MapboxGL.MapView style={styles.map}>
-          <MapboxGL.Camera
-            zoomLevel={13}
-            centerCoordinate={[longitude, latitude]}
-            animationMode="flyTo"
-            animationDuration={2000}
-          />
+          {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
+          <MapboxGL.Camera ref={camera} />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
@@ -150,7 +257,6 @@ export default function HomeScreen() {
   );
 }
 
-// Define the styles here
 const styles = StyleSheet.create({
   map: {
     flex: 1,
@@ -159,6 +265,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+  },
+  header: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   layout: {
     flex: 1,

@@ -24,7 +24,7 @@ const shareStageConstructor = (
   return [
     `Hier ist meine gefahrene Etappe "${title}".\n`,
     `Gestartet bin ich am ${startedAtDate} um ${startedAtTime} Uhr.\n`,
-    `Ich bin ${distance} km in ${duration} h gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h\n`,
+    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h\n`,
     finishedAtTime && finishedAtDate
       ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}\n`
       : "",

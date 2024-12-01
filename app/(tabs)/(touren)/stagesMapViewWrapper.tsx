@@ -6,7 +6,6 @@ import StagesMapView from "../../../components/Tour/stagesMapView";
 
 export default function StagesMapViewWrapper() {
   const { tourId } = useLocalSearchParams<{ tourId: string }>(); // Get tourId from URL
-
   if (!tourId) {
     return (
       <Layout>

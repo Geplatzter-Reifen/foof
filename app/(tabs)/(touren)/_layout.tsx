@@ -32,6 +32,13 @@ export default function ReiseStackLayout() {
           title: "Etappe",
         }}
       />
+      <Stack.Screen
+        name="stagesMapViewWrapper"
+        options={{
+          headerShown: true,
+          title: "Map of Stages",
+        }}
+      />
     </Stack>
   );
 }

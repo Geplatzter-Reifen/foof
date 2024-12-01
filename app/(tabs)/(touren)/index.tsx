@@ -1,7 +1,7 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Tour } from "@/model/model";
+import { Stage, Tour } from "@/model/model";
 import {
   Layout,
   Button,
@@ -63,7 +63,21 @@ export default function Touruebersicht() {
   const EnhancedHeader = enhance(Header);
 
   const renderMapAction = (): React.ReactElement => (
-    <TopNavigationAction icon={MapIcon} hitSlop={15} />
+    <TopNavigationAction
+      icon={MapIcon}
+      hitSlop={15}
+      onPress={() => {
+        if (activeTour) {
+          router.push({
+            pathname: "./stagesMapViewWrapper",
+            params: {
+              tourId: activeTour.id,
+              tourTitle: activeTour.title,
+            },
+          });
+        }
+      }}
+    />
   );
 
   const renderEditAction = (): React.ReactElement => (

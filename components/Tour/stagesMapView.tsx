@@ -8,6 +8,7 @@ import StageMapLine from "@/components/Tour/StageMapLine";
 
 // Define the StagesMapView component
 const StagesMapView = ({ stages }: { stages: Stage[] }) => {
+  console.log("stages-------->" + stages);
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
@@ -19,7 +20,9 @@ const StagesMapView = ({ stages }: { stages: Stage[] }) => {
     const fetchStagesWithLocations = async () => {
       const upgradedStages = await Promise.all(
         stages.map(async (stage) => {
-          const locations = await getAllLocationsByStageId(stage.id); // Fetch locations for each stage
+          console.log("stage title---->" + stage.title);
+          const locations = await getAllLocationsByStageId(stage.id);
+          console.log("stage locations---->" + locations); // Fetch locations for each stage
           return { stage, locations };
         }),
       );
@@ -35,14 +38,23 @@ const StagesMapView = ({ stages }: { stages: Stage[] }) => {
   }
 
   return (
-    <MapboxGL.MapView style={{ flex: 1 }}>
+    <MapboxGL.MapView
+      zoomEnabled={true}
+      scrollEnabled={true}
+      pitchEnabled={true}
+      rotateEnabled={true}
+      style={{ flex: 1 }}
+    >
       <MapboxGL.Camera
+        minLevel={5}
+        maxLevel={15}
         zoomLevel={5}
-        centerCoordinate={[8.239761, 50.078218]}
+        centerCoordinate={[10.4515, 51.1657]}
         animationMode="flyTo"
-        animationDuration={2000}
+        animationDuration={1000}
       />
       {stagesWithLocations.map((stage) => {
+        console.log("the stage id--->" + stage.stage.id);
         return (
           <StageMapLine locations={stage.locations} stageID={stage.stage.id} />
         );

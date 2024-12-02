@@ -20,7 +20,7 @@ const StageMapLine = ({
     location.latitude,
   ]);
 
-  console.log("coords in line-->" + coords);
+  console.log("Coordinates for line:", JSON.stringify(coords, null, 2));
   console.log("id for the line-->" + stageID);
   const stage = lineString(coords, { name: "Stage" });
   return (
@@ -32,6 +32,7 @@ const StageMapLine = ({
           lineWidth: 7, // Thickness
           lineOpacity: 1, // Transparency
           lineCap: "round",
+          lineJoin: "round",
         }}
       />
     </MapboxGL.ShapeSource>

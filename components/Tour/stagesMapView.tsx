@@ -18,8 +18,11 @@ const StagesMapView = ({ stages }: { stages: Stage[] }) => {
   useEffect(() => {
     // Fetch locations for all stages
     const fetchStagesWithLocations = async () => {
+      const finishedStages = stages.filter((stage) => {
+        return !stage.isActive;
+      });
       const upgradedStages = await Promise.all(
-        stages.map(async (stage) => {
+        finishedStages.map(async (stage) => {
           console.log("stage title---->" + stage.title);
           const locations = await getAllLocationsByStageId(stage.id);
           console.log("stage locations---->" + locations); // Fetch locations for each stage

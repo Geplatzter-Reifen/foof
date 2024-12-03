@@ -51,7 +51,7 @@ function StageCard({ stage }: { stage: Stage }) {
           ...styles.card,
         }}
         header={<Header />}
-        status={stage.isActive ? "primary" : ""}
+        status={stage.isActive ? "primary" : undefined}
       >
         <View style={styles.stat}>
           <FontAwesomeIcon

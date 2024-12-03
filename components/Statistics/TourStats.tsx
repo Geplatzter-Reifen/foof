@@ -49,7 +49,7 @@ export default function TourStats(props: TourStatsProps) {
             position: "absolute",
             top: "28%",
             left:
-              progress < 0.15
+              progress < 0.18
                 ? `${((progress + 0.04) * 100).toFixed(2)}%`
                 : progress < 1
                   ? `${((progress - 0.125) * 100).toFixed(2)}%`

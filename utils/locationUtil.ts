@@ -1,7 +1,22 @@
+export type Location = {
+  latitude: number;
+  longitude: number;
+};
+export function isLocationValid(location: Location): boolean {
+  return (
+    location.latitude >= -90 &&
+    location.latitude <= 90 &&
+    location.longitude >= -180 &&
+    location.longitude <= 180
+  );
+}
 export function calculateDistance(
-  location1: { latitude: number; longitude: number },
-  location2: { latitude: number; longitude: number },
+  location1: Location,
+  location2: Location,
 ): number {
+  if (!isLocationValid(location1) || !isLocationValid(location2)) {
+    throw new Error("Invalid location");
+  }
   const R = 6371; // Erdradius in Kilometern
 
   const lat1 = location1.latitude * (Math.PI / 180); // Umrechnung in Bogenmaß

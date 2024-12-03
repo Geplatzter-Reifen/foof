@@ -6,7 +6,7 @@ type StageMockConstructorArgs = {
   collections: any;
 };
 
-export class MockStage {
+export class MockLocation {
   constructor({
     latitude = 50.0826,
     longitude = 8.24,

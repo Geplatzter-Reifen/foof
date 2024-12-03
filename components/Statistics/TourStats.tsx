@@ -37,7 +37,7 @@ export default function TourStats(props: TourStatsProps) {
     })();
   }, [props.tour]);
 
-  const progress = 1.3; // getTourDistance(stages) / 1001;
+  const progress = getTourDistance(stages) / 1001;
 
   return (
     <View style={styles.container}>

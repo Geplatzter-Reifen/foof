@@ -6,6 +6,7 @@ import {
   ImageProps,
   Platform,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
@@ -33,7 +34,6 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/model/database_functions";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
-import SmallRoundButton from "@/components/Buttons/SmallRoundButton";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -96,55 +96,10 @@ export default function HomeScreen() {
       if (coords) {
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
-        console.log(coords);
       }
     } catch (error) {
       console.log("Error getting location:", error);
     }
-  };
-
-  const StartButton = () => {
-    return (
-      <BigRoundButton
-        icon={
-          <FontAwesomeIcon
-            transform="right-1"
-            icon="play"
-            size={buttonIconSize}
-            color="white"
-          />
-        }
-        onPress={() => {
-          setButtonState(ButtonStates.Cycling);
-          void startAutomaticTracking();
-        }}
-      />
-    );
-  };
-
-  const PauseButton = () => {
-    return (
-      <BigRoundButton
-        icon={
-          <FontAwesomeIcon icon="pause" size={buttonIconSize} color="white" />
-        }
-        onPress={() => setButtonState(ButtonStates.Paused)}
-      />
-    );
-  };
-
-  const StopButton = () => {
-    return (
-      <BigRoundButton
-        icon={
-          <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
-        }
-        onPress={() => {
-          setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-        }}
-      />
-    );
   };
 
   const showRoute = async () => {
@@ -193,6 +148,50 @@ export default function HomeScreen() {
     }
   };
 
+  const StartButton = () => {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon
+            transform="right-1"
+            icon="play"
+            size={buttonIconSize}
+            color="white"
+          />
+        }
+        onPress={() => {
+          setButtonState(ButtonStates.Cycling);
+          void startAutomaticTracking();
+        }}
+      />
+    );
+  };
+
+  const PauseButton = () => {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon icon="pause" size={buttonIconSize} color="white" />
+        }
+        onPress={() => setButtonState(ButtonStates.Paused)}
+      />
+    );
+  };
+
+  const StopButton = () => {
+    return (
+      <BigRoundButton
+        icon={
+          <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
+        }
+        onPress={() => {
+          setButtonState(ButtonStates.NotCycling);
+          void stopAutomaticTracking();
+        }}
+      />
+    );
+  };
+
   const RouteIcon = (props?: Partial<ImageProps>): IconElement => (
     <Icon
       {...props}
@@ -201,12 +200,17 @@ export default function HomeScreen() {
     />
   );
 
-  const CenterIcon = (props?: Partial<ImageProps>): IconElement => (
-    <Icon
-      {...props}
-      name="location-arrow"
-      style={[props?.style, { height: 20 }]}
-    />
+  const CenterButton = (props?: Partial<ImageProps>) => (
+    <TouchableOpacity
+      style={styles.centerButton}
+      onPress={() => setUserCentered(true)}
+    >
+      <Icon
+        {...props}
+        name="location-crosshairs"
+        style={[props?.style, { height: 23 }]}
+      />
+    </TouchableOpacity>
   );
 
   const renderRouteAction = (): React.ReactElement => (
@@ -280,6 +284,7 @@ export default function HomeScreen() {
       </Layout>
     );
   }
+
   return (
     <Layout style={styles.container}>
       <Layout>
@@ -322,15 +327,11 @@ export default function HomeScreen() {
           />
         </MapboxGL.MapView>
       </Layout>
-      <View style={styles.centerButtonContainer}>
-        <SmallRoundButton
-          icon={CenterIcon}
-          status="basic"
-          onPress={() => {
-            setUserCentered(true);
-          }}
-        />
-      </View>
+      {!userCentered && (
+        <View style={styles.centerButtonContainer}>
+          <CenterButton />
+        </View>
+      )}
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
   );
@@ -367,5 +368,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     top: 175,
     right: 11,
+  },
+  centerButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
   },
 });

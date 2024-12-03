@@ -45,5 +45,10 @@ describe("dateUtil", () => {
         dateUtil.getTotalMillisecondsString(endDateNum - startDateNum),
       ).toBe("14:50 h");
     });
+    it("should not work with negative milliseconds", () => {
+      expect(() =>
+        dateUtil.getTotalMillisecondsString(startDateNum - endDateNum),
+      ).toThrow();
+    });
   });
 });

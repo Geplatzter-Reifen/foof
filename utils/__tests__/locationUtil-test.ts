@@ -1,4 +1,4 @@
-import * as LocationUtil from "../locationUtil";
+import * as locationUtil from "../locationUtil";
 describe("LocationUtil", () => {
   const wiesbaden = {
     latitude: 50.0826,
@@ -11,7 +11,7 @@ describe("LocationUtil", () => {
   const distanceWiesbadenFrankfurt = 31.73; // km
 
   it("should calculate the distance between two points", () => {
-    const distance = LocationUtil.calculateDistance(wiesbaden, frankfurt);
+    const distance = locationUtil.calculateDistance(wiesbaden, frankfurt);
     expect(distance).toBeCloseTo(distanceWiesbadenFrankfurt);
   });
   it("should throw an error if the location is invalid", () => {
@@ -20,7 +20,7 @@ describe("LocationUtil", () => {
       longitude: 181,
     };
     expect(() =>
-      LocationUtil.calculateDistance(wiesbaden, invalidLocation),
+      locationUtil.calculateDistance(wiesbaden, invalidLocation),
     ).toThrow("Invalid location");
   });
 });

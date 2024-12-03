@@ -35,6 +35,9 @@ export function getDurationFormatted(start: Date, end: Date): string {
 }
 
 export function getTotalMillisecondsString(totalMilliseconds: number): string {
+  if (totalMilliseconds < 0) {
+    throw new Error("Total milliseconds must be positive");
+  }
   const totalMinutes = Math.ceil(totalMilliseconds / 60000);
 
   const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");

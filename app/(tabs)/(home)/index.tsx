@@ -59,16 +59,20 @@ export default function HomeScreen() {
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
-    void getCurrentLocation();
-    TaskManager.isTaskRegisteredAsync("background-location-task").then(
-      (result) => setTracking(result),
-    );
-    getActiveTour().then((tour) => {
-      if (tour) {
-        setActiveTour(tour);
-      }
-    });
-    setLoading(false);
+    const prepare = async () => {
+      await getCurrentLocation();
+      TaskManager.isTaskRegisteredAsync("background-location-task").then(
+        (result) => setTracking(result),
+      );
+      getActiveTour().then((tour) => {
+        if (tour) {
+          setActiveTour(tour);
+        }
+      });
+      setLoading(false);
+    };
+
+    prepare();
   }, []);
 
   const getCurrentLocation = async () => {

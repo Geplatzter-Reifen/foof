@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-
 import React, { useState, useEffect, useRef } from "react";
 import {
   View,
@@ -18,13 +15,12 @@ import {
   stopAutomaticTracking,
 } from "@/services/tracking";
 
-import MapboxGL, { UserTrackingMode } from "@rnmapbox/maps";
+import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
-import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
-import MapboxGL, { Camera } from "@rnmapbox/maps";
 import {
   Layout,
   ButtonGroup,
+  Spinner,
   IconElement,
   Icon,
   TopNavigation,
@@ -37,6 +33,7 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/model/database_functions";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
+import SmallRoundButton from "@/components/Buttons/SmallRoundButton";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -55,6 +52,7 @@ export default function HomeScreen() {
   const [longitude, setLongitude] = useState<number>(0);
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [activeTour, setActiveTour] = useState<Tour>();
+  const [userCentered, setUserCentered] = useState(true);
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
 
@@ -72,15 +70,6 @@ export default function HomeScreen() {
     });
     setLoading(false);
   }, []);
-
-  useEffect(() => {
-    camera.current?.setCamera({
-      centerCoordinate: [longitude, latitude],
-      zoomLevel: 13,
-      animationDuration: 2000,
-      animationMode: "flyTo",
-    });
-  }, [latitude, longitude]);
 
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -212,6 +201,14 @@ export default function HomeScreen() {
     />
   );
 
+  const CenterIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="location-arrow"
+      style={[props?.style, { height: 20 }]}
+    />
+  );
+
   const renderRouteAction = (): React.ReactElement => (
     <TopNavigationAction icon={RouteIcon} onPress={showRoute} hitSlop={15} />
   );
@@ -298,16 +295,42 @@ export default function HomeScreen() {
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
-          compassEnabled
+          localizeLabels={{ locale: "current" }}
+          compassEnabled={true}
           compassPosition={{ top: 8, right: 8 }}
           logoPosition={{ top: 8, left: 8 }}
           attributionPosition={{ top: 8, left: 96 }}
+          onTouchMove={() => {
+            setUserCentered(false);
+          }}
         >
           {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
-          <MapboxGL.Camera ref={camera} />
-          <MapboxGL.UserLocation androidRenderMode="gps" />
+          <MapboxGL.Camera
+            defaultSettings={{
+              centerCoordinate: [longitude, latitude],
+              zoomLevel: 14,
+            }}
+            followZoomLevel={15}
+            animationMode="flyTo"
+            followUserMode={UserTrackingMode.FollowWithCourse}
+            followUserLocation={userCentered}
+            ref={camera}
+          />
+          <MapboxGL.UserLocation
+            androidRenderMode="gps"
+            showsUserHeadingIndicator={true}
+          />
         </MapboxGL.MapView>
       </Layout>
+      <View style={styles.centerButtonContainer}>
+        <SmallRoundButton
+          icon={CenterIcon}
+          status="basic"
+          onPress={() => {
+            setUserCentered(true);
+          }}
+        />
+      </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
   );
@@ -337,5 +360,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     bottom: 15,
+  },
+  centerButtonContainer: {
+    position: "absolute",
+    flexDirection: "row",
+    alignSelf: "center",
+    top: 175,
+    right: 11,
   },
 });

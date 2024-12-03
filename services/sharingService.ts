@@ -11,7 +11,7 @@ import {
   DateFormat,
   getTotalMillisecondsString,
 } from "@/utils/dateUtil";
-const shareStageConstructor = (
+const shareStageMaker = (
   title: string,
   distance: string,
   avgSpeed: string,
@@ -31,7 +31,7 @@ const shareStageConstructor = (
   ].join("");
 };
 
-const shareTourConstructor = (
+const shareTourMaker = (
   title: string,
   distance: string,
   avgSpeed: string,
@@ -73,7 +73,7 @@ export const shareStage = async (stage: Stage) => {
 
   Share.open({
     title: "Share Stage",
-    message: shareStageConstructor(
+    message: shareStageMaker(
       stageTitle,
       stageDistance,
       stageAverageSpeed,
@@ -110,7 +110,7 @@ export const shareTour = async (uri?: string) => {
 
   Share.open({
     title: "Share Tour",
-    message: shareTourConstructor(
+    message: shareTourMaker(
       tourTitle,
       tourDistance,
       tourAverageSpeed,

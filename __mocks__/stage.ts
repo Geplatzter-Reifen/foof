@@ -11,27 +11,14 @@ type StageMockConstructorArgs = {
 
 export class MockStage {
   constructor({
-    title = "Mock Title",
+    title = "Mock Stage",
     isActive = true,
     startedAt = new Date("2024-12-03 12:00").getTime(),
     finishedAt = undefined,
     distance = 42.195,
     avgSpeed = 10.5,
     tour = { id: "mock-tour-id", name: "Mock Tour" },
-    collections = {
-      get: jest.fn(() => ({
-        create: jest.fn((fn) => {
-          const mockLocation = {
-            latitude: 0,
-            longitude: 0,
-            recordedAt: Date.now(),
-            stage: { set: jest.fn() },
-          };
-          fn(mockLocation);
-          return Promise.resolve(mockLocation);
-        }),
-      })),
-    },
+    collections = {},
   }: Partial<StageMockConstructorArgs> = {}) {
     this.title = title;
     this.isActive = isActive;

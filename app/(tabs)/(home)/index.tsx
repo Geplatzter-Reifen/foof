@@ -26,7 +26,7 @@ import {
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
-import { getActiveTour } from "@/model/database_functions";
+import { getActiveTour } from "@/services/data/tourService"
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
 

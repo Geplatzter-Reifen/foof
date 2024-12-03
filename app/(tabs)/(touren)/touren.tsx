@@ -18,10 +18,11 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { setTourRoute, updateTourNameById } from "@/model/database_functions";
+import { updateTourNameById } from "@/services/data/tourService";
+import { setTourRoute } from "@/services/data/routeService";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
-import * as gjv from "geojson-validation";
+import * as Gjv from "geojson-validation";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
@@ -59,7 +60,7 @@ export default function Touren() {
     });
     if (!file.canceled) {
       const content = await FileSystem.readAsStringAsync(file.assets[0].uri);
-      if (gjv.valid(JSON.parse(content))) {
+      if (Gjv.valid(JSON.parse(content))) {
         setSelectedFile(file);
         await setTourRoute(tourId, content);
       } else {

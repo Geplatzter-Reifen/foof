@@ -26,10 +26,19 @@ class Tour extends Model {
   @children("routes") routes;
 
   //@ts-ignore
-  @writer async addStage(title: string, startedAt?: number) {
+  @writer async addStage(
+    title: string,
+    startedAt?: number,
+    finishedAt?: number,
+    active: boolean = false,
+  ) {
     return this.collections.get<Stage>("stages").create((stage) => {
       stage.title = title;
       stage.startedAt = startedAt ?? Date.now();
+      if (finishedAt) {
+        stage.finishedAt = finishedAt;
+      }
+      stage.isActive = active;
       stage.tour.set(this);
     });
   }

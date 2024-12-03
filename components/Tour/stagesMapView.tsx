@@ -58,8 +58,13 @@ const StagesMapView = ({ stages }: { stages: Stage[] }) => {
       />
       {stagesWithLocations.map((stage) => {
         console.log("the stage id--->" + stage.stage.id);
+        if (stage.locations.length <= 1) return;
         return (
-          <StageMapLine locations={stage.locations} stageID={stage.stage.id} />
+          <StageMapLine
+            locations={stage.locations}
+            stageID={stage.stage.id}
+            key={stage.stage.id}
+          />
         );
       })}
     </MapboxGL.MapView>

@@ -14,6 +14,9 @@ import MapboxGL from "@rnmapbox/maps";
 import { Layout, ButtonGroup } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
+import { Stage } from "@/model/model";
+import { getActiveStage } from "@/services/data/stageService";
+import { StageLine } from "@/components/Stage/activeStageWrapper";
 
 MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -31,6 +34,7 @@ export default function HomeScreen() {
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const buttonIconSize = 60;
+  const [activeStageId, setActiveStageId] = useState<string>();
 
   useEffect(() => {
     getCurrentLocation();
@@ -86,7 +90,11 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking();
+          startAutomaticTracking().then(() =>
+            getActiveStage().then((stage) => {
+              setActiveStageId(stage?.id!);
+            }),
+          );
         }}
       />
     );
@@ -139,10 +147,11 @@ export default function HomeScreen() {
         <MapboxGL.MapView style={styles.map}>
           <MapboxGL.Camera
             zoomLevel={13}
-            centerCoordinate={[longitude, latitude]}
+            centerCoordinate={[8.24, 50.0826]}
             animationMode="flyTo"
             animationDuration={2000}
           />
+          {activeStageId && <StageLine stageId={activeStageId} />}
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

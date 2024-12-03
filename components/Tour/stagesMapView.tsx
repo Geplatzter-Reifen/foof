@@ -1,13 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { Stage, Location } from "@/model/model";
+import React, { useState, useEffect, ReactElement } from "react";
+import { Stage, Location, Tour } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
+import { Text } from "@ui-kitten/components";
 import StageMapLine from "@/components/Tour/StageMapLine";
+import { useNavigation } from "expo-router";
 
 // Define the StagesMapView component
-const StagesMapView = ({ stages }: { stages: Stage[] }) => {
+const StagesMapView = ({
+  stages,
+  tour,
+}: {
+  stages: Stage[];
+  tour: ReactElement;
+}) => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({
+      // headerTitle: () => tour,
+      headerTitleAlign: "center", // Ensures the title is centered
+    });
+  }, [tour]);
+
   console.log("stages-------->" + stages);
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]

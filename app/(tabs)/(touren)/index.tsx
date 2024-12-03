@@ -72,7 +72,7 @@ export default function Touruebersicht() {
             pathname: "./stagesMapViewWrapper",
             params: {
               tourId: activeTour.id,
-              tourTitle: activeTour.title,
+              tourTitle: Header,
             },
           });
         }
@@ -135,6 +135,7 @@ export default function Touruebersicht() {
             pathname: "./createManualStage",
             params: {
               tourId: activeTour?.id,
+              tour: activeTour?.title,
             },
           })
         }

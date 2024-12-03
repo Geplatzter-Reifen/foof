@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
+import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -33,7 +34,7 @@ const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
   />
 );
 
-export default function StageCard({ stage }: { stage: Stage }) {
+function StageCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
   let finishedAt: Date | undefined = stage.finishedAt
     ? new Date(stage.finishedAt)
@@ -82,6 +83,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
           ...styles.card,
         }}
         header={<Header />}
+        status={stage.isActive ? "primary" : undefined}
       >
         <View style={styles.stat}>
           <FontAwesomeIcon
@@ -119,6 +121,10 @@ export default function StageCard({ stage }: { stage: Stage }) {
     </Layout>
   );
 }
+
+// Observe die reingegebene Prop "stage"und reagiere auf änderungen
+const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
+export default enhance(StageCard);
 
 const styles = StyleSheet.create({
   card: {

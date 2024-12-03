@@ -41,3 +41,5 @@ expo-env.d.ts
 # Build folders for android and ios
 android/
 ios/
+
+coverage/

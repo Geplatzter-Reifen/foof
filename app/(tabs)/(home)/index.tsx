@@ -120,6 +120,7 @@ export default function HomeScreen() {
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
           stopAutomaticTracking();
+          setActiveStageId(null);
         }}
       />
     );

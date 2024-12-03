@@ -1,6 +1,6 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tour } from "@/model/model";
 import {
   Layout,
@@ -21,7 +21,6 @@ import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { shareTour } from "@/services/sharingService";
-import { captureRef } from "react-native-view-shot";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -48,23 +47,6 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 export default function Touruebersicht() {
-  // Für die Screenshot Einbindung später
-  const viewRef = useRef<Layout>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function captureAndShare() {
-    try {
-      // Capture the screenshot of the element and store it into the uri variable
-      const uri = await captureRef(viewRef, {
-        format: "png",
-        quality: 1,
-      });
-      shareTour(uri);
-      // in der URI steht jetzt eine Refernce zum Bild, das geteilt werden kann.
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   const [activeTour, setActiveTour] = useState<Tour>();
 
   useEffect(() => {
@@ -121,7 +103,7 @@ export default function Touruebersicht() {
   }
 
   return (
-    <Layout level="2" style={styles.container} ref={viewRef}>
+    <Layout level="2" style={styles.container}>
       <Layout>
         <TopNavigation
           title={EnhancedHeader}

@@ -9,9 +9,12 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import * as Notifications from "expo-notifications";
+
 import {
   startAutomaticTracking,
   stopAutomaticTracking,
+  LOCATION_TASK_NAME,
 } from "@/services/tracking";
 import MapboxGL, { Camera } from "@rnmapbox/maps";
 import {
@@ -41,7 +44,6 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
-  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -53,9 +55,11 @@ export default function HomeScreen() {
 
   useEffect(() => {
     void getCurrentLocation();
-    TaskManager.isTaskRegisteredAsync("background-location-task").then(
-      (result) => setTracking(result),
-    );
+    TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
+      if (result) {
+        setButtonState(ButtonStates.Cycling);
+      }
+    });
     getActiveTour().then((tour) => {
       if (tour) {
         setActiveTour(tour);
@@ -72,8 +76,23 @@ export default function HomeScreen() {
     });
   }, [latitude, longitude]);
 
+  const requestPermissionsAsync = async () => {
+    return await Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: true,
+      },
+    });
+  };
+
+  //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
+    console.log(status);
+    const { status: notificationStatus } = await requestPermissionsAsync();
+    console.log(notificationStatus);
+
     if (status !== "granted") {
       Alert.alert(
         "Permission denied",

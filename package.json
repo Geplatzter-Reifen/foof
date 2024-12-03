@@ -71,12 +71,12 @@
     "react-native-svg": "15.2.0",
     "react-native-web": "~0.19.10",
     "rn-faded-scrollview": "^1.0.13"
-    },
+  },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@testing-library/react-native": "^12.9.0",
     "@types/geojson-validation": "^1.0.3",
     "@types/jest": "^29.5.14",
-    "@testing-library/react-native": "^12.9.0",
     "@types/react": "~18.2.45",
     "@types/react-native-maps": "^0.24.1",
     "eslint": "^8.57.0",

@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ImageProps,
+  Platform,
+  StatusBar,
+} from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 
@@ -12,10 +21,24 @@ import {
 import MapboxGL, { UserTrackingMode } from "@rnmapbox/maps";
 
 import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
+import MapboxGL, { Camera } from "@rnmapbox/maps";
+import {
+  Layout,
+  ButtonGroup,
+  IconElement,
+  Icon,
+  TopNavigation,
+  Divider,
+  TopNavigationAction,
+  Text,
+} from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
+import { getActiveTour } from "@/model/database_functions";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { Route, Tour } from "@/model/model";
 
-MapboxGL.setAccessToken(
+void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
 );
 
@@ -31,21 +54,34 @@ export default function HomeScreen() {
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [activeTour, setActiveTour] = useState<Tour>();
   const buttonIconSize = 60;
+  const camera = useRef<Camera>(null);
+
+  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
-    const prepare = async () => {
-      await getCurrentLocation();
-      TaskManager.isTaskRegisteredAsync("background-location-task").then(
-        (result) => setTracking(result),
-      );
-      setLoading(false);
-    };
+    void getCurrentLocation();
+    TaskManager.isTaskRegisteredAsync("background-location-task").then(
+      (result) => setTracking(result),
+    );
+    getActiveTour().then((tour) => {
+      if (tour) {
+        setActiveTour(tour);
+      }
+    });
+    setLoading(false);
+  }, []);
 
-    prepare();
+  useEffect(() => {
+    camera.current?.setCamera({
+      centerCoordinate: [longitude, latitude],
+      zoomLevel: 13,
+      animationDuration: 2000,
+      animationMode: "flyTo",
+    });
   }, [latitude, longitude]);
 
-  //get current location
   const getCurrentLocation = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -71,11 +107,13 @@ export default function HomeScreen() {
       if (coords) {
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
+        console.log(coords);
       }
     } catch (error) {
       console.log("Error getting location:", error);
     }
   };
+
   const StartButton = () => {
     return (
       <BigRoundButton
@@ -89,7 +127,7 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking();
+          void startAutomaticTracking();
         }}
       />
     );
@@ -106,7 +144,7 @@ export default function HomeScreen() {
     );
   };
 
-  function StopButton() {
+  const StopButton = () => {
     return (
       <BigRoundButton
         icon={
@@ -114,13 +152,71 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
-          stopAutomaticTracking();
+          void stopAutomaticTracking();
         }}
       />
     );
-  }
+  };
 
-  function toggleButtons(buttonState: ButtonStates) {
+  const showRoute = async () => {
+    if (geoJSON) {
+      // Find the outermost coordinates
+      let minLat = Infinity,
+        maxLat = -Infinity,
+        minLng = Infinity,
+        maxLng = -Infinity;
+      geoJSON.features.forEach((feature) => {
+        if (feature.geometry.type === "LineString") {
+          (feature.geometry as GeoJSON.LineString).coordinates.forEach(
+            ([lng, lat]) => {
+              if (lat < minLat) minLat = lat;
+              if (lat > maxLat) maxLat = lat;
+              if (lng < minLng) minLng = lng;
+              if (lng > maxLng) maxLng = lng;
+            },
+          );
+        } else if (feature.geometry.type === "Point") {
+          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+          if (lat < minLat) minLat = lat;
+          if (lat > maxLat) maxLat = lat;
+          if (lng < minLng) minLng = lng;
+          if (lng > maxLng) maxLng = lng;
+        }
+      });
+
+      const bounds = {
+        ne: [maxLng, maxLat],
+        sw: [minLng, minLat],
+      };
+
+      camera.current?.setCamera({
+        bounds: bounds,
+        padding: {
+          paddingLeft: 30,
+          paddingRight: 30,
+          paddingTop: 30,
+          paddingBottom: 150,
+        },
+        animationDuration: 2000,
+        heading: 0,
+        animationMode: "flyTo",
+      });
+    }
+  };
+
+  const RouteIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="route"
+      style={[props?.style, { height: 40, width: "auto" }]}
+    />
+  );
+
+  const renderRouteAction = (): React.ReactElement => (
+    <TopNavigationAction icon={RouteIcon} onPress={showRoute} hitSlop={15} />
+  );
+
+  const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
         return StartButton();
@@ -134,7 +230,51 @@ export default function HomeScreen() {
           </ButtonGroup>
         );
     }
-  }
+  };
+
+  const ShapeSource = ({ route }: { route: Route }) => {
+    geoJSON = JSON.parse(route.geoJson);
+    return (
+      <MapboxGL.ShapeSource id="route" shape={geoJSON}>
+        <MapboxGL.LineLayer
+          id="route"
+          belowLayerID="road-label"
+          style={{
+            lineColor: "#b8b8b8",
+            lineWidth: 5,
+            lineJoin: "round",
+          }}
+        />
+        <MapboxGL.CircleLayer
+          id="pointLayer"
+          filter={["==", "$type", "Point"]}
+          style={{
+            circleColor: "black",
+            circleRadius: 6,
+          }}
+        />
+      </MapboxGL.ShapeSource>
+    );
+  };
+
+  // observe the route (tracks updates to the route)
+  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
+    route,
+  }));
+
+  const EnhancedShapeSource = enhance(ShapeSource);
+
+  // observe routes of a tour (only tracks create and delete in the routes table)
+  const Bridge = ({ routes }: { routes: Route[] }) => {
+    if (routes.length === 0) return null;
+    return <EnhancedShapeSource route={routes[0]} />;
+  };
+
+  const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routes: tour.routes,
+  }));
+
+  const EnhancedShapeSourceV2 = enhanceV2(Bridge);
 
   if (loading) {
     return (
@@ -145,6 +285,15 @@ export default function HomeScreen() {
   }
   return (
     <Layout style={styles.container}>
+      <Layout>
+        <TopNavigation
+          title={() => <Text category="h4">Home</Text>}
+          accessoryRight={renderRouteAction}
+          style={styles.header}
+          alignment="center"
+        ></TopNavigation>
+        <Divider />
+      </Layout>
       <Layout style={styles.layout}>
         <MapboxGL.MapView
           style={styles.map}
@@ -154,12 +303,8 @@ export default function HomeScreen() {
           logoPosition={{ top: 8, left: 8 }}
           attributionPosition={{ top: 8, left: 96 }}
         >
-          <MapboxGL.Camera
-            followZoomLevel={15}
-            animationMode="moveTo"
-            followUserMode={UserTrackingMode.FollowWithCourse}
-            followUserLocation={true}
-          />
+          {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
+          <MapboxGL.Camera ref={camera} />
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
@@ -178,6 +323,9 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     flexDirection: "row",
+  },
+  header: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   layout: {
     flex: 1,

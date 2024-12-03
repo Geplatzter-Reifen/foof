@@ -6,7 +6,7 @@ import {
   getTotalMillisecondsString,
 } from "@/utils/dateUtil";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
-import { Tour, Stage } from "@/model/model";
+import { Tour, Stage } from "@/database/model/model";
 import {
   getTourDuration,
   getTourDistance,

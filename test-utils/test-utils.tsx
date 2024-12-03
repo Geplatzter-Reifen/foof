@@ -32,5 +32,6 @@ const customRender = (
   return render(component, { wrapper: AllTheProviders, ...options });
 };
 
+// Exportiert alle Funktionen der Testing Library, weswegen man diese dann auch von dieser Datei importieren kann
 export * from "@testing-library/react-native";
 export { customRender as render };

@@ -1,4 +1,4 @@
-import { Stage } from "@/model/model";
+import { Stage } from "@/database/model/model";
 import { getDurationFormatted, getDurationInMs } from "@/utils/dateUtil";
 
 // Distance //

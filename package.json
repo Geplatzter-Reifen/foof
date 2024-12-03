@@ -67,6 +67,7 @@
     "@types/jest": "^29.5.14",
     "@types/react": "~18.2.45",
     "@types/react-native-maps": "^0.24.1",
+    "better-sqlite3": "^11.6.0",
     "eslint": "^8.57.0",
     "eslint-config-expo": "~7.1.2",
     "eslint-config-prettier": "^9.1.0",

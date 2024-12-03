@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Text, Layout, Button } from "@ui-kitten/components";
-import ButtonGroup from "../../../components/Stage/ButtonGroup";
+import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
 import { StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
@@ -9,7 +9,7 @@ import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { Alert } from "react-native";
-import { ButtonSwitch } from "@/components/Stage/ButtonSwitch";
+import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();

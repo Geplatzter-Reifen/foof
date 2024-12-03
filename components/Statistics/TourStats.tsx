@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { dateFormat, DATE, getTotalMillisecondsString } from "@/utils/dateUtil";
+import {
+  formatDate,
+  DateFormat,
+  getTotalMillisecondsString,
+} from "@/utils/dateUtil";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/model/model";
 import {
@@ -45,14 +49,14 @@ export default function TourStats(props: TourStatsProps) {
           <Icon name="calendar-plus" style={styles.icon_style} />
           <Text>
             {props.tour.startedAt
-              ? dateFormat(props.tour.startedAt, DATE)
+              ? formatDate(props.tour.startedAt, DateFormat.DATE)
               : "--"}
           </Text>
         </View>
         {props.tour.finishedAt && (
           <View style={styles.stat_row}>
             <Icon name="calendar-check" style={styles.icon_style} />
-            <Text>{dateFormat(props.tour.finishedAt, DATE)}</Text>
+            <Text>{formatDate(props.tour.finishedAt, DateFormat.DATE)}</Text>
           </View>
         )}
         <View style={styles.stat_row}>

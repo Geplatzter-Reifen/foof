@@ -136,7 +136,7 @@ export default function HomeScreen() {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout}>
-        <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.MapView style={styles.map} localizeLabels={true}>
           <MapboxGL.Camera
             zoomLevel={13}
             centerCoordinate={[longitude, latitude]}

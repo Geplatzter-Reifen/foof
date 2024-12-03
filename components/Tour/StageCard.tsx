@@ -1,14 +1,37 @@
 import React from "react";
-import { DATE, dateFormat, getDurationFormatted } from "@/utils/dateUtil";
+import { DateFormat, formatDate, getDurationFormatted } from "@/utils/dateUtil";
 
 import { Stage } from "@/model/model";
 import { deleteStage } from "@/services/data/stageService";
 
-import { Button, Card, Layout, Text } from "@ui-kitten/components";
+import {
+  Button,
+  Card,
+  Icon,
+  IconElement,
+  Layout,
+  Text,
+} from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { StyleSheet, View } from "react-native";
+import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
+import { shareStage } from "@/services/sharingService";
+
+const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon
+    {...props}
+    name="share-nodes"
+    style={[props?.style, { height: 18, width: "auto" }]}
+  />
+);
+const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon
+    {...props}
+    name="trash"
+    style={[props?.style, { height: 18, width: "auto" }]}
+  />
+);
 
 export default function StageCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
@@ -16,7 +39,7 @@ export default function StageCard({ stage }: { stage: Stage }) {
     ? new Date(stage.finishedAt)
     : undefined;
 
-  const date: string = dateFormat(startedAt, DATE);
+  const date: string = formatDate(startedAt, DateFormat.DATE);
 
   let duration: string | undefined = finishedAt
     ? getDurationFormatted(startedAt, finishedAt)
@@ -32,13 +55,20 @@ export default function StageCard({ stage }: { stage: Stage }) {
         <Text category="h6" style={styles.title}>
           {stage.title}
         </Text>
-        <Button
-          status="basic"
-          appearance="ghost"
-          onPress={() => deleteStage(stage.id)}
-        >
-          <FontAwesomeIcon icon="trash" />
-        </Button>
+        <View style={styles.buttonGroup}>
+          <Button
+            status="basic"
+            appearance="ghost"
+            accessoryLeft={TrashIcon}
+            onPress={() => deleteStage(stage.id)}
+          ></Button>
+          <Button
+            status="basic"
+            appearance="ghost"
+            accessoryLeft={ShareIcon}
+            onPress={() => shareStage(stage)}
+          ></Button>
+        </View>
       </View>
     );
   };
@@ -108,6 +138,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+  },
+  buttonGroup: {
+    flexDirection: "row",
   },
   icon: {
     marginRight: 10,

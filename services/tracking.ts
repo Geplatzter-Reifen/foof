@@ -88,9 +88,8 @@ export async function startAutomaticTracking() {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       foregroundService: {
-        killServiceOnDestroy: true,
         notificationTitle: "Tracking aktiv",
-        notificationBody: "Deine Etappe wird getrackt",
+        notificationBody: "Viel Spaß beim Raddeln! ️",
       },
     });
     console.log("Tracking started.");

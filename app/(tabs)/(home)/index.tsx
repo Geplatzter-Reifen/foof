@@ -28,7 +28,6 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
-  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME) PROBLEM
   const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
   const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -36,9 +35,11 @@ export default function HomeScreen() {
 
   useEffect(() => {
     getCurrentLocation();
-    TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) =>
-      setTracking(result),
-    );
+    TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
+      if (result) {
+        setButtonState(ButtonStates.Cycling);
+      }
+    });
   }, []);
 
   const requestPermissionsAsync = async () => {

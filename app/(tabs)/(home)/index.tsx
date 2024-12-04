@@ -164,6 +164,7 @@ export default function HomeScreen() {
     );
   };
 
+  // Function to display the route on the map by adjusting the camera to fit the route's bounds
   const showRoute = async () => {
     if (geoJSON) {
       // Find the outermost coordinates
@@ -241,14 +242,15 @@ export default function HomeScreen() {
   const ShapeSource = ({ route }: { route: Route }) => {
     geoJSON = JSON.parse(route.geoJson);
     return (
-      <MapboxGL.ShapeSource id="route" shape={geoJSON}>
+      <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
         <MapboxGL.LineLayer
-          id="route"
+          id="routeLayer"
           belowLayerID="road-label"
           style={{
             lineColor: "#b8b8b8",
             lineWidth: 5,
             lineJoin: "round",
+            lineCap: "round",
           }}
         />
         <MapboxGL.CircleLayer
@@ -256,7 +258,7 @@ export default function HomeScreen() {
           filter={["==", "$type", "Point"]}
           style={{
             circleColor: "black",
-            circleRadius: 6,
+            circleRadius: 5,
           }}
         />
       </MapboxGL.ShapeSource>

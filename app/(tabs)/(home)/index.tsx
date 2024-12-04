@@ -15,9 +15,7 @@ import { Layout, ButtonGroup } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 
-MapboxGL.setAccessToken(
-  "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
-);
+MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
 enum ButtonStates {
   NotCycling,

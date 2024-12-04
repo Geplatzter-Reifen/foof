@@ -418,7 +418,7 @@ exports[`<StageCard /> renders correctly 1`] = `
             ]
           }
         >
-          00:01 h
+          00:30 h
         </Text>
       </View>
       <View
@@ -523,7 +523,7 @@ exports[`<StageCard /> renders correctly 1`] = `
           ]
         }
       >
-        04.12.2024
+        01.01.2024
       </Text>
     </View>
   </View>

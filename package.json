@@ -45,6 +45,7 @@
     "expo-task-manager": "~11.8.2",
     "expo-updates": "~0.25.27",
     "expo-web-browser": "~13.0.3",
+    "geojson": "^0.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
@@ -60,6 +61,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/jest": "^29.5.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "~18.2.45",
     "@types/react-native-maps": "^0.24.1",
     "@types/react-test-renderer": "^18.0.7",

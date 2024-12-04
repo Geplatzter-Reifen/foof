@@ -22,11 +22,12 @@ describe("ColorUtil", () => {
     });
 
     it.each([
-      ["#FF00000", "Invalid hex"],
-      ["#FF000", "Invalid hex"],
-      ["FF0000", "Invalid hex"],
-      ["Invalid Hex", "Invalid hex"],
-    ])("should throw error if hex is invalid", (hex, expected) => {
+      ["#FF00000"],
+      ["#FF000"],
+      ["FF0000"],
+      ["Invalid Hex"],
+      ["slkdhfja"],
+    ])("should throw error if hex is invalid", (hex) => {
       expect(() => ColorUtils.hexToRgb(hex)).toThrow("Invalid hex");
     });
   });

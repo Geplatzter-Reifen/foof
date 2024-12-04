@@ -1,4 +1,4 @@
-import { createStage, getStageByStageId } from "@/services/data/stageService";
+import { createStage } from "@/services/data/stageService";
 import StageCard from "../StageCard";
 import { render } from "@/test-utils/test-utils";
 import { createTour } from "@/services/data/tourService";
@@ -9,11 +9,11 @@ describe("<StageCard />", () => {
     const stage = await createStage(
       tour.id,
       "Test Stage",
-      Date.now(),
+      new Date("2024-11-29T20:30:00.000").getTime(),
       undefined,
       true,
     );
-    const view = render(<StageCard stage={stage.observe} />);
+    const view = render(<StageCard stage={stage} />);
     expect(view).toMatchSnapshot();
   });
 });

@@ -3,7 +3,7 @@
 exports[`<CreateManualStageModal /> should render correctly 1`] = `
 <Modal
   hardwareAccelerated={false}
-  statusBarTranslucent={false}
+  statusBarTranslucent={true}
   transparent={true}
   visible={true}
 >

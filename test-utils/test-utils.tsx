@@ -3,9 +3,21 @@ import React from "react";
 import { render, RenderOptions } from "@testing-library/react-native";
 import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import { mapping } from "@eva-design/eva";
-import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
+import {
+  IconRegistry,
+  ApplicationProvider,
+  ModalService,
+} from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(far, fas, fab);
+
+ModalService.setShouldUseTopInsets = true;
 
 type Props = {
   children: React.ReactNode;

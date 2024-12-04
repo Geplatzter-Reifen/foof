@@ -5,11 +5,10 @@ import { render } from "@/test-utils/test-utils";
 describe("TourStats", () => {
   it("should render correctly", async () => {
     const tour = new MockTour();
-    let view;
 
     // Hier wird eine Warning ausgegeben, dass soll aber anscheinend so
     // @ts-ignore
-    render(<TourStats tour={tour} />).toJSON();
+    const view = render(<TourStats tour={tour} />);
 
     expect(view).toMatchSnapshot();
   });

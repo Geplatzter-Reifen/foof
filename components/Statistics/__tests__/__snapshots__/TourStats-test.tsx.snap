@@ -1,3 +1,282 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TourStats should render correctly 1`] = `undefined`;
+exports[`TourStats should render correctly 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "rgba(51, 102, 255, 0.40)",
+      "flexDirection": "row",
+      "height": "auto",
+      "paddingHorizontal": 20,
+      "paddingVertical": 5,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flex": 1,
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        03.12.2024
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        00:00 h
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flex": 1,
+        "justifyContent": "flex-start",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        0.00 km
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        0 m
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        0.0 km/h
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            undefined,
+          ]
+        }
+      >
+        0 kcal
+      </Text>
+    </View>
+  </View>
+</View>
+`;

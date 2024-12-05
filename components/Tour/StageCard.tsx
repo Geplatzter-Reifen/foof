@@ -83,6 +83,7 @@ function StageCard({ stage }: { stage: Stage }) {
           ...styles.card,
         }}
         header={<Header />}
+        status={stage.isActive ? "primary" : undefined}
       >
         <View style={styles.stat}>
           <FontAwesomeIcon
@@ -120,6 +121,10 @@ function StageCard({ stage }: { stage: Stage }) {
     </Layout>
   );
 }
+const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
+export default enhance(StageCard);
+
+// Observe die reingegebene Prop "stage"und reagiere auf änderungen
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
 export default enhance(StageCard);
 

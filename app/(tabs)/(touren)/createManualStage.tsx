@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Text, Layout, Button } from "@ui-kitten/components";
-import ButtonGroup from "../../../components/Stage/ButtonGroup";
+import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
 import { StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
@@ -9,6 +9,7 @@ import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { Alert } from "react-native";
+import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -124,19 +125,24 @@ const CreateManualStage: React.FC = () => {
     }
   };
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <Layout style={styles.layout} level="2">
-      <ButtonGroup>
-        <Button style={styles.button} onPress={() => {}}>
+      <ButtonSwitch
+        onSelect={(index) => setSelectedIndex(index)}
+        selectedIndex={selectedIndex}
+      >
+        <Button style={styles.button}>
           <FontAwesomeIcon icon="compass" size={25} />
         </Button>
-        <Button style={styles.button} onPress={() => {}}>
+        <Button style={styles.button}>
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
-        <Button style={styles.button} onPress={() => {}}>
+        <Button style={styles.button}>
           <FontAwesomeIcon icon="city" size={25} />
         </Button>
-      </ButtonGroup>
+      </ButtonSwitch>
 
       <Layout style={styles.cardsContainer} level="2">
         <CardComponent title="Start" form={startCoordInput} />

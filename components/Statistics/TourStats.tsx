@@ -21,7 +21,6 @@ export default function TourStats(props: TourStatsProps) {
   const theme = useTheme();
   const styles = makeStyles(theme);
   const [stages, setStages] = useState<Stage[]>([]);
-  const [, setTime] = useState(Date.now());
 
   useEffect(() => {
     (async () => {
@@ -31,16 +30,6 @@ export default function TourStats(props: TourStatsProps) {
       }
     })();
   }, [props.tour]);
-
-  // Damit nicht so oft gerechnet wird, wird die Komponente einfach alle
-  // 5 Sekunden aktualisiert
-  useEffect(() => {
-    const fiveSeconds = 5000;
-    const interval = setInterval(() => setTime(Date.now()), fiveSeconds);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
   return (
     <View style={styles.container}>

@@ -121,7 +121,7 @@ export default function Touruebersicht() {
       <Layout>
         <TopNavigation
           title={EnhancedHeader}
-          accessoryLeft={renderShareAction}
+          accessoryLeft={renderMapAction}
           accessoryRight={renderEditAction}
           style={styles.header}
           alignment="center"

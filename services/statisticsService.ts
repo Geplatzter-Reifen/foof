@@ -9,7 +9,7 @@ export function getStageDistanceString(
   return stage.distance.toFixed(precision ?? 1) + " km";
 }
 
-/** Returns the total distance of a tour in milliseconds.*/
+/** Returns the total duration of a tour in milliseconds.*/
 export function getTourDuration(stages: Stage[]): number {
   return stages.reduce((acc, stage) => acc + getStageDuration(stage), 0);
 }

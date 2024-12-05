@@ -34,7 +34,6 @@ import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
 import { sleepAsync } from "expo-dev-launcher/bundle/functions/sleepAsync";
-import { getTourRoute } from "@/services/data/routeService";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -54,13 +53,10 @@ export default function HomeScreen() {
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [activeTour, setActiveTour] = useState<Tour>();
   const [userCentered, setUserCentered] = useState(true);
-  const [geoJSON, setGeoJson] = useState<
-    GeoJSON.FeatureCollection | undefined
-  >();
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
 
-  //let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
+  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
     const prepare = async () => {
@@ -73,15 +69,8 @@ export default function HomeScreen() {
           setActiveTour(tour);
         }
       });
-      if (activeTour) {
-        const route = await getTourRoute(activeTour.id);
-        if (route) {
-          setGeoJson(JSON.parse(route.geoJson));
-        }
-      }
       setLoading(false);
     };
-
     prepare();
   }, [activeTour]);
 
@@ -175,50 +164,52 @@ export default function HomeScreen() {
 
   // Function to display the route on the map by adjusting the camera to fit the route's bounds
   const showRoute = async () => {
-    if (geoJSON) {
-      setUserCentered(false);
-      // Find the outermost coordinates
-      let minLat = Infinity,
-        maxLat = -Infinity,
-        minLng = Infinity,
-        maxLng = -Infinity;
-      geoJSON.features.forEach((feature) => {
-        if (feature.geometry.type === "LineString") {
-          (feature.geometry as GeoJSON.LineString).coordinates.forEach(
-            ([lng, lat]) => {
-              if (lat < minLat) minLat = lat;
-              if (lat > maxLat) maxLat = lat;
-              if (lng < minLng) minLng = lng;
-              if (lng > maxLng) maxLng = lng;
-            },
-          );
-        } else if (feature.geometry.type === "Point") {
-          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
-          if (lat < minLat) minLat = lat;
-          if (lat > maxLat) maxLat = lat;
-          if (lng < minLng) minLng = lng;
-          if (lng > maxLng) maxLng = lng;
-        }
-      });
-
-      const bounds = {
-        ne: [maxLng, maxLat],
-        sw: [minLng, minLat],
-      };
-
-      camera.current?.setCamera({
-        bounds: bounds,
-        padding: {
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingTop: 30,
-          paddingBottom: 150,
-        },
-        animationDuration: 2000,
-        heading: 0,
-        animationMode: "flyTo",
-      });
+    if (!geoJSON) {
+      throw new Error("Keine Route importiert!");
     }
+
+    setUserCentered(false);
+    // Find the outermost coordinates
+    let minLat = Infinity,
+      maxLat = -Infinity,
+      minLng = Infinity,
+      maxLng = -Infinity;
+    geoJSON.features.forEach((feature) => {
+      if (feature.geometry.type === "LineString") {
+        (feature.geometry as GeoJSON.LineString).coordinates.forEach(
+          ([lng, lat]) => {
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+            if (lng < minLng) minLng = lng;
+            if (lng > maxLng) maxLng = lng;
+          },
+        );
+      } else if (feature.geometry.type === "Point") {
+        const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+        if (lng < minLng) minLng = lng;
+        if (lng > maxLng) maxLng = lng;
+      }
+    });
+
+    const bounds = {
+      ne: [maxLng, maxLat],
+      sw: [minLng, minLat],
+    };
+
+    camera.current?.setCamera({
+      bounds: bounds,
+      padding: {
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 30,
+        paddingBottom: 150,
+      },
+      animationDuration: 2000,
+      heading: 0,
+      animationMode: "flyTo",
+    });
   };
 
   const CenterButton = (props?: Partial<ImageProps>) => (
@@ -264,7 +255,7 @@ export default function HomeScreen() {
   };
 
   const ShapeSource = ({ route }: { route: Route }) => {
-    setGeoJson(JSON.parse(route.geoJson));
+    geoJSON = JSON.parse(route.geoJson);
     return (
       <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
         <MapboxGL.LineLayer
@@ -358,7 +349,7 @@ export default function HomeScreen() {
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        {geoJSON && <RouteButton />}
+        <RouteButton />
         {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

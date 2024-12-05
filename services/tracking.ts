@@ -88,7 +88,7 @@ export async function startAutomaticTracking() {
       accuracy: Location.Accuracy.Highest,
       foregroundService: {
         notificationTitle: "Tracking aktiv",
-        notificationBody: "Viel Spaß beim Raddeln! ️",
+        notificationBody: "Viel Spaß beim Radeln!",
       },
     });
     console.log("Tracking started.");

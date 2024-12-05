@@ -10,7 +10,11 @@ const StageList = ({ stages }: { stages: Stage[] }) => {
       {stages.length === 0 ? (
         <Text style={styles.noStageText}>Starte eine Etappe!</Text>
       ) : (
-        stages.map((stage) => <StageCard key={stage.id} stage={stage} />)
+        stages
+          .sort((stage_a, stage_b) => {
+            return stage_b.startedAt - stage_a.startedAt;
+          })
+          .map((stage) => <StageCard key={stage.id} stage={stage} />)
       )}
     </Layout>
   );

@@ -1,9 +1,5 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import {
-  getActiveTour,
-  getAllStagesByTourIdQuery,
-} from "@/model/database_functions";
 import React, { useEffect, useState } from "react";
 import { Tour } from "@/model/model";
 import {
@@ -22,6 +18,9 @@ import { hexToRgba } from "@/utils/colorUtil";
 import { foofTheme } from "@/constants/custom-theme";
 import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
+import { getActiveTour } from "@/services/data/tourService";
+import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
+import { shareTour } from "@/services/sharingService";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -33,6 +32,10 @@ const MapIcon = (props?: Partial<ImageProps>): IconElement => (
 
 const EditIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
+);
+
+const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="share-nodes" style={[props?.style, { height: 24 }]} />
 );
 
 const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -55,17 +58,19 @@ export default function Touruebersicht() {
     })();
   }, []);
 
-  const Header = ({ tour }: { tour: Tour }) => (
-    <Text category="h4">{tour.title}</Text>
-  );
-
-  const enhance = withObservables([], () => ({
-    tour: activeTour!,
-  }));
-  const EnhancedHeader = enhance(Header);
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderMapAction = (): React.ReactElement => (
     <TopNavigationAction icon={MapIcon} hitSlop={15} />
+  );
+
+  const renderShareAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ShareIcon}
+      hitSlop={15}
+      onPress={() => {
+        shareTour();
+      }}
+    />
   );
 
   const renderEditAction = (): React.ReactElement => (
@@ -84,6 +89,15 @@ export default function Touruebersicht() {
     />
   );
 
+  const Header = ({ tour }: { tour: Tour }) => (
+    <Text category="h4">{tour.title}</Text>
+  );
+
+  const enhance = withObservables([], () => ({
+    tour: activeTour!,
+  }));
+  const EnhancedHeader = enhance(Header);
+
   if (!activeTour) {
     return null;
   }
@@ -93,7 +107,7 @@ export default function Touruebersicht() {
       <Layout>
         <TopNavigation
           title={EnhancedHeader}
-          accessoryLeft={renderMapAction}
+          accessoryLeft={renderShareAction}
           accessoryRight={renderEditAction}
           style={styles.header}
           alignment="center"
@@ -112,8 +126,6 @@ export default function Touruebersicht() {
           hexToRgba(foofTheme["color-basic-200"], 0.18),
           hexToRgba(foofTheme["color-basic-200"], 0.9),
         ]}
-        // startFadeStyle={styles.fadeStyle}
-        // endFadeStyle={styles.fadeStyle}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>

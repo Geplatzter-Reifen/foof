@@ -15,7 +15,6 @@ import * as Notifications from "expo-notifications";
 import {
   startAutomaticTracking,
   stopAutomaticTracking,
-  LOCATION_TASK_NAME,
 } from "@/services/tracking";
 
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
@@ -24,11 +23,9 @@ import {
   Layout,
   ButtonGroup,
   Spinner,
-  IconElement,
   Icon,
   TopNavigation,
   Divider,
-  TopNavigationAction,
   Text,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -36,6 +33,8 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
+import { sleepAsync } from "expo-dev-launcher/bundle/functions/sleepAsync";
+import { getTourRoute } from "@/services/data/routeService";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -55,10 +54,13 @@ export default function HomeScreen() {
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [activeTour, setActiveTour] = useState<Tour>();
   const [userCentered, setUserCentered] = useState(true);
+  const [geoJSON, setGeoJson] = useState<
+    GeoJSON.FeatureCollection | undefined
+  >();
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
 
-  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
+  //let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
     const prepare = async () => {
@@ -71,11 +73,17 @@ export default function HomeScreen() {
           setActiveTour(tour);
         }
       });
+      if (activeTour) {
+        const route = await getTourRoute(activeTour.id);
+        if (route) {
+          setGeoJson(JSON.parse(route.geoJson));
+        }
+      }
       setLoading(false);
     };
 
     prepare();
-  }, []);
+  }, [activeTour]);
 
   const requestPermissionsAsync = async () => {
     return await Notifications.requestPermissionsAsync({
@@ -168,6 +176,7 @@ export default function HomeScreen() {
   // Function to display the route on the map by adjusting the camera to fit the route's bounds
   const showRoute = async () => {
     if (geoJSON) {
+      setUserCentered(false);
       // Find the outermost coordinates
       let minLat = Infinity,
         maxLat = -Infinity,
@@ -212,18 +221,6 @@ export default function HomeScreen() {
     }
   };
 
-  const RouteIcon = (props?: Partial<ImageProps>): IconElement => (
-    <Icon
-      {...props}
-      name="route"
-      style={[props?.style, { height: 40, width: "auto" }]}
-    />
-  );
-
-  const renderRouteAction = (): React.ReactElement => (
-    <TopNavigationAction icon={RouteIcon} onPress={showRoute} hitSlop={15} />
-  );
-
   const CenterButton = (props?: Partial<ImageProps>) => (
     <TouchableOpacity
       style={styles.centerButton}
@@ -234,6 +231,19 @@ export default function HomeScreen() {
         name="location-crosshairs"
         style={[props?.style, { height: 23 }]}
       />
+    </TouchableOpacity>
+  );
+
+  const RouteButton = (props?: Partial<ImageProps>) => (
+    <TouchableOpacity
+      style={styles.routeButton}
+      onPress={async () => {
+        setUserCentered(false);
+        await sleepAsync(100);
+        showRoute();
+      }}
+    >
+      <Icon {...props} name="route" style={[props?.style, { height: 23 }]} />
     </TouchableOpacity>
   );
 
@@ -254,7 +264,7 @@ export default function HomeScreen() {
   };
 
   const ShapeSource = ({ route }: { route: Route }) => {
-    geoJSON = JSON.parse(route.geoJson);
+    setGeoJson(JSON.parse(route.geoJson));
     return (
       <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
         <MapboxGL.LineLayer
@@ -311,7 +321,6 @@ export default function HomeScreen() {
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}
-          accessoryRight={renderRouteAction}
           style={styles.header}
           alignment="center"
         ></TopNavigation>
@@ -336,7 +345,7 @@ export default function HomeScreen() {
               centerCoordinate: [longitude, latitude],
               zoomLevel: 14,
             }}
-            followZoomLevel={15}
+            followZoomLevel={17}
             animationMode="flyTo"
             followUserMode={UserTrackingMode.FollowWithCourse}
             followUserLocation={userCentered}
@@ -348,11 +357,10 @@ export default function HomeScreen() {
           />
         </MapboxGL.MapView>
       </Layout>
-      {!userCentered && (
-        <View style={styles.centerButtonContainer}>
-          <CenterButton />
-        </View>
-      )}
+      <View style={styles.mapButtonsContainer}>
+        {geoJSON && <RouteButton />}
+        {!userCentered && <CenterButton />}
+      </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
   );
@@ -363,13 +371,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
   },
   map: {
     flex: 1,
     flexDirection: "row",
   },
   header: {
+    flexDirection: "column",
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   layout: {
@@ -383,9 +391,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     bottom: 15,
   },
-  centerButtonContainer: {
+  mapButtonsContainer: {
     position: "absolute",
-    flexDirection: "row",
+    flexDirection: "column",
     alignSelf: "center",
     top: 175,
     right: 11,
@@ -397,5 +405,14 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     elevation: 3,
     padding: 10.5,
+  },
+  routeButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
+    marginBottom: 10,
   },
 });

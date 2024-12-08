@@ -344,10 +344,7 @@ export default function HomeScreen() {
             followUserLocation={userCentered}
             ref={camera}
           />
-          <MapboxGL.UserLocation
-            androidRenderMode="gps"
-            showsUserHeadingIndicator={true}
-          />
+          <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>

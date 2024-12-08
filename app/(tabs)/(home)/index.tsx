@@ -303,7 +303,7 @@ export default function HomeScreen() {
 
   if (loading) {
     return (
-      <Layout level="2" style={styles.container}>
+      <Layout level="2" style={styles.loadingContainer}>
         <Spinner size="giant" />
       </Layout>
     );
@@ -357,6 +357,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     flexDirection: "column",

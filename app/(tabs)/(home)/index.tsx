@@ -13,6 +13,7 @@ import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 
 import {
+  LOCATION_TASK_NAME,
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
@@ -33,7 +34,7 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
-import { sleepAsync } from "expo-dev-launcher/bundle/functions/sleepAsync";
+import { timeout } from "@/utils/utils";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
@@ -46,7 +47,6 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
-  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
   const [loading, setLoading] = useState(true); // Ladezustand
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
@@ -61,9 +61,11 @@ export default function HomeScreen() {
   useEffect(() => {
     const prepare = async () => {
       await getCurrentLocation();
-      TaskManager.isTaskRegisteredAsync("background-location-task").then(
-        (result) => setTracking(result),
-      );
+      TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
+        if (result) {
+          setButtonState(ButtonStates.Cycling);
+        }
+      });
       getActiveTour().then((tour) => {
         if (tour) {
           setActiveTour(tour);
@@ -230,11 +232,11 @@ export default function HomeScreen() {
       style={styles.routeButton}
       onPress={async () => {
         setUserCentered(false);
-        await sleepAsync(100);
+        await timeout(100);
         showRoute();
       }}
     >
-      <Icon {...props} name="route" style={[props?.style, { height: 23 }]} />
+      <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />
     </TouchableOpacity>
   );
 
@@ -338,7 +340,7 @@ export default function HomeScreen() {
             }}
             followZoomLevel={17}
             animationMode="flyTo"
-            followUserMode={UserTrackingMode.FollowWithCourse}
+            followUserMode={UserTrackingMode.Follow}
             followUserLocation={userCentered}
             ref={camera}
           />

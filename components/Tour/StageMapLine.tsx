@@ -41,7 +41,7 @@ const StageMapLine = ({
     <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
       <MapboxGL.LineLayer
         id={`lineLayer-${stageId}`}
-        // belowLayerID="road-label"
+        belowLayerID="road-label"
         // aboveLayerID="routeSource"
         style={{
           lineColor: theme["color-primary-500"],

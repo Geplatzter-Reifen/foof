@@ -1,21 +1,20 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
+import { getTourByTourId, getActiveTour } from "@/services/data/tourService";
 import { getStageAvgSpeedInKmh } from "./statisticsService";
 import {
-  createLocation,
-  createStage,
   getActiveStage,
-  setStageActive,
+  createStage,
+  startStage,
   setStageDistance,
-  getTourByTourId,
-  getActiveTour,
   setStageAvgSpeed,
   finishStage,
-} from "@/model/database_functions";
+} from "@/services/data/stageService";
+import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
 
-const LOCATION_TASK_NAME = "background-location-task";
+export const LOCATION_TASK_NAME = "location-task";
 
 let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
@@ -48,7 +47,12 @@ export async function createManualStage(
     throw new Error("Start und Endzeit sind ungültig");
   }
 
-  let stage = await createStage(tour.id, stageName, startTime.getTime());
+  let stage = await createStage(
+    tour.id,
+    stageName,
+    startTime.getTime(),
+    endTime.getTime(),
+  );
 
   await stage.addLocation(
     startingCoordinates?.latitude,
@@ -63,8 +67,6 @@ export async function createManualStage(
   let speed = getStageAvgSpeedInKmh(stage);
 
   await setStageAvgSpeed(stage.id, speed);
-
-  finishStage(stage.id, endTime.getTime());
 }
 
 export async function startAutomaticTracking() {
@@ -72,26 +74,24 @@ export async function startAutomaticTracking() {
     await Location.requestForegroundPermissionsAsync();
   if (foregroundStatus === "granted") {
     console.log("Foreground status: ", foregroundStatus);
-    const { status: backgroundStatus } =
-      await Location.requestBackgroundPermissionsAsync();
-    if (backgroundStatus === "granted") {
-      console.log("Background status: ", backgroundStatus);
-      if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
-        console.log("Tracking already started.");
-      } else {
-        let activeTour = await getActiveTour();
-        if (!activeTour) {
-          throw new Error("No active tour set");
-        }
-        let stage = await createStage(activeTour.id, "Etappe");
-        await setStageActive(stage.id);
-
-        await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-          accuracy: Location.Accuracy.Highest,
-        });
-        console.log("Tracking started.");
-      }
+  }
+  if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
+    console.log("Tracking already started.");
+  } else {
+    let activeTour = await getActiveTour();
+    if (!activeTour) {
+      throw new Error("No active tour set");
     }
+    await startStage(activeTour.id);
+
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Highest,
+      foregroundService: {
+        notificationTitle: "Tracking aktiv",
+        notificationBody: "Viel Spaß beim Raddeln! ️",
+      },
+    });
+    console.log("Tracking started.");
   }
 }
 
@@ -139,7 +139,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   // Extract locations from the data (ignoring TypeScript warning)
   //@ts-ignore
   const { locations } = data;
-  console.log("New background location received:", locations[0]);
+  console.log("New location received:", locations[0]);
 
   // Fetch the active stage
   const activeStage = await getActiveStage();

@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   Icon,
   IconElement,
@@ -8,10 +9,20 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from "@ui-kitten/components";
-import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import {
+  ImageProps,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
-import { updateTourNameById } from "@/model/database_functions";
+import { updateTourNameById } from "@/services/data/tourService";
+import { setTourRoute } from "@/services/data/routeService";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
+import * as Gjv from "geojson-validation";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
@@ -26,6 +37,8 @@ export default function Touren() {
   const params = useLocalSearchParams() as TourenParams;
   const { tourId, tourTitle } = params;
   const [tourname, setTourname] = useState(tourTitle);
+  const [selectedFile, setSelectedFile] =
+    useState<DocumentPicker.DocumentPickerResult>();
 
   const updateTourname = (newTourName: string) => {
     updateTourNameById(tourId, newTourName).then(() => {
@@ -40,6 +53,21 @@ export default function Touren() {
       onPress={() => router.back()}
     />
   );
+
+  const importTour = async () => {
+    const file = await DocumentPicker.getDocumentAsync({
+      type: "application/json",
+    });
+    if (!file.canceled) {
+      const content = await FileSystem.readAsStringAsync(file.assets[0].uri);
+      if (Gjv.valid(JSON.parse(content))) {
+        setSelectedFile(file);
+        await setTourRoute(tourId, content);
+      } else {
+        Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
+      }
+    }
+  };
 
   return (
     <Layout style={styles.container}>
@@ -57,6 +85,14 @@ export default function Touren() {
           placeholder={"Neuer Tourname"}
           onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
         ></Input>
+        <Text>Die Route kann nur als GeoJSON importiert werden.</Text>
+        <Button onPress={importTour}>Route importieren</Button>
+        {selectedFile?.assets?.at(0)?.name && (
+          <Text>
+            {selectedFile?.assets?.at(0)!.name} {"\n"} wurde erfolgreich
+            importiert!
+          </Text>
+        )}
       </Layout>
     </Layout>
   );

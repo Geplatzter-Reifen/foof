@@ -30,7 +30,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [LayoutLoaded, setLayoutLoaded] = useState(false);
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
 
   const theme = USE_DARK_THEME
     ? { ...eva.dark, ...foofDarkTheme }
@@ -58,10 +58,10 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (LayoutLoaded) {
+    if (layoutLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [LayoutLoaded]);
+  }, [layoutLoaded]);
 
   if (!appIsReady) {
     return null;

@@ -11,11 +11,11 @@ import {
   TopNavigation,
   TopNavigationAction,
   Divider,
+  useTheme,
 } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtil";
-import { foofTheme } from "@/constants/custom-theme";
 import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
@@ -48,6 +48,7 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 
 export default function Touruebersicht() {
   const [activeTour, setActiveTour] = useState<Tour>();
+  const theme = useTheme();
 
   useEffect(() => {
     (async () => {
@@ -137,8 +138,8 @@ export default function Touruebersicht() {
         horizontal={false}
         fadeSize={10}
         fadeColors={[
-          hexToRgba(foofTheme["color-basic-200"], 0.18),
-          hexToRgba(foofTheme["color-basic-200"], 0.9),
+          hexToRgba(theme["background-basic-color-2"], 0.18),
+          hexToRgba(theme["background-basic-color-2"], 0.9),
         ]}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />

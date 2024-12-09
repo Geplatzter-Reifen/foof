@@ -14,7 +14,7 @@ import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
 
-const LOCATION_TASK_NAME = "background-location-task";
+export const LOCATION_TASK_NAME = "location-task";
 
 let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
@@ -74,26 +74,24 @@ export async function startAutomaticTracking() {
     await Location.requestForegroundPermissionsAsync();
   if (foregroundStatus === "granted") {
     console.log("Foreground status: ", foregroundStatus);
-    const { status: backgroundStatus } =
-      await Location.requestBackgroundPermissionsAsync();
-    if (backgroundStatus === "granted") {
-      console.log("Background status: ", backgroundStatus);
-      if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
-        console.log("Tracking already started.");
-      } else {
-        let activeTour = await getActiveTour();
-        if (!activeTour) {
-          throw new Error("No active tour set");
-        }
-
-        await startStage(activeTour.id);
-
-        await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-          accuracy: Location.Accuracy.Highest,
-        });
-        console.log("Tracking started.");
-      }
+  }
+  if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
+    console.log("Tracking already started.");
+  } else {
+    let activeTour = await getActiveTour();
+    if (!activeTour) {
+      throw new Error("No active tour set");
     }
+    await startStage(activeTour.id);
+
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Highest,
+      foregroundService: {
+        notificationTitle: "Tracking aktiv",
+        notificationBody: "Viel Spaß beim Radeln!",
+      },
+    });
+    console.log("Tracking started.");
   }
 }
 
@@ -141,7 +139,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   // Extract locations from the data (ignoring TypeScript warning)
   //@ts-ignore
   const { locations } = data;
-  console.log("New background location received:", locations[0]);
+  console.log("New location received:", locations[0]);
 
   // Fetch the active stage
   const activeStage = await getActiveStage();
@@ -176,6 +174,9 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     // Update the stage distance in the database
     await setStageDistance(activeStage.id, updatedDistance);
   }
+
+  await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
+
   lastActiveStageId = activeStage.id;
   lastLocation = locations[0];
 });

@@ -38,7 +38,7 @@ export const createStage = async (
   return tour.addStage(title, startedAt, finishedAt, active);
 };
 
-// creates a Stage and sets it active
+/** creates a Stage and sets it active */
 export const startStage = async (tourId: string) => {
   const title: string = `Etappe ${(await getAllStagesByTourId(tourId)).length + 1}`;
 

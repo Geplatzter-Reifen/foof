@@ -36,7 +36,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
-import { StageLine } from "@/components/Stage/activeStageWrapper";
+import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 
 void MapboxGL.setAccessToken(
   "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",

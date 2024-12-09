@@ -1,7 +1,7 @@
 // Wrapper component that extracts `tourId` and passes it as a prop
 import { useLocalSearchParams } from "expo-router";
 import { Layout, Text } from "@ui-kitten/components";
-import StagesMapView from "../../../components/Tour/stagesMapView";
+import StagesMapView from "../../../components/Tour/StagesMapView";
 
 type localParams = {
   tourId?: string;

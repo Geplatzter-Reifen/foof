@@ -174,6 +174,9 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     // Update the stage distance in the database
     await setStageDistance(activeStage.id, updatedDistance);
   }
+
+  await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
+
   lastActiveStageId = activeStage.id;
   lastLocation = locations[0];
 });

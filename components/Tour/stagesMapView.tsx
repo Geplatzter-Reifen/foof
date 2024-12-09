@@ -16,21 +16,22 @@ const StagesMapView = ({ stages }: stagesMapViewProps) => {
   >([]);
 
   // Fetch locations for all stages
-  const fetchStagesWithLocations = async () => {
-    const finishedStages = stages.filter((stage) => {
-      return !stage.isActive;
-    });
-    const upgradedStages = await Promise.all(
-      finishedStages.map(async (stage) => {
-        const locations = await getAllLocationsByStageId(stage.id);
-        return { stage, locations };
-      }),
-    );
-    setStagesWithLocations(upgradedStages); // Set the resolved array
-  };
+
   useEffect(() => {
+    const fetchStagesWithLocations = async () => {
+      const finishedStages = stages.filter((stage) => {
+        return !stage.isActive;
+      });
+      const upgradedStages = await Promise.all(
+        finishedStages.map(async (stage) => {
+          const locations = await getAllLocationsByStageId(stage.id);
+          return { stage, locations };
+        }),
+      );
+      setStagesWithLocations(upgradedStages); // Set the resolved array
+    };
     fetchStagesWithLocations();
-  }, [fetchStagesWithLocations, stages]); // Re-run if `stages` changes
+  }, [stages]); // Re-run if `stages` changes
 
   // Fallback if stages are still being resolved
   if (!stagesWithLocations.length) {

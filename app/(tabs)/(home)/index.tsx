@@ -27,7 +27,6 @@ import {
   Icon,
   TopNavigation,
   Divider,
-  TopNavigationAction,
   Text,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";

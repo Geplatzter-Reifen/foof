@@ -70,11 +70,13 @@ export async function createManualStage(
 }
 
 export async function startAutomaticTracking() {
+  // Ensure necessary permissions are granted
   const { status: foregroundStatus } =
     await Location.requestForegroundPermissionsAsync();
   if (foregroundStatus === "granted") {
     console.log("Foreground status: ", foregroundStatus);
   }
+  // Register tracking task (if not already done)
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     console.log("Tracking already started.");
   } else {
@@ -83,7 +85,6 @@ export async function startAutomaticTracking() {
       throw new Error("No active tour set");
     }
     await startStage(activeTour.id);
-
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       foregroundService: {
@@ -96,6 +97,7 @@ export async function startAutomaticTracking() {
 }
 
 export async function stopAutomaticTracking() {
+  // Unregister tracking task (if not already done)
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
@@ -106,6 +108,53 @@ export async function stopAutomaticTracking() {
     console.log("Tracking already stopped.");
   }
 }
+
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
+  // Handle errors first
+  if (error) {
+    console.error("Error in location task:", error.message);
+    throw error;
+  }
+  // Proceed if there is data
+  if (!data) {
+    console.warn("No data received in location task.");
+    throw new Error("No data received in location task.");
+  }
+  // Extract locations from the data
+  //@ts-ignore
+  const { locations } = data;
+  console.log("New location received:", locations[0]);
+  // Fetch the active stage
+  const activeStage = await getActiveStage();
+  if (!activeStage) {
+    throw new Error("No active stage set");
+  }
+  const currentLocation = {
+    latitude: locations[0].coords.latitude,
+    longitude: locations[0].coords.longitude,
+  };
+  // Add the current location to the database
+  await createLocation(
+    activeStage.id,
+    currentLocation.latitude,
+    currentLocation.longitude,
+  );
+  // Check if a former location exists and whether it belongs to the currently active stage
+  if (lastLocation && lastActiveStageId === activeStage.id) {
+    const latestLocation = {
+      latitude: lastLocation.coords.latitude,
+      longitude: lastLocation.coords.longitude,
+    };
+    // Calculate und update the distance for the active stage
+    const updatedDistance =
+      activeStage.distance + calculateDistance(latestLocation, currentLocation);
+    console.log("Updated distance for active stage:", updatedDistance);
+    await setStageDistance(activeStage.id, updatedDistance);
+  }
+  // Set the now latest location
+  lastActiveStageId = activeStage.id;
+  lastLocation = locations[0];
+});
 
 function parseCoordinates(
   coordinateString: string,
@@ -122,58 +171,3 @@ function parseCoordinates(
 
   return { latitude, longitude };
 }
-
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
-  // Handle errors first
-  if (error) {
-    console.error("Error in location task:", error.message);
-    throw error;
-  }
-
-  // Proceed if there is data
-  if (!data) {
-    console.warn("No data received in location task.");
-    throw new Error("No data received in location task.");
-  }
-
-  // Extract locations from the data (ignoring TypeScript warning)
-  //@ts-ignore
-  const { locations } = data;
-  console.log("New location received:", locations[0]);
-
-  // Fetch the active stage
-  const activeStage = await getActiveStage();
-  if (!activeStage) {
-    throw new Error("No active stage set");
-  }
-
-  const currentLocation = {
-    latitude: locations[0].coords.latitude,
-    longitude: locations[0].coords.longitude,
-  };
-
-  // Add the new location to the database
-  await createLocation(
-    activeStage.id,
-    currentLocation.latitude,
-    currentLocation.longitude,
-  );
-
-  if (lastLocation && lastActiveStageId === activeStage.id) {
-    const latestLocation = {
-      latitude: lastLocation.coords.latitude,
-      longitude: lastLocation.coords.longitude,
-    };
-
-    // Calculate the updated distance for the active stage
-    const updatedDistance =
-      activeStage.distance + calculateDistance(latestLocation, currentLocation);
-
-    console.log("Updated distance for active stage:", updatedDistance);
-
-    // Update the stage distance in the database
-    await setStageDistance(activeStage.id, updatedDistance);
-  }
-  lastActiveStageId = activeStage.id;
-  lastLocation = locations[0];
-});

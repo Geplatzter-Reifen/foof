@@ -1,25 +1,16 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import { Stage, Location } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
 import StageMapLine from "@/components/Tour/StageMapLine";
-import { useNavigation } from "expo-router";
 
 type stagesMapViewProps = {
   stages: Stage[];
-  tour: string;
 };
 // Define the StagesMapView component
-const StagesMapView = ({ stages, tour }: stagesMapViewProps) => {
-  const navigation = useNavigation();
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: tour,
-      headerTitleAlign: "center", // Ensures the title is centered
-    });
-  }, [navigation, tour]);
+const StagesMapView = ({ stages }: stagesMapViewProps) => {
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
@@ -48,8 +39,6 @@ const StagesMapView = ({ stages, tour }: stagesMapViewProps) => {
 
   return (
     <MapboxGL.MapView
-      minZoomLevel={5}
-      maxZoomLevel={15}
       zoomEnabled={true}
       scrollEnabled={true}
       pitchEnabled={true}
@@ -57,6 +46,8 @@ const StagesMapView = ({ stages, tour }: stagesMapViewProps) => {
       style={{ flex: 1 }}
     >
       <MapboxGL.Camera
+        minZoomLevel={5}
+        maxZoomLevel={15}
         zoomLevel={5}
         centerCoordinate={[10.4515, 51.1657]}
         animationMode="flyTo"

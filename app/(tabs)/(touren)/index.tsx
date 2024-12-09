@@ -1,7 +1,7 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Stage, Tour } from "@/model/model";
+import { Tour } from "@/model/model";
 import {
   Layout,
   Button,
@@ -70,7 +70,6 @@ export default function Touruebersicht() {
             pathname: "./stagesMapViewWrapper",
             params: {
               tourId: activeTour.id,
-              tourTitle: activeTour.title,
             },
           });
         }

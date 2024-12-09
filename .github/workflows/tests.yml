@@ -28,4 +28,4 @@ jobs:
         run: npm install
 
       - name: Run Jest tests
-        run: npm testFinal
+        run: npm run testFinal

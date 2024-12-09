@@ -93,6 +93,15 @@ export default function Touruebersicht() {
     <Text category="h4">{tour.title}</Text>
   );
 
+  const headerRight = () => {
+    return (
+      <>
+        {renderEditAction()}
+        {renderShareAction()}
+      </>
+    );
+  };
+
   const enhance = withObservables([], () => ({
     tour: activeTour!,
   }));
@@ -107,8 +116,8 @@ export default function Touruebersicht() {
       <Layout>
         <TopNavigation
           title={EnhancedHeader}
-          accessoryLeft={renderShareAction}
-          accessoryRight={renderEditAction}
+          accessoryLeft={renderMapAction}
+          accessoryRight={headerRight}
           style={styles.header}
           alignment="center"
         ></TopNavigation>

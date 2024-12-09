@@ -32,7 +32,6 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
-import { Stage } from "@/model/model";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/activeStageWrapper";
 
@@ -55,7 +54,7 @@ export default function HomeScreen() {
   const camera = useRef<Camera>(null);
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
-  const [activeStageId, setActiveStageId] = useState<string>();
+  const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
     void getCurrentLocation();
@@ -137,7 +136,7 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          void startAutomaticTracking().then(() =>
+          startAutomaticTracking().then(() =>
             getActiveStage().then((stage) => {
               setActiveStageId(stage?.id!);
             }),
@@ -308,13 +307,7 @@ export default function HomeScreen() {
         <MapboxGL.MapView style={styles.map}>
           {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
           {activeStageId && <StageLine stageId={activeStageId} />}
-          <MapboxGL.Camera
-            zoomLevel={13}
-            centerCoordinate={[8.24, 50.0826]}
-            animationMode="flyTo"
-            animationDuration={2000}
-            ref={camera}
-          />
+          <MapboxGL.Camera ref={camera} />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

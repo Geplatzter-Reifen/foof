@@ -1,55 +1,45 @@
 import React, { useState, useEffect, ReactElement } from "react";
-import { Stage, Location, Tour } from "@/model/model";
+import { Stage, Location } from "@/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
-import { Text } from "@ui-kitten/components";
 import StageMapLine from "@/components/Tour/StageMapLine";
 import { useNavigation } from "expo-router";
 
-// Define the StagesMapView component
-const StagesMapView = ({
-  stages,
-  tour,
-}: {
+type stagesMapViewProps = {
   stages: Stage[];
-  tour: ReactElement;
-}) => {
+  tour: string;
+};
+// Define the StagesMapView component
+const StagesMapView = ({ stages, tour }: stagesMapViewProps) => {
   const navigation = useNavigation();
   useEffect(() => {
     navigation.setOptions({
-      // headerTitle: () => tour,
+      headerTitle: tour,
       headerTitleAlign: "center", // Ensures the title is centered
     });
-  }, [tour]);
-
-  console.log("stages-------->" + stages);
+  }, [navigation, tour]);
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
-  MapboxGL.setAccessToken(
-    "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
-  );
-  useEffect(() => {
-    // Fetch locations for all stages
-    const fetchStagesWithLocations = async () => {
-      const finishedStages = stages.filter((stage) => {
-        return !stage.isActive;
-      });
-      const upgradedStages = await Promise.all(
-        finishedStages.map(async (stage) => {
-          console.log("stage title---->" + stage.title);
-          const locations = await getAllLocationsByStageId(stage.id);
-          console.log("stage locations---->" + locations); // Fetch locations for each stage
-          return { stage, locations };
-        }),
-      );
-      setStagesWithLocations(upgradedStages); // Set the resolved array
-    };
 
+  // Fetch locations for all stages
+  const fetchStagesWithLocations = async () => {
+    const finishedStages = stages.filter((stage) => {
+      return !stage.isActive;
+    });
+    const upgradedStages = await Promise.all(
+      finishedStages.map(async (stage) => {
+        const locations = await getAllLocationsByStageId(stage.id);
+        return { stage, locations };
+      }),
+    );
+    setStagesWithLocations(upgradedStages); // Set the resolved array
+  };
+  useEffect(() => {
     fetchStagesWithLocations();
-  }, [stages]); // Re-run if `stages` changes
+  }, [fetchStagesWithLocations, stages]); // Re-run if `stages` changes
 
   // Fallback if stages are still being resolved
   if (!stagesWithLocations.length) {
@@ -58,6 +48,8 @@ const StagesMapView = ({
 
   return (
     <MapboxGL.MapView
+      minZoomLevel={5}
+      maxZoomLevel={15}
       zoomEnabled={true}
       scrollEnabled={true}
       pitchEnabled={true}
@@ -65,20 +57,17 @@ const StagesMapView = ({
       style={{ flex: 1 }}
     >
       <MapboxGL.Camera
-        minLevel={5}
-        maxLevel={15}
         zoomLevel={5}
         centerCoordinate={[10.4515, 51.1657]}
         animationMode="flyTo"
         animationDuration={1000}
       />
       {stagesWithLocations.map((stage) => {
-        console.log("the stage id--->" + stage.stage.id);
         if (stage.locations.length <= 1) return;
         return (
           <StageMapLine
             locations={stage.locations}
-            stageID={stage.stage.id}
+            stageId={stage.stage.id}
             key={stage.stage.id}
           />
         );

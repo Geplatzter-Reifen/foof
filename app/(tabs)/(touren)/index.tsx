@@ -69,7 +69,7 @@ export default function Touruebersicht() {
             pathname: "./stagesMapViewWrapper",
             params: {
               tourId: activeTour.id,
-              tourTitle: Header,
+              tourTitle: activeTour.title,
             },
           });
         }

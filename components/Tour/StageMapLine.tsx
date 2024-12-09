@@ -1,17 +1,16 @@
 import { Location } from "@/model/model";
 import MapboxGL from "@rnmapbox/maps";
 import { lineString, point, featureCollection } from "@turf/helpers";
-import { Layout, useTheme } from "@ui-kitten/components";
+import { useTheme } from "@ui-kitten/components";
 import React from "react";
-import { Feature, FeatureCollection, LineString, Point } from "geojson";
+import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 
 const StageMapLine = ({
   locations,
-  stageID,
-  active,
+  stageId,
 }: {
   locations: Location[];
-  stageId: number;
+  stageId: string;
 }) => {
   const theme = useTheme();
 
@@ -32,20 +31,17 @@ const StageMapLine = ({
     name: "End",
   });
 
-  const featureCollection: FeatureCollection = {
-    type: "FeatureCollection",
-    features: [stage, firstPoint, lastPoint],
-  };
-  console.log(
-    "This is featureCollection---->" + JSON.stringify(featureCollection),
-  );
+  const collection: FeatureCollection = featureCollection<Point | LineString>([
+    stage,
+    firstPoint,
+    lastPoint,
+  ]);
   return (
-    <MapboxGL.ShapeSource
-      id={`lineSource-${stageID}`}
-      shape={featureCollection}
-    >
+    <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
       <MapboxGL.LineLayer
-        id={`lineLayer-${stageID}`}
+        id={`lineLayer-${stageId}`}
+        // belowLayerID="road-label"
+        // aboveLayerID="routeSource"
         style={{
           lineColor: theme["color-primary-500"],
           lineWidth: 4, // Thickness
@@ -55,7 +51,9 @@ const StageMapLine = ({
         }}
       />
       <MapboxGL.CircleLayer
-        id={`startPointLayer-${stageID}`}
+        id={`startPointLayer-${stageId}`}
+        // belowLayerID="road-label"
+        // aboveLayerID="routeSource"
         filter={["==", "name", "Start"]}
         style={{
           circleColor: theme["color-primary-100"],
@@ -65,8 +63,9 @@ const StageMapLine = ({
         }}
       />
       <MapboxGL.CircleLayer
-        id={`endPointLayer-${stageID}`}
+        id={`endPointLayer-${stageId}`}
         filter={["==", "name", "End"]}
+        // aboveLayerID="routeSource"
         style={{
           circleColor: theme["color-primary-100"],
           circleRadius: 6, // Size of the circle

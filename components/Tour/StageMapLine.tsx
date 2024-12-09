@@ -53,7 +53,6 @@ const StageMapLine = ({
       />
       <MapboxGL.CircleLayer
         id={`startPointLayer-${stageId}`}
-        // belowLayerID="road-label"
         // aboveLayerID="routeSource"
         filter={["==", "name", "Start"]}
         style={{

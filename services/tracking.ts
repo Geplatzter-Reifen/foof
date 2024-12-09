@@ -82,14 +82,13 @@ export async function startAutomaticTracking() {
     if (!activeTour) {
       throw new Error("No active tour set");
     }
-    let stage = await createStage(activeTour.id, "Etappe");
-    await startStage(stage.id);
+    await startStage(activeTour.id);
 
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       foregroundService: {
         notificationTitle: "Tracking aktiv",
-        notificationBody: "Viel Spaß beim Raddeln! ️",
+        notificationBody: "Viel Spaß beim Radeln!",
       },
     });
     console.log("Tracking started.");

@@ -8,7 +8,13 @@ const ActiveStageWrapper = ({ locations }: { locations: Location[] }) => {
     return null;
   }
 
-  return <StageMapLine locations={locations} stageId={locations[0].id} />;
+  return (
+    <StageMapLine
+      locations={locations}
+      stageId={locations[0].id}
+      active={true}
+    />
+  );
 };
 
 const enhance = withObservables(

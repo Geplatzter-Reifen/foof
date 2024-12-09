@@ -5,13 +5,16 @@ import { useTheme } from "@ui-kitten/components";
 import React from "react";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 
+type stageMapLineProps = {
+  locations: Location[];
+  stageId: string;
+  active?: boolean;
+};
 const StageMapLine = ({
   locations,
   stageId,
-}: {
-  locations: Location[];
-  stageId: string;
-}) => {
+  active = false,
+}: stageMapLineProps) => {
   const theme = useTheme();
 
   const locationsUnpacked = locations.map((loc) => ({
@@ -31,11 +34,9 @@ const StageMapLine = ({
     name: "End",
   });
 
-  const collection: FeatureCollection = featureCollection<Point | LineString>([
-    stage,
-    firstPoint,
-    lastPoint,
-  ]);
+  const collection: FeatureCollection = active
+    ? featureCollection<Point | LineString>([stage, firstPoint])
+    : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
   return (
     <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
       <MapboxGL.LineLayer

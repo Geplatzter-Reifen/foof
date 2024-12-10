@@ -3,7 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/after-env-jest-setup.js"],
   preset: "jest-expo",
   transformIgnorePatterns: [
-    "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|@ui-kitten/.*|@fortawesome/react-native-fontawesome/.*)",
+    "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|@ui-kitten/.*|@fortawesome/react-native-fontawesome/.*|rn-faded-scrollview/.*)",
   ],
   collectCoverage: true,
   collectCoverageFrom: [

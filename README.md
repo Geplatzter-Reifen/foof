@@ -48,10 +48,12 @@ describe("<ModulName/Dateiname>", () => {
 
 #### Bei Komponententests
 ```typescript
+import { render } from "@/test-utils/test-utils";
 describe("<Komponentenname>", () => {
    it("should <render correclty,have these values, etc. >", () => {
       // Initialisieren
       ...
+      const view = render(<Komponente>)
       expect(view).toMatchSnapshot();
       expect(<something>).toBe(<someValue>)
    })

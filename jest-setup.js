@@ -1,3 +1,4 @@
+// Überschreibt die Datenbank mit einer SQLLite Datenbank die jedes Mal zurückgesetzt wird
 jest.mock(
   "@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js",
   () => {
@@ -6,6 +7,7 @@ jest.mock(
     );
   },
 );
+// Mockt die Share Funktion von react-native-share
 jest.mock("react-native-share", () => ({
   default: jest.fn(),
 }));

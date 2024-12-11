@@ -16,11 +16,11 @@
     npx expo start
    ```
    oder
-   ```
+   ```bash
    npx expo run:android
    ```
    oder 
-    ```
+   ```bash
    npx expo run:ios
    ```
 Um die App in einem Emulator oder auf einem physischen Gerät zu testen, siehe folgende Links:
@@ -30,6 +30,34 @@ Um die App in einem Emulator oder auf einem physischen Gerät zu testen, siehe f
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 ## Testing
+Die Tests werden pro Ordner gespeichert. Dafür wird in jedem Ordner ein `__tests__` Ordner erstellt. Darin werden die Dateien des Ordners getestet. Die Testdatei wird folgendermaßen benannt: `<moduleName>-test.ts` oder `<moduleName>-test.tsx`. 
+
+### Aufbau einer Testdatei
+#### Bei Unittests
+```typescript
+describe("<ModulName/Dateiname>", () => {
+   describe("<einzelne Funktion oder Komponente>", () => {
+      it("should <do something>", () => {
+         // Initialisieren
+         ...
+         expect(<something>).toBe(<someValue>)
+      })
+   })
+} )
+```
+
+#### Bei Komponententests
+```typescript
+describe("<Komponentenname>", () => {
+   it("should <render correclty,have these values, etc. >", () => {
+      // Initialisieren
+      ...
+      expect(view).toMatchSnapshot();
+      expect(<something>).toBe(<someValue>)
+   })
+} )
+```
+
 ### Nur geänderte Dateien Testen
    ```bash
    npm run test

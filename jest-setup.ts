@@ -1,4 +1,7 @@
 import { jest } from "@jest/globals";
+import logger from "@nozbe/watermelondb/utils/common/logger";
+// Deaktiviert die Logs von WatermelonDB
+logger.silence();
 // Überschreibt die Datenbank mit einer SQLLite Datenbank die jedes Mal zurückgesetzt wird
 jest.mock(
   "@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js",

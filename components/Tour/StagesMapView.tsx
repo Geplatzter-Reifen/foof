@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Stage, Location } from "@/model/model";
+import { Stage, Location } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";

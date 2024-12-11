@@ -1,7 +1,6 @@
 import { MockTour } from "@/__mocks__/tour";
 import TourStats from "../TourStats";
 import { render } from "@/test-utils/test-utils";
-import { createStage } from "@/services/data/stageService";
 
 describe("TourStats", () => {
   it("should render correctly", async () => {

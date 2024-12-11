@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 // Überschreibt die Datenbank mit einer SQLLite Datenbank die jedes Mal zurückgesetzt wird
 jest.mock(
   "@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js",

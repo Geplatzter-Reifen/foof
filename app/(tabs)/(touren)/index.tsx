@@ -31,11 +31,19 @@ const MapIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 const EditIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
+  <Icon
+    {...props}
+    name="edit"
+    style={[props?.style, { height: 24, width: "auto" }]}
+  />
 );
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="share-nodes" style={[props?.style, { height: 24 }]} />
+  <Icon
+    {...props}
+    name="share-from-square"
+    style={[props?.style, { height: 24, width: "auto" }]}
+  />
 );
 
 const PlusIcon = (props?: Partial<ImageProps>): IconElement => (

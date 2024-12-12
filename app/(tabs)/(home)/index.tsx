@@ -37,6 +37,8 @@ import { Route, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import { calculateBounds } from "@/utils/locationUtil";
+import type { FeatureCollection } from "geojson";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -56,7 +58,7 @@ export default function HomeScreen() {
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
 
-  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
+  let geoJSON: FeatureCollection | undefined = undefined;
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
@@ -171,40 +173,12 @@ export default function HomeScreen() {
   };
 
   // Function to display the route on the map by adjusting the camera to fit the route's bounds
-  const showRoute = async () => {
+  const fitRouteInCam = () => {
     if (!geoJSON) {
       throw new Error("Keine Route importiert!");
     }
-
     setUserCentered(false);
-    // Find the outermost coordinates
-    let minLat = Infinity,
-      maxLat = -Infinity,
-      minLng = Infinity,
-      maxLng = -Infinity;
-    geoJSON.features.forEach((feature) => {
-      if (feature.geometry.type === "LineString") {
-        (feature.geometry as GeoJSON.LineString).coordinates.forEach(
-          ([lng, lat]) => {
-            if (lat < minLat) minLat = lat;
-            if (lat > maxLat) maxLat = lat;
-            if (lng < minLng) minLng = lng;
-            if (lng > maxLng) maxLng = lng;
-          },
-        );
-      } else if (feature.geometry.type === "Point") {
-        const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
-        if (lat < minLat) minLat = lat;
-        if (lat > maxLat) maxLat = lat;
-        if (lng < minLng) minLng = lng;
-        if (lng > maxLng) maxLng = lng;
-      }
-    });
-
-    const bounds = {
-      ne: [maxLng, maxLat],
-      sw: [minLng, minLat],
-    };
+    const bounds = calculateBounds(geoJSON);
 
     camera.current?.setCamera({
       bounds: bounds,
@@ -239,7 +213,7 @@ export default function HomeScreen() {
       onPress={async () => {
         setUserCentered(false);
         await timeout(100);
-        showRoute();
+        fitRouteInCam();
       }}
     >
       <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />
@@ -262,7 +236,7 @@ export default function HomeScreen() {
     }
   };
 
-  const ShapeSource = ({ route }: { route: Route }) => {
+  const RenderRoute = ({ route }: { route: Route }) => {
     geoJSON = JSON.parse(route.geoJson);
     return (
       <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
@@ -293,19 +267,19 @@ export default function HomeScreen() {
     route,
   }));
 
-  const EnhancedShapeSource = enhance(ShapeSource);
+  const EnhancedRenderRoute = enhance(RenderRoute);
 
-  // observe routes of a tour (only tracks create and delete in the routes table)
   const Bridge = ({ routes }: { routes: Route[] }) => {
     if (routes.length === 0) return null;
-    return <EnhancedShapeSource route={routes[0]} />;
+    return <EnhancedRenderRoute route={routes[0]} />;
   };
 
+  // observe routes of a tour (only tracks create and delete in the routes table)
   const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
     routes: tour.routes,
   }));
 
-  const EnhancedShapeSourceV2 = enhanceV2(Bridge);
+  const EnhancedRenderRouteV2 = enhanceV2(Bridge);
 
   if (loading) {
     return (
@@ -338,7 +312,7 @@ export default function HomeScreen() {
             setUserCentered(false);
           }}
         >
-          {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
+          {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
           {activeStageId && <StageLine stageId={activeStageId} />}
           <MapboxGL.Camera ref={camera} />
           <MapboxGL.Camera

@@ -54,7 +54,7 @@ export default function Touren() {
     />
   );
 
-  const importTour = async () => {
+  const importRouteForTour = async () => {
     const file = await DocumentPicker.getDocumentAsync({
       type: "application/json",
     });
@@ -86,7 +86,7 @@ export default function Touren() {
           onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
         ></Input>
         <Text>Die Route kann nur als GeoJSON importiert werden.</Text>
-        <Button onPress={importTour}>Route importieren</Button>
+        <Button onPress={importRouteForTour}>Route importieren</Button>
         {selectedFile?.assets?.at(0)?.name && (
           <Text>
             {selectedFile?.assets?.at(0)!.name} {"\n"} wurde erfolgreich

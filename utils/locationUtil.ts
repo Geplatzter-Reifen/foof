@@ -1,7 +1,10 @@
+import type { FeatureCollection, Position } from "geojson";
+
 export type MapPoint = {
   latitude: number;
   longitude: number;
 };
+
 export function isLocationValid(location: MapPoint): boolean {
   return (
     location.latitude >= -90 &&
@@ -10,6 +13,7 @@ export function isLocationValid(location: MapPoint): boolean {
     location.longitude <= 180
   );
 }
+
 export function calculateDistance(
   location1: MapPoint,
   location2: MapPoint,
@@ -36,4 +40,50 @@ export function calculateDistance(
 
   // Entfernung in Kilometern
   return R * c;
+}
+
+/**
+ * Calculate the bounds of a GeoJSON feature collection (only for Points and LineStrings)
+ * @param geoJson The GeoJSON feature collection
+ * @returns The bounds of the GeoJSON feature collection
+ */
+export function calculateBounds(geoJson: FeatureCollection): {
+  ne: number[];
+  sw: number[];
+} {
+  let bounds = {
+    ne: [-Infinity, -Infinity],
+    sw: [Infinity, Infinity],
+  };
+
+  for (const feature of geoJson.features) {
+    if (feature.geometry.type === "Point") {
+      const coords = feature.geometry.coordinates;
+      bounds = updateBounds([coords], bounds);
+    } else if (feature.geometry.type === "LineString") {
+      const coords = feature.geometry.coordinates;
+      bounds = updateBounds(coords, bounds);
+    }
+  }
+  return bounds;
+}
+
+/**
+ * Calculate the bounds of a set of coordinates
+ * @param coords New coordinates
+ * @param bounds The current bounds
+ * @returns The updated bounds
+ */
+function updateBounds(
+  coords: Position[],
+  bounds: { ne: number[]; sw: number[] },
+): { ne: number[]; sw: number[] } {
+  for (const coord of coords) {
+    const [lon, lat] = coord;
+    bounds = {
+      ne: [Math.max(bounds.ne[0], lon), Math.max(bounds.ne[1], lat)],
+      sw: [Math.min(bounds.sw[0], lon), Math.min(bounds.sw[1], lat)],
+    };
+  }
+  return bounds;
 }

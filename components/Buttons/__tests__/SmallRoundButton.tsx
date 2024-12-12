@@ -1,9 +1,9 @@
 import { render } from "@/test-utils/test-utils";
-import SmallRoundButton from "../SmallRoundButton";
+import SmallIconButton from "../SmallIconButton";
 
-describe("SmallRoundButton", () => {
+describe("SmallIconButton", () => {
   it("renders correctly", () => {
-    const view = render(<SmallRoundButton icon={() => <></>} />);
+    const view = render(<SmallIconButton icon={() => <></>} />);
     expect(view).toMatchSnapshot();
   });
 });

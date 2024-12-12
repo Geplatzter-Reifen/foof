@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SmallRoundButton renders correctly 1`] = `
+exports[`SmallIconButton renders correctly 1`] = `
 <View
   accessibilityState={
     {
@@ -32,21 +32,31 @@ exports[`SmallRoundButton renders correctly 1`] = `
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "#FF6E14",
-      "borderColor": "#FF6E14",
-      "borderRadius": 25,
-      "borderWidth": 1,
+      "borderRadius": 22,
       "elevation": 3,
-      "flexDirection": "row",
+      "flex": 1,
       "height": 44,
       "justifyContent": "center",
-      "minHeight": 40,
-      "minWidth": 40,
       "opacity": 1,
-      "paddingHorizontal": 10,
-      "paddingVertical": 12,
+      "paddingLeft": 1,
+      "paddingTop": 1,
       "width": 44,
     }
   }
-/>
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "transform": [
+          {
+            "scale": 1,
+          },
+        ],
+      }
+    }
+  >
+    <Text />
+  </View>
+</View>
 `;

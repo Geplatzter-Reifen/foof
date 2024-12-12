@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ImageProps,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Alert, Platform, StatusBar } from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
@@ -24,7 +16,6 @@ import {
   Layout,
   ButtonGroup,
   Spinner,
-  Icon,
   TopNavigation,
   Divider,
   Text,
@@ -37,6 +28,7 @@ import { Route, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import SmallIconButton from "@/components/Buttons/SmallIconButton";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -48,16 +40,20 @@ enum ButtonStates {
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
-  const [latitude, setLatitude] = useState<number>(0);
-  const [longitude, setLongitude] = useState<number>(0);
-  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+
+  const [, setLatitude] = useState<number>(0);
+  const [, setLongitude] = useState<number>(0);
+
   const [activeTour, setActiveTour] = useState<Tour>();
-  const [userCentered, setUserCentered] = useState(true);
-  const buttonIconSize = 60;
+  const [activeStageId, setActiveStageId] = useState<string | null>();
+
+  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
+
   const camera = useRef<Camera>(null);
+  const buttonIconSize = 60;
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
-  const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
     const prepare = async () => {
@@ -74,7 +70,7 @@ export default function HomeScreen() {
       });
       setLoading(false);
     };
-    prepare();
+    void prepare();
   }, [activeTour]);
 
   const requestPermissionsAsync = async () => {
@@ -220,32 +216,6 @@ export default function HomeScreen() {
     });
   };
 
-  const CenterButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.centerButton}
-      onPress={() => setUserCentered(true)}
-    >
-      <Icon
-        {...props}
-        name="location-crosshairs"
-        style={[props?.style, { height: 23 }]}
-      />
-    </TouchableOpacity>
-  );
-
-  const RouteButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.routeButton}
-      onPress={async () => {
-        setUserCentered(false);
-        await timeout(100);
-        showRoute();
-      }}
-    >
-      <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />
-    </TouchableOpacity>
-  );
-
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
@@ -326,38 +296,61 @@ export default function HomeScreen() {
         <Divider />
       </Layout>
       <Layout style={styles.layout}>
-        <MapboxGL.MapView
-          style={styles.map}
-          scaleBarEnabled={false}
-          localizeLabels={{ locale: "current" }}
-          compassEnabled={true}
-          compassPosition={{ top: 8, right: 8 }}
-          logoPosition={{ top: 8, left: 8 }}
-          attributionPosition={{ top: 8, left: 96 }}
-          onTouchMove={() => {
-            setUserCentered(false);
-          }}
-        >
-          {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
-          {activeStageId && <StageLine stageId={activeStageId} />}
-          <MapboxGL.Camera ref={camera} />
-          <MapboxGL.Camera
-            defaultSettings={{
-              centerCoordinate: [longitude, latitude],
-              zoomLevel: 14,
+        {
+          // Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md)
+          <MapboxGL.MapView
+            style={styles.map}
+            scaleBarEnabled={false}
+            compassEnabled={true}
+            compassPosition={{ top: 8, right: 8 }}
+            logoPosition={{ top: 8, left: 8 }}
+            attributionPosition={{ top: 8, left: 96 }}
+            onTouchMove={() => {
+              setUserCentered(false);
             }}
-            followZoomLevel={17}
-            animationMode="flyTo"
-            followUserMode={UserTrackingMode.Follow}
-            followUserLocation={userCentered}
-            ref={camera}
-          />
-          <MapboxGL.UserLocation androidRenderMode="gps" />
-        </MapboxGL.MapView>
+          >
+            {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
+            {activeStageId && <StageLine stageId={activeStageId} />}
+            {
+              // Kamera, die dem User folgt
+              <MapboxGL.Camera
+                followZoomLevel={17}
+                animationMode="flyTo"
+                followUserMode={UserTrackingMode.Follow}
+                followUserLocation={userCentered}
+                ref={camera}
+              />
+            }
+            {
+              //Blauer Punkt
+              <MapboxGL.UserLocation androidRenderMode="gps" />
+            }
+          </MapboxGL.MapView>
+        }
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        <RouteButton />
-        {!userCentered && <CenterButton />}
+        {
+          // Button zum Route anzeigen
+          <SmallIconButton
+            icon="route"
+            style={[styles.mapButton, styles.routeButton]}
+            onPress={async () => {
+              setUserCentered(false);
+              await timeout(100);
+              showRoute();
+            }}
+          />
+        }
+        {
+          // Button zum Zentrieren der Karte auf den User
+          !userCentered && (
+            <SmallIconButton
+              icon="location-crosshairs"
+              style={styles.mapButton}
+              onPress={() => setUserCentered(true)}
+            />
+          )
+        }
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
@@ -401,21 +394,10 @@ const styles = StyleSheet.create({
     top: 175,
     right: 11,
   },
-  centerButton: {
+  mapButton: {
     backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
   },
   routeButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-    marginBottom: 10,
+    marginBottom: 11,
   },
 });

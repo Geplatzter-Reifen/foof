@@ -35,10 +35,10 @@ import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/model/model";
 import { timeout } from "@/utils/utils";
+import { getActiveStage } from "@/services/data/stageService";
+import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 
-void MapboxGL.setAccessToken(
-  "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
-);
+MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
 enum ButtonStates {
   NotCycling,
@@ -57,6 +57,7 @@ export default function HomeScreen() {
   const camera = useRef<Camera>(null);
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
+  const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
     const prepare = async () => {
@@ -133,7 +134,11 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          void startAutomaticTracking();
+          startAutomaticTracking().then(() =>
+            getActiveStage().then((stage) => {
+              setActiveStageId(stage?.id!);
+            }),
+          );
         }}
       />
     );
@@ -159,6 +164,7 @@ export default function HomeScreen() {
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
           void stopAutomaticTracking();
+          setActiveStageId(null);
         }}
       />
     );
@@ -333,6 +339,8 @@ export default function HomeScreen() {
           }}
         >
           {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
+          {activeStageId && <StageLine stageId={activeStageId} />}
+          <MapboxGL.Camera ref={camera} />
           <MapboxGL.Camera
             defaultSettings={{
               centerCoordinate: [longitude, latitude],

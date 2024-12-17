@@ -1,5 +1,5 @@
 import React from "react";
-import { DateFormat, formatDate, getDurationFormatted } from "@/utils/dateUtil";
+import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 import { Stage } from "@/database/model/model";
 import { deleteStage } from "@/services/data/stageService";
@@ -12,10 +12,8 @@ import {
   Layout,
   Text,
 } from "@ui-kitten/components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
-import { foofDarkTheme } from "@/constants/custom-theme";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
 import {
@@ -43,9 +41,6 @@ const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
 function StageCard({ stage }: { stage: Stage }) {
   // Startdatum & "Enddatum" aus der Stage holen
   const startedAt: Date = new Date(stage.startedAt);
-  let finishedAt: Date | undefined = stage.finishedAt
-    ? new Date(stage.finishedAt)
-    : new Date(Date.now()); // falls Stage noch am aufzeichnen
 
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
   const dateString: string = formatDate(startedAt, DateFormat.DATE_TIME);

@@ -1,8 +1,8 @@
-export type Location = {
+export type MapPoint = {
   latitude: number;
   longitude: number;
 };
-export function isLocationValid(location: Location): boolean {
+export function isLocationValid(location: MapPoint): boolean {
   return (
     location.latitude >= -90 &&
     location.latitude <= 90 &&
@@ -11,8 +11,8 @@ export function isLocationValid(location: Location): boolean {
   );
 }
 export function calculateDistance(
-  location1: Location,
-  location2: Location,
+  location1: MapPoint,
+  location2: MapPoint,
 ): number {
   if (!isLocationValid(location1) || !isLocationValid(location2)) {
     throw new Error("Invalid location");

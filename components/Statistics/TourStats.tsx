@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  formatDate,
-  DateFormat,
-  getTotalMillisecondsString,
-} from "@/utils/dateUtil";
-import {
-  Icon,
-  ProgressBar,
-  Text,
-  ThemeType,
-  useTheme,
-} from "@ui-kitten/components";
+import { formatDate, DateFormat } from "@/utils/dateUtil";
+import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/database/model/model";
 import {
-  getTourDuration,
   getTourDistance,
   getTourAverageSpeed,
+  getTourDurationString,
 } from "@/services/statisticsService";
+import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
 
 type TourStatsProps = {
   tour: Tour;
@@ -41,26 +32,7 @@ export default function TourStats(props: TourStatsProps) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressContainer}>
-        <ProgressBar progress={progress} style={styles.progressBar} />
-        <Text
-          //@ts-ignore
-          style={{
-            position: "absolute",
-            top: "28%",
-            left:
-              progress < 0.18
-                ? `${((progress + 0.04) * 100).toFixed(2)}%`
-                : progress < 1
-                  ? `${((progress - 0.125) * 100).toFixed(2)}%`
-                  : "44%",
-            color: progress >= 0.15 ? "#fff" : theme["text-basic-color"],
-            fontSize: 19,
-          }}
-        >
-          {(progress * 100).toFixed(1) + "%"}
-        </Text>
-      </View>
+      <TourProgressBar progress={progress} style={styles.progressContainer} />
       <View style={styles.statsContainer}>
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
@@ -97,7 +69,7 @@ export default function TourStats(props: TourStatsProps) {
           )}
           <View style={styles.stat_row}>
             <Icon name="clock" style={styles.icon_style} />
-            <Text>{getTotalMillisecondsString(getTourDuration(stages))}</Text>
+            <Text>{getTourDurationString(stages)}</Text>
           </View>
         </View>
       </View>

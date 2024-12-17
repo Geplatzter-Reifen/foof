@@ -36,7 +36,6 @@ exports[`TourStats should render correctly 1`] = `
             "backgroundColor": "#eaeaea",
             "borderRadius": 6,
             "height": 27,
-            "indicatorColor": "#FF6E14",
           },
         ]
       }
@@ -72,14 +71,14 @@ exports[`TourStats should render correctly 1`] = `
           {
             "color": "#000000",
             "fontSize": 19,
-            "left": "4.00%",
+            "left": "12.43%",
             "position": "absolute",
             "top": "28%",
           },
         ]
       }
     >
-      0.0%
+      8.4%
     </Text>
   </View>
   <View
@@ -122,7 +121,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Solid",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "900",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -140,7 +166,7 @@ exports[`TourStats should render correctly 1`] = `
             ]
           }
         >
-          0.0 km
+          84.4 km
         </Text>
       </View>
       <View
@@ -163,7 +189,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Solid",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "900",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -204,7 +257,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Solid",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "900",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -222,7 +302,7 @@ exports[`TourStats should render correctly 1`] = `
             ]
           }
         >
-          0.0 km/h
+          0.1 km/h
         </Text>
       </View>
       <View
@@ -245,7 +325,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Solid",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "900",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -296,7 +403,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Regular",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "400",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -337,7 +471,34 @@ exports[`TourStats should render correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              [
+                {
+                  "color": undefined,
+                  "fontSize": 15,
+                },
+                {
+                  "alignSelf": "center",
+                  "marginHorizontal": 4,
+                  "minWidth": 17,
+                  "width": "100%",
+                },
+                {
+                  "fontFamily": "FontAwesome6Free-Regular",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                {
+                  "fontWeight": "400",
+                },
+              ]
+            }
+          >
+            
+          </Text>
         </View>
         <Text
           appearance="default"
@@ -355,7 +516,7 @@ exports[`TourStats should render correctly 1`] = `
             ]
           }
         >
-          00:00 h
+          668h 0m
         </Text>
       </View>
     </View>

@@ -101,21 +101,17 @@ describe("statisticsService", () => {
   describe("getStageDurationString", () => {
     it("should return the correct duration string for a stage", () => {
       // @ts-ignore
-      expect(StatisticsService.getStageDurationString(stageOne)).toBe(
-        "01:00 h",
-      );
+      expect(StatisticsService.getStageDurationString(stageOne)).toBe("1h 0m");
     });
     it("should return the correct duration string for a stage with only a start", () => {
       // @ts-ignore
       expect(StatisticsService.getStageDurationString(stageOnlyStart)).toBe(
-        "06:00 h",
+        "6h 0m",
       );
     });
     it("should return the correct duration string for a stage with minutes", () => {
       // @ts-ignore
-      expect(StatisticsService.getStageDurationString(stageTwo)).toBe(
-        "09:37 h",
-      );
+      expect(StatisticsService.getStageDurationString(stageTwo)).toBe("9h 37m");
     });
   });
 
@@ -152,4 +148,6 @@ describe("statisticsService", () => {
       );
     });
   });
+
+  //TODO
 });

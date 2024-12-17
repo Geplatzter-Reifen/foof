@@ -439,7 +439,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
             ]
           }
         >
-          07:15 h
+          7h 15m
         </Text>
       </View>
       <View
@@ -975,7 +975,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             ]
           }
         >
-          00:00 h
+          0h 0m
         </Text>
       </View>
       <View
@@ -1511,7 +1511,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
             ]
           }
         >
-          08:36 h
+          8h 36m
         </Text>
       </View>
       <View

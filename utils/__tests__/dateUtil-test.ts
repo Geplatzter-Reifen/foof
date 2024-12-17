@@ -33,17 +33,17 @@ describe("dateUtil", () => {
   });
   describe("getDurationFormatted", () => {
     it("should format duration correctly", () => {
-      expect(dateUtil.getDurationFormatted(startDate, endDate)).toBe("14:50 h");
+      expect(dateUtil.getDurationFormatted(startDate, endDate)).toBe("14h 50m");
     });
     it("should not work with end date before", () => {
       expect(() => dateUtil.getDurationFormatted(endDate, startDate)).toThrow();
     });
   });
-  describe("getTotalMillisecondsString", () => {
+  describe("getDurationMsFormatted", () => {
     it("should format total milliseconds correctly", () => {
-      expect(
-        dateUtil.getTotalMillisecondsString(endDateNum - startDateNum),
-      ).toBe("14:50 h");
+      expect(dateUtil.getDurationMsFormatted(endDateNum - startDateNum)).toBe(
+        "14h 50m",
+      );
     });
   });
 });

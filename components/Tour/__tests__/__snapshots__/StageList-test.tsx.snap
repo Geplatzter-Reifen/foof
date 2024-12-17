@@ -446,7 +446,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -979,7 +979,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -1512,7 +1512,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -2045,7 +2045,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -2578,7 +2578,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -3111,7 +3111,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View
@@ -3688,7 +3688,7 @@ exports[`StageList renders correctly for one stage 1`] = `
               ]
             }
           >
-            07:15 h
+            7h 15m
           </Text>
         </View>
         <View

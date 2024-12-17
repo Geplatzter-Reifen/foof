@@ -377,7 +377,6 @@ exports[`Touruebersicht should render correctly 1`] = `
               "backgroundColor": "#eaeaea",
               "borderRadius": 6,
               "height": 27,
-              "indicatorColor": "#FF6E14",
             },
           ]
         }
@@ -858,7 +857,7 @@ exports[`Touruebersicht should render correctly 1`] = `
               ]
             }
           >
-            00:00 h
+            0h 0m
           </Text>
         </View>
       </View>

@@ -43,6 +43,6 @@ export class MockStage {
   finishedAt?: number;
   distance: number;
   avgSpeed: number;
-  tour;
+  tour: { id: string; name: string };
   collections;
 }

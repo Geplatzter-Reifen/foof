@@ -42,6 +42,6 @@ export class MockTour {
   startedAt: number;
   finishedAt?: number;
   stages: MockStage[];
-  routes;
-  collections;
+  routes: any;
+  collections: any;
 }

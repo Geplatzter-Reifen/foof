@@ -21,4 +21,5 @@ describe("<StageCard />", () => {
     const view = render(<StageCard stage={stage} />);
     expect(view).toMatchSnapshot();
   });
+  //TODO: Add more tests
 });

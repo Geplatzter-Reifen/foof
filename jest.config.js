@@ -13,5 +13,7 @@ module.exports = {
     "!**/babel.config.js",
     "!**/expo-env.d.ts",
     "!**/.expo/**",
+    "!eslint.js",
+    "!jest.config.js",
   ],
 };

@@ -6,6 +6,7 @@ type StageMockConstructorArgs = {
   distance: number;
   avgSpeed: number;
   tour: { id: string; name: string };
+  locations: [{ id: string; latitude: number; longitude: number }];
   collections: any;
 };
 
@@ -18,6 +19,7 @@ export class MockStage {
     distance = 42.195,
     avgSpeed = 10.5,
     tour = { id: "mock-tour-id", name: "Mock Tour" },
+    locations = [{ id: "mock-location-id", latitude: 0, longitude: 0 }],
     collections = {},
   }: Partial<StageMockConstructorArgs> = {}) {
     this.title = title;
@@ -28,6 +30,7 @@ export class MockStage {
     this.avgSpeed = avgSpeed;
     this.tour = tour;
     this.collections = collections;
+    this.locations = locations;
   }
   static table = "stages";
 
@@ -44,5 +47,6 @@ export class MockStage {
   distance: number;
   avgSpeed: number;
   tour: { id: string; name: string };
+  locations: [{ id: string; latitude: number; longitude: number }];
   collections;
 }

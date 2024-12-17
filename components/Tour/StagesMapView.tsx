@@ -6,6 +6,38 @@ import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
 import StageMapLine from "@/components/Tour/StageMapLine";
 
+/**
+ * Fetches finished stages and their associated locations.
+ *
+ * @param {Stage[]} stages - List of stages.
+ * @returns {Promise<{ stage: Stage; locations: Location[] }[]>}
+ * An array of objects containing a stage and its locations.
+ */
+const fetchStagesWithLocations = async (stages: Stage[]) => {
+  // Filter stages that are not active
+  const finishedStages = stages.filter((stage) => !stage.isActive);
+
+  // Fetch locations for each finished stage
+  const upgradedStages = await Promise.all(
+    finishedStages.map(async (stage) => {
+      const locations = await getAllLocationsByStageId(stage.id);
+      return { stage, locations };
+    }),
+  );
+
+  return upgradedStages; // Return resolved array
+};
+
+/**
+ * StagesMapView
+ *
+ * A reusable component which returns a map of Germany with all existing stages.
+ * Each stage is then passed as props to tha MapLine component.
+ * @param {Stage[]} stages - The properties for the card.
+ * @param {string} props.title - The title displayed at the top of the card.
+ * @param {React.ReactNode} props.form - The content rendered inside the card under the header.
+ * @returns {JSX.Element} A card component with a header and customizable content.
+ */
 type stagesMapViewProps = {
   stages: Stage[];
 };
@@ -15,23 +47,23 @@ const StagesMapView = ({ stages }: stagesMapViewProps) => {
     { stage: Stage; locations: Location[] }[]
   >([]);
 
-  // Fetch locations for all stages
+  /**
+   * Handles fetching stages with their locations.
+   * Runs asynchronously and updates the state.
+   */
+  const loadStagesWithLocations = async () => {
+    try {
+      const result = await fetchStagesWithLocations(stages);
+      setStagesWithLocations(result);
+    } catch (error) {
+      console.error("Error fetching stages with locations:", error);
+    }
+  };
 
+  // useEffect to trigger data fetching when `stages` changes
   useEffect(() => {
-    const fetchStagesWithLocations = async () => {
-      const finishedStages = stages.filter((stage) => {
-        return !stage.isActive;
-      });
-      const upgradedStages = await Promise.all(
-        finishedStages.map(async (stage) => {
-          const locations = await getAllLocationsByStageId(stage.id);
-          return { stage, locations };
-        }),
-      );
-      setStagesWithLocations(upgradedStages); // Set the resolved array
-    };
-    fetchStagesWithLocations();
-  }, [stages]); // Re-run if `stages` changes
+    loadStagesWithLocations();
+  }, [stages]);
 
   // Fallback if stages are still being resolved
   if (!stagesWithLocations.length) {

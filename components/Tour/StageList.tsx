@@ -1,6 +1,6 @@
 import { Stage } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
-import StageCard from "@/components/Tour/StageCard";
+import { StageCard } from "@/components/Tour/StageCard";
 import { Text } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 

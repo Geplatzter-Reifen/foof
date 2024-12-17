@@ -10,20 +10,13 @@ import {
   getStageDurationString,
 } from "@/services/statisticsService";
 
-import {
-  Button,
-  Card,
-  Icon,
-  IconElement,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
+import { Button, Card, Icon, IconElement, Text } from "@ui-kitten/components";
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { withObservables } from "@nozbe/watermelondb/react";
 import IconStat from "@/components/Statistics/IconStat";
 
-function StageCard({ stage }: { stage: Stage }) {
+function StageCardComp({ stage }: { stage: Stage }) {
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
   const dateString: string = formatDate(stage.startedAt, DateFormat.DATE_TIME);
   const durationString: string = getStageDurationString(stage);
@@ -115,7 +108,9 @@ function StageCard({ stage }: { stage: Stage }) {
 
 // Observe die reingegebene Prop "stage"und reagiere auf änderungen
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
-export default enhance(StageCard);
+const StageCard = enhance(StageCardComp);
+
+export { StageCard, StageCardComp as StageCardForTest };
 
 const styles = StyleSheet.create({
   card: {

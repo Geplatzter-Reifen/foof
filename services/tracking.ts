@@ -67,6 +67,8 @@ export async function createManualStage(
   let speed = getStageAvgSpeedInKmh(stage);
 
   await setStageAvgSpeed(stage.id, speed);
+
+  return stage;
 }
 
 export async function startAutomaticTracking() {

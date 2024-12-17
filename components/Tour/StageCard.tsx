@@ -3,6 +3,12 @@ import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 import { Stage } from "@/database/model/model";
 import { deleteStage } from "@/services/data/stageService";
+import { shareStage } from "@/services/sharingService";
+import {
+  getStageAvgSpeedString,
+  getStageDistanceString,
+  getStageDurationString,
+} from "@/services/statisticsService";
 
 import {
   Button,
@@ -15,47 +21,39 @@ import {
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { shareStage } from "@/services/sharingService";
-import {
-  getStageAvgSpeedString,
-  getStageDistanceString,
-  getStageDurationString,
-} from "@/services/statisticsService";
 import IconStat from "@/components/Statistics/IconStat";
 
-const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon
-    {...props}
-    name="share-nodes"
-    style={[props?.style, { height: 18, width: "auto" }]}
-  />
-);
-const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon
-    {...props}
-    name="trash"
-    style={[props?.style, { height: 18, width: "auto" }]}
-  />
-);
-
 function StageCard({ stage }: { stage: Stage }) {
-  // Startdatum & "Enddatum" aus der Stage holen
-  const startedAt: Date = new Date(stage.startedAt);
-
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
-  const dateString: string = formatDate(startedAt, DateFormat.DATE_TIME);
+  const dateString: string = formatDate(stage.startedAt, DateFormat.DATE_TIME);
   const durationString: string = getStageDurationString(stage);
   const distanceString: string = getStageDistanceString(stage);
   const avgSpeedString: string = getStageAvgSpeedString(stage);
+
+  // Icons für Teilen und Löschen
+  const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="share-nodes"
+      style={[props?.style, { height: 18, width: "auto" }]}
+    />
+  );
+  const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon
+      {...props}
+      name="trash"
+      style={[props?.style, { height: 18, width: "auto" }]}
+    />
+  );
 
   // Header der Kachel mit Löschen- und Teilen-Button
   const Header = () => {
     return (
       <View style={styles.header}>
-        <Text category="h6" style={styles.title}>
+        <Text category="h5" style={styles.title}>
           {stage.title}
         </Text>
-        <View style={styles.buttonGroup}>
+        <View style={styles.headerButtonGroup}>
           <Button
             status="basic"
             appearance="ghost"
@@ -73,33 +71,45 @@ function StageCard({ stage }: { stage: Stage }) {
     );
   };
 
+  // Body mit Distanz, Dauer und Durchschnittsgeschwindigkeit
+  const Body = () => {
+    return (
+      <View style={styles.body}>
+        <IconStat icon="arrows-left-right" status="primary">
+          {distanceString}
+        </IconStat>
+        <IconStat icon="clock-rotate-left" status="primary">
+          {durationString}
+        </IconStat>
+        <IconStat icon="gauge-high" status="primary">
+          {avgSpeedString}
+        </IconStat>
+      </View>
+    );
+  };
+
+  // Footer: Startzeitpunkt der Stage
+  const Footer = () => {
+    return (
+      <Text appearance="hint" style={styles.date}>
+        {dateString}
+      </Text>
+    );
+  };
+
   return (
-    <Layout level="2">
-      <Card
-        style={{
-          ...customStyles.basicCard,
-          ...customStyles.basicShadow,
-          ...styles.card,
-        }}
-        header={<Header />}
-        status={stage.isActive ? "primary" : undefined}
-      >
-        <View style={styles.body}>
-          <IconStat icon="arrows-left-right" status="primary">
-            {distanceString}
-          </IconStat>
-          <IconStat icon="clock-rotate-left" status="primary">
-            {durationString}
-          </IconStat>
-          <IconStat icon="gauge-high" status="primary">
-            {avgSpeedString}
-          </IconStat>
-        </View>
-        <Text appearance="hint" style={styles.date}>
-          {dateString}
-        </Text>
-      </Card>
-    </Layout>
+    <Card
+      style={{
+        ...customStyles.basicCard,
+        ...customStyles.basicShadow,
+        ...styles.card,
+      }}
+      header={<Header />}
+      status={stage.isActive ? "primary" : undefined}
+    >
+      <Body />
+      <Footer />
+    </Card>
   );
 }
 
@@ -119,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    marginTop: 10,
+    marginTop: 8,
     marginLeft: 15,
   },
   body: {
@@ -128,10 +138,10 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-  buttonGroup: {
+  headerButtonGroup: {
     flexDirection: "row",
   },
   date: {
-    marginTop: 7,
+    marginTop: 9,
   },
 });

@@ -136,34 +136,40 @@ export default function Touruebersicht() {
         ></TopNavigation>
         <Divider />
       </Layout>
-      <TourStats tour={activeTour} />
-      <Text category="h5" style={styles.stagesHeader}>
-        Etappen
-      </Text>
-      <RNFadedScrollView
-        allowStartFade={true}
-        horizontal={false}
-        fadeSize={10}
-        fadeColors={[
-          hexToRgba(theme["background-basic-color-2"], 0.18),
-          hexToRgba(theme["background-basic-color-2"], 0.9),
-        ]}
-      >
-        <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
-      </RNFadedScrollView>
-      <Button
-        style={styles.button}
-        accessoryLeft={PlusIcon}
-        onPress={() =>
-          router.push({
-            pathname: "./createManualStage",
-            params: {
-              tourId: activeTour?.id,
-              tour: activeTour?.title,
-            },
-          })
-        }
-      ></Button>
+      {
+        // Tourstatistiken in orangenem Kasten
+        <TourStats tour={activeTour} />
+      }
+      {
+        // Liste mit Etappen innerhalb einer Scrollview mit Fade
+        <RNFadedScrollView
+          allowStartFade={true}
+          horizontal={false}
+          fadeSize={15}
+          fadeColors={[
+            hexToRgba(theme["background-basic-color-2"], 0.3),
+            hexToRgba(theme["background-basic-color-2"], 0.9),
+          ]}
+        >
+          <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
+        </RNFadedScrollView>
+      }
+      {
+        // Button zum erstellen einer manuellen Etappe
+        <Button
+          style={styles.button}
+          accessoryLeft={PlusIcon}
+          onPress={() =>
+            router.push({
+              pathname: "./createManualStage",
+              params: {
+                tourId: activeTour?.id,
+                tour: activeTour?.title,
+              },
+            })
+          }
+        />
+      }
     </Layout>
   );
 }
@@ -174,10 +180,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  stagesHeader: {
-    marginHorizontal: 15,
-    marginVertical: 10,
   },
   button: {
     position: "absolute",

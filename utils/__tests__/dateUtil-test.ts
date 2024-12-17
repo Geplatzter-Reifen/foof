@@ -4,7 +4,6 @@ describe("dateUtil", () => {
   const startDate = new Date("2024-11-29T20:30:00.000");
   const startDateNum = startDate.getTime();
   const endDate = new Date("2024-11-30T11:20:00.000");
-  const endDateNum = endDate.getTime();
   describe("formatDate", () => {
     it("should format date correctly", () => {
       expect(dateUtil.formatDate(startDate, dateUtil.DateFormat.DATE)).toBe(
@@ -40,10 +39,14 @@ describe("dateUtil", () => {
     });
   });
   describe("getDurationMsFormatted", () => {
-    it("should format total milliseconds correctly", () => {
-      expect(dateUtil.getDurationMsFormatted(endDateNum - startDateNum)).toBe(
-        "14h 50m",
-      );
+    it("should format duration correctly for < 24h", () => {
+      expect(dateUtil.getDurationMsFormatted(54420123)).toBe("15h 7m");
+    });
+    it("should format duration correctly for 24h", () => {
+      expect(dateUtil.getDurationMsFormatted(86400000)).toBe("1d 0h 0m");
+    });
+    it("should format duration correctly for > 24h", () => {
+      expect(dateUtil.getDurationMsFormatted(91567654)).toBe("1d 1h 26m");
     });
   });
 });

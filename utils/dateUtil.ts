@@ -30,10 +30,12 @@ export function getDurationFormatted(start: Date, end: Date): string {
 }
 
 export function getDurationMsFormatted(ms: number) {
-  const totalMinutes = Math.ceil(ms / 60000);
+  const totalMinutes = Math.floor(ms / 60000);
 
-  const hours = String(Math.floor(totalMinutes / 60));
-  const minutes = String(totalMinutes % 60);
+  const days = Math.floor(totalMinutes / 1440); // 1 Tag = 1440 Minuten
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
 
-  return `${hours}h ${minutes}m`;
+  const dayPart = days >= 1 ? `${days}d ` : ""; // Nur anzeigen, wenn Tage >= 1
+  return `${dayPart}${hours}h ${minutes}m`;
 }

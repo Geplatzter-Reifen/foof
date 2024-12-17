@@ -26,7 +26,7 @@ type Props = {
   use_dark_theme?: boolean;
 };
 // Der Wrapper wird verwendet, um die Provider zu umschließen, die für die Komponenten notwendig sind
-const AllTheProviders = ({ children, use_dark_theme = true }: Props) => {
+const AllTheProviders = ({ children, use_dark_theme = false }: Props) => {
   const theme = use_dark_theme
     ? { ...eva.dark, ...foofDarkTheme }
     : { ...eva.light, ...foofLightTheme };

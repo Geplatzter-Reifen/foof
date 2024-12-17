@@ -32,6 +32,8 @@ Um die App in einem Emulator oder auf einem physischen Gerät zu testen, siehe f
 ## Testing
 Die Tests werden pro Ordner gespeichert. Dafür wird in jedem Ordner ein `__tests__` Ordner erstellt. Darin werden die Dateien des Ordners getestet. Die Testdatei wird folgendermaßen benannt: `<moduleName>-test.ts` oder `<moduleName>-test.tsx`. 
 
+Falls aus dem `node-modules`-Ordner etwas gebraucht wird, so muss das jest explizit mitgeteilt werden. Dafür in der `jest.config.js`-Datei beim `transformIgnorePattern` hinten an das Regex das gebrauchte Modul mit dazuschreiben. 
+
 ### Aufbau einer Testdatei
 #### Bei Unittests
 ```typescript

@@ -28,11 +28,6 @@ function TourStats() {
   const styles = makeStyles(theme);
 
   const progress = getTourDistance(tourStages) / 1001;
-  console.log("refreshed");
-  console.log(tourStages.length);
-  tourStages.forEach((stage) => {
-    console.log(stage.distance);
-  });
 
   return (
     <View style={styles.container}>

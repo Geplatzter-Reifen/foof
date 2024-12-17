@@ -1,6 +1,6 @@
 import Share from "react-native-share";
 import { getActiveTour } from "./data/tourService";
-import { Stage, Tour } from "@/model/model";
+import { Stage, Tour } from "@/database/model/model";
 import {
   getTourAverageSpeed,
   getTourDistance,

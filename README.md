@@ -1,50 +1,80 @@
-# Welcome to your Expo app 👋
+# Willkommen im Foof Projekt
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Installation
+1. Projekt clonen
+   ```bash
+   git clone https://github.com/Geplatzter-Reifen/foof
+   ```
 
-## Get started
-
-1. Install dependencies
-
+2. Pakete installieren
    ```bash
    npm install
    ```
 
 2. Start the app
-
    ```bash
     npx expo start
    ```
-
-In the output, you'll find options to open the app in a
-
+   oder
+   ```bash
+   npx expo run:android
+   ```
+   oder 
+   ```bash
+   npx expo run:ios
+   ```
+Um die App in einem Emulator oder auf einem physischen Gerät zu testen, siehe folgende Links:
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Testing
+Die Tests werden pro Ordner gespeichert. Dafür wird in jedem Ordner ein `__tests__` Ordner erstellt. Darin werden die Dateien des Ordners getestet. Die Testdatei wird folgendermaßen benannt: `<moduleName>-test.ts` oder `<moduleName>-test.tsx`. 
 
-## Get a fresh project
+Falls aus dem `node-modules`-Ordner etwas gebraucht wird, so muss das jest explizit mitgeteilt werden. Dafür in der `jest.config.js`-Datei beim `transformIgnorePattern` hinten an das Regex das gebrauchte Modul mit dazuschreiben. 
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+### Aufbau einer Testdatei
+#### Bei Unittests
+```typescript
+describe("<ModulName/Dateiname>", () => {
+   describe("<einzelne Funktion oder Komponente>", () => {
+      it("should <do something>", () => {
+         // Initialisieren
+         ...
+         expect(<something>).toBe(<someValue>)
+      })
+   })
+} )
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+#### Bei Komponententests
+```typescript
+import { render } from "@/test-utils/test-utils";
+describe("<Komponentenname>", () => {
+   it("should <render correclty,have these values, etc. >", () => {
+      // Initialisieren
+      ...
+      const view = render(<Komponente>)
+      expect(view).toMatchSnapshot();
+      expect(<something>).toBe(<someValue>)
+   })
+} )
+```
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Nur geänderte Dateien Testen
+   ```bash
+   npm run test
+   ```
+### Zum Debuggen aber auch sonst ganz praktisch
+   ```bash
+   npm run testDebug
+   ```
+### Finales Testen mit Coverage Report, vor allem für die Pipeline
+   ```bash
+   npm run testFinal
+   ```
+### Für Änderungen an den Snapshots
+   ```bash
+   npm run updateSnapshot
+   ```

@@ -1,8 +1,10 @@
-type StageMockConstructorArgs = {
+import { MockStage } from "./stage";
+
+type LocationMockConstructorArgs = {
   latitude: number;
   longitude: number;
   recordedAt?: number;
-  stage: { id: string; name: string };
+  stage: MockStage[];
   collections: any;
 };
 
@@ -11,9 +13,9 @@ export class MockLocation {
     latitude = 50.0826,
     longitude = 8.24,
     recordedAt = new Date("2024-12-03 12:00").getTime(),
-    stage = { id: "mock-stage-id", name: "Mock Stage" },
+    stage = [new MockStage()],
     collections = {},
-  }: Partial<StageMockConstructorArgs> = {}) {
+  }: Partial<LocationMockConstructorArgs> = {}) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.recordedAt = recordedAt;
@@ -23,8 +25,7 @@ export class MockLocation {
   static table = "stages";
 
   static associations = {
-    tours: { type: "belongs_to", key: "tour_id" },
-    locations: { type: "has_many", foreignKey: "stage_id" },
+    stages: { type: "belongs_to", key: "stage_id" },
   };
 
   // Properties

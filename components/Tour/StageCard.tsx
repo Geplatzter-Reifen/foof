@@ -21,7 +21,9 @@ import { shareStage } from "@/services/sharingService";
 import {
   getStageAvgSpeedString,
   getStageDistanceString,
+  getStageDurationString,
 } from "@/services/statisticsService";
+import IconStat from "@/components/Statistics/IconStat";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -47,7 +49,7 @@ function StageCard({ stage }: { stage: Stage }) {
 
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
   const dateString: string = formatDate(startedAt, DateFormat.DATE_TIME);
-  const durationString: string = getDurationFormatted(startedAt, finishedAt);
+  const durationString: string = getStageDurationString(stage);
   const distanceString: string = getStageDistanceString(stage);
   const avgSpeedString: string = getStageAvgSpeedString(stage);
 
@@ -87,32 +89,16 @@ function StageCard({ stage }: { stage: Stage }) {
         header={<Header />}
         status={stage.isActive ? "primary" : undefined}
       >
-        <View style={styles.stat}>
-          <FontAwesomeIcon
-            icon="arrows-left-right"
-            size={19}
-            color={foofDarkTheme["color-primary-500"]}
-            style={styles.icon}
-          />
-          <Text style={styles.statLabel}>{distanceString}</Text>
-        </View>
-        <View style={styles.stat}>
-          <FontAwesomeIcon
-            icon="clock"
-            size={19}
-            color={foofDarkTheme["color-primary-500"]}
-            style={styles.icon}
-          />
-          <Text style={styles.statLabel}>{durationString}</Text>
-        </View>
-        <View style={styles.stat}>
-          <FontAwesomeIcon
-            icon="gauge-high"
-            size={19}
-            color={foofDarkTheme["color-primary-500"]}
-            style={styles.icon}
-          />
-          <Text style={styles.statLabel}>{avgSpeedString}</Text>
+        <View style={styles.body}>
+          <IconStat icon="arrows-left-right" status="primary">
+            {distanceString}
+          </IconStat>
+          <IconStat icon="clock-rotate-left" status="primary">
+            {durationString}
+          </IconStat>
+          <IconStat icon="gauge-high" status="primary">
+            {avgSpeedString}
+          </IconStat>
         </View>
         <Text appearance="hint" style={styles.date}>
           {dateString}
@@ -141,21 +127,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 15,
   },
-  stat: {
+  body: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   buttonGroup: {
     flexDirection: "row",
   },
-  icon: {
-    marginRight: 10,
-  },
-  statLabel: {
-    fontSize: 17,
-  },
   date: {
-    marginTop: 5,
+    marginTop: 7,
   },
 });

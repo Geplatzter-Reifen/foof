@@ -10,6 +10,8 @@ export function isLocationValid(location: MapPoint): boolean {
     location.longitude <= 180
   );
 }
+
+/** Calculates the distance between two point in km */
 export function calculateDistance(
   location1: MapPoint,
   location2: MapPoint,

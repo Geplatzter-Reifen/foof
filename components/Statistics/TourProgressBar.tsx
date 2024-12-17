@@ -14,7 +14,11 @@ export function TourProgressBar(props: TourProgressBarProps) {
 
   return (
     <View {...rest}>
-      <ProgressBar progress={progress} style={styles.progressBar} />
+      <ProgressBar
+        progress={progress}
+        animating={false}
+        style={styles.progressBar}
+      />
       <Text
         //@ts-ignore - wegen dem String-Konstrukt bei "left" hat sich TS beschwert
         style={{

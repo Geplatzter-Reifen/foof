@@ -388,11 +388,7 @@ exports[`Touruebersicht should render correctly 1`] = `
               "backgroundColor": "#FF6E14",
               "borderRadius": 6,
               "height": 27,
-              "transform": [
-                {
-                  "translateX": -0,
-                },
-              ],
+              "width": "0%",
             }
           }
         />

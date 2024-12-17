@@ -1,6 +1,6 @@
 import { MockTour } from "@/__mocks__/tour";
 import TourStats from "../TourStats";
-import { render, waitFor, act } from "@/test-utils/test-utils";
+import { render, waitFor } from "@/test-utils/test-utils";
 
 describe("TourStats", () => {
   beforeEach(() => {
@@ -12,12 +12,9 @@ describe("TourStats", () => {
   it("should render correctly", async () => {
     const tour = new MockTour();
 
-    let view;
     // Hier wird eine Warning ausgegeben, dass soll aber anscheinend so
-    await act(async () => {
-      // @ts-ignore
-      view = await waitFor(() => render(<TourStats tour={tour} />));
-    });
+    // @ts-ignore
+    const view = await waitFor(() => render(<TourStats tour={tour} />));
     expect(view).toMatchSnapshot();
   });
   //TODO: Add more tests

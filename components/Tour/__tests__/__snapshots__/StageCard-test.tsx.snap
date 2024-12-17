@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<StageCard /> renders basic stage correctly 1`] = `
+exports[`StageCard renders basic stage correctly 1`] = `
 <View
   accessibilityState={
     {
@@ -50,6 +50,7 @@ exports[`<StageCard /> renders basic stage correctly 1`] = `
       "shadowRadius": 2,
     }
   }
+  testID="stage-card"
 >
   <View
     style={
@@ -535,7 +536,7 @@ exports[`<StageCard /> renders basic stage correctly 1`] = `
 </View>
 `;
 
-exports[`<StageCard /> renders correctly for active stage 1`] = `
+exports[`StageCard renders correctly for active stage 1`] = `
 <View
   accessibilityState={
     {
@@ -585,6 +586,7 @@ exports[`<StageCard /> renders correctly for active stage 1`] = `
       "shadowRadius": 2,
     }
   }
+  testID="stage-card"
 >
   <View
     style={
@@ -1070,7 +1072,7 @@ exports[`<StageCard /> renders correctly for active stage 1`] = `
 </View>
 `;
 
-exports[`<StageCard /> renders correctly for manually created stage 1`] = `
+exports[`StageCard renders correctly for manually created stage 1`] = `
 <View
   accessibilityState={
     {
@@ -1120,6 +1122,7 @@ exports[`<StageCard /> renders correctly for manually created stage 1`] = `
       "shadowRadius": 2,
     }
   }
+  testID="stage-card"
 >
   <View
     style={

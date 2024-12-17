@@ -99,6 +99,7 @@ function StageCardComp({ stage }: { stage: Stage }) {
       }}
       header={<Header />}
       status={stage.isActive ? "primary" : undefined}
+      testID="stage-card"
     >
       <Body />
       <Footer />

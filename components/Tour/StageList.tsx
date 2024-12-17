@@ -4,7 +4,7 @@ import { StageCard } from "@/components/Tour/StageCard";
 import { Text } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 
-const StageList = ({ stages }: { stages: Stage[] }) => {
+const StageListComp = ({ stages }: { stages: Stage[] }) => {
   return (
     <View style={styles.list}>
       {
@@ -25,7 +25,8 @@ const StageList = ({ stages }: { stages: Stage[] }) => {
 
 // enhancen, um auf DB-Änderungen zu reagieren
 const enhance = withObservables(["stages"], ({ stages }) => ({ stages }));
-export default enhance(StageList);
+const StageList = enhance(StageListComp);
+export { StageList, StageListComp as StageListForTesting };
 
 const styles = StyleSheet.create({
   noStageText: {

@@ -10,7 +10,7 @@ import { createTour } from "@/services/data/tourService";
 import { createManualStage } from "@/services/tracking";
 import { waitFor } from "@testing-library/react-native";
 
-describe("<StageCard />", () => {
+describe("StageCard", () => {
   beforeEach(() => {
     jest
       .spyOn(global.Date, "now")

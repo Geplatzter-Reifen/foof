@@ -27,7 +27,7 @@ let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
 
 // Utility to parse coordinates
-function parseCoordinates(coordinateString: string): Coordinates | null {
+export function parseCoordinates(coordinateString: string): Coordinates | null {
   const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
   const match = coordinateString.match(regex);
   return match

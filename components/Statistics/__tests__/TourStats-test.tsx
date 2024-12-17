@@ -12,4 +12,5 @@ describe("TourStats", () => {
 
     expect(view).toMatchSnapshot();
   });
+  //TODO: Add more tests
 });

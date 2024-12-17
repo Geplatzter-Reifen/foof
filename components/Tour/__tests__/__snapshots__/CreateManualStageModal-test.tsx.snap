@@ -113,8 +113,8 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "backgroundColor": "#373737",
-            "borderColor": "#FFFFFF",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7e7e7e",
             "borderRadius": 4,
             "borderWidth": 1,
             "opacity": 1,
@@ -185,8 +185,8 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
               style={
                 [
                   {
-                    "backgroundColor": "#282828",
-                    "borderColor": "#FFFFFF",
+                    "backgroundColor": "#eaeaea",
+                    "borderColor": "#7e7e7e",
                     "borderRadius": 4,
                     "borderWidth": 1,
                     "minHeight": 40,
@@ -210,13 +210,13 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
                 placeholder="Tourname"
-                placeholderTextColor="#282828"
+                placeholderTextColor="#373737"
                 size="medium"
                 status="basic"
                 style={
                   [
                     {
-                      "color": "#FFFFFF",
+                      "color": "#000000",
                       "fontFamily": "System",
                       "fontSize": 15,
                       "fontWeight": "normal",
@@ -276,8 +276,8 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
               style={
                 [
                   {
-                    "backgroundColor": "#282828",
-                    "borderColor": "#FFFFFF",
+                    "backgroundColor": "#eaeaea",
+                    "borderColor": "#7e7e7e",
                     "borderRadius": 4,
                     "borderWidth": 1,
                     "minHeight": 40,
@@ -301,13 +301,13 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
                 placeholder="Startkoordinaten"
-                placeholderTextColor="#282828"
+                placeholderTextColor="#373737"
                 size="medium"
                 status="basic"
                 style={
                   [
                     {
-                      "color": "#FFFFFF",
+                      "color": "#000000",
                       "fontFamily": "System",
                       "fontSize": 15,
                       "fontWeight": "normal",
@@ -367,8 +367,8 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
               style={
                 [
                   {
-                    "backgroundColor": "#282828",
-                    "borderColor": "#FFFFFF",
+                    "backgroundColor": "#eaeaea",
+                    "borderColor": "#7e7e7e",
                     "borderRadius": 4,
                     "borderWidth": 1,
                     "minHeight": 40,
@@ -392,13 +392,13 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
                 onMouseEnter={[Function]}
                 onMouseLeave={[Function]}
                 placeholder="Endkoordinaten"
-                placeholderTextColor="#282828"
+                placeholderTextColor="#373737"
                 size="medium"
                 status="basic"
                 style={
                   [
                     {
-                      "color": "#FFFFFF",
+                      "color": "#000000",
                       "fontFamily": "System",
                       "fontSize": 15,
                       "fontWeight": "normal",
@@ -470,13 +470,13 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
               style={
                 [
                   {
-                    "color": "#FFFFFF",
+                    "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 15,
                     "fontWeight": "400",
                   },
                   {
-                    "color": "#000000",
+                    "color": "#FFFFFF",
                     "fontFamily": "System",
                     "fontSize": 14,
                     "fontWeight": "bold",
@@ -519,8 +519,8 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
             style={
               {
                 "alignItems": "center",
-                "backgroundColor": "#171717",
-                "borderColor": "#171717",
+                "backgroundColor": "#b8b8b8",
+                "borderColor": "#b8b8b8",
                 "borderRadius": 4,
                 "borderWidth": 1,
                 "flexDirection": "row",
@@ -541,13 +541,13 @@ exports[`<CreateManualStageModal /> should render correctly 1`] = `
               style={
                 [
                   {
-                    "color": "#FFFFFF",
+                    "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 15,
                     "fontWeight": "400",
                   },
                   {
-                    "color": "#7e7e7e",
+                    "color": "#202020",
                     "fontFamily": "System",
                     "fontSize": 14,
                     "fontWeight": "bold",

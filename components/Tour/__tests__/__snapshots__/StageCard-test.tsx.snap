@@ -7,7 +7,7 @@ exports[`<StageCard /> renders correctly 1`] = `
   style={
     [
       {
-        "backgroundColor": "#282828",
+        "backgroundColor": "#eaeaea",
       },
       undefined,
     ]
@@ -43,8 +43,8 @@ exports[`<StageCard /> renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "backgroundColor": "#373737",
-        "borderColor": "#FFFFFF",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
         "borderRadius": 5,
         "borderWidth": 1,
         "elevation": 2,
@@ -86,7 +86,7 @@ exports[`<StageCard /> renders correctly 1`] = `
         style={
           [
             {
-              "color": "#FFFFFF",
+              "color": "#000000",
               "fontFamily": "System",
               "fontSize": 18,
               "fontWeight": "800",
@@ -234,7 +234,7 @@ exports[`<StageCard /> renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#202020",
+            "backgroundColor": "#b8b8b8",
             "height": 1,
           },
           undefined,
@@ -323,7 +323,7 @@ exports[`<StageCard /> renders correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -407,7 +407,7 @@ exports[`<StageCard /> renders correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -490,7 +490,7 @@ exports[`<StageCard /> renders correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -512,7 +512,7 @@ exports[`<StageCard /> renders correctly 1`] = `
         style={
           [
             {
-              "color": "#282828",
+              "color": "#373737",
               "fontFamily": "System",
               "fontSize": 15,
               "fontWeight": "400",

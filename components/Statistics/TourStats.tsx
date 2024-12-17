@@ -5,8 +5,9 @@ import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/database/model/model";
 import {
   getTourDistance,
-  getTourAverageSpeed,
   getTourDurationString,
+  getTourDistanceString,
+  getTourAverageSpeedString,
 } from "@/services/statisticsService";
 import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
 
@@ -37,7 +38,7 @@ export default function TourStats(props: TourStatsProps) {
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
             <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistance(stages).toFixed(1) + " km"}</Text>
+            <Text>{getTourDistanceString(stages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="arrow-up-right-dots" style={styles.icon_style} />
@@ -45,7 +46,7 @@ export default function TourStats(props: TourStatsProps) {
           </View>
           <View style={styles.stat_row}>
             <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeed(stages).toFixed(1) + " km/h"}</Text>
+            <Text>{getTourAverageSpeedString(stages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="bolt" style={styles.icon_style} />

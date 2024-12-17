@@ -5,8 +5,18 @@ import {
   getDurationMsFormatted,
 } from "@/utils/dateUtil";
 
-/** Distance */
-/** Returns the stage distance as a string in km */
+/* DISTANCE */
+/** Returns the total TOUR distance in km */
+export function getTourDistance(stages: Stage[]): number {
+  return stages.reduce((acc, stage) => acc + stage.distance, 0);
+}
+
+/** Returns the total TOUR distance in km as a STRING*/
+export function getTourDistanceString(stages: Stage[], precision?: number) {
+  return getTourDistance(stages).toFixed(precision ?? 1) + " km";
+}
+
+/** Returns the STAGE distance in km as a STRING */
 export function getStageDistanceString(
   stage: Stage,
   precision?: number,
@@ -14,24 +24,19 @@ export function getStageDistanceString(
   return stage.distance.toFixed(precision ?? 1) + " km";
 }
 
-/** Returns the total distance of a tour in km */
-export function getTourDistance(stages: Stage[]): number {
-  return stages.reduce((acc, stage) => acc + stage.distance, 0);
-}
-
-/** Duration */
-/** Returns the total duration of a tour in milliseconds.*/
+/* DURATION */
+/** Returns the total TOUR duration in milliseconds.*/
 export function getTourDuration(stages: Stage[]): number {
   return stages.reduce((acc, stage) => acc + getStageDuration(stage), 0);
 }
-/** Returns the total duration of a tour as a string.*/
+/** Returns the total TOUR duration in milliseconds as a STRING.*/
 export function getTourDurationString(stages: Stage[]): string {
   const tourDuration = getTourDuration(stages);
 
   return getDurationMsFormatted(tourDuration);
 }
 
-/** Returns the duration of a stage in milliseconds */
+/** Returns the STAGE duration in milliseconds */
 export function getStageDuration(stage: Stage): number {
   const start = new Date(stage.startedAt);
   const end = new Date(stage.finishedAt ?? Date.now());
@@ -39,7 +44,7 @@ export function getStageDuration(stage: Stage): number {
   return getDurationInMs(start, end);
 }
 
-/** Returns the duration of a stage as a string */
+/** Returns the STAGE duration in milliseconds as a string */
 export function getStageDurationString(stage: Stage): string {
   const start = new Date(stage.startedAt);
   const end = new Date(stage.finishedAt ?? Date.now());
@@ -47,8 +52,8 @@ export function getStageDurationString(stage: Stage): string {
   return getDurationFormatted(start, end);
 }
 
-/** Average Speed */
-/** Returns the average speed of a tour in km/h */
+/* AVERAGE SPEED */
+/** Returns the average TOUR speed in km/h */
 export function getTourAverageSpeed(stages: Stage[]): number {
   const tourDuration = getTourDuration(stages);
   if (tourDuration === 0) return 0;
@@ -56,7 +61,7 @@ export function getTourAverageSpeed(stages: Stage[]): number {
   return getTourDistance(stages) / hours;
 }
 
-/** Returns the average speed of a tour in km/h as a string */
+/** Returns the average TOUR speed in km/h as a STRING */
 export function getTourAverageSpeedString(
   stages: Stage[],
   precision?: number,
@@ -64,14 +69,14 @@ export function getTourAverageSpeedString(
   return getTourAverageSpeed(stages).toFixed(precision ?? 1) + " km/h";
 }
 
-/** Returns the average speed of a stage in km/h */
+/** Returns the average STAGE speed in km/h */
 export function getStageAvgSpeedInKmh(stage: Stage): number {
   const hours = getStageDuration(stage) / (1000 * 60 * 60);
 
   return stage.distance / hours;
 }
 
-/** Returns the average speed of a stage as a string in km/h */
+/** Returns the average STAGE speed in km/h as a STRING */
 export function getStageAvgSpeedString(
   stage: Stage,
   precision?: number,

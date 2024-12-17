@@ -3,8 +3,8 @@ import { getActiveTour } from "./data/tourService";
 import { Stage, Tour } from "@/database/model/model";
 import {
   getStageDurationString,
-  getTourAverageSpeed,
-  getTourDistance,
+  getTourAverageSpeedString,
+  getTourDistanceString,
   getTourDurationString,
 } from "@/services/statisticsService";
 import { formatDate, DateFormat } from "@/utils/dateUtil";
@@ -86,8 +86,8 @@ export const shareTour = async (uri?: string) => {
   if (!tour) throw new Error("No active Tour");
   const stages: Stage[] = await tour.stages.fetch();
   const tourTitle = tour.title;
-  const tourDistance = getTourDistance(stages).toFixed(2);
-  const tourAverageSpeed = getTourAverageSpeed(stages).toFixed(2);
+  const tourDistance = getTourDistanceString(stages, 2);
+  const tourAverageSpeed = getTourAverageSpeedString(stages, 2);
   const tourDuration = getTourDurationString(stages);
 
   if (!tour.startedAt) throw new Error("Tour has no start date");

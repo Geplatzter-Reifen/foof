@@ -111,6 +111,12 @@ describe("statisticsService", () => {
         "06:00 h",
       );
     });
+    it("should return the correct duration string for a stage with minutes", () => {
+      // @ts-ignore
+      expect(StatisticsService.getStageDurationString(stageTwo)).toBe(
+        "09:37 h",
+      );
+    });
   });
 
   describe("getStageAvgSpeedInKmh", () => {

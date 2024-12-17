@@ -18,6 +18,10 @@ import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
+import {
+  getStageAvgSpeedString,
+  getStageDistanceString,
+} from "@/services/statisticsService";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -35,21 +39,19 @@ const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 function StageCard({ stage }: { stage: Stage }) {
+  // Startdatum & "Enddatum" aus der Stage holen
   const startedAt: Date = new Date(stage.startedAt);
   let finishedAt: Date | undefined = stage.finishedAt
     ? new Date(stage.finishedAt)
-    : undefined;
+    : new Date(Date.now()); // falls Stage noch am aufzeichnen
 
-  const date: string = formatDate(startedAt, DateFormat.DATE);
+  // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
+  const dateString: string = formatDate(startedAt, DateFormat.DATE_TIME);
+  const durationString: string = getDurationFormatted(startedAt, finishedAt);
+  const distanceString: string = getStageDistanceString(stage);
+  const avgSpeedString: string = getStageAvgSpeedString(stage);
 
-  let duration: string | undefined = finishedAt
-    ? getDurationFormatted(startedAt, finishedAt)
-    : getDurationFormatted(startedAt, new Date(Date.now()));
-
-  const distance: string = stage.distance.toFixed(1);
-
-  const avgSpeed: string = stage.avgSpeed.toFixed(1);
-
+  // Header der Kachel mit Löschen- und Teilen-Button
   const Header = () => {
     return (
       <View style={styles.header}>
@@ -92,19 +94,17 @@ function StageCard({ stage }: { stage: Stage }) {
             color={foofDarkTheme["color-primary-500"]}
             style={styles.icon}
           />
-          <Text style={styles.statLabel}>{distance} km</Text>
+          <Text style={styles.statLabel}>{distanceString}</Text>
         </View>
-        {duration && (
-          <View style={styles.stat}>
-            <FontAwesomeIcon
-              icon="clock"
-              size={19}
-              color={foofDarkTheme["color-primary-500"]}
-              style={styles.icon}
-            />
-            <Text style={styles.statLabel}>{duration}</Text>
-          </View>
-        )}
+        <View style={styles.stat}>
+          <FontAwesomeIcon
+            icon="clock"
+            size={19}
+            color={foofDarkTheme["color-primary-500"]}
+            style={styles.icon}
+          />
+          <Text style={styles.statLabel}>{durationString}</Text>
+        </View>
         <View style={styles.stat}>
           <FontAwesomeIcon
             icon="gauge-high"
@@ -112,10 +112,10 @@ function StageCard({ stage }: { stage: Stage }) {
             color={foofDarkTheme["color-primary-500"]}
             style={styles.icon}
           />
-          <Text style={styles.statLabel}>{avgSpeed} km/h</Text>
+          <Text style={styles.statLabel}>{avgSpeedString}</Text>
         </View>
         <Text appearance="hint" style={styles.date}>
-          {date}
+          {dateString}
         </Text>
       </Card>
     </Layout>
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 15,
     marginHorizontal: 10,
+    flex: 1,
   },
   header: {
     flex: 1,

@@ -1,5 +1,4 @@
 import React from "react";
-import { RenderProp } from "@ui-kitten/components/devsupport";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import { Icon } from "@ui-kitten/components";
 
 type SmallButtonType = React.PropsWithChildren<TouchableOpacityProps> & {
   icon: string;
-}; // ist das richtig so?
+};
 
 export default function SmallIconButton(props: SmallButtonType) {
   return (

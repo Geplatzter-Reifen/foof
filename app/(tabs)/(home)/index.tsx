@@ -55,6 +55,7 @@ export default function HomeScreen() {
   const [userCentered, setUserCentered] = useState(true);
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
+  const [confettiPieces, setConfettiPieces] = useState([]);
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
   const [activeStageId, setActiveStageId] = useState<string | null>();
@@ -155,17 +156,20 @@ export default function HomeScreen() {
     );
   };
 
+  const onStopButtonPress = async () => {
+    setButtonState(ButtonStates.NotCycling);
+    if (await stopAutomaticTracking()) {
+    }
+    setActiveStageId(null);
+  };
+
   const StopButton = () => {
     return (
       <BigRoundButton
         icon={
           <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
         }
-        onPress={() => {
-          setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-          setActiveStageId(null);
-        }}
+        onPress={onStopButtonPress}
       />
     );
   };
@@ -317,6 +321,10 @@ export default function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
+      <ConfettiCanvas
+        confettiPieces={confettiPieces}
+        colors={["#deb7ff", "#c785ec", "#a86add", "#8549a7", "#634087"]}
+      />
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}

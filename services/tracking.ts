@@ -13,6 +13,7 @@ import {
 import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
+import { isFinished } from "./StageConnection/stageConnection";
 
 export const LOCATION_TASK_NAME = "location-task";
 
@@ -95,16 +96,22 @@ export async function startAutomaticTracking() {
   }
 }
 
-export async function stopAutomaticTracking() {
+/** Stops automatic tracking. */
+export async function stopAutomaticTracking(): Promise<boolean> {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
     await finishStage(stage!.id);
     lastActiveStageId = undefined;
+    const tour = await getActiveTour();
     console.log("Tracking stopped.");
+    if (tour) {
+      return await isFinished(tour);
+    }
   } else {
     console.log("Tracking already stopped.");
   }
+  return false;
 }
 
 function parseCoordinates(

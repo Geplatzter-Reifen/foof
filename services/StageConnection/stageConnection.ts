@@ -1,4 +1,4 @@
-import { Stage, Tour, Location } from "@/database/model/model";
+import { Tour, Location } from "@/database/model/model";
 import { calculateDistance, MapPoint } from "@/utils/locationUtil";
 import LinkedList from "ts-linked-list";
 import { getAllLocationsByStageId } from "../data/locationService";
@@ -89,7 +89,7 @@ export async function isFinished(tour: Tour): Promise<boolean> {
   const head = connectedLocationList.head;
   const tail = connectedLocationList.tail;
   if (!head || !tail) {
-    throw new Error("Head or tail is undefined");
+    return false;
   }
   return (
     (isLocationInRadius(

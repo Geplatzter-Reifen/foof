@@ -1,6 +1,6 @@
 import { getAllLocationsByStageIdQuery } from "@/services/data/locationService";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Location } from "@/model/model";
+import { Location } from "@/database/model/model";
 import StageMapLine from "@/components/Tour/StageMapLine";
 
 const ActiveStageWrapper = ({ locations }: { locations: Location[] }) => {

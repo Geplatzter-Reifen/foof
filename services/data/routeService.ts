@@ -1,6 +1,6 @@
-import { database } from "@/model/createDatabase";
+import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
-import { Tour, Route } from "@/model/model";
+import { Tour, Route } from "@/database/model/model";
 
 /** Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise. */
 export const setTourRoute = async (tourId: string, geoJson: string) => {

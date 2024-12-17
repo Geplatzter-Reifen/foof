@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Route, Tour } from "@/model/model";
+import { Route, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";

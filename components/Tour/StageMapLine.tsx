@@ -1,4 +1,4 @@
-import { Location } from "@/model/model";
+import { Location } from "@/database/model/model";
 import MapboxGL from "@rnmapbox/maps";
 import { lineString, point, featureCollection } from "@turf/helpers";
 import { useTheme } from "@ui-kitten/components";

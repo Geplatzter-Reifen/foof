@@ -1,4 +1,4 @@
-import { Stage } from "@/model/model";
+import { Stage } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import StageCard from "@/components/Tour/StageCard";
 import { Layout, Text } from "@ui-kitten/components";

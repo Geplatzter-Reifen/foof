@@ -1,7 +1,7 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Tour } from "@/model/model";
+import { Tour } from "@/database/model/model";
 import {
   Layout,
   Button,

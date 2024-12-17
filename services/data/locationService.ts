@@ -1,6 +1,6 @@
-import { database } from "@/model/createDatabase";
+import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
-import { Location, Stage } from "@/model/model";
+import { Location, Stage } from "@/database/model/model";
 
 // CREATE
 

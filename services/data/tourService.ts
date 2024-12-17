@@ -1,6 +1,6 @@
 import { Q } from "@nozbe/watermelondb";
-import { database } from "@/model/createDatabase";
-import { Tour } from "@/model/model";
+import { database } from "@/database";
+import { Tour } from "@/database/model/model";
 import { getAllStagesByTourId } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 

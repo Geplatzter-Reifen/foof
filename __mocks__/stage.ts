@@ -37,7 +37,6 @@ export class MockStage {
   };
 
   // Properties
-  // Properties
   title: string;
   isActive: boolean;
   startedAt: number;

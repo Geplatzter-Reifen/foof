@@ -4,7 +4,7 @@ exports[`TourStats should render correctly 1`] = `
 <View
   style={
     {
-      "backgroundColor": "rgba(51, 102, 255, 0.40)",
+      "backgroundColor": "rgba(255, 110, 20, 0.26)",
     }
   }
 >
@@ -33,7 +33,7 @@ exports[`TourStats should render correctly 1`] = `
             "overflow": "hidden",
           },
           {
-            "backgroundColor": "#282828",
+            "backgroundColor": "#eaeaea",
             "borderRadius": 6,
             "height": 27,
             "indicatorColor": "#FF6E14",
@@ -64,13 +64,13 @@ exports[`TourStats should render correctly 1`] = `
       style={
         [
           {
-            "color": "#FFFFFF",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#FFFFFF",
+            "color": "#000000",
             "fontSize": 19,
             "left": "4.00%",
             "position": "absolute",
@@ -131,7 +131,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -172,7 +172,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -213,7 +213,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -254,7 +254,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -305,7 +305,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",
@@ -346,7 +346,7 @@ exports[`TourStats should render correctly 1`] = `
           style={
             [
               {
-                "color": "#FFFFFF",
+                "color": "#000000",
                 "fontFamily": "System",
                 "fontSize": 15,
                 "fontWeight": "400",

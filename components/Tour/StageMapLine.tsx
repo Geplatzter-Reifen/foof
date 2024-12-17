@@ -5,6 +5,19 @@ import { useTheme } from "@ui-kitten/components";
 import React from "react";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 
+/**
+ * StageMapLine component
+ *
+ * Renders a line on the map representing a stage with dots at the start and end.
+ * If the `active` prop is set to true, only the start dot will be shown.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Location[]} props.locations - Array of location objects containing latitude and longitude.
+ * @param {string} props.stageId - Unique identifier for the stage (used for layer IDs).
+ * @param {boolean} [props.active=false] - If true, shows only the start point (used for active stages).
+ * @returns {JSX.Element} A Mapbox shape source with a line and optional start/end points.
+ */
+
 type stageMapLineProps = {
   locations: Location[];
   stageId: string;

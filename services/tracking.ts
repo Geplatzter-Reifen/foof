@@ -14,7 +14,7 @@ import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
 
-import { Stage, Tour } from "@/model/model";
+import { Stage, Tour } from "@/database/model/model";
 
 type Coordinates = {
   latitude: number;

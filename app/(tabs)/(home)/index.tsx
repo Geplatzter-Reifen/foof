@@ -55,7 +55,6 @@ export default function HomeScreen() {
   const [userCentered, setUserCentered] = useState(true);
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
-  const [confettiPieces, setConfettiPieces] = useState([]);
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
   const [activeStageId, setActiveStageId] = useState<string | null>();
@@ -321,10 +320,6 @@ export default function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
-      <ConfettiCanvas
-        confettiPieces={confettiPieces}
-        colors={["#deb7ff", "#c785ec", "#a86add", "#8549a7", "#634087"]}
-      />
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}

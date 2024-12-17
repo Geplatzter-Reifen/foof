@@ -28,10 +28,11 @@ let lastActiveStageId: string | undefined = undefined;
 
 // Utility to parse coordinates
 export function parseCoordinates(coordinateString: string): Coordinates | null {
-  const regex = /^\s*([-+]?\d{1,2}(?:\.\d+)?),\s*([-+]?\d{1,3}(?:\.\d+)?)\s*$/;
+  const regex =
+    /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
   const match = coordinateString.match(regex);
   return match
-    ? { latitude: parseFloat(match[1]), longitude: parseFloat(match[2]) }
+    ? { latitude: parseFloat(match[1]), longitude: parseFloat(match[4]) }
     : null;
 }
 

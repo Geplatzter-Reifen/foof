@@ -10,5 +10,25 @@ describe("Tracking", () => {
         longitude: 8.21725,
       });
     });
+    it("should return null for a too low latitude", () => {
+      const input = "-91.0, 8.21725";
+      const result = parseCoordinates(input);
+      expect(result).toBeNull();
+    });
+    it("should return null for a too high latitude", () => {
+      const input = "91.0, 8.21725";
+      const result = parseCoordinates(input);
+      expect(result).toBeNull();
+    });
+    it("should return null for a too low longitude", () => {
+      const input = "90.0, -181.0";
+      const result = parseCoordinates(input);
+      expect(result).toBeNull();
+    });
+    it("should return null for a too high longitude", () => {
+      const input = "90.0, 181.0";
+      const result = parseCoordinates(input);
+      expect(result).toBeNull();
+    });
   });
 });

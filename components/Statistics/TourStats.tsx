@@ -106,11 +106,11 @@ const EnhancedTourStats = enhance(TourStats);
 // Bridge component that determines which TourStats component to render based on the active stage.
 const Bridge = ({ stages }: { stages: Stage[] }) => {
   tourStages = stages;
-  stages.forEach((stage) => {
+  for (const stage of stages) {
     if (stage.isActive) {
       return <EnhancedTourStats stage={stage} />;
     }
-  });
+  }
   return <TourStats />;
 };
 

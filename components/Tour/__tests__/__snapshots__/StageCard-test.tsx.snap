@@ -311,6 +311,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -380,6 +381,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -449,6 +451,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -847,6 +850,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -916,6 +920,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -985,6 +990,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -1383,6 +1389,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -1452,6 +1459,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}
@@ -1521,6 +1529,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
             "flexDirection": "row",
           }
         }
+        testID="container"
       >
         <View
           collapsable={false}

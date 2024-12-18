@@ -36,7 +36,7 @@ export default function IconStat(props: IconStatPropType) {
   const iconColorString = getColorStringByStatus(props.status ?? "primary");
 
   return (
-    <View style={styles.view}>
+    <View style={styles.view} testID="container">
       <Icon
         name={props.icon}
         style={{ height: iconSize, width: "auto", color: iconColorString }}

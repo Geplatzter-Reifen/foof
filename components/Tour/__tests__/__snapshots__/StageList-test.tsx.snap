@@ -318,6 +318,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -387,6 +388,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -456,6 +458,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -851,6 +854,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -920,6 +924,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -989,6 +994,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -1384,6 +1390,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -1453,6 +1460,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -1522,6 +1530,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -1917,6 +1926,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -1986,6 +1996,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -2055,6 +2066,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -2450,6 +2462,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -2519,6 +2532,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -2588,6 +2602,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -2983,6 +2998,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -3052,6 +3068,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -3121,6 +3138,7 @@ exports[`StageList renders correctly for many stages 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -3560,6 +3578,7 @@ exports[`StageList renders correctly for one stage 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -3629,6 +3648,7 @@ exports[`StageList renders correctly for one stage 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}
@@ -3698,6 +3718,7 @@ exports[`StageList renders correctly for one stage 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="container"
         >
           <View
             collapsable={false}

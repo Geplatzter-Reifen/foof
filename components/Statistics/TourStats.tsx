@@ -4,7 +4,7 @@ import {
   formatDate,
   DateFormat,
   getTotalMillisecondsString,
-} from "@/utils/dateUtil";
+} from "@/utils/dateUtils";
 import {
   Icon,
   ProgressBar,

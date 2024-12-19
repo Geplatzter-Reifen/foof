@@ -1,4 +1,4 @@
-import * as locationUtil from "../locationUtil";
+import * as locationUtil from "../locationUtils";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import { point, lineString, featureCollection } from "@turf/helpers";
 describe("LocationUtil", () => {

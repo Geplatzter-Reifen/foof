@@ -1,4 +1,4 @@
-import * as dateUtil from "../dateUtil";
+import * as dateUtil from "../dateUtils";
 
 describe("dateUtil", () => {
   const startDate = new Date("2024-11-29T20:30:00.000");

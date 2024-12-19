@@ -15,7 +15,7 @@ import {
 } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
-import { hexToRgba } from "@/utils/colorUtil";
+import { hexToRgba } from "@/utils/colorUtils";
 import StageList from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";

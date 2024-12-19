@@ -11,7 +11,7 @@ import {
   finishStage,
 } from "@/services/data/stageService";
 import { createLocation } from "@/services/data/locationService";
-import { calculateDistance } from "@/utils/locationUtil";
+import { calculateDistance } from "@/utils/locationUtils";
 import { LocationObject } from "expo-location";
 
 export const LOCATION_TASK_NAME = "location-task";

@@ -1,5 +1,5 @@
 import { Stage } from "@/database/model/model";
-import { getDurationFormatted, getDurationInMs } from "@/utils/dateUtil";
+import { getDurationFormatted, getDurationInMs } from "@/utils/dateUtils";
 
 /** Distance */
 /** Returns the stage distance as a string in km */

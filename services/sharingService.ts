@@ -10,7 +10,7 @@ import {
   formatDate,
   DateFormat,
   getTotalMillisecondsString,
-} from "@/utils/dateUtil";
+} from "@/utils/dateUtils";
 const shareStageMaker = (
   title: string,
   distance: string,

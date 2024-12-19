@@ -35,7 +35,7 @@ import { Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import { calculateBounds, getCurrentLocation } from "@/utils/locationUtil";
+import { calculateBounds, getCurrentLocation } from "@/utils/locationUtils";
 import type { FeatureCollection } from "geojson";
 import { getTourRoute } from "@/services/data/routeService";
 

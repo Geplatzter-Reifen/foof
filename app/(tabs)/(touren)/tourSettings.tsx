@@ -33,7 +33,7 @@ type TourenParams = {
   tourTitle: string;
 };
 
-export default function Touren() {
+export default function TourSettings() {
   const params = useLocalSearchParams() as TourenParams;
   const { tourId, tourTitle } = params;
   const [tourname, setTourname] = useState(tourTitle);

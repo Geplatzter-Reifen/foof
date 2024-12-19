@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
-  Alert,
   ImageProps,
   Platform,
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
@@ -37,7 +35,7 @@ import { Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import { calculateBounds } from "@/utils/locationUtil";
+import { calculateBounds, getCurrentLocation } from "@/utils/locationUtil";
 import type { FeatureCollection } from "geojson";
 import { getTourRoute } from "@/services/data/routeService";
 
@@ -62,7 +60,12 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const prepare = async () => {
-      await getCurrentLocation();
+      const coords = await getCurrentLocation();
+      if (coords) {
+        setLatitude(coords.latitude);
+        setLongitude(coords.longitude);
+      }
+      await requestPermissionsAsync();
       TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
         if (result) {
           setButtonState(ButtonStates.Cycling);
@@ -86,40 +89,6 @@ export default function HomeScreen() {
         allowSound: true,
       },
     });
-  };
-
-  //get current location
-  const getCurrentLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log(status);
-    const { status: notificationStatus } = await requestPermissionsAsync();
-    console.log(notificationStatus);
-
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission denied",
-        "Allow the app to use location services",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ],
-      );
-      return; // Exit the function if permission is not granted
-    }
-
-    try {
-      const { coords } = await Location.getCurrentPositionAsync();
-      if (coords) {
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      }
-    } catch (error) {
-      console.log("Error getting location:", error);
-    }
   };
 
   const StartButton = () => {

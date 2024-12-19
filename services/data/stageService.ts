@@ -11,6 +11,7 @@ export const createStage = async (
   startedAt?: number,
   finishedAt?: number,
   active: boolean = false,
+  distance?: number,
 ): Promise<Stage> => {
   // if stage to be active, deactivate all active stages
   if (active) {
@@ -35,7 +36,7 @@ export const createStage = async (
   }
 
   // Create Stage
-  return tour.addStage(title, startedAt, finishedAt, active);
+  return tour.addStage(title, startedAt, finishedAt, distance, active);
 };
 
 /** creates a Stage and sets it active */

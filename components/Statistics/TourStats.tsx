@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { DimensionValue, StyleSheet, View } from "react-native";
 import {
   formatDate,
   DateFormat,
@@ -18,42 +18,31 @@ import {
   getTourDistance,
   getTourAverageSpeed,
 } from "@/services/statisticsService";
+import { withObservables } from "@nozbe/watermelondb/react";
 
-type TourStatsProps = {
-  tour: Tour;
-};
+let activeTour: Tour | undefined = undefined;
+let tourStages: Stage[] = [];
 
-export default function TourStats(props: TourStatsProps) {
+function TourStats() {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const [stages, setStages] = useState<Stage[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const getStages = await props.tour.stages.fetch();
-      if (getStages) {
-        setStages(getStages);
-      }
-    })();
-  }, [props.tour]);
-
-  const progress = getTourDistance(stages) / 1001;
+  const progress = getTourDistance(tourStages) / 1001;
 
   return (
     <View style={styles.container}>
       <View style={styles.progressContainer}>
         <ProgressBar progress={progress} style={styles.progressBar} />
         <Text
-          //@ts-ignore
           style={{
             position: "absolute",
             top: "28%",
             left:
               progress < 0.18
-                ? `${((progress + 0.04) * 100).toFixed(2)}%`
+                ? (`${((progress + 0.04) * 100).toFixed(2)}%` as DimensionValue)
                 : progress < 1
-                  ? `${((progress - 0.125) * 100).toFixed(2)}%`
-                  : "44%",
+                  ? (`${((progress - 0.125) * 100).toFixed(2)}%` as DimensionValue)
+                  : ("44%" as DimensionValue),
             color: progress >= 0.15 ? "#fff" : theme["text-basic-color"],
             fontSize: 19,
           }}
@@ -65,7 +54,7 @@ export default function TourStats(props: TourStatsProps) {
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
             <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistance(stages).toFixed(1) + " km"}</Text>
+            <Text>{getTourDistance(tourStages).toFixed(1) + " km"}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="arrow-up-right-dots" style={styles.icon_style} />
@@ -73,7 +62,7 @@ export default function TourStats(props: TourStatsProps) {
           </View>
           <View style={styles.stat_row}>
             <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeed(stages).toFixed(1) + " km/h"}</Text>
+            <Text>{getTourAverageSpeed(tourStages).toFixed(1) + " km/h"}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="bolt" style={styles.icon_style} />
@@ -84,20 +73,22 @@ export default function TourStats(props: TourStatsProps) {
           <View style={styles.stat_row}>
             <Icon name="calendar-plus" style={styles.icon_style} />
             <Text>
-              {props.tour.startedAt
-                ? formatDate(props.tour.startedAt, DateFormat.DATE)
+              {activeTour!.startedAt
+                ? formatDate(activeTour!.startedAt, DateFormat.DATE)
                 : "--"}
             </Text>
           </View>
-          {props.tour.finishedAt && (
+          {activeTour!.finishedAt && (
             <View style={styles.stat_row}>
               <Icon name="calendar-check" style={styles.icon_style} />
-              <Text>{formatDate(props.tour.finishedAt, DateFormat.DATE)}</Text>
+              <Text>{formatDate(activeTour!.finishedAt, DateFormat.DATE)}</Text>
             </View>
           )}
           <View style={styles.stat_row}>
             <Icon name="clock" style={styles.icon_style} />
-            <Text>{getTotalMillisecondsString(getTourDuration(stages))}</Text>
+            <Text>
+              {getTotalMillisecondsString(getTourDuration(tourStages))}
+            </Text>
           </View>
         </View>
       </View>
@@ -105,7 +96,37 @@ export default function TourStats(props: TourStatsProps) {
   );
 }
 
-const makeStyles = (theme: ThemeType): any => {
+// observe the stage (tracks updates to the stage)
+const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
+  stage,
+}));
+
+const EnhancedTourStats = enhance(TourStats);
+
+// Bridge component that determines which TourStats component to render based on the active stage.
+const Bridge = ({ stages }: { stages: Stage[] }) => {
+  tourStages = stages;
+  for (const stage of stages) {
+    if (stage.isActive) {
+      return <EnhancedTourStats stage={stage} />;
+    }
+  }
+  return <TourStats />;
+};
+
+// observe stages of a tour (only tracks create and delete in the stages table)
+const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => {
+  activeTour = tour;
+  return {
+    stages: tour.stages,
+  };
+});
+
+const EnhancedTourStatsV2 = enhanceV2(Bridge);
+
+export default EnhancedTourStatsV2;
+
+const makeStyles = (theme: ThemeType) => {
   return StyleSheet.create({
     container: {
       backgroundColor: theme["color-primary-transparent-500"],

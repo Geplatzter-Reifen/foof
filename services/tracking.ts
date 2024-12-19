@@ -52,6 +52,8 @@ export async function createManualStage(
     stageName,
     startTime.getTime(),
     endTime.getTime(),
+    false,
+    calculateDistance(startingCoordinates, endCoordinates),
   );
 
   await stage.addLocation(
@@ -59,10 +61,6 @@ export async function createManualStage(
     startingCoordinates?.longitude,
   );
   await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
-  await setStageDistance(
-    stage.id,
-    calculateDistance(startingCoordinates, endCoordinates),
-  );
 
   let speed = getStageAvgSpeedInKmh(stage);
 

@@ -35,9 +35,8 @@ import { Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import { calculateBounds, getCurrentLocation } from "@/utils/locationUtils";
-import type { FeatureCollection } from "geojson";
-import { getTourRoute } from "@/services/data/routeService";
+import { getCurrentLocation } from "@/utils/locationUtils";
+import { fitRouteInCam } from "@/utils/camUtils";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -140,31 +139,6 @@ export default function HomeScreen() {
     );
   };
 
-  // Function to display the route on the map by adjusting the camera to fit the route's bounds
-  const fitRouteInCam = () => {
-    getTourRoute(activeTour?.id!).then((route) => {
-      if (!route) {
-        throw new Error("Keine Route importiert!");
-      }
-      setUserCentered(false);
-      const geoJSON: FeatureCollection = JSON.parse(route.geoJson);
-      const bounds = calculateBounds(geoJSON);
-
-      camera.current?.setCamera({
-        bounds: bounds,
-        padding: {
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingTop: 30,
-          paddingBottom: 150,
-        },
-        animationDuration: 2000,
-        heading: 0,
-        animationMode: "flyTo",
-      });
-    });
-  };
-
   const CenterButton = (props?: Partial<ImageProps>) => (
     <TouchableOpacity
       style={styles.centerButton}
@@ -184,7 +158,7 @@ export default function HomeScreen() {
       onPress={async () => {
         setUserCentered(false);
         await timeout(100);
-        fitRouteInCam();
+        fitRouteInCam(activeTour, camera);
       }}
     >
       <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />

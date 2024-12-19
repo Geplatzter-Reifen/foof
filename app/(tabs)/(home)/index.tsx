@@ -233,18 +233,29 @@ export default function HomeScreen() {
     </TouchableOpacity>
   );
 
-  const RouteButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.routeButton}
-      onPress={async () => {
-        setUserCentered(false);
-        await timeout(100);
-        showRoute();
-      }}
-    >
-      <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />
-    </TouchableOpacity>
-  );
+  const RouteButton = ({ routeCount }: { routeCount: number }) => {
+    if (routeCount === 0) {
+      return null;
+    }
+    return (
+      <TouchableOpacity
+        style={styles.routeButton}
+        onPress={async () => {
+          setUserCentered(false);
+          await timeout(100);
+          showRoute();
+        }}
+      >
+        <Icon name="route" style={{ height: 22 }} />
+      </TouchableOpacity>
+    );
+  };
+
+  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routeCount: tour.routes.observeCount(),
+  }));
+
+  const EnhancedRouteButton = enhance(RouteButton);
 
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
@@ -289,11 +300,14 @@ export default function HomeScreen() {
   };
 
   // observe the route (tracks updates to the route)
-  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
-    route,
-  }));
+  const enhanceV1 = withObservables(
+    ["route"],
+    ({ route }: { route: Route }) => ({
+      route,
+    }),
+  );
 
-  const EnhancedShapeSource = enhance(ShapeSource);
+  const EnhancedShapeSource = enhanceV1(ShapeSource);
 
   // observe routes of a tour (only tracks create and delete in the routes table)
   const Bridge = ({ routes }: { routes: Route[] }) => {
@@ -356,7 +370,7 @@ export default function HomeScreen() {
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        <RouteButton />
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
         {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

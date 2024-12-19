@@ -11,6 +11,7 @@ import {
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
+import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
 
 import {
   LOCATION_TASK_NAME,
@@ -32,13 +33,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
-import { withObservables } from "@nozbe/watermelondb/react";
-import { Route, Tour } from "@/database/model/model";
+import { Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import { calculateBounds } from "@/utils/locationUtil";
 import type { FeatureCollection } from "geojson";
+import { getTourRoute } from "@/services/data/routeService";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -57,8 +58,6 @@ export default function HomeScreen() {
   const [userCentered, setUserCentered] = useState(true);
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
-
-  let geoJSON: FeatureCollection | undefined = undefined;
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
@@ -174,23 +173,26 @@ export default function HomeScreen() {
 
   // Function to display the route on the map by adjusting the camera to fit the route's bounds
   const fitRouteInCam = () => {
-    if (!geoJSON) {
-      throw new Error("Keine Route importiert!");
-    }
-    setUserCentered(false);
-    const bounds = calculateBounds(geoJSON);
+    getTourRoute(activeTour?.id!).then((route) => {
+      if (!route) {
+        throw new Error("Keine Route importiert!");
+      }
+      setUserCentered(false);
+      const geoJSON: FeatureCollection = JSON.parse(route.geoJson);
+      const bounds = calculateBounds(geoJSON);
 
-    camera.current?.setCamera({
-      bounds: bounds,
-      padding: {
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 30,
-        paddingBottom: 150,
-      },
-      animationDuration: 2000,
-      heading: 0,
-      animationMode: "flyTo",
+      camera.current?.setCamera({
+        bounds: bounds,
+        padding: {
+          paddingLeft: 30,
+          paddingRight: 30,
+          paddingTop: 30,
+          paddingBottom: 150,
+        },
+        animationDuration: 2000,
+        heading: 0,
+        animationMode: "flyTo",
+      });
     });
   };
 
@@ -235,51 +237,6 @@ export default function HomeScreen() {
         );
     }
   };
-
-  const RenderRoute = ({ route }: { route: Route }) => {
-    geoJSON = JSON.parse(route.geoJson);
-    return (
-      <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
-        <MapboxGL.LineLayer
-          id="routeLayer"
-          belowLayerID="road-label"
-          style={{
-            lineColor: "#b8b8b8",
-            lineWidth: 5,
-            lineJoin: "round",
-            lineCap: "round",
-          }}
-        />
-        <MapboxGL.CircleLayer
-          id="pointLayer"
-          filter={["==", "$type", "Point"]}
-          style={{
-            circleColor: "black",
-            circleRadius: 5,
-          }}
-        />
-      </MapboxGL.ShapeSource>
-    );
-  };
-
-  // observe the route (tracks updates to the route)
-  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
-    route,
-  }));
-
-  const EnhancedRenderRoute = enhance(RenderRoute);
-
-  const Bridge = ({ routes }: { routes: Route[] }) => {
-    if (routes.length === 0) return null;
-    return <EnhancedRenderRoute route={routes[0]} />;
-  };
-
-  // observe routes of a tour (only tracks create and delete in the routes table)
-  const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
-    routes: tour.routes,
-  }));
-
-  const EnhancedRenderRouteV2 = enhanceV2(Bridge);
 
   if (loading) {
     return (

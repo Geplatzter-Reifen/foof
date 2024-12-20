@@ -30,6 +30,7 @@ class Tour extends Model {
     title: string,
     startedAt?: number,
     finishedAt?: number,
+    distance?: number,
     active: boolean = false,
   ) {
     return this.collections.get<Stage>("stages").create((stage) => {
@@ -37,6 +38,9 @@ class Tour extends Model {
       stage.startedAt = startedAt ?? Date.now();
       if (finishedAt) {
         stage.finishedAt = finishedAt;
+      }
+      if (distance) {
+        stage.distance = distance;
       }
       stage.isActive = active;
       stage.tour.set(this);

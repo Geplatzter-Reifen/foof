@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { formatDate, DateFormat } from "@/utils/dateUtil";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
@@ -9,27 +9,17 @@ import {
   getTourDistanceString,
   getTourAverageSpeedString,
 } from "@/services/statisticsService";
+import { withObservables } from "@nozbe/watermelondb/react";
 import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
 
-type TourStatsProps = {
-  tour: Tour;
-};
+let activeTour: Tour | undefined = undefined;
+let tourStages: Stage[] = [];
 
-export default function TourStats(props: TourStatsProps) {
+function TourStats() {
   const theme = useTheme();
   const styles = makeStyles(theme);
-  const [stages, setStages] = useState<Stage[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const getStages = await props.tour.stages.fetch();
-      if (getStages) {
-        setStages(getStages);
-      }
-    })();
-  }, [props.tour]);
-
-  const progress = getTourDistance(stages) / 1001;
+  const progress = getTourDistance(tourStages) / 1001;
 
   return (
     <View style={styles.container}>
@@ -39,7 +29,7 @@ export default function TourStats(props: TourStatsProps) {
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
             <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistanceString(stages)}</Text>
+            <Text>{getTourDistanceString(tourStages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="arrow-up-right-dots" style={styles.icon_style} />
@@ -47,7 +37,7 @@ export default function TourStats(props: TourStatsProps) {
           </View>
           <View style={styles.stat_row}>
             <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeedString(stages)}</Text>
+            <Text>{getTourAverageSpeedString(tourStages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="bolt" style={styles.icon_style} />
@@ -58,20 +48,20 @@ export default function TourStats(props: TourStatsProps) {
           <View style={styles.stat_row}>
             <Icon name="calendar-plus" style={styles.icon_style} />
             <Text>
-              {props.tour.startedAt
-                ? formatDate(props.tour.startedAt, DateFormat.DATE)
+              {activeTour!.startedAt
+                ? formatDate(activeTour!.startedAt, DateFormat.DATE)
                 : "--"}
             </Text>
           </View>
-          {props.tour.finishedAt && (
+          {activeTour!.finishedAt && (
             <View style={styles.stat_row}>
               <Icon name="calendar-check" style={styles.icon_style} />
-              <Text>{formatDate(props.tour.finishedAt, DateFormat.DATE)}</Text>
+              <Text>{formatDate(activeTour!.finishedAt, DateFormat.DATE)}</Text>
             </View>
           )}
           <View style={styles.stat_row}>
             <Icon name="clock" style={styles.icon_style} />
-            <Text>{getTourDurationString(stages)}</Text>
+            <Text>{getTourDurationString(tourStages)}</Text>
           </View>
         </View>
       </View>
@@ -79,7 +69,37 @@ export default function TourStats(props: TourStatsProps) {
   );
 }
 
-const makeStyles = (theme: ThemeType): any => {
+// observe the stage (tracks updates to the stage)
+const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
+  stage,
+}));
+
+const EnhancedTourStats = enhance(TourStats);
+
+// Bridge component that determines which TourStats component to render based on the active stage.
+const Bridge = ({ stages }: { stages: Stage[] }) => {
+  tourStages = stages;
+  for (const stage of stages) {
+    if (stage.isActive) {
+      return <EnhancedTourStats stage={stage} />;
+    }
+  }
+  return <TourStats />;
+};
+
+// observe stages of a tour (only tracks create and delete in the stages table)
+const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => {
+  activeTour = tour;
+  return {
+    stages: tour.stages,
+  };
+});
+
+const EnhancedTourStatsV2 = enhanceV2(Bridge);
+
+export default EnhancedTourStatsV2;
+
+const makeStyles = (theme: ThemeType) => {
   return StyleSheet.create({
     container: {
       backgroundColor: theme["color-primary-transparent-500"],

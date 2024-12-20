@@ -2,15 +2,12 @@ import Share from "react-native-share";
 import { getActiveTour } from "./data/tourService";
 import { Stage, Tour } from "@/database/model/model";
 import {
-  getTourAverageSpeed,
-  getTourDistance,
-  getTourDuration,
+  getStageDurationString,
+  getTourAverageSpeedString,
+  getTourDistanceString,
+  getTourDurationString,
 } from "@/services/statisticsService";
-import {
-  formatDate,
-  DateFormat,
-  getTotalMillisecondsString,
-} from "@/utils/dateUtil";
+import { formatDate, DateFormat } from "@/utils/dateUtil";
 const shareStageMaker = (
   title: string,
   distance: string,
@@ -55,11 +52,7 @@ export const shareStage = async (stage: Stage) => {
   const stageTitle = stage.title;
   const stageDistance = stage.distance.toFixed(2);
   const stageAverageSpeed = stage.avgSpeed.toFixed(2);
-  const stageDuration = getTotalMillisecondsString(
-    stage.finishedAt
-      ? stage.finishedAt - stage.startedAt
-      : Date.now() - stage.startedAt,
-  );
+  const stageDuration = getStageDurationString(stage);
 
   const stageStartedAtDate = formatDate(stage.startedAt, DateFormat.DATE);
   const stageStartedAtTime = formatDate(stage.startedAt, DateFormat.TIME);
@@ -93,9 +86,9 @@ export const shareTour = async (uri?: string) => {
   if (!tour) throw new Error("No active Tour");
   const stages: Stage[] = await tour.stages.fetch();
   const tourTitle = tour.title;
-  const tourDistance = getTourDistance(stages).toFixed(2);
-  const tourAverageSpeed = getTourAverageSpeed(stages).toFixed(2);
-  const tourDuration = getTotalMillisecondsString(getTourDuration(stages));
+  const tourDistance = getTourDistanceString(stages, 2);
+  const tourAverageSpeed = getTourAverageSpeedString(stages, 2);
+  const tourDuration = getTourDurationString(stages);
 
   if (!tour.startedAt) throw new Error("Tour has no start date");
   const tourStartedAtDate = formatDate(tour.startedAt, DateFormat.DATE);

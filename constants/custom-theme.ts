@@ -81,7 +81,7 @@ export const foofLightTheme = {
 
   // Custom text colors
   "text-basic-color": "#000000",
-  "text-hint-color": "$color-basic-600",
+  "text-hint-color": "$color-basic-500",
 };
 
 export const foofDarkTheme = {
@@ -114,5 +114,5 @@ export const foofDarkTheme = {
 
   // Custom text colors
   "text-basic-color": "#FFFFFF",
-  "text-hint-color": "$color-basic-500",
+  "text-hint-color": "$color-basic-900",
 };

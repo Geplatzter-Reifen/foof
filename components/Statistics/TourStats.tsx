@@ -1,24 +1,16 @@
 import React from "react";
-import { DimensionValue, StyleSheet, View } from "react-native";
-import {
-  formatDate,
-  DateFormat,
-  getTotalMillisecondsString,
-} from "@/utils/dateUtil";
-import {
-  Icon,
-  ProgressBar,
-  Text,
-  ThemeType,
-  useTheme,
-} from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
+import { formatDate, DateFormat } from "@/utils/dateUtil";
+import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/database/model/model";
 import {
-  getTourDuration,
   getTourDistance,
-  getTourAverageSpeed,
+  getTourDurationString,
+  getTourDistanceString,
+  getTourAverageSpeedString,
 } from "@/services/statisticsService";
 import { withObservables } from "@nozbe/watermelondb/react";
+import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
 
 let activeTour: Tour | undefined = undefined;
 let tourStages: Stage[] = [];
@@ -31,30 +23,14 @@ function TourStats() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressContainer}>
-        <ProgressBar progress={progress} style={styles.progressBar} />
-        <Text
-          style={{
-            position: "absolute",
-            top: "28%",
-            left:
-              progress < 0.18
-                ? (`${((progress + 0.04) * 100).toFixed(2)}%` as DimensionValue)
-                : progress < 1
-                  ? (`${((progress - 0.125) * 100).toFixed(2)}%` as DimensionValue)
-                  : ("44%" as DimensionValue),
-            color: progress >= 0.15 ? "#fff" : theme["text-basic-color"],
-            fontSize: 19,
-          }}
-        >
-          {(progress * 100).toFixed(1) + "%"}
-        </Text>
-      </View>
+      {/* Fortschrittsbalken über die Tourdistanz*/}
+      <TourProgressBar progress={progress} style={styles.progressContainer} />
+
       <View style={styles.statsContainer}>
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
             <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistance(tourStages).toFixed(1) + " km"}</Text>
+            <Text>{getTourDistanceString(tourStages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="arrow-up-right-dots" style={styles.icon_style} />
@@ -62,7 +38,7 @@ function TourStats() {
           </View>
           <View style={styles.stat_row}>
             <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeed(tourStages).toFixed(1) + " km/h"}</Text>
+            <Text>{getTourAverageSpeedString(tourStages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="bolt" style={styles.icon_style} />
@@ -86,9 +62,7 @@ function TourStats() {
           )}
           <View style={styles.stat_row}>
             <Icon name="clock" style={styles.icon_style} />
-            <Text>
-              {getTotalMillisecondsString(getTourDuration(tourStages))}
-            </Text>
+            <Text>{getTourDurationString(tourStages)}</Text>
           </View>
         </View>
       </View>

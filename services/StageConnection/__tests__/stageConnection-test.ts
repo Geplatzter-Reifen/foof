@@ -1,8 +1,8 @@
-import { createLocationWithRecordedAt } from "../data/locationService";
-import { createStage } from "../data/stageService";
-import { createTour } from "../data/tourService";
-import { isFinished } from "../StageConnection/stageConnection";
-import { flensburg, hannover, oberstdorf } from "../StageConnection/data";
+import { createLocationWithRecordedAt } from "../../data/locationService";
+import { createStage } from "../../data/stageService";
+import { createTour } from "../../data/tourService";
+import { isFinished } from "../stageConnection";
+import { flensburg, hannover, oberstdorf } from "../data";
 
 describe("stageConnection", () => {
   describe("isFinished", () => {

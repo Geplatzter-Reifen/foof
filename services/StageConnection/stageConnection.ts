@@ -25,7 +25,6 @@ export async function isFinished(tour: Tour): Promise<boolean> {
         const firstLocationB = getFirstLocation(locationsB);
         const lastLocationB = getLastLocation(locationsB);
         if (isLocationInRadius(firstLocationA, firstLocationB, 1)) {
-          // in linked list einfügen mit prev = null und next=etappen_list_sorted[j]
           connectedLocationList.push(
             lastLocationA,
             firstLocationA,
@@ -91,6 +90,7 @@ export async function isFinished(tour: Tour): Promise<boolean> {
   if (!head || !tail) {
     return false;
   }
+  console.log(connectedLocationList);
   return (
     (isLocationInRadius(
       flensburg,

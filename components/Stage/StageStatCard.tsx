@@ -27,13 +27,6 @@ const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
     style={[props?.style, { height: 18, width: "auto" }]}
   />
 );
-const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon
-    {...props}
-    name="trash"
-    style={[props?.style, { height: 18, width: "auto" }]}
-  />
-);
 
 function StageCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
@@ -55,15 +48,9 @@ function StageCard({ stage }: { stage: Stage }) {
     return (
       <View style={styles.header}>
         <Text category="h6" style={styles.title}>
-          {stage.title}
+          Statistik
         </Text>
         <View style={styles.buttonGroup}>
-          <Button
-            status="basic"
-            appearance="ghost"
-            accessoryLeft={TrashIcon}
-            onPress={() => deleteStage(stage.id)}
-          ></Button>
           <Button
             status="basic"
             appearance="ghost"
@@ -76,59 +63,14 @@ function StageCard({ stage }: { stage: Stage }) {
   };
 
   return (
-    <Layout level="2">
-      <Card
-        style={{
-          ...customStyles.basicCard,
-          ...customStyles.basicShadow,
-          ...styles.card,
-        }}
-        header={<Header />}
-        status={stage.isActive ? "primary" : undefined}
-        disabled={stage.isActive}
-        onPress={() =>
-          router.push({
-            pathname: "./stage",
-            params: {
-              stageId: stage.id,
-            },
-          })
-        }
-      >
-        <View style={styles.stat}>
-          <FontAwesomeIcon
-            icon="arrows-left-right"
-            size={19}
-            color={foofDarkTheme["color-primary-500"]}
-            style={styles.icon}
-          />
-          <Text style={styles.statLabel}>{distance} km</Text>
-        </View>
-        {duration && (
-          <View style={styles.stat}>
-            <FontAwesomeIcon
-              icon="clock"
-              size={19}
-              color={foofDarkTheme["color-primary-500"]}
-              style={styles.icon}
-            />
-            <Text style={styles.statLabel}>{duration}</Text>
-          </View>
-        )}
-        <View style={styles.stat}>
-          <FontAwesomeIcon
-            icon="gauge-high"
-            size={19}
-            color={foofDarkTheme["color-primary-500"]}
-            style={styles.icon}
-          />
-          <Text style={styles.statLabel}>{avgSpeed} km/h</Text>
-        </View>
-        <Text appearance="hint" style={styles.date}>
-          {date}
-        </Text>
-      </Card>
-    </Layout>
+    <Card
+      style={{
+        ...customStyles.basicCard,
+        ...customStyles.basicShadow,
+        ...styles.card,
+      }}
+      header={<Text>Statistik</Text>}
+    ></Card>
   );
 }
 
@@ -139,7 +81,6 @@ export default enhance(StageCard);
 const styles = StyleSheet.create({
   card: {
     marginBottom: 15,
-    marginHorizontal: 10,
   },
   header: {
     flex: 1,

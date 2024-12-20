@@ -1,4 +1,3 @@
-import { MockTour } from "@/__mocks__/tour";
 import TourStats from "../TourStats";
 import { render, waitFor } from "@/test-utils/test-utils";
 import { createTour } from "@/services/data/tourService";
@@ -28,8 +27,6 @@ describe("TourStats", () => {
       true,
       90,
     );
-    // Hier wird eine Warning ausgegeben, dass soll aber anscheinend so
-    // @ts-ignore
     const view = await waitFor(() => render(<TourStats tour={tour} />));
     expect(view).toMatchSnapshot();
   });

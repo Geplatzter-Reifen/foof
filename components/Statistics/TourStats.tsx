@@ -33,10 +33,8 @@ export default function TourStats(props: TourStatsProps) {
 
   return (
     <View style={styles.container}>
-      {
-        // Fortschrittsbalken über die Tourdistanz
-        <TourProgressBar progress={progress} style={styles.progressContainer} />
-      }
+      {/* Fortschrittsbalken über die Tourdistanz*/}
+      <TourProgressBar progress={progress} style={styles.progressContainer} />
       <View style={styles.statsContainer}>
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>

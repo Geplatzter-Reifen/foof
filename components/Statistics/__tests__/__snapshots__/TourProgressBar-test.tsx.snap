@@ -50,7 +50,7 @@ exports[`TourProgressBar renders correctly for < 18% Percent 1`] = `
           "fontWeight": "400",
         },
         {
-          "color": "#fff",
+          "color": "#000000",
           "fontSize": 19,
           "left": "21.50%",
           "position": "absolute",

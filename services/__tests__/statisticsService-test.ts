@@ -20,7 +20,7 @@ describe("statisticsService", () => {
     startedAt: new Date("2024-01-01 15:00").getTime(),
   });
   const stages = [stageOne, stageTwo];
-  describe("Distanz", () => {
+  describe("Distance", () => {
     describe("getTourDistance", () => {
       it("should return 0 for an empty tour", () => {
         expect(StatisticsService.getTourDistance([])).toBe(0);
@@ -63,7 +63,7 @@ describe("statisticsService", () => {
     });
   });
 
-  describe("Dauer", () => {
+  describe("Duration", () => {
     describe("getTourDuration", () => {
       it("should return 0 for an empty tour", () => {
         expect(StatisticsService.getTourDuration([])).toBe(0);
@@ -125,7 +125,7 @@ describe("statisticsService", () => {
     });
   });
 
-  describe("Durchschnittsgeschwindigkeit", () => {
+  describe("Average Speed", () => {
     describe("getTourAverageSpeed", () => {
       it("should return 0 for an empty tour", () => {
         expect(StatisticsService.getTourDistance([])).toBe(0);

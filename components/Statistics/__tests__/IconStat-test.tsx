@@ -16,55 +16,55 @@ describe("TourStats", () => {
     expect(view).toMatchSnapshot();
   });
   describe("should render the correct icon color depending on the given status", () => {
-    it("primary", () => {
+    test("primary", () => {
       const { getByTestId } = render(<IconStat icon="home" status="primary" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-primary-500"]);
     });
-    it("basic", () => {
+    test("basic", () => {
       const { getByTestId } = render(<IconStat icon="home" status="basic" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-basic-500"]);
     });
-    it("success", () => {
+    test("success", () => {
       const { getByTestId } = render(<IconStat icon="home" status="success" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-success-500"]);
     });
-    it("info", () => {
+    test("info", () => {
       const { getByTestId } = render(<IconStat icon="home" status="info" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-info-500"]);
     });
-    it("warning", () => {
+    test("warning", () => {
       const { getByTestId } = render(<IconStat icon="home" status="warning" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-warning-500"]);
     });
-    it("danger", () => {
+    test("danger", () => {
       const { getByTestId } = render(<IconStat icon="home" status="danger" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-danger-500"]);
     });
-    it("text", () => {
+    test("text", () => {
       const { getByTestId } = render(<IconStat icon="home" status="text" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofLightTheme["text-basic-color"]); // wäre im Darkmode das andere Theme
     });
-    it("incorrect syntax should render primary color", () => {
+    test("incorrect syntax should render primary color", () => {
       const { getByTestId } = render(<IconStat icon="home" status="xyz" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
       expect(icon.props.style.color).toBe(foofTheme["color-primary-500"]);
     });
-    it("no given status should render primary color", () => {
+    test("no given status should render primary color", () => {
       const { getByTestId } = render(<IconStat icon="home" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];

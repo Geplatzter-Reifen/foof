@@ -17,7 +17,7 @@ describe("StageCard", () => {
       .mockImplementation(() => new Date("2024-01-01 21:00").getTime());
   });
 
-  test("renders basic stage correctly", async () => {
+  it("renders basic stage correctly", async () => {
     const tour = await createTour("Test Tour");
     const stage = await createStage(
       tour.id,

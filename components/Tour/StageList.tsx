@@ -4,11 +4,11 @@ import { StageCard } from "@/components/Tour/StageCard";
 import { Text } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 
-const StageListComp = ({ stages }: { stages: Stage[] }) => {
+const StageListComponent = ({ stages }: { stages: Stage[] }) => {
   return (
     <View style={styles.list}>
       {
-        // Falls keine Etappe existiert, returne einen String
+        // Falls keine Etappe existiert, returne eine Text-Komponente
         stages.length === 0 ? (
           <Text style={styles.noStageText}>Starte eine Etappe!</Text>
         ) : (
@@ -25,8 +25,8 @@ const StageListComp = ({ stages }: { stages: Stage[] }) => {
 
 // enhancen, um auf DB-Änderungen zu reagieren
 const enhance = withObservables(["stages"], ({ stages }) => ({ stages }));
-const StageList = enhance(StageListComp);
-export { StageList, StageListComp as StageListForTesting };
+const StageList = enhance(StageListComponent);
+export { StageList, StageListComponent as StageListForTesting };
 
 const styles = StyleSheet.create({
   noStageText: {

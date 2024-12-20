@@ -136,40 +136,37 @@ export default function Touruebersicht() {
         ></TopNavigation>
         <Divider />
       </Layout>
-      {
-        // Tourstatistiken in orangenem Kasten
-        <TourStats tour={activeTour} />
-      }
-      {
-        // Liste mit Etappen innerhalb einer Scrollview mit Fade
-        <RNFadedScrollView
-          allowStartFade={true}
-          horizontal={false}
-          fadeSize={15}
-          fadeColors={[
-            hexToRgba(theme["background-basic-color-2"], 0.3),
-            hexToRgba(theme["background-basic-color-2"], 0.9),
-          ]}
-        >
-          <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
-        </RNFadedScrollView>
-      }
-      {
-        // Button zum erstellen einer manuellen Etappe
-        <Button
-          style={styles.button}
-          accessoryLeft={PlusIcon}
-          onPress={() =>
-            router.push({
-              pathname: "./createManualStage",
-              params: {
-                tourId: activeTour?.id,
-                tour: activeTour?.title,
-              },
-            })
-          }
-        />
-      }
+
+      {/* Tourstatistiken in orangem Kasten */}
+      <TourStats tour={activeTour} />
+
+      {/* Liste mit Etappen innerhalb einer Scrollview mit Fade */}
+      <RNFadedScrollView
+        allowStartFade={true}
+        horizontal={false}
+        fadeSize={15}
+        fadeColors={[
+          hexToRgba(theme["background-basic-color-2"], 0.3),
+          hexToRgba(theme["background-basic-color-2"], 0.9),
+        ]}
+      >
+        <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
+      </RNFadedScrollView>
+
+      {/* Button zum erstellen einer manuellen Etappe */}
+      <Button
+        style={styles.button}
+        accessoryLeft={PlusIcon}
+        onPress={() =>
+          router.push({
+            pathname: "./createManualStage",
+            params: {
+              tourId: activeTour?.id,
+              tour: activeTour?.title,
+            },
+          })
+        }
+      />
     </Layout>
   );
 }

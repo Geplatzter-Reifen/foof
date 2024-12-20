@@ -16,7 +16,7 @@ import customStyles from "../../constants/styles";
 import { withObservables } from "@nozbe/watermelondb/react";
 import IconStat from "@/components/Statistics/IconStat";
 
-function StageCardComp({ stage }: { stage: Stage }) {
+function StageCardComponent({ stage }: { stage: Stage }) {
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
   const dateString: string = formatDate(stage.startedAt, DateFormat.DATE_TIME);
   const durationString: string = getStageDurationString(stage);
@@ -109,9 +109,9 @@ function StageCardComp({ stage }: { stage: Stage }) {
 
 // Observe die reingegebene Prop "stage"und reagiere auf änderungen
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
-const StageCard = enhance(StageCardComp);
+const StageCard = enhance(StageCardComponent);
 
-export { StageCard, StageCardComp as StageCardForTest };
+export { StageCard, StageCardComponent as StageCardForTest };
 
 const styles = StyleSheet.create({
   card: {

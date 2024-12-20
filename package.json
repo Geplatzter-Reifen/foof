@@ -13,7 +13,8 @@
     "updateSnapshot": "jest -u",
     "lint": "expo lint",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js .",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "type-docs": "typedoc"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
@@ -81,6 +82,8 @@
     "jest-expo": "~51.0.3",
     "patch-package": "^8.0.0",
     "prettier": "^3.3.3",
+    "typedoc": "^0.27.5",
+    "typedoc-plugin-pdf-export": "^0.0.3",
     "typescript": "~5.3.3"
   },
   "private": true

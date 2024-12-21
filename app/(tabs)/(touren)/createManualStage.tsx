@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Text, Layout, Button } from "@ui-kitten/components";
+import { Text, Layout, Button, TabBar, Tab } from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
 import { StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { Input } from "@ui-kitten/components";
+import { Input, useTheme } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
+import MapboxGL from "@rnmapbox/maps";
+import type { Feature } from "geojson";
+import Marker from "@/components/Map/Marker";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -27,6 +30,7 @@ const CreateManualStage: React.FC = () => {
   const [endLatitude, setEndLatitude] = useState("");
   const [endLongitude, setEndLongitude] = useState("");
   const [endDate, setEndDate] = useState(new Date());
+  const theme = useTheme();
 
   ////////////address input
 
@@ -127,10 +131,106 @@ const CreateManualStage: React.FC = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const MapWithMarker = ({ markerIndex }: { markerIndex: number }) => {
+    const [startMarkerCoordinate, setStartMarkerCoordinate] = useState<
+      [number, number] | null
+    >(null);
+    const [endMarkerCoordinate, setEndMarkerCoordinate] = useState<
+      [number, number] | null
+    >(null);
+
+    const handleMapPress = (feature: Feature) => {
+      const geometry = feature.geometry;
+      if (geometry.type === "Point") {
+        if (markerIndex === 0) {
+          setStartMarkerCoordinate(geometry.coordinates as [number, number]);
+        } else if (markerIndex === 1) {
+          setEndMarkerCoordinate(geometry.coordinates as [number, number]);
+        }
+      }
+    };
+
+    return (
+      <Layout style={styles.container}>
+        <MapboxGL.MapView style={styles.map} onPress={handleMapPress}>
+          <MapboxGL.Camera
+            centerCoordinate={[10.4515, 51.1657]} // Zentrum von Deutschland
+            zoomLevel={5} // Zoom-Level für Deutschland
+            animationDuration={0}
+          />
+          {startMarkerCoordinate && (
+            <Marker
+              id="startMarker"
+              coordinate={startMarkerCoordinate}
+              markerIndex={0}
+              currentIndex={markerIndex}
+              setCoordinate={setStartMarkerCoordinate}
+              selectedColor={theme["color-primary-default"]}
+            />
+          )}
+          {endMarkerCoordinate && (
+            <Marker
+              id="endMarker"
+              coordinate={endMarkerCoordinate}
+              markerIndex={1}
+              currentIndex={markerIndex}
+              setCoordinate={setEndMarkerCoordinate}
+              selectedColor={theme["color-primary-default"]}
+            />
+          )}
+        </MapboxGL.MapView>
+      </Layout>
+    );
+  };
+
+  const TopTapBar = (): React.ReactElement => {
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    return (
+      <>
+        <TabBar
+          style={{ height: 50 }}
+          selectedIndex={selectedIndex}
+          onSelect={(index) => setSelectedIndex(index)}
+        >
+          <Tab title="Start" />
+          <Tab title="Ende" />
+        </TabBar>
+        <MapWithMarker markerIndex={selectedIndex} />
+      </>
+    );
+  };
+
+  const renderContent = () => {
+    switch (selectedIndex) {
+      case 0:
+        return (
+          <>
+            <CardComponent title="Start" form={startCoordInput} />
+            <CardComponent title="Ende" form={endCoordInput} />
+          </>
+        );
+      case 1:
+        return (
+          <>
+            <TopTapBar />
+          </>
+        );
+      case 2:
+        return <Text>City Input</Text>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Layout style={styles.layout} level="2">
       <ButtonSwitch
-        onSelect={(index) => setSelectedIndex(index)}
+        onSelect={(index) => {
+          if (index < 2) {
+            setSelectedIndex(index);
+          }
+        }}
         selectedIndex={selectedIndex}
       >
         <Button style={styles.button}>
@@ -145,9 +245,7 @@ const CreateManualStage: React.FC = () => {
       </ButtonSwitch>
 
       <Layout style={styles.cardsContainer} level="2">
-        <CardComponent title="Start" form={startCoordInput} />
-
-        <CardComponent title="Ende" form={endCoordInput} />
+        {renderContent()}
       </Layout>
       <ButtonGroup>
         <Button
@@ -189,5 +287,34 @@ const styles = StyleSheet.create({
   headerInput: {
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  container: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  markerContainer: {
+    alignItems: "center",
+  },
+  marker: {
+    width: 20,
+    height: 20,
+    backgroundColor: "red",
+    borderRadius: 10,
+  },
+  markerText: {
+    marginTop: 5,
+    color: "black",
+    fontWeight: "bold",
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    backgroundColor: "rgba(0, 0, 255, 0.5)",
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "blue",
   },
 });

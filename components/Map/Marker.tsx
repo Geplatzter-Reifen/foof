@@ -1,15 +1,15 @@
 import React from "react";
 import MapboxGL from "@rnmapbox/maps";
 import Icon from "@expo/vector-icons/FontAwesome6";
-import type { Feature } from "geojson";
+import type { Feature, Position } from "geojson";
 
 type MarkerProps = {
   id: string;
-  coordinate: [number, number];
+  coordinate: Position;
   markerIndex: number;
   currentIndex: number;
-  setCoordinate: (coordinates: [number, number]) => void;
   selectedColor: string;
+  onCoordinateChange: (index: number, coordinates: Position) => void;
 };
 
 function Marker({
@@ -17,8 +17,8 @@ function Marker({
   coordinate,
   markerIndex,
   currentIndex,
-  setCoordinate,
   selectedColor,
+  onCoordinateChange,
 }: MarkerProps) {
   return (
     <MapboxGL.PointAnnotation
@@ -27,7 +27,9 @@ function Marker({
       key={`${id}-${currentIndex}`}
       draggable={markerIndex === currentIndex}
       onDragEnd={(feature: Feature) => {
-        setCoordinate(feature.geometry.coordinates as [number, number]);
+        if (feature.geometry.type === "Point") {
+          onCoordinateChange(markerIndex, feature.geometry.coordinates);
+        }
       }}
     >
       {markerIndex === currentIndex ? (

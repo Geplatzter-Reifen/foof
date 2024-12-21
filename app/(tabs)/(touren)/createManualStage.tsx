@@ -10,9 +10,8 @@ import { Input, useTheme } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
-import MapboxGL from "@rnmapbox/maps";
-import type { Feature } from "geojson";
-import Marker from "@/components/Map/Marker";
+import type { Position } from "geojson";
+import MapWithMarkers from "@/components/Map/MapWithMarkers";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -131,56 +130,15 @@ const CreateManualStage: React.FC = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const MapWithMarker = ({ markerIndex }: { markerIndex: number }) => {
-    const [startMarkerCoordinate, setStartMarkerCoordinate] = useState<
-      [number, number] | null
-    >(null);
-    const [endMarkerCoordinate, setEndMarkerCoordinate] = useState<
-      [number, number] | null
-    >(null);
-
-    const handleMapPress = (feature: Feature) => {
-      const geometry = feature.geometry;
-      if (geometry.type === "Point") {
-        if (markerIndex === 0) {
-          setStartMarkerCoordinate(geometry.coordinates as [number, number]);
-        } else if (markerIndex === 1) {
-          setEndMarkerCoordinate(geometry.coordinates as [number, number]);
-        }
-      }
-    };
-
-    return (
-      <Layout style={styles.container}>
-        <MapboxGL.MapView style={styles.map} onPress={handleMapPress}>
-          <MapboxGL.Camera
-            centerCoordinate={[10.4515, 51.1657]} // Zentrum von Deutschland
-            zoomLevel={5} // Zoom-Level für Deutschland
-            animationDuration={0}
-          />
-          {startMarkerCoordinate && (
-            <Marker
-              id="startMarker"
-              coordinate={startMarkerCoordinate}
-              markerIndex={0}
-              currentIndex={markerIndex}
-              setCoordinate={setStartMarkerCoordinate}
-              selectedColor={theme["color-primary-default"]}
-            />
-          )}
-          {endMarkerCoordinate && (
-            <Marker
-              id="endMarker"
-              coordinate={endMarkerCoordinate}
-              markerIndex={1}
-              currentIndex={markerIndex}
-              setCoordinate={setEndMarkerCoordinate}
-              selectedColor={theme["color-primary-default"]}
-            />
-          )}
-        </MapboxGL.MapView>
-      </Layout>
-    );
+  const setCoordinate = (coordinate: Position) => {
+    if (selectedIndex === 0) {
+      setStartLatitude(coordinate[1].toString());
+      setStartLongitude(coordinate[0].toString());
+    } else {
+      setEndLatitude(coordinate[1].toString());
+      setEndLongitude(coordinate[0].toString());
+    }
+    console.log(coordinate);
   };
 
   const TopTapBar = (): React.ReactElement => {
@@ -196,7 +154,10 @@ const CreateManualStage: React.FC = () => {
           <Tab title="Start" />
           <Tab title="Ende" />
         </TabBar>
-        <MapWithMarker markerIndex={selectedIndex} />
+        <MapWithMarkers
+          markerIndex={selectedIndex}
+          onCoordinateChange={setCoordinate}
+        />
       </>
     );
   };
@@ -287,34 +248,5 @@ const styles = StyleSheet.create({
   headerInput: {
     justifyContent: "space-around",
     alignItems: "center",
-  },
-  container: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  markerContainer: {
-    alignItems: "center",
-  },
-  marker: {
-    width: 20,
-    height: 20,
-    backgroundColor: "red",
-    borderRadius: 10,
-  },
-  markerText: {
-    marginTop: 5,
-    color: "black",
-    fontWeight: "bold",
-  },
-  circle: {
-    width: 30,
-    height: 30,
-    backgroundColor: "rgba(0, 0, 255, 0.5)",
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: "blue",
   },
 });

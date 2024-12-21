@@ -35,7 +35,6 @@ import { Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import { getCurrentLocation } from "@/utils/locationUtils";
 import { fitRouteInCam } from "@/utils/camUtils";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
@@ -48,8 +47,6 @@ enum ButtonStates {
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
-  const [latitude, setLatitude] = useState<number>(0);
-  const [longitude, setLongitude] = useState<number>(0);
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [activeTour, setActiveTour] = useState<Tour>();
   const [userCentered, setUserCentered] = useState(true);
@@ -59,12 +56,13 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const prepare = async () => {
-      const coords = await getCurrentLocation();
-      if (coords) {
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      }
-      await requestPermissionsAsync();
+      await Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: true,
+          allowSound: true,
+        },
+      });
       TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
         if (result) {
           setButtonState(ButtonStates.Cycling);
@@ -79,16 +77,6 @@ export default function HomeScreen() {
     };
     prepare();
   }, [activeTour]);
-
-  const requestPermissionsAsync = async () => {
-    return await Notifications.requestPermissionsAsync({
-      ios: {
-        allowAlert: true,
-        allowBadge: true,
-        allowSound: true,
-      },
-    });
-  };
 
   const StartButton = () => {
     return (
@@ -216,10 +204,6 @@ export default function HomeScreen() {
           {activeStageId && <StageLine stageId={activeStageId} />}
           <MapboxGL.Camera ref={camera} />
           <MapboxGL.Camera
-            defaultSettings={{
-              centerCoordinate: [longitude, latitude],
-              zoomLevel: 14,
-            }}
             followZoomLevel={17}
             animationMode="flyTo"
             followUserMode={UserTrackingMode.Follow}

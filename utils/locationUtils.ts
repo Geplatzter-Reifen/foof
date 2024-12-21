@@ -1,6 +1,4 @@
 import type { FeatureCollection, Position } from "geojson";
-import * as Location from "expo-location";
-import { Alert } from "react-native";
 
 export type MapPoint = {
   latitude: number;
@@ -88,30 +86,4 @@ function updateBounds(
     };
   }
   return bounds;
-}
-
-//get current location
-export async function getCurrentLocation() {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-
-  if (status !== "granted") {
-    Alert.alert("Permission denied", "Allow the app to use location services", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
-    return; // Exit the function if permission is not granted
-  }
-
-  try {
-    const { coords } = await Location.getCurrentPositionAsync();
-    if (coords) {
-      return coords;
-    }
-  } catch (error) {
-    console.log("Error getting location:", error);
-  }
 }

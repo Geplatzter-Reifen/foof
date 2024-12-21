@@ -6,31 +6,37 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 
-interface CoordinateInputProps {
-  latitude: string;
-  setLatitude: (coord: string) => void;
-  longitude: string;
-  setLongitude: (coord: string) => void;
-  date: Date;
-  setDate: (dateInput: Date) => void;
-}
+type CoordinateInputProps = {
+  onLatitudeChange: (latitude: string) => void;
+  onLongitudeChange: (longitude: string) => void;
+  onDateChange: (date: Date) => void;
+};
 
 function CoordinateInput(props: CoordinateInputProps) {
   const theme = useTheme();
-  const { latitude, setLatitude, longitude, setLongitude, date, setDate } =
-    props;
+  const { onLatitudeChange, onLongitudeChange, onDateChange } = props;
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
 
-  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+  const handleDateChange = (
+    event: DateTimePickerEvent,
+    selectedDate?: Date,
+  ) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(false);
+    onDateChange(currentDate);
     setDate(currentDate);
   };
 
-  const onTimeChange = (event: DateTimePickerEvent, selectedTime?: Date) => {
+  const handleTimeChange = (
+    event: DateTimePickerEvent,
+    selectedTime?: Date,
+  ) => {
     const currentTime = selectedTime || date;
     setShowTimePicker(false);
+    onDateChange(currentTime);
     setDate(currentTime);
   };
 
@@ -40,16 +46,14 @@ function CoordinateInput(props: CoordinateInputProps) {
       <Layout style={styles.row}>
         <Input
           style={styles.input}
-          value={latitude}
           label="Latitude"
-          onChangeText={(nextValue) => setLatitude(nextValue.trim())}
+          onChangeText={(nextValue) => onLatitudeChange(nextValue.trim())}
           maxLength={20}
         />
         <Input
           style={styles.input}
-          value={longitude}
           label="Longitude"
-          onChangeText={(nextValue) => setLongitude(nextValue.trim())}
+          onChangeText={(nextValue) => onLongitudeChange(nextValue.trim())}
           maxLength={20}
         />
       </Layout>
@@ -95,7 +99,7 @@ function CoordinateInput(props: CoordinateInputProps) {
             value={date}
             mode="date"
             display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={onDateChange}
+            onChange={handleDateChange}
             textColor={theme["color-primary-500"]} // Primary color for text
           />
         )}
@@ -105,7 +109,7 @@ function CoordinateInput(props: CoordinateInputProps) {
             value={date}
             mode="time"
             display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={onTimeChange}
+            onChange={handleTimeChange}
             textColor={theme["color-primary-500"]} // Primary color for text
           />
         )}

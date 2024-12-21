@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Text, Layout, Button, TabBar, Tab } from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
@@ -22,14 +22,12 @@ const CreateManualStage: React.FC = () => {
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
   const router = useRouter();
   // compass input
-  const [startLatitude, setStartLatitude] = useState("");
-  const [startLongitude, setStartLongitude] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-
-  const [endLatitude, setEndLatitude] = useState("");
-  const [endLongitude, setEndLongitude] = useState("");
-  const [endDate, setEndDate] = useState(new Date());
-  const theme = useTheme();
+  const startLatitude = useRef<string>("");
+  const startLongitude = useRef<string>("");
+  const endLatitude = useRef<string>("");
+  const endLongitude = useRef<string>("");
+  const startDate = useRef(new Date());
+  const endDate = useRef(new Date());
 
   ////////////address input
 
@@ -88,23 +86,17 @@ const CreateManualStage: React.FC = () => {
 
   const startCoordInput = (
     <CoordinateInput
-      latitude={startLatitude}
-      longitude={startLongitude}
-      setLatitude={setStartLatitude}
-      setLongitude={setStartLongitude}
-      date={startDate}
-      setDate={setStartDate}
+      onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
+      onLongitudeChange={(longitude) => (startLongitude.current = longitude)}
+      onDateChange={(date) => (startDate.current = date)}
     />
   );
 
   const endCoordInput = (
     <CoordinateInput
-      latitude={endLatitude}
-      longitude={endLongitude}
-      setLatitude={setEndLatitude}
-      setLongitude={setEndLongitude}
-      date={endDate}
-      setDate={setEndDate}
+      onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
+      onLongitudeChange={(longitude) => (endLongitude.current = longitude)}
+      onDateChange={(date) => (endDate.current = date)}
     />
   );
 
@@ -112,10 +104,10 @@ const CreateManualStage: React.FC = () => {
     try {
       await createManualStageFn(
         stageTitle,
-        startLatitude + ", " + startLongitude,
-        endLatitude + ", " + endLongitude,
-        startDate,
-        endDate,
+        startLatitude.current + ", " + startLongitude.current,
+        endLatitude.current + ", " + endLongitude.current,
+        startDate.current,
+        endDate.current,
         tourId,
       );
       router.back();
@@ -132,13 +124,12 @@ const CreateManualStage: React.FC = () => {
 
   const setCoordinate = (coordinate: Position) => {
     if (selectedIndex === 0) {
-      setStartLatitude(coordinate[1].toString());
-      setStartLongitude(coordinate[0].toString());
+      startLongitude.current = coordinate[0].toString();
+      startLatitude.current = coordinate[1].toString();
     } else {
-      setEndLatitude(coordinate[1].toString());
-      setEndLongitude(coordinate[0].toString());
+      endLongitude.current = coordinate[0].toString();
+      endLatitude.current = coordinate[1].toString();
     }
-    console.log(coordinate);
   };
 
   const TopTapBar = (): React.ReactElement => {

@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ImageProps,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import * as TaskManager from "expo-task-manager";
 
 import {
@@ -174,17 +166,12 @@ export default function HomeScreen() {
     });
   };
 
-  const CenterButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.centerButton}
+  const CenterButton = () => (
+    <SmallIconButton
+      icon="location-crosshairs"
+      style={styles.mapButtonNew}
       onPress={() => setUserCentered(true)}
-    >
-      <Icon
-        {...props}
-        name="location-crosshairs"
-        style={[props?.style, { height: 23 }]}
-      />
-    </TouchableOpacity>
+    />
   );
 
   const RouteButton = ({ routeCount }: { routeCount: number }) => {
@@ -192,16 +179,15 @@ export default function HomeScreen() {
       return null;
     }
     return (
-      <TouchableOpacity
-        style={styles.routeButton}
+      <SmallIconButton
+        icon="route"
+        style={[styles.mapButtonNew, styles.routeButtonNew]}
         onPress={async () => {
           setUserCentered(false);
           await timeout(100);
           showRoute();
         }}
-      >
-        <Icon name="route" style={{ height: 22 }} />
-      </TouchableOpacity>
+      />
     );
   };
 
@@ -321,26 +307,10 @@ export default function HomeScreen() {
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        {activeTour && <EnhancedRouteButton tour={activeTour} />}
-        {!userCentered && <CenterButton />}
         {/* Button zum Route anzeigen */}
-        <SmallIconButton
-          icon="route"
-          style={[styles.mapButtonNew, styles.routeButton]}
-          onPress={async () => {
-            setUserCentered(false);
-            await timeout(100);
-            showRoute();
-          }}
-        />
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
         {/* Button zum Zentrieren der Karte auf den User */}
-        {!userCentered && (
-          <SmallIconButton
-            icon="location-crosshairs"
-            style={styles.mapButtonNew}
-            onPress={() => setUserCentered(true)}
-          />
-        )}
+        {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
@@ -385,6 +355,14 @@ const styles = StyleSheet.create({
     right: 11,
   },
   mapButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
+  },
+  centerButton: {
     backgroundColor: "#fff",
     width: 44,
     height: 44,

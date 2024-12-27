@@ -5,12 +5,14 @@ import { EvaStatus } from "@ui-kitten/components/devsupport";
 
 type IconStatPropType = React.PropsWithChildren<TextProps> & {
   icon: string;
-  iconSize?: number;
+  iconHeight?: number;
+  iconWidth?: number;
   fontSize?: number;
 };
 
 export default function IconStat(props: IconStatPropType) {
-  const iconSize = props.iconSize ?? 22;
+  const iconHeight = props.iconHeight ?? 22;
+  const iconWidth = props.iconWidth ?? "auto";
   const fontSize = props.fontSize ?? 18;
 
   // Iconfarbe wird durch den EvaStatus (oder "text") bestimmt
@@ -39,7 +41,13 @@ export default function IconStat(props: IconStatPropType) {
     <View style={styles.view} testID="container">
       <Icon
         name={props.icon}
-        style={{ height: iconSize, width: "auto", color: iconColorString }}
+        style={{
+          height: iconHeight,
+          width: iconWidth,
+          color: iconColorString,
+          textAlign: "center",
+          textAlignVertical: "center",
+        }}
       />
       <Text style={{ fontSize: fontSize, marginLeft: 8 }}>
         {props.children}
@@ -50,7 +58,6 @@ export default function IconStat(props: IconStatPropType) {
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
     flexDirection: "row",
   },
 });

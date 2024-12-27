@@ -13,14 +13,16 @@ import {
   getStageByStageId,
   setStageTitle,
 } from "@/services/data/stageService";
-import { Stage } from "@/database/model/model";
+import { Location, Stage } from "@/database/model/model";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
 
 export default function HomeScreen() {
   const { stageId } = useLocalSearchParams<{ stageId: string }>();
   const [stage, setStage] = useState<Stage>();
+  const [stageLocations, setStageLocations] = useState<Location[]>([]);
   // changing the title of the page
   const navigation = useNavigation();
   //switches title from plain text to the input field
@@ -31,12 +33,16 @@ export default function HomeScreen() {
 
   useEffect(() => {
     (async () => {
-      const dbstage = await getStageByStageId(stageId);
-      if (stageId) {
-        setStage(dbstage);
+      const dbStage = await getStageByStageId(stageId);
+      if (dbStage) {
+        setStage(dbStage);
         setStageTitleVal(stage?.title ?? "Etappe");
       } else {
         throw new Error("Stage does not exist");
+      }
+      const dbLocations = await getAllLocationsByStageId(stageId);
+      if (dbLocations) {
+        setStageLocations(dbLocations);
       }
     })();
   }, [stage, stageId]);
@@ -129,7 +135,7 @@ export default function HomeScreen() {
 
   return (
     <Layout level="2" style={styles.layout}>
-      {stage && <StageStatCard stage={stage} />}
+      {stage && <StageStatCard stage={stage} locations={stageLocations} />}
     </Layout>
   );
 }

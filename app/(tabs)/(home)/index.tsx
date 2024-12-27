@@ -169,7 +169,7 @@ export default function HomeScreen() {
   const CenterButton = () => (
     <SmallIconButton
       icon="location-crosshairs"
-      style={styles.mapButtonNew}
+      style={styles.mapButton}
       onPress={() => setUserCentered(true)}
     />
   );
@@ -181,7 +181,7 @@ export default function HomeScreen() {
     return (
       <SmallIconButton
         icon="route"
-        style={[styles.mapButtonNew, styles.routeButtonNew]}
+        style={[styles.mapButton, styles.routeButton]}
         onPress={async () => {
           setUserCentered(false);
           await timeout(100);
@@ -356,33 +356,8 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-  },
-  centerButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
   },
   routeButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-    marginBottom: 10,
-  },
-  mapButtonNew: {
-    backgroundColor: "#fff",
-  },
-  routeButtonNew: {
     marginBottom: 11,
   },
 });

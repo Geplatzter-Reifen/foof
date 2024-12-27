@@ -1,5 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ImageProps,
+  Platform,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import * as TaskManager from "expo-task-manager";
 
 import {
@@ -166,6 +174,43 @@ export default function HomeScreen() {
     });
   };
 
+  const CenterButton = (props?: Partial<ImageProps>) => (
+    <TouchableOpacity
+      style={styles.centerButton}
+      onPress={() => setUserCentered(true)}
+    >
+      <Icon
+        {...props}
+        name="location-crosshairs"
+        style={[props?.style, { height: 23 }]}
+      />
+    </TouchableOpacity>
+  );
+
+  const RouteButton = ({ routeCount }: { routeCount: number }) => {
+    if (routeCount === 0) {
+      return null;
+    }
+    return (
+      <TouchableOpacity
+        style={styles.routeButton}
+        onPress={async () => {
+          setUserCentered(false);
+          await timeout(100);
+          showRoute();
+        }}
+      >
+        <Icon name="route" style={{ height: 22 }} />
+      </TouchableOpacity>
+    );
+  };
+
+  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routeCount: tour.routes.observeCount(),
+  }));
+
+  const EnhancedRouteButton = enhance(RouteButton);
+
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
@@ -209,11 +254,14 @@ export default function HomeScreen() {
   };
 
   // observe the route (tracks updates to the route)
-  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
-    route,
-  }));
+  const enhanceV1 = withObservables(
+    ["route"],
+    ({ route }: { route: Route }) => ({
+      route,
+    }),
+  );
 
-  const EnhancedShapeSource = enhance(ShapeSource);
+  const EnhancedShapeSource = enhanceV1(ShapeSource);
 
   // observe routes of a tour (only tracks create and delete in the routes table)
   const Bridge = ({ routes }: { routes: Route[] }) => {
@@ -268,16 +316,17 @@ export default function HomeScreen() {
             followUserLocation={userCentered}
             ref={camera}
           />
-
           {/* Blauer Punkt */}
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
+        {!userCentered && <CenterButton />}
         {/* Button zum Route anzeigen */}
         <SmallIconButton
           icon="route"
-          style={[styles.mapButton, styles.routeButton]}
+          style={[styles.mapButtonNew, styles.routeButton]}
           onPress={async () => {
             setUserCentered(false);
             await timeout(100);
@@ -288,7 +337,7 @@ export default function HomeScreen() {
         {!userCentered && (
           <SmallIconButton
             icon="location-crosshairs"
-            style={styles.mapButton}
+            style={styles.mapButtonNew}
             onPress={() => setUserCentered(true)}
           />
         )}
@@ -337,8 +386,25 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
   },
   routeButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
+    marginBottom: 10,
+  },
+  mapButtonNew: {
+    backgroundColor: "#fff",
+  },
+  routeButtonNew: {
     marginBottom: 11,
   },
 });

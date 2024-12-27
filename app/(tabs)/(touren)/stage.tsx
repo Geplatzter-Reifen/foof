@@ -1,22 +1,22 @@
 import {
-  Button,
   Input,
   Layout,
   Text,
   Icon,
   useTheme,
   ThemeType,
-  Card,
-  IconElement,
 } from "@ui-kitten/components";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
-import { getStageByStageId, setStageTitle } from "@/services/data/stageService";
+import {
+  deleteStage,
+  getStageByStageId,
+  setStageTitle,
+} from "@/services/data/stageService";
 import { Stage } from "@/database/model/model";
-import { ImageProps, StyleSheet, TouchableOpacity, View } from "react-native";
-import { shareStage } from "@/services/sharingService";
-import customStyles from "@/constants/styles";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
 export default function HomeScreen() {
   const { stageId } = useLocalSearchParams<{ stageId: string }>();
@@ -51,11 +51,11 @@ export default function HomeScreen() {
         />
       </Layout>
     ),
-    [stageTitleVal],
+    [styles.headerInput, stageTitleVal],
   );
 
   //switching between done and edit, saving new title to DB
-  const changingTitleButton = useMemo(
+  const changeTitleButton = useMemo(
     () => (
       <TouchableOpacity
         onPress={async () => {
@@ -72,8 +72,35 @@ export default function HomeScreen() {
         )}
       </TouchableOpacity>
     ),
-    [stage, stageTitleVal, titleBeingChanged],
+    [styles.iconStyle, stage, stageTitleVal, titleBeingChanged],
   );
+
+  const DeleteButton = () => {
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
+
+    const handleConfirm = () => {
+      deleteStage(stageId);
+      setIsDialogVisible(false);
+      navigation.goBack();
+    };
+
+    return (
+      <View style={styles.deleteButton}>
+        <TouchableOpacity onPress={() => setIsDialogVisible(true)}>
+          <Icon name="trash-can" style={styles.deleteIcon} />
+        </TouchableOpacity>
+
+        <ConfirmDialog
+          visible={isDialogVisible}
+          title="Etappe löschen"
+          message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
+          confirmString="Löschen"
+          onConfirm={handleConfirm}
+          onCancel={() => setIsDialogVisible(false)}
+        />
+      </View>
+    );
+  };
 
   // Update header input ot text based on if title or edit state changes
   useEffect(() => {
@@ -84,48 +111,24 @@ export default function HomeScreen() {
         ) : (
           <Text category="h4">{stageTitleVal}</Text>
         ), // Switch between input and title
-      headerRight: () => changingTitleButton, // Set the button on the right
+      headerRight: () => (
+        <View style={{ flexDirection: "row" }}>
+          {changeTitleButton}
+          <DeleteButton />
+        </View>
+      ), // Set the view on the right
       headerTitleAlign: "center", // Keep the title centered
     });
   }, [
     navigation,
     titleInput,
-    changingTitleButton,
+    changeTitleButton,
     titleBeingChanged,
     stageTitleVal,
   ]);
 
-  const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
-    <Icon
-      {...props}
-      name="share-nodes"
-      style={[props?.style, { height: 18, width: "auto" }]}
-    />
-  );
-
-  const StatsHeader = () => {
-    return (
-      <View>
-        <Text category="h5">Statistik</Text>
-        <View>
-          <Button
-            status="basic"
-            appearance="ghost"
-            accessoryLeft={ShareIcon}
-            onPress={() => {
-              if (stage) {
-                shareStage(stage);
-              }
-            }}
-          ></Button>
-        </View>
-      </View>
-    );
-  };
-
   return (
     <Layout level="2" style={styles.layout}>
-      {stage && <StageStatCard stage={stage} />}
       {stage && <StageStatCard stage={stage} />}
     </Layout>
   );
@@ -138,6 +141,14 @@ const makeStyles = (theme: ThemeType) => {
       width: "auto",
       color: theme["color-primary-500"],
     },
+    deleteButton: {
+      marginLeft: 13,
+    },
+    deleteIcon: {
+      height: 25,
+      width: "auto",
+      color: theme["color-basic-500"],
+    },
     cardsContainer: {
       flex: 7, // Takes up the majority of the remaining space
       flexDirection: "column", // Arrange cards in a column
@@ -147,6 +158,7 @@ const makeStyles = (theme: ThemeType) => {
       paddingVertical: 10,
       paddingHorizontal: 10,
     },
+    card: { flex: 1 },
     button: {
       flex: 1,
       flexDirection: "row",

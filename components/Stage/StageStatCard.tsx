@@ -2,33 +2,22 @@ import React from "react";
 import { DateFormat, formatDate, getDurationFormatted } from "@/utils/dateUtil";
 
 import { Stage } from "@/database/model/model";
-import { deleteStage } from "@/services/data/stageService";
 
-import {
-  Button,
-  Card,
-  Icon,
-  IconElement,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { Button, Card, Icon, IconElement, Text } from "@ui-kitten/components";
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
-import { foofDarkTheme } from "@/constants/custom-theme";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
-import { router } from "expo-router";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
     {...props}
     name="share-nodes"
-    style={[props?.style, { height: 18, width: "auto" }]}
+    style={[props?.style, { height: 20, width: "auto" }]}
   />
 );
 
-function StageCard({ stage }: { stage: Stage }) {
+function StageStatCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
   let finishedAt: Date | undefined = stage.finishedAt
     ? new Date(stage.finishedAt)
@@ -47,19 +36,21 @@ function StageCard({ stage }: { stage: Stage }) {
   const Header = () => {
     return (
       <View style={styles.header}>
-        <Text category="h6" style={styles.title}>
-          Statistik
+        <Text category="h5" style={styles.title}>
+          Statistiken
         </Text>
-        <View style={styles.buttonGroup}>
-          <Button
-            status="basic"
-            appearance="ghost"
-            accessoryLeft={ShareIcon}
-            onPress={() => shareStage(stage)}
-          ></Button>
-        </View>
+        <Button
+          status="primary"
+          appearance="ghost"
+          accessoryLeft={ShareIcon}
+          onPress={() => shareStage(stage)}
+        />
       </View>
     );
+  };
+
+  const StartEnd = () => {
+    return <View></View>;
   };
 
   return (
@@ -69,35 +60,36 @@ function StageCard({ stage }: { stage: Stage }) {
         ...customStyles.basicShadow,
         ...styles.card,
       }}
-      header={<Text>Statistik</Text>}
-    ></Card>
+      header={<Header />}
+    >
+      <Text appearance="hint">vom {date}</Text>
+      <StartEnd />
+    </Card>
   );
 }
 
 // Observe die reingegebene Prop "stage"und reagiere auf änderungen
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
-export default enhance(StageCard);
+export default enhance(StageStatCard);
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 15,
+    flex: 1,
+    marginBottom: 5,
   },
   header: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   title: {
     marginTop: 10,
     marginLeft: 15,
+    marginBottom: 10,
   },
   stat: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-  },
-  buttonGroup: {
-    flexDirection: "row",
   },
   icon: {
     marginRight: 10,

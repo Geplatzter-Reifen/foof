@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import * as TaskManager from "expo-task-manager";
 
 import {
@@ -166,6 +166,37 @@ export default function HomeScreen() {
     });
   };
 
+  const CenterButton = () => (
+    <SmallIconButton
+      icon="location-crosshairs"
+      style={styles.mapButtonNew}
+      onPress={() => setUserCentered(true)}
+    />
+  );
+
+  const RouteButton = ({ routeCount }: { routeCount: number }) => {
+    if (routeCount === 0) {
+      return null;
+    }
+    return (
+      <SmallIconButton
+        icon="route"
+        style={[styles.mapButtonNew, styles.routeButtonNew]}
+        onPress={async () => {
+          setUserCentered(false);
+          await timeout(100);
+          showRoute();
+        }}
+      />
+    );
+  };
+
+  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routeCount: tour.routes.observeCount(),
+  }));
+
+  const EnhancedRouteButton = enhance(RouteButton);
+
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
@@ -209,11 +240,14 @@ export default function HomeScreen() {
   };
 
   // observe the route (tracks updates to the route)
-  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
-    route,
-  }));
+  const enhanceV1 = withObservables(
+    ["route"],
+    ({ route }: { route: Route }) => ({
+      route,
+    }),
+  );
 
-  const EnhancedShapeSource = enhance(ShapeSource);
+  const EnhancedShapeSource = enhanceV1(ShapeSource);
 
   // observe routes of a tour (only tracks create and delete in the routes table)
   const Bridge = ({ routes }: { routes: Route[] }) => {
@@ -268,30 +302,15 @@ export default function HomeScreen() {
             followUserLocation={userCentered}
             ref={camera}
           />
-
           {/* Blauer Punkt */}
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
         {/* Button zum Route anzeigen */}
-        <SmallIconButton
-          icon="route"
-          style={[styles.mapButton, styles.routeButton]}
-          onPress={async () => {
-            setUserCentered(false);
-            await timeout(100);
-            showRoute();
-          }}
-        />
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
         {/* Button zum Zentrieren der Karte auf den User */}
-        {!userCentered && (
-          <SmallIconButton
-            icon="location-crosshairs"
-            style={styles.mapButton}
-            onPress={() => setUserCentered(true)}
-          />
-        )}
+        {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
@@ -337,8 +356,33 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
+  },
+  centerButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
   },
   routeButton: {
+    backgroundColor: "#fff",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    elevation: 3,
+    padding: 10.5,
+    marginBottom: 10,
+  },
+  mapButtonNew: {
+    backgroundColor: "#fff",
+  },
+  routeButtonNew: {
     marginBottom: 11,
   },
 });

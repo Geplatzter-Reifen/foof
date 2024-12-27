@@ -1,12 +1,11 @@
 import React from "react";
-import { DateFormat, formatDate, getDurationFormatted } from "@/utils/dateUtil";
+import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 import { Location, Stage } from "@/database/model/model";
 
 import { Button, Card, Icon, IconElement, Text } from "@ui-kitten/components";
 import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
-import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
 import IconStat from "@/components/Statistics/IconStat";
 import { getCoordinateString } from "@/utils/locationUtil";
@@ -24,7 +23,7 @@ const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   />
 );
 
-function StageStatCard({
+export default function StageStatCard({
   stage,
   locations,
 }: {
@@ -44,7 +43,7 @@ function StageStatCard({
           <Text category="h5" style={styles.title}>
             Statistiken
           </Text>
-          <Text appearance="hint" style={styles.title}>
+          <Text appearance="hint" style={styles.date}>
             vom {date}
           </Text>
         </View>
@@ -58,22 +57,24 @@ function StageStatCard({
     );
   };
 
-  const getCoordinateText = (loc: Location): string => {
-    return (
-      getCoordinateString(loc) +
-      "        " +
-      formatDate(loc.recordedAt ?? 0, DateFormat.TIME)
-    );
-  };
-
   const StartEnd = () => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <View style={styles.startEndContainer}>
-          <IconStat icon="dot-circle" iconWidth={25} iconHeight={23}>
+          <IconStat
+            icon="dot-circle"
+            iconWidth={25}
+            iconHeight={23}
+            status="basic"
+          >
             {getCoordinateString(locations[0])}
           </IconStat>
-          <IconStat icon="location-dot" iconWidth={25} iconHeight={23}>
+          <IconStat
+            icon="location-dot"
+            iconWidth={25}
+            iconHeight={23}
+            status="basic"
+          >
             {getCoordinateString(locations[locations.length - 1])}
           </IconStat>
         </View>
@@ -123,14 +124,9 @@ function StageStatCard({
   );
 }
 
-// Observe die reingegebene Prop "stage"und reagiere auf änderungen
-const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
-export default enhance(StageStatCard);
-
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
-    marginBottom: 5,
+    marginBottom: 15,
   },
   header: {
     flexDirection: "row",
@@ -140,6 +136,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 15,
     marginBottom: 10,
+  },
+  date: {
+    marginLeft: 10,
+    fontSize: 18,
   },
   startEndContainer: {
     justifyContent: "space-between",

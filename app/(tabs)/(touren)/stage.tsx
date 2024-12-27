@@ -13,11 +13,12 @@ import {
   getStageByStageId,
   setStageTitle,
 } from "@/services/data/stageService";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { Location, Stage } from "@/database/model/model";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
+import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
-import { getAllLocationsByStageId } from "@/services/data/locationService";
 
 export default function HomeScreen() {
   const { stageId } = useLocalSearchParams<{ stageId: string }>();
@@ -135,7 +136,14 @@ export default function HomeScreen() {
 
   return (
     <Layout level="2" style={styles.layout}>
+      {/*Kachel mit den Statistiken der Etappe*/}
       {stage && <StageStatCard stage={stage} locations={stageLocations} />}
+      {/*Karte, auf der die gefahrene Etappe angezeigt wird*/}
+      {stageLocations.length > 1 && (
+        <View style={styles.mapContainer}>
+          <StageMapView stageId={stageId} locations={stageLocations} />
+        </View>
+      )}
     </Layout>
   );
 }
@@ -155,27 +163,19 @@ const makeStyles = (theme: ThemeType) => {
       width: "auto",
       color: theme["color-basic-500"],
     },
-    cardsContainer: {
-      flex: 7, // Takes up the majority of the remaining space
-      flexDirection: "column", // Arrange cards in a column
-    },
     layout: {
       flex: 1,
       paddingVertical: 10,
       paddingHorizontal: 10,
     },
-    card: { flex: 1 },
-    button: {
-      flex: 1,
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      margin: 5,
-      alignSelf: "center",
-    },
     headerInput: {
       justifyContent: "space-around",
       alignItems: "center",
+    },
+    mapContainer: {
+      flex: 1,
+      borderRadius: 8,
+      overflow: "hidden", // Wichtig für abgerundete Ecken
     },
   });
 };

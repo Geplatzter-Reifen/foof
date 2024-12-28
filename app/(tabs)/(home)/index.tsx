@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  ImageProps,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
@@ -23,7 +16,6 @@ import {
   Layout,
   ButtonGroup,
   Spinner,
-  Icon,
   TopNavigation,
   Divider,
   Text,
@@ -32,11 +24,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { Tour } from "@/database/model/model";
-import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import { fitRouteInCam } from "@/utils/camUtils";
-import { withObservables } from "@nozbe/watermelondb/react";
+import {
+  CenterButton,
+  EnhancedRouteButton,
+} from "@/components/Buttons/MapButtons";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -128,43 +121,6 @@ export default function HomeScreen() {
     );
   };
 
-  const CenterButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.centerButton}
-      onPress={() => setUserCentered(true)}
-    >
-      <Icon
-        {...props}
-        name="location-crosshairs"
-        style={[props?.style, { height: 23 }]}
-      />
-    </TouchableOpacity>
-  );
-
-  const RouteButton = ({ routeCount }: { routeCount: number }) => {
-    if (routeCount === 0) {
-      return null;
-    }
-    return (
-      <TouchableOpacity
-        style={styles.routeButton}
-        onPress={async () => {
-          setUserCentered(false);
-          await timeout(100);
-          fitRouteInCam(activeTour, camera);
-        }}
-      >
-        <Icon name="route" style={{ height: 22 }} />
-      </TouchableOpacity>
-    );
-  };
-
-  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
-    routeCount: tour.routes.observeCount(),
-  }));
-
-  const EnhancedRouteButton = enhance(RouteButton);
-
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
       case ButtonStates.NotCycling:
@@ -227,7 +183,9 @@ export default function HomeScreen() {
       </Layout>
       <View style={styles.mapButtonsContainer}>
         {activeTour && <EnhancedRouteButton tour={activeTour} />}
-        {!userCentered && <CenterButton />}
+        {!userCentered && (
+          <CenterButton onPress={() => setUserCentered(true)} />
+        )}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
@@ -270,22 +228,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     top: 175,
     right: 11,
-  },
-  centerButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-  },
-  routeButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-    marginBottom: 10,
   },
 });

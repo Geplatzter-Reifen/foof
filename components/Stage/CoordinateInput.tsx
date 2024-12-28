@@ -1,10 +1,6 @@
-import React, { useState } from "react";
-import { Platform, StyleSheet } from "react-native";
-import { Input, Layout, Button, useTheme } from "@ui-kitten/components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import { StyleSheet } from "react-native";
+import { Input, Layout } from "@ui-kitten/components";
+import DateTimeButton from "@/components/Modal/DateTimeButton";
 
 type CoordinateInputProps = {
   onLatitudeChange: (latitude: string) => void;
@@ -13,32 +9,7 @@ type CoordinateInputProps = {
 };
 
 function CoordinateInput(props: CoordinateInputProps) {
-  const theme = useTheme();
   const { onLatitudeChange, onLongitudeChange, onDateChange } = props;
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
-
-  const handleDateChange = (
-    event: DateTimePickerEvent,
-    selectedDate?: Date,
-  ) => {
-    const currentDate = selectedDate || date;
-    setShowDatePicker(false);
-    onDateChange(currentDate);
-    setDate(currentDate);
-  };
-
-  const handleTimeChange = (
-    event: DateTimePickerEvent,
-    selectedTime?: Date,
-  ) => {
-    const currentTime = selectedTime || date;
-    setShowTimePicker(false);
-    onDateChange(currentTime);
-    setDate(currentTime);
-  };
 
   return (
     <>
@@ -61,58 +32,17 @@ function CoordinateInput(props: CoordinateInputProps) {
       {/* Datepicker Row */}
       <Layout style={styles.row}>
         {/* Button to open date picker */}
-        <Button
-          appearance="outline"
-          style={styles.input}
-          onPress={() => setShowDatePicker(true)}
-          accessoryRight={
-            <FontAwesomeIcon
-              style={styles.icon}
-              size={20}
-              color={theme["color-primary-500"]}
-              icon="calendar"
-            />
-          }
-        >
-          {date.toLocaleDateString()}
-        </Button>
-
+        <DateTimeButton
+          date={new Date()}
+          mode={"date"}
+          onDateChange={onDateChange}
+        />
         {/* Button to open time picker */}
-        <Button
-          appearance="outline"
-          style={styles.input}
-          onPress={() => setShowTimePicker(true)}
-          accessoryRight={
-            <FontAwesomeIcon
-              style={styles.icon}
-              size={20}
-              color={theme["color-primary-500"]}
-              icon="clock"
-            />
-          }
-        >
-          {date.toLocaleTimeString()}
-        </Button>
-
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={handleDateChange}
-            textColor={theme["color-primary-500"]} // Primary color for text
-          />
-        )}
-
-        {showTimePicker && (
-          <DateTimePicker
-            value={date}
-            mode="time"
-            display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={handleTimeChange}
-            textColor={theme["color-primary-500"]} // Primary color for text
-          />
-        )}
+        <DateTimeButton
+          date={new Date()}
+          mode={"time"}
+          onDateChange={onDateChange}
+        />
       </Layout>
     </>
   );
@@ -130,9 +60,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8, // Add space between inputs
     marginVertical: 3,
     backgroundColor: "transparent",
-  },
-  icon: {
-    alignSelf: "flex-end",
   },
 });
 

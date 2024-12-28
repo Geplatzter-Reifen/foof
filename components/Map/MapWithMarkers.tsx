@@ -8,17 +8,35 @@ import { StyleSheet } from "react-native";
 type MapWithMarkerProps = {
   markerIndex: number;
   onCoordinateChange: (coordinates: Position) => void;
+  initialStartCoordinate?: Position;
+  initialEndCoordinate?: Position;
 };
 
 function MapWithMarkers({
   markerIndex,
   onCoordinateChange,
+  initialStartCoordinate,
+  initialEndCoordinate,
 }: MapWithMarkerProps) {
   const theme = useTheme();
+
   const [startMarkerCoordinate, setStartMarkerCoordinate] =
-    useState<Position | null>(null);
+    useState<Position | null>(
+      initialStartCoordinate &&
+        !isNaN(initialStartCoordinate[0]) &&
+        !isNaN(initialStartCoordinate[1])
+        ? initialStartCoordinate
+        : null,
+    );
+
   const [endMarkerCoordinate, setEndMarkerCoordinate] =
-    useState<Position | null>(null);
+    useState<Position | null>(
+      initialEndCoordinate &&
+        !isNaN(initialEndCoordinate[0]) &&
+        !isNaN(initialEndCoordinate[1])
+        ? initialEndCoordinate
+        : null,
+    );
 
   const handleMapPress = (feature: Feature) => {
     const geometry = feature.geometry;

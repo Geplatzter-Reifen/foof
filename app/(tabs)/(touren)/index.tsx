@@ -65,7 +65,7 @@ export default function Touruebersicht() {
       hitSlop={15}
       onPress={() => {
         if (activeTour) {
-          router.push({
+          router.navigate({
             pathname: "./stagesMapViewWrapper",
             params: {
               tourId: activeTour.id,
@@ -91,7 +91,7 @@ export default function Touruebersicht() {
       icon={EditIcon}
       hitSlop={15}
       onPress={() =>
-        router.push({
+        router.navigate({
           pathname: "./tourSettings",
           params: {
             tourId: activeTour?.id,
@@ -155,7 +155,7 @@ export default function Touruebersicht() {
         style={styles.button}
         accessoryLeft={PlusIcon}
         onPress={() =>
-          router.push({
+          router.navigate({
             pathname: "./createManualStage",
             params: {
               tourId: activeTour?.id,

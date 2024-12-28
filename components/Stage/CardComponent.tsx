@@ -31,11 +31,7 @@ function CardComponent(props: cardProps) {
       <Card
         style={style.card}
         header={() => CardHeder({ title })}
-        pointerEvents="none"
         disabled={true}
-        pressableProps={{
-          android_ripple: { color: "transparent" }, // Remove ripple effect
-        }}
       >
         {form}
       </Card>

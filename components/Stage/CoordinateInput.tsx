@@ -8,6 +8,7 @@ type CoordinateInputProps = {
   onDateChange: (date: Date) => void;
   initialLatitude?: number;
   initialLongitude?: number;
+  initialDate?: Date;
 };
 
 function CoordinateInput(props: CoordinateInputProps) {
@@ -17,14 +18,25 @@ function CoordinateInput(props: CoordinateInputProps) {
     onDateChange,
     initialLatitude,
     initialLongitude,
+    initialDate,
   } = props;
+
+  let latitude: string | undefined = undefined;
+  if (initialLatitude !== undefined) {
+    latitude = (Math.round(initialLatitude * 1000000) / 1000000).toString();
+  }
+
+  let longitude: string | undefined = undefined;
+  if (initialLongitude !== undefined) {
+    longitude = (Math.round(initialLongitude * 1000000) / 1000000).toString();
+  }
 
   return (
     <>
       {/* Latitude and Longitude Inputs */}
       <Layout style={styles.row}>
         <Input
-          value={initialLatitude?.toString()}
+          value={latitude}
           style={styles.input}
           label="Latitude"
           onChangeText={(nextValue) =>
@@ -33,7 +45,7 @@ function CoordinateInput(props: CoordinateInputProps) {
           maxLength={20}
         />
         <Input
-          value={initialLongitude?.toString()}
+          value={longitude}
           style={styles.input}
           label="Longitude"
           onChangeText={(nextValue) =>
@@ -47,13 +59,13 @@ function CoordinateInput(props: CoordinateInputProps) {
       <Layout style={styles.row}>
         {/* Button to open date picker */}
         <DateTimeButton
-          date={new Date()}
+          date={initialDate || new Date()}
           mode={"date"}
           onDateChange={onDateChange}
         />
         {/* Button to open time picker */}
         <DateTimeButton
-          date={new Date()}
+          date={initialDate || new Date()}
           mode={"time"}
           onDateChange={onDateChange}
         />

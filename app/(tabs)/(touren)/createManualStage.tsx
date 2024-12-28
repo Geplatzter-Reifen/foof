@@ -154,6 +154,7 @@ export default function CreateManualStage() {
       onDateChange={(date) => (startDate.current = date)}
       initialLatitude={startLatitude.current}
       initialLongitude={startLongitude.current}
+      initialDate={startDate.current}
     />
   );
 
@@ -164,6 +165,7 @@ export default function CreateManualStage() {
       onDateChange={(date) => (endDate.current = date)}
       initialLatitude={endLatitude.current}
       initialLongitude={endLongitude.current}
+      initialDate={endDate.current}
     />
   );
 

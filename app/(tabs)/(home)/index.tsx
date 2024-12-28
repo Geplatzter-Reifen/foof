@@ -30,6 +30,8 @@ import {
   CenterButton,
   EnhancedRouteButton,
 } from "@/components/Buttons/MapButtons";
+import { timeout } from "@/utils/utils";
+import { fitRouteInCam } from "@/utils/camUtils";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -182,7 +184,16 @@ export default function HomeScreen() {
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        {activeTour && <EnhancedRouteButton tour={activeTour} />}
+        {activeTour && (
+          <EnhancedRouteButton
+            tour={activeTour}
+            onPress={async () => {
+              setUserCentered(false);
+              await timeout(100);
+              fitRouteInCam(activeTour, camera);
+            }}
+          />
+        )}
         {!userCentered && (
           <CenterButton onPress={() => setUserCentered(true)} />
         )}

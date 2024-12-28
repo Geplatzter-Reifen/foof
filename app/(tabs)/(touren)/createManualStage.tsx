@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Text, Layout, Button, TabBar, Tab } from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
@@ -40,8 +40,8 @@ export default function CreateManualStage() {
   const [titleBeingChanged, setTitleBeingChanged] = useState(false);
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedMarkerIndex, setSelectedMarkerIndex] = React.useState(0);
-  const [visible, setVisible] = React.useState(false);
+  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
   const router = useRouter();
   // compass input
   const startLatitude = useRef<number>();

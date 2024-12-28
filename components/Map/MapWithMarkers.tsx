@@ -61,7 +61,11 @@ function MapWithMarkers({
 
   return (
     <Layout style={styles.container}>
-      <MapboxGL.MapView style={styles.map} onPress={handleMapPress}>
+      <MapboxGL.MapView
+        style={styles.map}
+        onPress={handleMapPress}
+        localizeLabels={true}
+      >
         <MapboxGL.Camera
           centerCoordinate={[10.4515, 51.1657]} // Zentrum von Deutschland
           zoomLevel={5} // Zoom-Level für Deutschland

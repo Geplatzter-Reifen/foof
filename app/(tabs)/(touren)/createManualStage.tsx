@@ -20,7 +20,6 @@ type TopTapBarProps = {
 };
 
 const TopTapBar = ({ selectedMarkerIndex, onSelect }: TopTapBarProps) => {
-  console.log("TopTapBar", selectedMarkerIndex);
   return (
     <TabBar
       style={{ height: 50 }}
@@ -45,10 +44,10 @@ export default function CreateManualStage() {
   const [visible, setVisible] = React.useState(false);
   const router = useRouter();
   // compass input
-  const startLatitude = useRef<string>("");
-  const startLongitude = useRef<string>("");
-  const endLatitude = useRef<string>("");
-  const endLongitude = useRef<string>("");
+  const startLatitude = useRef<number>();
+  const startLongitude = useRef<number>();
+  const endLatitude = useRef<number>();
+  const endLongitude = useRef<number>();
   const startDate = useRef(new Date());
   const endDate = useRef(new Date());
 
@@ -129,11 +128,11 @@ export default function CreateManualStage() {
 
   const setCoordinate = (coordinate: Position) => {
     if (selectedMarkerIndex === 0) {
-      startLongitude.current = coordinate[0].toString();
-      startLatitude.current = coordinate[1].toString();
+      startLongitude.current = coordinate[0];
+      startLatitude.current = coordinate[1];
     } else {
-      endLongitude.current = coordinate[0].toString();
-      endLatitude.current = coordinate[1].toString();
+      endLongitude.current = coordinate[0];
+      endLatitude.current = coordinate[1];
     }
   };
 
@@ -153,6 +152,8 @@ export default function CreateManualStage() {
       onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (startLongitude.current = longitude)}
       onDateChange={(date) => (startDate.current = date)}
+      initialLatitude={startLatitude.current}
+      initialLongitude={startLongitude.current}
     />
   );
 
@@ -161,6 +162,8 @@ export default function CreateManualStage() {
       onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (endLongitude.current = longitude)}
       onDateChange={(date) => (endDate.current = date)}
+      initialLatitude={endLatitude.current}
+      initialLongitude={endLongitude.current}
     />
   );
 
@@ -175,12 +178,12 @@ export default function CreateManualStage() {
         );
       case 1:
         const initialStartCoordinate: Position = [
-          parseFloat(startLongitude.current),
-          parseFloat(startLatitude.current),
+          startLongitude.current ?? NaN,
+          startLatitude.current ?? NaN,
         ];
         const initialEndCoordinate: Position = [
-          parseFloat(endLongitude.current),
-          parseFloat(endLatitude.current),
+          endLongitude.current ?? NaN,
+          endLatitude.current ?? NaN,
         ];
         return (
           <>

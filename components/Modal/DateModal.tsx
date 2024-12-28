@@ -24,8 +24,6 @@ function DateTimeModal(props: DateTimeModalProps) {
     initialEndDate,
   } = props;
 
-  console.log("DateTimeModal", initialStartDate, initialEndDate);
-
   const [startDate, setStartDate] = React.useState(
     initialStartDate || new Date(),
   );

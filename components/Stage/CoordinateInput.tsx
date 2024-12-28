@@ -3,28 +3,42 @@ import { Input, Layout } from "@ui-kitten/components";
 import DateTimeButton from "@/components/Modal/DateTimeButton";
 
 type CoordinateInputProps = {
-  onLatitudeChange: (latitude: string) => void;
-  onLongitudeChange: (longitude: string) => void;
+  onLatitudeChange: (latitude: number) => void;
+  onLongitudeChange: (longitude: number) => void;
   onDateChange: (date: Date) => void;
+  initialLatitude?: number;
+  initialLongitude?: number;
 };
 
 function CoordinateInput(props: CoordinateInputProps) {
-  const { onLatitudeChange, onLongitudeChange, onDateChange } = props;
+  const {
+    onLatitudeChange,
+    onLongitudeChange,
+    onDateChange,
+    initialLatitude,
+    initialLongitude,
+  } = props;
 
   return (
     <>
       {/* Latitude and Longitude Inputs */}
       <Layout style={styles.row}>
         <Input
+          value={initialLatitude?.toString()}
           style={styles.input}
           label="Latitude"
-          onChangeText={(nextValue) => onLatitudeChange(nextValue.trim())}
+          onChangeText={(nextValue) =>
+            onLatitudeChange(Number(nextValue.trim()))
+          }
           maxLength={20}
         />
         <Input
+          value={initialLongitude?.toString()}
           style={styles.input}
           label="Longitude"
-          onChangeText={(nextValue) => onLongitudeChange(nextValue.trim())}
+          onChangeText={(nextValue) =>
+            onLongitudeChange(Number(nextValue.trim()))
+          }
           maxLength={20}
         />
       </Layout>

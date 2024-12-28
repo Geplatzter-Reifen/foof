@@ -36,6 +36,7 @@ import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import { fitRouteInCam } from "@/utils/camUtils";
+import { withObservables } from "@nozbe/watermelondb/react";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -140,18 +141,29 @@ export default function HomeScreen() {
     </TouchableOpacity>
   );
 
-  const RouteButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.routeButton}
-      onPress={async () => {
-        setUserCentered(false);
-        await timeout(100);
-        fitRouteInCam(activeTour, camera);
-      }}
-    >
-      <Icon {...props} name="route" style={[props?.style, { height: 22 }]} />
-    </TouchableOpacity>
-  );
+  const RouteButton = ({ routeCount }: { routeCount: number }) => {
+    if (routeCount === 0) {
+      return null;
+    }
+    return (
+      <TouchableOpacity
+        style={styles.routeButton}
+        onPress={async () => {
+          setUserCentered(false);
+          await timeout(100);
+          fitRouteInCam(activeTour, camera);
+        }}
+      >
+        <Icon name="route" style={{ height: 22 }} />
+      </TouchableOpacity>
+    );
+  };
+
+  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routeCount: tour.routes.observeCount(),
+  }));
+
+  const EnhancedRouteButton = enhance(RouteButton);
 
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
@@ -214,7 +226,7 @@ export default function HomeScreen() {
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
-        <RouteButton />
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
         {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>

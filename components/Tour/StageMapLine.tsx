@@ -9,13 +9,23 @@ type stageMapLineProps = {
   locations: Location[];
   stageId: string;
   active?: boolean;
+  lineColor?: string;
+  circleColor?: string;
+  circleStrokeColor?: string;
 };
 const StageMapLine = ({
   locations,
   stageId,
   active = false,
+  lineColor,
+  circleColor,
+  circleStrokeColor,
 }: stageMapLineProps) => {
   const theme = useTheme();
+
+  lineColor = lineColor || theme["color-primary-500"];
+  circleColor = circleColor || theme["color-primary-100"];
+  circleStrokeColor = circleStrokeColor || theme["color-primary-500"];
 
   const locationsUnpacked = locations.map((loc) => ({
     latitude: loc.latitude,
@@ -44,7 +54,7 @@ const StageMapLine = ({
         belowLayerID="road-label"
         // aboveLayerID="routeSource"
         style={{
-          lineColor: theme["color-primary-500"],
+          lineColor: lineColor,
           lineWidth: 4, // Thickness
           lineOpacity: 1, // Transparency
           lineCap: "round",
@@ -56,10 +66,10 @@ const StageMapLine = ({
         // aboveLayerID="routeSource"
         filter={["==", "name", "Start"]}
         style={{
-          circleColor: theme["color-primary-100"],
+          circleColor: circleColor,
           circleRadius: 6, // Size of the circle
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
       <MapboxGL.CircleLayer
@@ -67,10 +77,10 @@ const StageMapLine = ({
         filter={["==", "name", "End"]}
         // aboveLayerID="routeSource"
         style={{
-          circleColor: theme["color-primary-100"],
+          circleColor: circleColor,
           circleRadius: 6, // Size of the circle
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
     </MapboxGL.ShapeSource>

@@ -26,6 +26,7 @@ function Marker({
       coordinate={coordinate}
       key={`${id}-${currentIndex}`}
       draggable={markerIndex === currentIndex}
+      anchor={{ x: 0.5, y: 1 }}
       onDragEnd={(feature: Feature) => {
         if (feature.geometry.type === "Point") {
           onCoordinateChange(markerIndex, feature.geometry.coordinates);

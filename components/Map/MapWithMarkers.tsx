@@ -81,6 +81,7 @@ function MapWithMarkers({
         onPress={handleMapPress}
         localizeLabels={true}
         onMapIdle={onMapIdle}
+        scaleBarEnabled={false}
       >
         <MapboxGL.Camera
           centerCoordinate={centerCoordinate}
@@ -115,6 +116,9 @@ function MapWithMarkers({
               locations={stage.locations}
               stageId={stage.stage.id}
               key={stage.stage.id}
+              lineColor={"#b8b8b8"}
+              circleColor={"#eaeaea"}
+              circleStrokeColor={"#b8b8b8"}
             />
           );
         })}

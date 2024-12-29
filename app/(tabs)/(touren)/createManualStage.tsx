@@ -256,9 +256,7 @@ export default function CreateManualStage() {
     <Layout style={styles.layout} level="2">
       <ButtonSwitch
         onSelect={(index) => {
-          if (index < 2) {
-            setSelectedIndex(index);
-          }
+          setSelectedIndex(index);
         }}
         selectedIndex={selectedIndex}
       >
@@ -267,9 +265,6 @@ export default function CreateManualStage() {
         </Button>
         <Button style={styles.button}>
           <FontAwesomeIcon icon="map-pin" size={25} />
-        </Button>
-        <Button style={styles.button}>
-          <FontAwesomeIcon icon="city" size={25} />
         </Button>
       </ButtonSwitch>
       <DateModal

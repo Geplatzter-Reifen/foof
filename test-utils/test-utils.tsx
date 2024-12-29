@@ -1,6 +1,10 @@
 // https://testing-library.com/docs/react-testing-library/setup/#add-custom-queries
 import React from "react";
-import { render, RenderOptions } from "@testing-library/react-native";
+import {
+  render,
+  RenderOptions,
+  RenderResult,
+} from "@testing-library/react-native";
 import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import { mapping } from "@eva-design/eva";
 import {
@@ -44,7 +48,7 @@ const AllTheProviders = ({ children, use_dark_theme = false }: Props) => {
 const customRender = (
   component: React.ReactElement,
   options?: Omit<RenderOptions, "wrapper">,
-) => {
+): RenderResult => {
   return render(component, { wrapper: AllTheProviders, ...options });
 };
 

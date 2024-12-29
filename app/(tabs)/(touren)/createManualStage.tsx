@@ -15,11 +15,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
-import type { Feature, Point, Position } from "geojson";
+import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
 import DateModal from "@/components/Modal/DateModal";
 import { MapState } from "@rnmapbox/maps";
-import { RegionPayload } from "@rnmapbox/maps/lib/typescript/src/components/MapView";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
+import { getAllStagesByTourId } from "@/services/data/stageService";
+import { Location, Stage } from "@/database/model/model";
 
 type TopTapBarProps = {
   selectedMarkerIndex: number;
@@ -61,6 +63,10 @@ export default function CreateManualStage() {
   const centerCoordinate = useRef<Position>();
   const zoomLevel = useRef<number>();
   const heading = useRef<number>();
+
+  const [stagesWithLocations, setStagesWithLocations] = useState<
+    { stage: Stage; locations: Location[] }[]
+  >([]);
 
   ////////////on the map input
 
@@ -114,6 +120,23 @@ export default function CreateManualStage() {
     titleBeingChanged,
     stageTitle,
   ]);
+
+  useEffect(() => {
+    const fetchStagesWithLocations = async () => {
+      const stages = await getAllStagesByTourId(tourId);
+      const finishedStages = stages.filter((stage) => {
+        return !stage.isActive;
+      });
+      const upgradedStages = await Promise.all(
+        finishedStages.map(async (stage) => {
+          const locations = await getAllLocationsByStageId(stage.id);
+          return { stage, locations };
+        }),
+      );
+      setStagesWithLocations(upgradedStages); // Set the resolved array
+    };
+    fetchStagesWithLocations();
+  }, [tourId]);
 
   const submitStage = async () => {
     try {
@@ -218,6 +241,7 @@ export default function CreateManualStage() {
               zoomLevel={zoomLevel.current}
               heading={heading.current}
               onMapIdle={handleMapIdle}
+              stagesWithLocations={stagesWithLocations}
             />
           </>
         );

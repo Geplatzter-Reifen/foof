@@ -4,6 +4,8 @@ import { Layout, useTheme } from "@ui-kitten/components";
 import MapboxGL from "@rnmapbox/maps";
 import Marker from "@/components/Map/Marker";
 import { StyleSheet } from "react-native";
+import StageMapLine from "@/components/Tour/StageMapLine";
+import { Stage, Location } from "@/database/model/model";
 
 type MapWithMarkerProps = {
   markerIndex: number;
@@ -14,6 +16,7 @@ type MapWithMarkerProps = {
   centerCoordinate?: Position;
   zoomLevel?: number;
   heading?: number;
+  stagesWithLocations?: { stage: Stage; locations: Location[] }[];
 };
 
 function MapWithMarkers({
@@ -25,6 +28,7 @@ function MapWithMarkers({
   centerCoordinate,
   zoomLevel,
   heading,
+  stagesWithLocations,
 }: MapWithMarkerProps) {
   const theme = useTheme();
   centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
@@ -104,6 +108,16 @@ function MapWithMarkers({
             selectedColor={theme["color-primary-default"]}
           />
         )}
+        {stagesWithLocations?.map((stage) => {
+          if (stage.locations.length <= 1) return;
+          return (
+            <StageMapLine
+              locations={stage.locations}
+              stageId={stage.stage.id}
+              key={stage.stage.id}
+            />
+          );
+        })}
       </MapboxGL.MapView>
     </Layout>
   );

@@ -10,6 +10,10 @@ type MapWithMarkerProps = {
   onCoordinateChange: (coordinates: Position) => void;
   initialStartCoordinate?: Position;
   initialEndCoordinate?: Position;
+  onMapIdle?: (state: MapboxGL.MapState) => void;
+  centerCoordinate?: Position;
+  zoomLevel?: number;
+  heading?: number;
 };
 
 function MapWithMarkers({
@@ -17,8 +21,15 @@ function MapWithMarkers({
   onCoordinateChange,
   initialStartCoordinate,
   initialEndCoordinate,
+  onMapIdle,
+  centerCoordinate,
+  zoomLevel,
+  heading,
 }: MapWithMarkerProps) {
   const theme = useTheme();
+  centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
+  zoomLevel = zoomLevel || 5; // Zoom-Level für Deutschland
+  heading = heading || 0;
 
   const [startMarkerCoordinate, setStartMarkerCoordinate] =
     useState<Position | null>(
@@ -65,11 +76,13 @@ function MapWithMarkers({
         style={styles.map}
         onPress={handleMapPress}
         localizeLabels={true}
+        onMapIdle={onMapIdle}
       >
         <MapboxGL.Camera
-          centerCoordinate={[10.4515, 51.1657]} // Zentrum von Deutschland
-          zoomLevel={5} // Zoom-Level für Deutschland
+          centerCoordinate={centerCoordinate}
+          zoomLevel={zoomLevel}
           animationDuration={0}
+          heading={heading}
         />
         {startMarkerCoordinate && (
           <Marker

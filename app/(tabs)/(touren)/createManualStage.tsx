@@ -1,18 +1,25 @@
-import { useState, useEffect, useMemo, useRef } from "react";
-import { Text, Layout, Button, TabBar, Tab } from "@ui-kitten/components";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Button,
+  Input,
+  Layout,
+  Tab,
+  TabBar,
+  Text,
+} from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
-import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
-import type { Position } from "geojson";
+import type { Feature, Point, Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
 import DateModal from "@/components/Modal/DateModal";
+import { MapState } from "@rnmapbox/maps";
+import { RegionPayload } from "@rnmapbox/maps/lib/typescript/src/components/MapView";
 
 type TopTapBarProps = {
   selectedMarkerIndex: number;
@@ -51,7 +58,9 @@ export default function CreateManualStage() {
   const startDate = useRef(new Date());
   const endDate = useRef(new Date());
 
-  ////////////address input
+  const centerCoordinate = useRef<Position>();
+  const zoomLevel = useRef<number>();
+  const heading = useRef<number>();
 
   ////////////on the map input
 
@@ -169,6 +178,13 @@ export default function CreateManualStage() {
     />
   );
 
+  const handleMapIdle = (state: MapState) => {
+    const properties = state.properties;
+    centerCoordinate.current = properties.center;
+    zoomLevel.current = properties.zoom;
+    heading.current = properties.heading;
+  };
+
   const renderContent = () => {
     switch (selectedIndex) {
       case 0:
@@ -198,6 +214,10 @@ export default function CreateManualStage() {
               onCoordinateChange={setCoordinate}
               initialStartCoordinate={initialStartCoordinate}
               initialEndCoordinate={initialEndCoordinate}
+              centerCoordinate={centerCoordinate.current}
+              zoomLevel={zoomLevel.current}
+              heading={heading.current}
+              onMapIdle={handleMapIdle}
             />
           </>
         );

@@ -96,7 +96,9 @@ export async function startAutomaticTracking() {
   }
 }
 
-/** Stops automatic tracking. */
+/** Stops automatic tracking.
+ * @returns {boolean} True if the active tour is finished, false otherwise.
+ */
 export async function stopAutomaticTracking(): Promise<boolean> {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);

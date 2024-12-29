@@ -38,7 +38,6 @@ import { Route, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
-import Explosion from "react-native-confetti-cannon";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -57,7 +56,6 @@ export default function HomeScreen() {
   const [userCentered, setUserCentered] = useState(true);
   const buttonIconSize = 60;
   const camera = useRef<Camera>(null);
-  const explosion = useRef<Explosion>(null);
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
   const [activeStageId, setActiveStageId] = useState<string | null>();
@@ -161,8 +159,8 @@ export default function HomeScreen() {
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
     if (await stopAutomaticTracking()) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
-    explosion.current?.start(true);
     setActiveStageId(null);
   };
 
@@ -324,12 +322,6 @@ export default function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
-      <ConfettiCannon
-        count={200}
-        origin={{ x: -10, y: 0 }}
-        autoStart={false}
-        ref={explosion}
-      />
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}

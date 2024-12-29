@@ -49,7 +49,7 @@ export default function IconStat(props: IconStatPropType) {
           textAlignVertical: "center",
         }}
       />
-      <Text style={{ fontSize: fontSize, marginLeft: 8 }}>
+      <Text style={{ fontSize: fontSize, ...styles.text }}>
         {props.children}
       </Text>
     </View>
@@ -59,5 +59,11 @@ export default function IconStat(props: IconStatPropType) {
 const styles = StyleSheet.create({
   view: {
     flexDirection: "row",
+  },
+  text: {
+    marginLeft: 8,
+    flexShrink: 1,
+    flexWrap: "wrap",
+    width: "100%",
   },
 });

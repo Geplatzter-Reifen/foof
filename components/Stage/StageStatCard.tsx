@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 import { Location, Stage } from "@/database/model/model";
@@ -8,12 +8,12 @@ import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { shareStage } from "@/services/sharingService";
 import IconStat from "@/components/Statistics/IconStat";
-import { getCoordinateString } from "@/utils/locationUtil";
 import {
   getStageAvgSpeedString,
   getStageDistanceString,
   getStageDurationString,
 } from "@/services/statisticsService";
+import { fetchPlaceName } from "@/services/geoService";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -35,6 +35,25 @@ export default function StageStatCard({
   const durationString: string = getStageDurationString(stage);
   const distanceString: string = getStageDistanceString(stage);
   const avgSpeedString: string = getStageAvgSpeedString(stage);
+  const startLocation: Location = locations[0];
+  const [startName, setStartName] = useState("Von");
+  const endLocation: Location = locations[locations.length - 1];
+  const [endName, setEndName] = useState("Nach");
+
+  useEffect(() => {
+    const getStartAndEndNames = async () => {
+      const start = await fetchPlaceName(startLocation);
+      if (start) {
+        setStartName(start);
+      }
+      const end = await fetchPlaceName(endLocation);
+      if (end) {
+        setEndName(end);
+      }
+    };
+
+    void getStartAndEndNames();
+  }, [startLocation, endLocation]);
 
   const Header = () => {
     return (
@@ -67,7 +86,7 @@ export default function StageStatCard({
             iconHeight={23}
             status="basic"
           >
-            {getCoordinateString(locations[0])}
+            {startName}
           </IconStat>
           <IconStat
             icon="location-dot"
@@ -75,18 +94,15 @@ export default function StageStatCard({
             iconHeight={23}
             status="basic"
           >
-            {getCoordinateString(locations[locations.length - 1])}
+            {endName}
           </IconStat>
         </View>
-        <View style={styles.startEndContainer}>
+        <View style={styles.startEndTimeContainer}>
           <Text appearance="hint" style={styles.timeString}>
-            {formatDate(locations[0].recordedAt ?? 0, DateFormat.TIME)}
+            {formatDate(startLocation.recordedAt ?? 0, DateFormat.TIME)}
           </Text>
           <Text appearance="hint" style={styles.timeString}>
-            {formatDate(
-              locations[locations.length - 1].recordedAt ?? 0,
-              DateFormat.TIME,
-            )}
+            {formatDate(endLocation.recordedAt ?? 0, DateFormat.TIME)}
           </Text>
         </View>
       </View>
@@ -142,11 +158,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   startEndContainer: {
+    flex: 6,
+    justifyContent: "space-between",
+    gap: 7,
+  },
+  startEndTimeContainer: {
+    flex: 1,
     justifyContent: "space-between",
     gap: 7,
   },
   timeString: {
     fontSize: 17,
+    textAlign: "right",
   },
   statContainer: {
     justifyContent: "space-between",

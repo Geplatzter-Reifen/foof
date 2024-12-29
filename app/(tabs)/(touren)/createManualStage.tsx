@@ -22,6 +22,7 @@ import { MapState } from "@rnmapbox/maps";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { getAllStagesByTourId } from "@/services/data/stageService";
 import { Location, Stage } from "@/database/model/model";
+import { roundNumber } from "@/utils/utils";
 
 type TopTapBarProps = {
   selectedMarkerIndex: number;
@@ -184,8 +185,8 @@ export default function CreateManualStage() {
       onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (startLongitude.current = longitude)}
       onDateChange={(date) => (startDate.current = date)}
-      initialLatitude={startLatitude.current}
-      initialLongitude={startLongitude.current}
+      initialLatitude={roundNumber(6, startLatitude.current)}
+      initialLongitude={roundNumber(6, startLongitude.current)}
       initialDate={startDate.current}
     />
   );
@@ -195,8 +196,8 @@ export default function CreateManualStage() {
       onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (endLongitude.current = longitude)}
       onDateChange={(date) => (endDate.current = date)}
-      initialLatitude={endLatitude.current}
-      initialLongitude={endLongitude.current}
+      initialLatitude={roundNumber(6, endLatitude.current)}
+      initialLongitude={roundNumber(6, endLongitude.current)}
       initialDate={endDate.current}
     />
   );

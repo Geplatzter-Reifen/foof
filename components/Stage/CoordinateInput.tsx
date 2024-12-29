@@ -23,12 +23,12 @@ function CoordinateInput(props: CoordinateInputProps) {
 
   let latitude: string | undefined = undefined;
   if (initialLatitude !== undefined) {
-    latitude = (Math.round(initialLatitude * 1000000) / 1000000).toString();
+    latitude = initialLatitude.toString();
   }
 
   let longitude: string | undefined = undefined;
   if (initialLongitude !== undefined) {
-    longitude = (Math.round(initialLongitude * 1000000) / 1000000).toString();
+    longitude = initialLongitude.toString();
   }
 
   return (

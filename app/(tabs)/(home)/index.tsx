@@ -13,8 +13,8 @@ import {
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
 import {
-  Layout,
   ButtonGroup,
+  Layout,
   Spinner,
   TopNavigation,
   Divider,
@@ -43,12 +43,15 @@ enum ButtonStates {
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
-  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+
   const [activeTour, setActiveTour] = useState<Tour>();
-  const [userCentered, setUserCentered] = useState(true);
-  const buttonIconSize = 60;
-  const camera = useRef<Camera>(null);
   const [activeStageId, setActiveStageId] = useState<string | null>();
+
+  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
+
+  const camera = useRef<Camera>(null);
+  const buttonIconSize = 60;
 
   useEffect(() => {
     const prepare = async () => {
@@ -71,7 +74,7 @@ export default function HomeScreen() {
       });
       setLoading(false);
     };
-    prepare();
+    void prepare();
   }, [activeTour]);
 
   const StartButton = () => {
@@ -158,10 +161,11 @@ export default function HomeScreen() {
         <Divider />
       </Layout>
       <Layout style={styles.layout}>
+        {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
-          localizeLabels={{ locale: "current" }}
+          localizeLabels={true}
           compassEnabled={true}
           compassPosition={{ top: 8, right: 8 }}
           logoPosition={{ top: 8, left: 8 }}
@@ -172,7 +176,7 @@ export default function HomeScreen() {
         >
           {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
           {activeStageId && <StageLine stageId={activeStageId} />}
-          <MapboxGL.Camera ref={camera} />
+          {/* Kamera, die dem User folgt */}
           <MapboxGL.Camera
             followZoomLevel={17}
             animationMode="flyTo"
@@ -180,10 +184,12 @@ export default function HomeScreen() {
             followUserLocation={userCentered}
             ref={camera}
           />
+          {/* Blauer Punkt */}
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
+        {/* Button zum Route anzeigen */}
         {activeTour && (
           <EnhancedRouteButton
             tour={activeTour}
@@ -194,6 +200,7 @@ export default function HomeScreen() {
             }}
           />
         )}
+        {/* Button zum Zentrieren der Karte auf den User */}
         {!userCentered && (
           <CenterButton onPress={() => setUserCentered(true)} />
         )}

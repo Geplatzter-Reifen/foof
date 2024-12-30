@@ -16,7 +16,7 @@ import {
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtils";
-import StageList from "@/components/Tour/StageList";
+import { StageList } from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
@@ -136,21 +136,24 @@ export default function Touruebersicht() {
         ></TopNavigation>
         <Divider />
       </Layout>
+
+      {/* Tourstatistiken in orangem Kasten */}
       <TourStats tour={activeTour} />
-      <Text category="h5" style={styles.stagesHeader}>
-        Etappen
-      </Text>
+
+      {/* Liste mit Etappen innerhalb einer Scrollview mit Fade */}
       <RNFadedScrollView
         allowStartFade={true}
         horizontal={false}
-        fadeSize={10}
+        fadeSize={15}
         fadeColors={[
-          hexToRgba(theme["background-basic-color-2"], 0.18),
+          hexToRgba(theme["background-basic-color-2"], 0.3),
           hexToRgba(theme["background-basic-color-2"], 0.9),
         ]}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>
+
+      {/* Button zum erstellen einer manuellen Etappe */}
       <Button
         style={styles.button}
         accessoryLeft={PlusIcon}
@@ -163,7 +166,7 @@ export default function Touruebersicht() {
             },
           })
         }
-      ></Button>
+      />
     </Layout>
   );
 }
@@ -174,10 +177,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  stagesHeader: {
-    marginHorizontal: 15,
-    marginVertical: 10,
   },
   button: {
     position: "absolute",

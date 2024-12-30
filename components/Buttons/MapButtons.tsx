@@ -1,23 +1,18 @@
-import { ImageProps, TouchableOpacity } from "react-native";
-import { Icon } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Tour } from "@/database/model/model";
 import React from "react";
+import SmallIconButton from "@/components/Buttons/SmallIconButton";
 
 type CenterButtonProps = {
   onPress: () => void;
 };
 
-export const CenterButton = (
-  props: CenterButtonProps & Partial<ImageProps>,
-) => (
-  <TouchableOpacity style={styles.centerButton} onPress={props.onPress}>
-    <Icon
-      {...props}
-      name="location-crosshairs"
-      style={[props.style, { height: 23 }]}
-    />
-  </TouchableOpacity>
+export const CenterButton = ({ onPress }: CenterButtonProps) => (
+  <SmallIconButton
+    icon="location-crosshairs"
+    style={styles.mapButton}
+    onPress={onPress}
+  />
 );
 
 type RouteButtonProps = {
@@ -25,14 +20,16 @@ type RouteButtonProps = {
   onPress: () => void;
 };
 
-export const RouteButton = (props: RouteButtonProps & Partial<ImageProps>) => {
-  if (props.routeCount === 0) {
+export const RouteButton = ({ routeCount, onPress }: RouteButtonProps) => {
+  if (routeCount === 0) {
     return null;
   }
   return (
-    <TouchableOpacity style={styles.routeButton} onPress={props.onPress}>
-      <Icon name="route" style={{ height: 22 }} />
-    </TouchableOpacity>
+    <SmallIconButton
+      icon="route"
+      style={[styles.mapButton, styles.routeButton]}
+      onPress={onPress}
+    />
   );
 };
 
@@ -43,21 +40,10 @@ const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
 export const EnhancedRouteButton = enhance(RouteButton);
 
 const styles = {
-  centerButton: {
+  mapButton: {
     backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
   },
   routeButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-    marginBottom: 10,
+    marginBottom: 11,
   },
 };

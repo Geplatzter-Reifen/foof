@@ -20,7 +20,7 @@ export default function IconStat(props: IconStatPropType) {
   function getColorStringByStatus(iconStatus: EvaStatus): string {
     switch (iconStatus) {
       case "basic":
-        return theme["color-basic-500"];
+        return theme["color-basic-400"];
       case "success":
         return theme["color-success-500"];
       case "info":
@@ -41,7 +41,13 @@ export default function IconStat(props: IconStatPropType) {
     <View style={styles.view} testID="container">
       <Icon
         name={props.icon}
-        style={{ height: iconHeight, width: iconWidth, color: iconColorString }}
+        style={{
+          height: iconHeight,
+          width: iconWidth,
+          color: iconColorString,
+          textAlign: "center",
+          textAlignVertical: "center",
+        }}
       />
       <Text style={{ fontSize: fontSize, ...styles.text }}>
         {props.children}

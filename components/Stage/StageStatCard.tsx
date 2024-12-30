@@ -136,6 +136,7 @@ export default function StageStatCard({
         ...styles.card,
       }}
       header={<Header />}
+      disabled={true}
     >
       {locations?.length > 0 && <StartEnd />}
       <Stats />

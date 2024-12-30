@@ -181,7 +181,7 @@ const makeStyles = (theme: ThemeType) => {
     deleteIcon: {
       height: 25,
       width: "auto",
-      color: theme["color-basic-500"],
+      color: theme["color-basic-400"],
     },
     layout: {
       flex: 1,
@@ -196,6 +196,7 @@ const makeStyles = (theme: ThemeType) => {
       flex: 1,
       borderRadius: 8,
       overflow: "hidden", // Wichtig für abgerundete Ecken
+      marginBottom: 5,
     },
   });
 };

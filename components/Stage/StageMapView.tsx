@@ -11,7 +11,7 @@ export default function StageMapView({
   stageId: string;
   locations: Location[];
 }) {
-  // Find the outermost coordinates
+  // Find the outermost coordinates & set as bounds
   let minLat = Infinity,
     maxLat = -Infinity,
     minLng = Infinity,

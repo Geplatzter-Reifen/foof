@@ -55,6 +55,7 @@ export default function StageStatCard({
     void getStartAndEndNames();
   }, [startLocation, endLocation]);
 
+  // Header der Kachel: Titel, Datum, Teilen-Button
   const Header = () => {
     return (
       <View style={styles.header}>
@@ -76,6 +77,7 @@ export default function StageStatCard({
     );
   };
 
+  // Start- und Zieladressen, Start- und Endzeitpunkt
   const StartEnd = () => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -109,6 +111,7 @@ export default function StageStatCard({
     );
   };
 
+  // Distanz, Dauer, Durchschnittsgeschwindigkeit
   const Stats = () => {
     return (
       <View style={styles.statContainer}>

@@ -19,8 +19,14 @@ describe("DateTimeModal Component", () => {
 
   it("renders correctly", () => {
     const { getByText } = render(<DateTimeModal {...defaultProps} />);
+    // Startzeit
     expect(getByText("Startzeit")).toBeTruthy();
+    expect(getByText("1.1.2024")).toBeTruthy();
+    expect(getByText("12:00:00")).toBeTruthy();
+    // Endzeit
     expect(getByText("Endzeit")).toBeTruthy();
+    expect(getByText("2.1.2024")).toBeTruthy();
+    expect(getByText("13:00:00")).toBeTruthy();
   });
 
   it("calls onClose when Abbrechen button is pressed", () => {

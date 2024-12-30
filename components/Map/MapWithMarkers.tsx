@@ -16,6 +16,7 @@ type MapWithMarkerProps = {
   centerCoordinate?: Position;
   zoomLevel?: number;
   heading?: number;
+  pitch?: number;
   stagesWithLocations?: { stage: Stage; locations: Location[] }[];
 };
 
@@ -28,12 +29,12 @@ function MapWithMarkers({
   centerCoordinate,
   zoomLevel,
   heading,
+  pitch,
   stagesWithLocations,
 }: MapWithMarkerProps) {
   const theme = useTheme();
   centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
   zoomLevel = zoomLevel || 5; // Zoom-Level für Deutschland
-  heading = heading || 0;
 
   const [startMarkerCoordinate, setStartMarkerCoordinate] =
     useState<Position | null>(
@@ -82,12 +83,14 @@ function MapWithMarkers({
         localizeLabels={true}
         onMapIdle={onMapIdle}
         scaleBarEnabled={false}
+        compassEnabled={true}
       >
         <MapboxGL.Camera
           centerCoordinate={centerCoordinate}
           zoomLevel={zoomLevel}
           animationDuration={0}
           heading={heading}
+          pitch={pitch}
         />
         {startMarkerCoordinate && (
           <Marker

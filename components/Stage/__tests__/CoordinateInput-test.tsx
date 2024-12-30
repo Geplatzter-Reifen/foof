@@ -17,10 +17,16 @@ describe("CoordinateInput", () => {
   };
 
   it("renders correctly with initial values", () => {
-    const { getByDisplayValue } = render(<CoordinateInput {...initialProps} />);
+    const { getByDisplayValue, getByText } = render(
+      <CoordinateInput {...initialProps} />,
+    );
 
+    expect(getByText("Latitude")).toBeTruthy();
     expect(getByDisplayValue("52.52")).toBeTruthy();
+    expect(getByText("Longitude")).toBeTruthy();
     expect(getByDisplayValue("13.405")).toBeTruthy();
+    expect(getByText("1.1.2024")).toBeTruthy();
+    expect(getByText("14:00:00")).toBeTruthy();
   });
 
   it("calls onLatitudeChange when latitude input changes", () => {

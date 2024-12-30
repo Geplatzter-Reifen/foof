@@ -17,7 +17,7 @@ import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
-import DateModal from "@/components/Modal/DateTimeModal";
+import DateTimeModal from "@/components/Modal/DateTimeModal";
 import { MapState } from "@rnmapbox/maps";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { getAllStagesByTourId } from "@/services/data/stageService";
@@ -64,6 +64,7 @@ export default function CreateManualStage() {
   const centerCoordinate = useRef<Position>();
   const zoomLevel = useRef<number>();
   const heading = useRef<number>();
+  const pitch = useRef<number>();
 
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
@@ -207,6 +208,7 @@ export default function CreateManualStage() {
     centerCoordinate.current = properties.center;
     zoomLevel.current = properties.zoom;
     heading.current = properties.heading;
+    pitch.current = properties.pitch;
   };
 
   const renderContent = () => {
@@ -241,6 +243,7 @@ export default function CreateManualStage() {
               centerCoordinate={centerCoordinate.current}
               zoomLevel={zoomLevel.current}
               heading={heading.current}
+              pitch={pitch.current}
               onMapIdle={handleMapIdle}
               stagesWithLocations={stagesWithLocations}
             />
@@ -268,7 +271,7 @@ export default function CreateManualStage() {
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
       </ButtonSwitch>
-      <DateModal
+      <DateTimeModal
         modalVisible={visible}
         onClose={() => setVisible(false)}
         onSave={submitStage}

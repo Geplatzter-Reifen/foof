@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ImageProps,
-  Platform,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
-import * as Location from "expo-location";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import * as TaskManager from "expo-task-manager";
-import * as Notifications from "expo-notifications";
 
 import {
   LOCATION_TASK_NAME,
@@ -21,13 +11,12 @@ import {
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
 import {
-  Layout,
   ButtonGroup,
-  Spinner,
-  Icon,
-  TopNavigation,
   Divider,
+  Layout,
+  Spinner,
   Text,
+  TopNavigation,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
@@ -37,6 +26,7 @@ import { Route, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import SmallIconButton from "@/components/Buttons/SmallIconButton";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -48,20 +38,20 @@ enum ButtonStates {
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
-  const [latitude, setLatitude] = useState<number>(0);
-  const [longitude, setLongitude] = useState<number>(0);
-  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+
   const [activeTour, setActiveTour] = useState<Tour>();
-  const [userCentered, setUserCentered] = useState(true);
-  const buttonIconSize = 60;
+  const [activeStageId, setActiveStageId] = useState<string | null>();
+
+  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
+
   const camera = useRef<Camera>(null);
+  const buttonIconSize = 60;
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
-  const [activeStageId, setActiveStageId] = useState<string | null>();
 
   useEffect(() => {
     const prepare = async () => {
-      await getCurrentLocation();
       TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
         if (result) {
           setButtonState(ButtonStates.Cycling);
@@ -74,52 +64,8 @@ export default function HomeScreen() {
       });
       setLoading(false);
     };
-    prepare();
+    void prepare();
   }, [activeTour]);
-
-  const requestPermissionsAsync = async () => {
-    return await Notifications.requestPermissionsAsync({
-      ios: {
-        allowAlert: true,
-        allowBadge: true,
-        allowSound: true,
-      },
-    });
-  };
-
-  //get current location
-  const getCurrentLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log(status);
-    const { status: notificationStatus } = await requestPermissionsAsync();
-    console.log(notificationStatus);
-
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission denied",
-        "Allow the app to use location services",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ],
-      );
-      return; // Exit the function if permission is not granted
-    }
-
-    try {
-      const { coords } = await Location.getCurrentPositionAsync();
-      if (coords) {
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      }
-    } catch (error) {
-      console.log("Error getting location:", error);
-    }
-  };
 
   const StartButton = () => {
     return (
@@ -220,17 +166,12 @@ export default function HomeScreen() {
     });
   };
 
-  const CenterButton = (props?: Partial<ImageProps>) => (
-    <TouchableOpacity
-      style={styles.centerButton}
+  const CenterButton = () => (
+    <SmallIconButton
+      icon="location-crosshairs"
+      style={styles.mapButton}
       onPress={() => setUserCentered(true)}
-    >
-      <Icon
-        {...props}
-        name="location-crosshairs"
-        style={[props?.style, { height: 23 }]}
-      />
-    </TouchableOpacity>
+    />
   );
 
   const RouteButton = ({ routeCount }: { routeCount: number }) => {
@@ -238,16 +179,15 @@ export default function HomeScreen() {
       return null;
     }
     return (
-      <TouchableOpacity
-        style={styles.routeButton}
+      <SmallIconButton
+        icon="route"
+        style={[styles.mapButton, styles.routeButton]}
         onPress={async () => {
           setUserCentered(false);
           await timeout(100);
           showRoute();
         }}
-      >
-        <Icon name="route" style={{ height: 22 }} />
-      </TouchableOpacity>
+      />
     );
   };
 
@@ -340,10 +280,10 @@ export default function HomeScreen() {
         <Divider />
       </Layout>
       <Layout style={styles.layout}>
+        {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
-          localizeLabels={{ locale: "current" }}
           compassEnabled={true}
           compassPosition={{ top: 8, right: 8 }}
           logoPosition={{ top: 8, left: 8 }}
@@ -354,23 +294,22 @@ export default function HomeScreen() {
         >
           {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
           {activeStageId && <StageLine stageId={activeStageId} />}
-          <MapboxGL.Camera ref={camera} />
+          {/* Kamera, die dem User folgt */}
           <MapboxGL.Camera
-            defaultSettings={{
-              centerCoordinate: [longitude, latitude],
-              zoomLevel: 14,
-            }}
             followZoomLevel={17}
             animationMode="flyTo"
             followUserMode={UserTrackingMode.Follow}
             followUserLocation={userCentered}
             ref={camera}
           />
+          {/* Blauer Punkt */}
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
       <View style={styles.mapButtonsContainer}>
+        {/* Button zum Route anzeigen */}
         {activeTour && <EnhancedRouteButton tour={activeTour} />}
+        {/* Button zum Zentrieren der Karte auf den User */}
         {!userCentered && <CenterButton />}
       </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
@@ -415,21 +354,10 @@ const styles = StyleSheet.create({
     top: 175,
     right: 11,
   },
-  centerButton: {
+  mapButton: {
     backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
   },
   routeButton: {
-    backgroundColor: "#fff",
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    elevation: 3,
-    padding: 10.5,
-    marginBottom: 10,
+    marginBottom: 11,
   },
 });

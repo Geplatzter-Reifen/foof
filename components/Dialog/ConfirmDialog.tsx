@@ -9,6 +9,7 @@ interface ConfirmDialogProps {
   title?: string;
   message?: string;
   confirmString?: string;
+  cancelString?: string;
 }
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
@@ -18,6 +19,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   title = "Bestätigung",
   message = "Möchtest du wirklich fortfahren?",
   confirmString = "Bestätigen",
+  cancelString = "Abbrechen",
 }) => {
   return (
     <Modal
@@ -35,7 +37,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             {confirmString}
           </Button>
           <Button onPress={onCancel} style={styles.button} status="basic">
-            Abbrechen
+            {cancelString}
           </Button>
         </View>
       </Card>

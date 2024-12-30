@@ -1,0 +1,348 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmDialog is not visible when requested 1`] = `null`;
+
+exports[`ConfirmDialog renders default texts 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  onDismiss={[Function]}
+  onRequestClose={[Function]}
+  statusBarTranslucent={true}
+  transparent={true}
+  visible={true}
+>
+  <View
+    style={
+      {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+      testID="@backdrop"
+    />
+    <View
+      backdropStyle={
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
+        }
+      }
+      onBackdropPress={[Function]}
+      onLayout={[Function]}
+      shouldUseContainer={true}
+      style={
+        [
+          undefined,
+          {
+            "position": "absolute",
+          },
+          {
+            "left": -999,
+            "top": -999,
+          },
+        ]
+      }
+      visible={true}
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": true,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7e7e7e",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "marginHorizontal": 25,
+            "opacity": 1,
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": undefined,
+              "height": 0,
+            }
+          }
+        />
+        <View
+          style={
+            [
+              {
+                "flexShrink": 1,
+              },
+              {
+                "paddingHorizontal": 24,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            appearance="default"
+            category="h6"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 18,
+                  "fontWeight": "800",
+                },
+                {
+                  "marginBottom": 10,
+                },
+              ]
+            }
+          >
+            Bestätigung
+          </Text>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "marginBottom": 20,
+                },
+              ]
+            }
+          >
+            Möchtest du wirklich fortfahren?
+          </Text>
+          <View
+            style={
+              {
+                "flex": 1,
+                "flexDirection": "row",
+                "gap": 10,
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#FF6756",
+                  "borderColor": "#FF6756",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#FFFFFF",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                Bestätigen
+              </Text>
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#b8b8b8",
+                  "borderColor": "#b8b8b8",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#202020",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                Abbrechen
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</Modal>
+`;

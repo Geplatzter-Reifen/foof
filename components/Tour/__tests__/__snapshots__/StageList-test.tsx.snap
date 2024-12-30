@@ -13,7 +13,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -28,7 +28,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -67,215 +67,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -314,7 +126,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -372,6 +183,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -384,7 +197,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -442,6 +254,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -454,7 +268,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -512,6 +325,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -549,7 +364,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -564,7 +379,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -603,215 +418,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -850,7 +477,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -908,6 +534,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -920,7 +548,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -978,6 +605,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -990,7 +619,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -1048,6 +676,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -1085,7 +715,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -1100,7 +730,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1139,215 +769,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -1386,7 +828,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -1444,6 +885,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -1456,7 +899,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -1514,6 +956,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -1526,7 +970,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -1584,6 +1027,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -1621,7 +1066,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -1636,7 +1081,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1675,215 +1120,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -1922,7 +1179,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -1980,6 +1236,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -1992,7 +1250,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -2050,6 +1307,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -2062,7 +1321,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -2120,6 +1378,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -2157,7 +1417,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -2172,7 +1432,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -2211,215 +1471,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -2458,7 +1530,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -2516,6 +1587,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -2528,7 +1601,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -2586,6 +1658,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -2598,7 +1672,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -2656,6 +1729,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -2693,7 +1768,7 @@ exports[`StageList renders correctly for many stages 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -2708,7 +1783,7 @@ exports[`StageList renders correctly for many stages 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -2747,215 +1822,27 @@ exports[`StageList renders correctly for many stages 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -2994,7 +1881,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3052,6 +1938,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -3064,7 +1952,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3122,6 +2009,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -3134,7 +2023,6 @@ exports[`StageList renders correctly for many stages 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3192,6 +2080,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -3273,7 +2163,7 @@ exports[`StageList renders correctly for one stage 1`] = `
       {
         "busy": undefined,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -3288,7 +2178,7 @@ exports[`StageList renders correctly for one stage 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -3327,215 +2217,27 @@ exports[`StageList renders correctly for one stage 1`] = `
         }
       }
     />
-    <View
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
       style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-        }
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
       }
     >
-      <Text
-        appearance="default"
-        category="h5"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 22,
-              "fontWeight": "800",
-            },
-            {
-              "marginLeft": 15,
-              "marginTop": 8,
-            },
-          ]
-        }
-      >
-        Test Stage
-      </Text>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "minHeight": 40,
-              "minWidth": 40,
-              "opacity": 1,
-              "paddingHorizontal": 10,
-              "paddingVertical": 12,
-            }
-          }
-        >
-          <View
-            collapsable={false}
-            style={
-              {
-                "transform": [
-                  {
-                    "scale": 1,
-                  },
-                ],
-              }
-            }
-          >
-            <Text
-              allowFontScaling={false}
-              selectable={false}
-              style={
-                [
-                  {
-                    "color": "#494949",
-                    "fontSize": 18,
-                  },
-                  {
-                    "marginHorizontal": 10,
-                    "width": "auto",
-                  },
-                  {
-                    "fontFamily": "FontAwesome6Free-Solid",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  {
-                    "fontWeight": "900",
-                  },
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+      Test Stage
+    </Text>
     <View
       appearance="default"
       style={
@@ -3574,7 +2276,6 @@ exports[`StageList renders correctly for one stage 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3632,6 +2333,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -3644,7 +2347,6 @@ exports[`StageList renders correctly for one stage 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3702,6 +2404,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },
@@ -3714,7 +2418,6 @@ exports[`StageList renders correctly for one stage 1`] = `
         <View
           style={
             {
-              "flex": 1,
               "flexDirection": "row",
             }
           }
@@ -3772,6 +2475,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   "fontWeight": "400",
                 },
                 {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
                   "fontSize": 18,
                   "marginLeft": 8,
                 },

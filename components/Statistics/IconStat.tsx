@@ -41,13 +41,7 @@ export default function IconStat(props: IconStatPropType) {
     <View style={styles.view} testID="container">
       <Icon
         name={props.icon}
-        style={{
-          height: iconHeight,
-          width: iconWidth,
-          color: iconColorString,
-          textAlign: "center",
-          textAlignVertical: "center",
-        }}
+        style={{ height: iconHeight, width: iconWidth, color: iconColorString }}
       />
       <Text style={{ fontSize: fontSize, ...styles.text }}>
         {props.children}
@@ -64,6 +58,5 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flexShrink: 1,
     flexWrap: "wrap",
-    width: "100%",
   },
 });

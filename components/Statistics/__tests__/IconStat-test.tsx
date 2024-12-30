@@ -9,7 +9,7 @@ describe("TourStats", () => {
   });
   it("should render the icon and font in correct size", () => {
     const view = render(
-      <IconStat icon="home" iconSize={30} fontSize={21}>
+      <IconStat icon="home" iconHeight={30} iconWidth={35} fontSize={21}>
         1001km
       </IconStat>,
     );

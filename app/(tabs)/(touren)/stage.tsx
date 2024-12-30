@@ -7,7 +7,7 @@ import {
   ThemeType,
 } from "@ui-kitten/components";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteStage,
   getStageByStageId,
@@ -20,18 +20,22 @@ import StageStatCard from "@/components/Stage/StageStatCard";
 import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
-export default function HomeScreen() {
+export default function StageScreen() {
+  // Etappen-ID aus dem Pfad holen
   const { stageId } = useLocalSearchParams<{ stageId: string }>();
+  // Lokale Variablen für die Etappe, Etappenlocations und Etappentitel
   const [stage, setStage] = useState<Stage>();
   const [stageLocations, setStageLocations] = useState<Location[]>([]);
-  // changing the title of the page
-  const navigation = useNavigation();
-  //switches title from plain text to the input field
+  const [stageTitleVal, setStageTitleVal] = useState("Etappe");
+  // Wird der Titel gerade bearbeitet?
   const [titleBeingChanged, setTitleBeingChanged] = useState(false);
-  const [stageTitleVal, setStageTitleVal] = useState("Etappe"); ///the name of the title
+  // Um den Header anzupassen, wenn der Etappentitel bearbeitet wird
+  const navigation = useNavigation();
+
   const theme = useTheme();
   const styles = makeStyles(theme);
 
+  // Vorbereitung: Etappe, Etappentitel und Locations setzen
   useEffect(() => {
     (async () => {
       const dbStage = await getStageByStageId(stageId);
@@ -48,6 +52,48 @@ export default function HomeScreen() {
     })();
   }, [stage, stageId]);
 
+  // Button zum Löschen der Etappe & zurücknavigieren
+  const DeleteButton = useCallback(() => {
+    let isDialogVisible = false;
+
+    const handleConfirm = () => {
+      void deleteStage(stageId);
+      isDialogVisible = false;
+      navigation.goBack();
+    };
+
+    return (
+      <View style={styles.deleteButton}>
+        <TouchableOpacity
+          onPress={() => {
+            isDialogVisible = true;
+          }}
+        >
+          <Icon name="trash-can" style={styles.deleteIcon} />
+        </TouchableOpacity>
+
+        {/*Öffnet einen Dialog zum Bestätigen*/}
+        <ConfirmDialog
+          visible={isDialogVisible}
+          title="Etappe löschen"
+          message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
+          confirmString="Löschen"
+          onConfirm={handleConfirm}
+          onCancel={() => {
+            isDialogVisible = false;
+          }}
+        />
+      </View>
+    );
+  }, [
+    navigation,
+    stage?.title,
+    stageId,
+    styles.deleteButton,
+    styles.deleteIcon,
+  ]);
+
+  // Input-Feld, in dem der Etappentitel eingegeben wird
   const titleInput = useMemo(
     () => (
       <Layout style={styles.headerInput}>
@@ -61,7 +107,7 @@ export default function HomeScreen() {
     [styles.headerInput, stageTitleVal],
   );
 
-  //switching between done and edit, saving new title to DB
+  // Edit/Confirm-Button, der den Bearbeitungsmodus (de)aktiviert und den neuen Titel in die DB Schreibt
   const changeTitleButton = useMemo(
     () => (
       <TouchableOpacity
@@ -82,34 +128,7 @@ export default function HomeScreen() {
     [styles.iconStyle, stage, stageTitleVal, titleBeingChanged],
   );
 
-  const DeleteButton = () => {
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
-
-    const handleConfirm = () => {
-      deleteStage(stageId);
-      setIsDialogVisible(false);
-      navigation.goBack();
-    };
-
-    return (
-      <View style={styles.deleteButton}>
-        <TouchableOpacity onPress={() => setIsDialogVisible(true)}>
-          <Icon name="trash-can" style={styles.deleteIcon} />
-        </TouchableOpacity>
-
-        <ConfirmDialog
-          visible={isDialogVisible}
-          title="Etappe löschen"
-          message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
-          confirmString="Löschen"
-          onConfirm={handleConfirm}
-          onCancel={() => setIsDialogVisible(false)}
-        />
-      </View>
-    );
-  };
-
-  // Update header input ot text based on if title or edit state changes
+  // Header: zwischen Etappentitel und Eingabefeld switchen
   useEffect(() => {
     navigation.setOptions({
       headerTitle: () =>
@@ -132,6 +151,7 @@ export default function HomeScreen() {
     changeTitleButton,
     titleBeingChanged,
     stageTitleVal,
+    DeleteButton,
   ]);
 
   return (

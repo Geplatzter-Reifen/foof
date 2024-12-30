@@ -17,7 +17,7 @@ import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
-import DateModal from "@/components/Modal/DateModal";
+import DateModal from "@/components/Modal/DateTimeModal";
 import { MapState } from "@rnmapbox/maps";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { getAllStagesByTourId } from "@/services/data/stageService";
@@ -184,7 +184,7 @@ export default function CreateManualStage() {
     <CoordinateInput
       onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (startLongitude.current = longitude)}
-      onDateChange={(date) => (startDate.current = date)}
+      onDateTimeChange={(date) => (startDate.current = date)}
       initialLatitude={roundNumber(6, startLatitude.current)}
       initialLongitude={roundNumber(6, startLongitude.current)}
       initialDate={startDate.current}
@@ -195,7 +195,7 @@ export default function CreateManualStage() {
     <CoordinateInput
       onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
       onLongitudeChange={(longitude) => (endLongitude.current = longitude)}
-      onDateChange={(date) => (endDate.current = date)}
+      onDateTimeChange={(date) => (endDate.current = date)}
       initialLatitude={roundNumber(6, endLatitude.current)}
       initialLongitude={roundNumber(6, endLongitude.current)}
       initialDate={endDate.current}

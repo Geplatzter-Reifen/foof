@@ -10,9 +10,15 @@ type DateTimeButtonProps = {
   date: Date;
   mode: "date" | "time";
   onDateChange: (date: Date) => void;
+  testID?: string;
 };
 
-const DateTimeButton = ({ date, mode, onDateChange }: DateTimeButtonProps) => {
+const DateTimeButton = ({
+  date,
+  mode,
+  onDateChange,
+  testID,
+}: DateTimeButtonProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const theme = useTheme();
 
@@ -35,6 +41,7 @@ const DateTimeButton = ({ date, mode, onDateChange }: DateTimeButtonProps) => {
             icon={mode === "date" ? "calendar" : "clock"}
           />
         }
+        testID={testID}
       >
         {mode === "date"
           ? date.toLocaleDateString()
@@ -43,6 +50,7 @@ const DateTimeButton = ({ date, mode, onDateChange }: DateTimeButtonProps) => {
 
       {showPicker && (
         <DateTimePicker
+          testID="dateTimePicker"
           value={date}
           mode={mode}
           display={Platform.OS === "ios" ? "spinner" : "default"}

@@ -5,7 +5,7 @@ import DateTimeButton from "@/components/Modal/DateTimeButton";
 type CoordinateInputProps = {
   onLatitudeChange: (latitude: number) => void;
   onLongitudeChange: (longitude: number) => void;
-  onDateChange: (date: Date) => void;
+  onDateTimeChange: (date: Date) => void;
   initialLatitude?: number;
   initialLongitude?: number;
   initialDate?: Date;
@@ -15,7 +15,7 @@ function CoordinateInput(props: CoordinateInputProps) {
   const {
     onLatitudeChange,
     onLongitudeChange,
-    onDateChange,
+    onDateTimeChange,
     initialLatitude,
     initialLongitude,
     initialDate,
@@ -61,13 +61,15 @@ function CoordinateInput(props: CoordinateInputProps) {
         <DateTimeButton
           date={initialDate || new Date()}
           mode={"date"}
-          onDateChange={onDateChange}
+          onDateChange={onDateTimeChange}
+          testID="datePicker"
         />
         {/* Button to open time picker */}
         <DateTimeButton
           date={initialDate || new Date()}
           mode={"time"}
-          onDateChange={onDateChange}
+          onDateChange={onDateTimeChange}
+          testID="timePicker"
         />
       </Layout>
     </>

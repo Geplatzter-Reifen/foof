@@ -138,15 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
-  markerContainer: {
-    alignItems: "center",
-  },
-  marker: {
-    width: 20,
-    height: 20,
-    backgroundColor: "red",
-    borderRadius: 10,
-  },
 });
 
 export default MapWithMarkers;

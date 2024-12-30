@@ -1,7 +1,7 @@
-import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
 import { Button, Layout, Text } from "@ui-kitten/components";
 import DateTimeButton from "@/components/Modal/DateTimeButton";
+import { useState } from "react";
 
 type DateTimeModalProps = {
   modalVisible: boolean;
@@ -24,10 +24,8 @@ function DateTimeModal(props: DateTimeModalProps) {
     initialEndDate,
   } = props;
 
-  const [startDate, setStartDate] = React.useState(
-    initialStartDate || new Date(),
-  );
-  const [endDate, setEndDate] = React.useState(initialEndDate || new Date());
+  const [startDate, setStartDate] = useState(initialStartDate || new Date());
+  const [endDate, setEndDate] = useState(initialEndDate || new Date());
 
   const handleStartDateChange = (date: Date) => {
     onStartDateChange(date);
@@ -115,12 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between", // Space them out
     alignItems: "center", // Center items vertically
     marginBottom: 5, // Add spacing between rows
-  },
-  input: {
-    flex: 1, // Make inputs share space equally
-    marginHorizontal: 8, // Add space between inputs
-    marginVertical: 3,
-    backgroundColor: "transparent",
   },
   button: {
     flex: 1,

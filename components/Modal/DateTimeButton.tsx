@@ -64,8 +64,8 @@ const DateTimeButton = ({
 
 const styles = StyleSheet.create({
   input: {
-    flex: 1,
-    marginHorizontal: 8,
+    flex: 1, // Make inputs share space equally
+    marginHorizontal: 8, // Add space between inputs
     marginVertical: 3,
     backgroundColor: "transparent",
   },

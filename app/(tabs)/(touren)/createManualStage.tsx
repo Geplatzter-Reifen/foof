@@ -211,8 +211,10 @@ export default function CreateManualStage() {
     pitch.current = properties.pitch;
   };
 
+  /** Render the content based on the selected index */
   const renderContent = () => {
     switch (selectedIndex) {
+      // Coordinate input
       case 0:
         return (
           <>
@@ -220,6 +222,7 @@ export default function CreateManualStage() {
             <CardComponent title="Ende" form={renderEndCoordinateInput} />
           </>
         );
+      // Map input
       case 1:
         const initialStartCoordinate: Position = [
           startLongitude.current ?? NaN,
@@ -249,8 +252,6 @@ export default function CreateManualStage() {
             />
           </>
         );
-      case 2:
-        return <Text>City Input</Text>;
       default:
         return null;
     }

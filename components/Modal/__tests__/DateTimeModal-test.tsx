@@ -60,7 +60,9 @@ describe("DateTimeModal Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(getByText("13:00:00"));
+    fireEvent.press(
+      getByText(new Date(2024, 0, 2, 13, 0, 0).toLocaleTimeString()),
+    );
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: new Date(2024, 0, 1, 14, 0, 0).getTime() },
     });

@@ -12,20 +12,22 @@ describe("DateTimeButton Component", () => {
 
   it("renders correctly with initial date", () => {
     const { getByText } = render(<DateTimeButton {...defaultProps} />);
-    expect(getByText("1.1.2024")).toBeTruthy();
+    expect(getByText(new Date(2024, 0, 1).toLocaleDateString())).toBeTruthy();
   });
 
   it("renders correctly with initial time", () => {
     const props = { ...defaultProps, mode: "time" as "date" | "time" };
     const { getByText } = render(<DateTimeButton {...props} />);
-    expect(getByText("12:00:00")).toBeTruthy();
+    expect(
+      getByText(new Date(2024, 0, 1, 12, 0, 0).toLocaleTimeString()),
+    ).toBeTruthy();
   });
 
   it("opens date picker on button press", () => {
     const { getByText, getByTestId } = render(
       <DateTimeButton {...defaultProps} />,
     );
-    fireEvent.press(getByText("1.1.2024"));
+    fireEvent.press(getByText(new Date(2024, 0, 1).toLocaleDateString()));
     expect(getByTestId("dateTimePicker")).toBeTruthy();
   });
 
@@ -33,7 +35,7 @@ describe("DateTimeButton Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeButton {...defaultProps} />,
     );
-    fireEvent.press(getByText("1.1.2024"));
+    fireEvent.press(getByText(new Date(2024, 0, 1).toLocaleDateString()));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: new Date(2024, 0, 2).getTime() },
     });
@@ -43,7 +45,9 @@ describe("DateTimeButton Component", () => {
   it("calls onDateChange with new time", () => {
     const props = { ...defaultProps, mode: "time" as "date" | "time" };
     const { getByText, getByTestId } = render(<DateTimeButton {...props} />);
-    fireEvent.press(getByText("12:00:00"));
+    fireEvent.press(
+      getByText(new Date(2024, 0, 1, 12, 0, 0).toLocaleTimeString()),
+    );
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: new Date(2024, 0, 1, 13, 0, 0).getTime() },
     });

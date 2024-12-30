@@ -25,8 +25,10 @@ describe("CoordinateInput", () => {
     expect(getByDisplayValue("52.52")).toBeTruthy();
     expect(getByText("Longitude")).toBeTruthy();
     expect(getByDisplayValue("13.405")).toBeTruthy();
-    expect(getByText("1.1.2024")).toBeTruthy();
-    expect(getByText("14:00:00")).toBeTruthy();
+    expect(getByText(new Date(2024, 0, 1).toLocaleDateString())).toBeTruthy();
+    expect(
+      getByText(new Date(2024, 0, 1, 14, 0, 0).toLocaleTimeString()),
+    ).toBeTruthy();
   });
 
   it("calls onLatitudeChange when latitude input changes", () => {

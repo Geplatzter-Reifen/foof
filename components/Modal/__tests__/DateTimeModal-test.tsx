@@ -21,12 +21,16 @@ describe("DateTimeModal Component", () => {
     const { getByText } = render(<DateTimeModal {...defaultProps} />);
     // Startzeit
     expect(getByText("Startzeit")).toBeTruthy();
-    expect(getByText("1.1.2024")).toBeTruthy();
-    expect(getByText("12:00:00")).toBeTruthy();
+    expect(getByText(new Date(2024, 0, 1).toLocaleDateString())).toBeTruthy();
+    expect(
+      getByText(new Date(2024, 0, 1, 12, 0, 0).toLocaleTimeString()),
+    ).toBeTruthy();
     // Endzeit
     expect(getByText("Endzeit")).toBeTruthy();
-    expect(getByText("2.1.2024")).toBeTruthy();
-    expect(getByText("13:00:00")).toBeTruthy();
+    expect(getByText(new Date(2024, 0, 2).toLocaleDateString())).toBeTruthy();
+    expect(
+      getByText(new Date(2024, 0, 2, 13, 0, 0).toLocaleTimeString()),
+    ).toBeTruthy();
   });
 
   it("calls onClose when Abbrechen button is pressed", () => {
@@ -45,7 +49,7 @@ describe("DateTimeModal Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(getByText("1.1.2024"));
+    fireEvent.press(getByText(new Date(2024, 0, 1).toLocaleDateString()));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: new Date(2024, 0, 2).getTime() },
     });

@@ -7,13 +7,15 @@ describe("CoordinateInput", () => {
   const mockOnLongitudeChange = jest.fn();
   const mockOnDateTimeChange = jest.fn();
 
+  const date = new Date(2024, 0, 1, 14, 0, 0);
+
   const initialProps = {
     onLatitudeChange: mockOnLatitudeChange,
     onLongitudeChange: mockOnLongitudeChange,
     onDateTimeChange: mockOnDateTimeChange,
     initialLatitude: 52.52,
     initialLongitude: 13.405,
-    initialDate: new Date(2024, 0, 1, 14, 0, 0),
+    initialDate: date,
   };
 
   it("renders correctly with initial values", () => {
@@ -26,9 +28,7 @@ describe("CoordinateInput", () => {
     expect(getByText("Longitude")).toBeTruthy();
     expect(getByDisplayValue("13.405")).toBeTruthy();
     expect(getByText(new Date(2024, 0, 1).toLocaleDateString())).toBeTruthy();
-    expect(
-      getByText(new Date(2024, 0, 1, 14, 0, 0).toLocaleTimeString()),
-    ).toBeTruthy();
+    expect(getByText(date.toLocaleTimeString())).toBeTruthy();
   });
 
   it("calls onLatitudeChange when latitude input changes", () => {
@@ -50,28 +50,30 @@ describe("CoordinateInput", () => {
   });
 
   it("calls onDateTimeChange when date or time changes", () => {
-    const { getByTestId } = render(<CoordinateInput {...initialProps} />);
-    const dateButton = getByTestId("datePicker");
-    const timeButton = getByTestId("timePicker");
+    const { getByTestId, getByText } = render(
+      <CoordinateInput {...initialProps} />,
+    );
 
+    let newDate = new Date(2024, 0, 2);
+    const dateButton = getByText(date.toLocaleDateString());
     // Simulate date change
     fireEvent.press(dateButton);
     let datePicker = getByTestId("dateTimePicker");
     fireEvent(datePicker, "onChange", {
-      nativeEvent: { timestamp: new Date(2024, 0, 2).getTime() },
+      nativeEvent: { timestamp: newDate.getTime() },
     });
 
-    expect(mockOnDateTimeChange).toHaveBeenCalledWith(new Date(2024, 0, 2));
+    expect(mockOnDateTimeChange).toHaveBeenCalledWith(newDate);
 
+    newDate = new Date(2024, 0, 1, 15, 0, 0);
+    const timeButton = getByText(date.toLocaleTimeString());
     // Simulate time change
     fireEvent.press(timeButton);
     datePicker = getByTestId("dateTimePicker");
     fireEvent(datePicker, "onChange", {
-      nativeEvent: { timestamp: new Date(2024, 0, 1, 15, 0, 0).getTime() },
+      nativeEvent: { timestamp: newDate.getTime() },
     });
 
-    expect(mockOnDateTimeChange).toHaveBeenCalledWith(
-      new Date(2024, 0, 1, 15, 0, 0),
-    );
+    expect(mockOnDateTimeChange).toHaveBeenCalledWith(newDate);
   });
 });

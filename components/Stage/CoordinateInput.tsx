@@ -62,14 +62,12 @@ function CoordinateInput(props: CoordinateInputProps) {
           date={initialDate || new Date()}
           mode={"date"}
           onDateChange={onDateTimeChange}
-          testID="datePicker"
         />
         {/* Button to open time picker */}
         <DateTimeButton
           date={initialDate || new Date()}
           mode={"time"}
           onDateChange={onDateTimeChange}
-          testID="timePicker"
         />
       </Layout>
     </>

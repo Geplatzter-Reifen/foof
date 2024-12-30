@@ -7,30 +7,30 @@ describe("DateTimeModal Component", () => {
   const mockOnSave = jest.fn();
   const mockOnStartDateChange = jest.fn();
   const mockOnEndDateChange = jest.fn();
+
+  const startDate = new Date(2024, 0, 1, 12, 0, 0);
+  const endDate = new Date(2024, 0, 2, 13, 0, 0);
+
   const defaultProps = {
     modalVisible: true,
     onClose: mockOnClose,
     onSave: mockOnSave,
     onStartDateChange: mockOnStartDateChange,
     onEndDateChange: mockOnEndDateChange,
-    initialStartDate: new Date(2024, 0, 1, 12, 0, 0),
-    initialEndDate: new Date(2024, 0, 2, 13, 0, 0),
+    initialStartDate: startDate,
+    initialEndDate: endDate,
   };
 
   it("renders correctly", () => {
     const { getByText } = render(<DateTimeModal {...defaultProps} />);
     // Startzeit
     expect(getByText("Startzeit")).toBeTruthy();
-    expect(getByText(new Date(2024, 0, 1).toLocaleDateString())).toBeTruthy();
-    expect(
-      getByText(new Date(2024, 0, 1, 12, 0, 0).toLocaleTimeString()),
-    ).toBeTruthy();
+    expect(getByText(startDate.toLocaleDateString())).toBeTruthy();
+    expect(getByText(startDate.toLocaleTimeString())).toBeTruthy();
     // Endzeit
     expect(getByText("Endzeit")).toBeTruthy();
-    expect(getByText(new Date(2024, 0, 2).toLocaleDateString())).toBeTruthy();
-    expect(
-      getByText(new Date(2024, 0, 2, 13, 0, 0).toLocaleTimeString()),
-    ).toBeTruthy();
+    expect(getByText(endDate.toLocaleDateString())).toBeTruthy();
+    expect(getByText(endDate.toLocaleTimeString())).toBeTruthy();
   });
 
   it("calls onClose when Abbrechen button is pressed", () => {
@@ -46,28 +46,26 @@ describe("DateTimeModal Component", () => {
   });
 
   it("calls onStartDateChange with new date", () => {
+    const newStartDate = new Date(2024, 0, 2);
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(getByText(new Date(2024, 0, 1).toLocaleDateString()));
+    fireEvent.press(getByText(startDate.toLocaleDateString()));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
-      nativeEvent: { timestamp: new Date(2024, 0, 2).getTime() },
+      nativeEvent: { timestamp: newStartDate.getTime() },
     });
-    expect(mockOnStartDateChange).toHaveBeenCalledWith(new Date(2024, 0, 2));
+    expect(mockOnStartDateChange).toHaveBeenCalledWith(newStartDate);
   });
 
   it("calls onEndDateChange with new time", () => {
+    const newEndDate = new Date(2024, 0, 1, 14, 0, 0);
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(
-      getByText(new Date(2024, 0, 2, 13, 0, 0).toLocaleTimeString()),
-    );
+    fireEvent.press(getByText(endDate.toLocaleTimeString()));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
-      nativeEvent: { timestamp: new Date(2024, 0, 1, 14, 0, 0).getTime() },
+      nativeEvent: { timestamp: newEndDate.getTime() },
     });
-    expect(mockOnEndDateChange).toHaveBeenCalledWith(
-      new Date(2024, 0, 1, 14, 0, 0),
-    );
+    expect(mockOnEndDateChange).toHaveBeenCalledWith(newEndDate);
   });
 });

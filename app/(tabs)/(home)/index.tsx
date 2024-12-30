@@ -27,6 +27,7 @@ import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import SmallIconButton from "@/components/Buttons/SmallIconButton";
+import { router } from "expo-router";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -110,6 +111,12 @@ export default function HomeScreen() {
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
           void stopAutomaticTracking();
+          router.push({
+            pathname: "../(touren)/stage",
+            params: {
+              stageId: activeStageId,
+            },
+          });
           setActiveStageId(null);
         }}
       />

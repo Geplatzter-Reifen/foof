@@ -31,6 +31,8 @@ export default function StageScreen() {
   const [titleBeingChanged, setTitleBeingChanged] = useState(false);
   // Um den Header anzupassen, wenn der Etappentitel bearbeitet wird
   const navigation = useNavigation();
+  // Wird der Löschen-Dialog angezeigt?
+  const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
 
   const theme = useTheme();
   const styles = makeStyles(theme);
@@ -54,11 +56,9 @@ export default function StageScreen() {
 
   // Button zum Löschen der Etappe & zurücknavigieren
   const DeleteButton = useCallback(() => {
-    let isDialogVisible = false;
-
     const handleConfirm = () => {
       void deleteStage(stageId);
-      isDialogVisible = false;
+      setIsDeleteDialogVisible(false);
       navigation.goBack();
     };
 
@@ -66,7 +66,7 @@ export default function StageScreen() {
       <View style={styles.deleteButton}>
         <TouchableOpacity
           onPress={() => {
-            isDialogVisible = true;
+            setIsDeleteDialogVisible(true);
           }}
         >
           <Icon name="trash-can" style={styles.deleteIcon} />
@@ -74,18 +74,19 @@ export default function StageScreen() {
 
         {/*Öffnet einen Dialog zum Bestätigen*/}
         <ConfirmDialog
-          visible={isDialogVisible}
+          visible={isDeleteDialogVisible}
           title="Etappe löschen"
           message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
           confirmString="Löschen"
           onConfirm={handleConfirm}
           onCancel={() => {
-            isDialogVisible = false;
+            setIsDeleteDialogVisible(false);
           }}
         />
       </View>
     );
   }, [
+    isDeleteDialogVisible,
     navigation,
     stage?.title,
     stageId,

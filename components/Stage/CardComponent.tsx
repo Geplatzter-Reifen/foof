@@ -40,11 +40,7 @@ const CardComponent: React.FC<cardProps> = ({ form, title }) => {
       <Card
         style={style.card}
         header={() => <CardHeader title={title} />}
-        pointerEvents="none"
         disabled={true}
-        pressableProps={{
-          android_ripple: { color: "transparent" }, // Remove ripple effect
-        }}
       >
         {form}
       </Card>

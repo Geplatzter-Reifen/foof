@@ -1,0 +1,441 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateManualStage Component the component is being created 1`] = `
+<div>
+  <View
+    onSelect={[Function]}
+    selectedIndex={0}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginHorizontal": 5,
+        },
+        undefined,
+      ]
+    }
+  >
+    <div
+      aria-label="Compass button"
+      onPress={[Function]}
+      status="primary"
+      style={
+        [
+          {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "margin": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <div>
+        MockedIcon(icon: 
+        compass
+        , size: 
+        25
+        )
+      </div>
+    </div>
+    <div
+      aria-label="Map Pin button"
+      onPress={[Function]}
+      status="basic"
+      style={
+        [
+          {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "margin": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <div>
+        MockedIcon(icon: 
+        map-pin
+        , size: 
+        25
+        )
+      </div>
+    </div>
+    <div
+      aria-label="City button"
+      onPress={[Function]}
+      status="basic"
+      style={
+        [
+          {
+            "alignItems": "center",
+            "alignSelf": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "margin": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <div>
+        MockedIcon(icon: 
+        city
+        , size: 
+        25
+        )
+      </div>
+    </div>
+  </View>
+  <div>
+    <div>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": true,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "#373737",
+            "borderColor": "#FFFFFF",
+            "borderRadius": 8,
+            "borderWidth": 0,
+            "elevation": 3,
+            "flex": 1,
+            "opacity": 1,
+            "overflow": "hidden",
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.25,
+            "shadowRadius": 2,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": undefined,
+              "height": 0,
+            }
+          }
+        />
+        <span>
+          Start
+        </span>
+        <View
+          appearance="default"
+          style={
+            [
+              {
+                "backgroundColor": "#202020",
+                "height": 1,
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          style={
+            [
+              {
+                "flexShrink": 1,
+              },
+              {
+                "paddingHorizontal": 24,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+        >
+          <div>
+            <input
+              onChange={[Function]}
+              value=""
+            />
+            <input
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div>
+            <div
+              accessoryRight={
+                <FontAwesomeIcon
+                  icon="calendar"
+                  size={20}
+                  style={
+                    {
+                      "alignSelf": "flex-end",
+                    }
+                  }
+                />
+              }
+              appearance="outline"
+              onPress={[Function]}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                }
+              }
+            >
+              12/25/2024
+            </div>
+            <div
+              accessoryRight={
+                <FontAwesomeIcon
+                  icon="clock"
+                  size={20}
+                  style={
+                    {
+                      "alignSelf": "flex-end",
+                    }
+                  }
+                />
+              }
+              appearance="outline"
+              onPress={[Function]}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                }
+              }
+            >
+              10:49:23 PM
+            </div>
+          </div>
+        </View>
+      </View>
+    </div>
+    <div>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": true,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "#373737",
+            "borderColor": "#FFFFFF",
+            "borderRadius": 8,
+            "borderWidth": 0,
+            "elevation": 3,
+            "flex": 1,
+            "opacity": 1,
+            "overflow": "hidden",
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.25,
+            "shadowRadius": 2,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": undefined,
+              "height": 0,
+            }
+          }
+        />
+        <span>
+          Ende
+        </span>
+        <View
+          appearance="default"
+          style={
+            [
+              {
+                "backgroundColor": "#202020",
+                "height": 1,
+              },
+              undefined,
+            ]
+          }
+        />
+        <View
+          style={
+            [
+              {
+                "flexShrink": 1,
+              },
+              {
+                "paddingHorizontal": 24,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+        >
+          <div>
+            <input
+              onChange={[Function]}
+              value=""
+            />
+            <input
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div>
+            <div
+              accessoryRight={
+                <FontAwesomeIcon
+                  icon="calendar"
+                  size={20}
+                  style={
+                    {
+                      "alignSelf": "flex-end",
+                    }
+                  }
+                />
+              }
+              appearance="outline"
+              onPress={[Function]}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                }
+              }
+            >
+              12/25/2024
+            </div>
+            <div
+              accessoryRight={
+                <FontAwesomeIcon
+                  icon="clock"
+                  size={20}
+                  style={
+                    {
+                      "alignSelf": "flex-end",
+                    }
+                  }
+                />
+              }
+              appearance="outline"
+              onPress={[Function]}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                }
+              }
+            >
+              10:49:23 PM
+            </div>
+          </div>
+        </View>
+      </View>
+    </div>
+  </div>
+  <div>
+    <div
+      aria-label="Cancel button"
+      onPress={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "margin": 5,
+        }
+      }
+    >
+      <span>
+        ABBRECHEN
+      </span>
+    </div>
+    <div
+      aria-label="Submit button"
+      onPress={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "margin": 5,
+        }
+      }
+    >
+      <span>
+        ERSTELLEN
+      </span>
+    </div>
+  </div>
+</div>
+`;

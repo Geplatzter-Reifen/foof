@@ -1,4 +1,4 @@
-import Touruebersicht from "..";
+import Touruebersicht from "../../index";
 import { render } from "@/test-utils/test-utils";
 
 describe("Touruebersicht", () => {

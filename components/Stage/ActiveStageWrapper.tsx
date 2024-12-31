@@ -7,7 +7,6 @@ const ActiveStageWrapper = ({ locations }: { locations: Location[] }) => {
   if (locations.length <= 1) {
     return null;
   }
-
   return (
     <StageMapLine
       locations={locations}

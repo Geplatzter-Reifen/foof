@@ -11,7 +11,6 @@ import {
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
-import ConfettiCannon from "react-native-confetti-cannon";
 
 import {
   LOCATION_TASK_NAME,

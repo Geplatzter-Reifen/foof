@@ -16,3 +16,7 @@ export const wuerzburg: MapPoint = {
   latitude: 49.7933723,
   longitude: 9.9309779,
 };
+export const wiesbaden: MapPoint = {
+  latitude: 52.520007,
+  longitude: 13.404954,
+};

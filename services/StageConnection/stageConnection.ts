@@ -51,22 +51,22 @@ export async function isFinished(tour: Tour): Promise<boolean> {
         } catch {
           return false;
         }
-        if (isLocationInRadius(firstLocationA, firstLocationB, 1)) {
+        if (isLocationInRadius(firstLocationA, firstLocationB)) {
           head = lastLocationA;
           tail = lastLocationB;
 
           stageList.splice(j, 1);
-        } else if (isLocationInRadius(firstLocationA, lastLocationB, 1)) {
+        } else if (isLocationInRadius(firstLocationA, lastLocationB)) {
           head = lastLocationA;
           tail = firstLocationB;
 
           stageList.splice(j, 1);
-        } else if (isLocationInRadius(lastLocationA, firstLocationB, 1)) {
+        } else if (isLocationInRadius(lastLocationA, firstLocationB)) {
           head = firstLocationA;
           tail = lastLocationB;
 
           stageList.splice(j, 1);
-        } else if (isLocationInRadius(lastLocationA, lastLocationB, 1)) {
+        } else if (isLocationInRadius(lastLocationA, lastLocationB)) {
           head = firstLocationA;
           tail = firstLocationB;
 
@@ -80,13 +80,13 @@ export async function isFinished(tour: Tour): Promise<boolean> {
         throw new Error("Head or tail is undefined");
       }
 
-      if (isLocationInRadius(head, firstLocationA, 1)) {
+      if (isLocationInRadius(head, firstLocationA)) {
         head = lastLocationA;
-      } else if (isLocationInRadius(head, lastLocationA, 1)) {
+      } else if (isLocationInRadius(head, lastLocationA)) {
         head = firstLocationA;
-      } else if (isLocationInRadius(tail, firstLocationA, 1)) {
+      } else if (isLocationInRadius(tail, firstLocationA)) {
         tail = lastLocationA;
-      } else if (isLocationInRadius(tail, lastLocationA, 1)) {
+      } else if (isLocationInRadius(tail, lastLocationA)) {
         tail = firstLocationA;
       }
     }
@@ -101,7 +101,7 @@ export async function isFinished(tour: Tour): Promise<boolean> {
   return areHeadAndTailInFlensburgAndOberstdorf(head, tail);
 }
 
-function areHeadAndTailInFlensburgAndOberstdorf(
+export function areHeadAndTailInFlensburgAndOberstdorf(
   head: MapPoint,
   tail: MapPoint,
 ) {
@@ -113,10 +113,10 @@ function areHeadAndTailInFlensburgAndOberstdorf(
   );
 }
 
-function isLocationInRadius(
+export function isLocationInRadius(
   location1: MapPoint,
   location2: MapPoint,
-  radius: number,
+  radius: number = 1,
 ): boolean {
   return calculateDistance(location1, location2) <= radius;
 }

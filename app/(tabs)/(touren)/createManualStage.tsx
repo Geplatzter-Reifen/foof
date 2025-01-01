@@ -155,6 +155,7 @@ const CreateManualStage: React.FC = () => {
           onPress={() => {
             router.back();
           }}
+          status={"basic"}
         >
           <Text category="h1">ABBRECHEN</Text>
         </Button>

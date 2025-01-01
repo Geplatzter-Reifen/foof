@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   Button,
   Card,
@@ -17,6 +17,18 @@ type DeleteStageModalProps = {
   setShowDeleteModal: (value: React.SetStateAction<boolean>) => void;
   showDeleteModal: boolean;
 };
+
+/**
+ * @component DeleteStageModal
+ * @description A confirmation modal for deleting a stage, providing options to cancel or confirm.
+ *
+ * @prop {string} stageName - The name of the stage to be deleted, displayed in the modal text.
+ * @prop {RecordId} stageID - The unique identifier of the stage.
+ * @prop {boolean} showDeleteModal - Controls the visibility of the modal.
+ * @prop {function} setShowDeleteModal - Function to toggle the modal's visibility.
+ *
+ */
+
 export const DeleteStageModal = ({
   stageName,
   stageID,
@@ -25,34 +37,83 @@ export const DeleteStageModal = ({
 }: DeleteStageModalProps): React.ReactElement => {
   const theme = useTheme();
   const styles = makeStyles(theme);
+
+  const handleDelete = () => {
+    deleteStage(stageID);
+    setShowDeleteModal(false);
+  };
+
   return (
     <Modal
       visible={showDeleteModal}
       backdropStyle={styles.backdrop}
       onBackdropPress={() => setShowDeleteModal(false)}
     >
-      <Card disabled={true}>
-        <Text>
-          Sind Sie sicher, dass Sie {stageName} löschen möchten? Dieser Vorgang
-          kann nicht rückgängig gemacht werden.
-        </Text>
-        <Button onPress={() => setShowDeleteModal(false)}>ABBRECHEN</Button>
-        <Button onPress={() => deleteStage(stageID)}>ERSTELLEN</Button>
-      </Card>
+      <View style={styles.modalContent}>
+        {/* Text Card */}
+        <Card disabled={true} style={styles.card}>
+          <Text category={"p1"} style={styles.moduleText}>
+            Sind Sie sicher, dass Sie{" "}
+            <Text style={styles.highlightedText}>{stageName}</Text> löschen
+            möchten? Dieser Vorgang kann{" "}
+            <Text style={styles.highlightedText}>nicht rückgängig</Text> gemacht
+            werden!
+          </Text>
+        </Card>
+
+        {/* Button Group */}
+        <View style={styles.buttonGroup}>
+          <Button
+            onPress={() => setShowDeleteModal(false)}
+            status={"basic"}
+            style={styles.button}
+          >
+            ABBRECHEN
+          </Button>
+          <Button onPress={handleDelete} style={styles.button}>
+            LÖSCHEN
+          </Button>
+        </View>
+      </View>
     </Modal>
   );
 };
 
 const makeStyles = (theme: ThemeType): any => {
   return StyleSheet.create({
-    container: {
-      minHeight: 192,
-    },
     backdrop: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
+    modalContent: {
+      width: 320,
+      backgroundColor: "transparent",
+      alignItems: "center",
+    },
+    card: {
+      width: "100%",
+      paddingHorizontal: 5,
+      paddingVertical: 5,
+      alignItems: "center",
+    },
     highlightedText: {
-      backgroundColor: theme["background-basic-color-2"],
+      color: theme["color-primary-600"],
+    },
+    moduleText: {
+      textAlign: "center",
+      fontSize: 16,
+      fontWeight: "normal",
+    },
+    buttonGroup: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      marginTop: 5,
+      marginHorizontal: 2.5,
+    },
+    button: {
+      flex: 1,
+      marginHorizontal: 2.5,
     },
   });
 };

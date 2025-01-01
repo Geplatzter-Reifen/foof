@@ -30,8 +30,8 @@ const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   />
 );
 
-const EditIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
+const SettingsIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="gear" style={[props?.style, { height: 24 }]} />
 );
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -86,9 +86,9 @@ export default function Touruebersicht() {
     />
   );
 
-  const renderEditAction = (): React.ReactElement => (
+  const renderSettingsAction = (): React.ReactElement => (
     <TopNavigationAction
-      icon={EditIcon}
+      icon={SettingsIcon}
       hitSlop={15}
       onPress={() =>
         router.push({
@@ -109,7 +109,7 @@ export default function Touruebersicht() {
   const headerRight = () => {
     return (
       <>
-        {renderEditAction()}
+        {renderSettingsAction()}
         {renderShareAction()}
       </>
     );

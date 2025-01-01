@@ -7,20 +7,23 @@ const maxDistanceFromCenterFlensburg = 5;
 const maxDistanceFromCenterOberstdorf = 10;
 
 export async function isFinished(tour: Tour): Promise<boolean> {
-  let head: MapPoint | undefined;
-  let tail: MapPoint | undefined;
   const stageList = await tour.stages.fetch();
 
-  // Falls nur eine Stage existiert
-  if (stageList.length === 1) {
-    const locations = await getAllLocationsByStageId(stageList[0].id);
+  // Falls eine der Stages alleine schon von Flensburg nach Oberstdorf geht
+  for (let stage of stageList) {
+    const locations = await getAllLocationsByStageId(stage.id);
     if (locations.length === 0) {
-      return false;
+      continue;
     }
     const firstLocation = getFirstLocation(locations);
     const lastLocation = getLastLocation(locations);
-    return areHeadAndTailInFlensburgAndOberstdorf(firstLocation, lastLocation);
+    if (areHeadAndTailInFlensburgAndOberstdorf(firstLocation, lastLocation)) {
+      return true;
+    }
   }
+
+  let head: MapPoint | undefined;
+  let tail: MapPoint | undefined;
 
   let i = 0;
   while (i < stageList.length) {
@@ -73,34 +76,29 @@ export async function isFinished(tour: Tour): Promise<boolean> {
     } else {
       // wenn schon Elemente in der Liste ist, dann prüfe ob head oder tail verknüpfbar sind mit stageList[i].
       // Wenn ja, dann packe die Elemente in die linked list
-      //const head = connectedLocationList.head;
-      //const tail = connectedLocationList.tail;
       if (!head || !tail) {
         throw new Error("Head or tail is undefined");
       }
 
-      if (isLocationInRadius(head.value, firstLocationA, 1)) {
-        connectedLocationList.prepend(lastLocationA, firstLocationA);
-      } else if (isLocationInRadius(head!.value, lastLocationA, 1)) {
-        connectedLocationList.prepend(firstLocationA, lastLocationA);
-      } else if (isLocationInRadius(tail!.value, firstLocationA, 1)) {
-        connectedLocationList.push(firstLocationA, lastLocationA);
-      } else if (isLocationInRadius(tail!.value, lastLocationA, 1)) {
-        connectedLocationList.push(lastLocationA, firstLocationA);
+      if (isLocationInRadius(head, firstLocationA, 1)) {
+        head = lastLocationA;
+      } else if (isLocationInRadius(head, lastLocationA, 1)) {
+        head = firstLocationA;
+      } else if (isLocationInRadius(tail, firstLocationA, 1)) {
+        tail = lastLocationA;
+      } else if (isLocationInRadius(tail, lastLocationA, 1)) {
+        tail = firstLocationA;
       }
     }
     // i erhöhen um zum nächsten Element zu kommen
     i++;
   }
-  // Jetzt sollte einmal durch die Liste durchgegangen sein und einige Elemente in der linked list sein.
+  // Jetzt sollte einmal durch die Liste durchgegangen sein und head und tail gesetzt sein.
   // Jetzt prüfen ob head und tail in der Nähe von Flensburg und Oberstdorf sind
-  //const head = connectedLocationList.head;
-  //const tail = connectedLocationList.tail;
   if (!head || !tail) {
     return false;
   }
-  console.log(connectedLocationList);
-  return areHeadAndTailInFlensburgAndOberstdorf(head.value, tail.value);
+  return areHeadAndTailInFlensburgAndOberstdorf(head, tail);
 }
 
 function areHeadAndTailInFlensburgAndOberstdorf(

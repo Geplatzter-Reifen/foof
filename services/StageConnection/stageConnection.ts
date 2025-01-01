@@ -121,7 +121,7 @@ export function isLocationInRadius(
   return calculateDistance(location1, location2) <= radius;
 }
 
-function getFirstLocation(locations: Location[]): MapPoint {
+export function getFirstLocation(locations: Partial<Location>[]): MapPoint {
   if (locations.length === 0) {
     throw new Error("No locations found");
   }
@@ -134,7 +134,7 @@ function getFirstLocation(locations: Location[]): MapPoint {
     longitude: location.longitude,
   } as MapPoint;
 }
-function getLastLocation(locations: Location[]): MapPoint {
+export function getLastLocation(locations: Partial<Location>[]): MapPoint {
   if (locations.length === 0) {
     throw new Error("No locations found");
   }

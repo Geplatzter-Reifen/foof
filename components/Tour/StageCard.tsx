@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 import { Stage } from "@/database/model/model";
-import { deleteStage } from "@/services/data/stageService";
 import { shareStage } from "@/services/sharingService";
 import {
   getStageAvgSpeedString,
@@ -15,6 +14,7 @@ import { ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { withObservables } from "@nozbe/watermelondb/react";
 import IconStat from "@/components/Statistics/IconStat";
+import { DeleteStageModal } from "@/components/Stage/DeleteStageModal";
 
 function StageCardComponent({ stage }: { stage: Stage }) {
   // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
@@ -22,6 +22,8 @@ function StageCardComponent({ stage }: { stage: Stage }) {
   const durationString: string = getStageDurationString(stage);
   const distanceString: string = getStageDistanceString(stage);
   const avgSpeedString: string = getStageAvgSpeedString(stage);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // Icons für Teilen und Löschen
   const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -38,6 +40,9 @@ function StageCardComponent({ stage }: { stage: Stage }) {
       style={[props?.style, { height: 18, width: "auto" }]}
     />
   );
+  const handleStageDelete = () => {
+    setShowDeleteModal(true);
+  };
 
   // Header der Kachel mit Löschen- und Teilen-Button
   const Header = () => {
@@ -51,7 +56,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
             status="basic"
             appearance="ghost"
             accessoryLeft={TrashIcon}
-            onPress={() => deleteStage(stage.id)}
+            onPress={handleStageDelete}
           ></Button>
           <Button
             status="basic"
@@ -91,19 +96,27 @@ function StageCardComponent({ stage }: { stage: Stage }) {
   };
 
   return (
-    <Card
-      style={{
-        ...customStyles.basicCard,
-        ...customStyles.basicShadow,
-        ...styles.card,
-      }}
-      header={<Header />}
-      status={stage.isActive ? "primary" : undefined}
-      testID="stage-card"
-    >
-      <Body />
-      <Footer />
-    </Card>
+    <>
+      <Card
+        style={{
+          ...customStyles.basicCard,
+          ...customStyles.basicShadow,
+          ...styles.card,
+        }}
+        header={<Header />}
+        status={stage.isActive ? "primary" : undefined}
+        testID="stage-card"
+      >
+        <Body />
+        <Footer />
+      </Card>
+      <DeleteStageModal
+        stageName={stage.title}
+        stageID={stage.id}
+        setShowDeleteModal={setShowDeleteModal}
+        showDeleteModal={showDeleteModal}
+      />
+    </>
   );
 }
 

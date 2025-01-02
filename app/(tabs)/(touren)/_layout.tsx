@@ -20,7 +20,7 @@ export default function ReiseStackLayout() {
         }}
       />
       <Stack.Screen
-        name={"touren"}
+        name={"settings"}
         options={{
           headerShown: false,
         }}

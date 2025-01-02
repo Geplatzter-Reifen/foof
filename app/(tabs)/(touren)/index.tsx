@@ -92,7 +92,7 @@ export default function Touruebersicht() {
       hitSlop={15}
       onPress={() =>
         router.push({
-          pathname: "./touren",
+          pathname: "./settings",
           params: {
             tourId: activeTour?.id,
             tourTitle: activeTour?.title,

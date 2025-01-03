@@ -23,6 +23,7 @@ import { setTourRoute } from "@/services/data/routeService";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
@@ -34,6 +35,7 @@ type TourenParams = {
 };
 
 export default function TourSettings() {
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams() as TourenParams;
   const { tourId, tourTitle } = params;
   const [tourname, setTourname] = useState(tourTitle);
@@ -74,8 +76,8 @@ export default function TourSettings() {
       <TopNavigation
         title={() => <Text category={"h4"}>Touren</Text>}
         accessoryLeft={renderBackAction}
-        style={styles.header}
         alignment={"center"}
+        style={{ marginTop: insets.top }}
       ></TopNavigation>
       <Divider />
       <Layout style={styles.body}>
@@ -101,9 +103,6 @@ export default function TourSettings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   body: {
     margin: 15,

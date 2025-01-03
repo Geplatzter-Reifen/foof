@@ -21,6 +21,7 @@ import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { shareTour } from "@/services/sharingService";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -47,6 +48,7 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 export default function Touruebersicht() {
+  const insets = useSafeAreaInsets();
   const [activeTour, setActiveTour] = useState<Tour>();
   const theme = useTheme();
 
@@ -131,7 +133,7 @@ export default function Touruebersicht() {
           title={EnhancedHeader}
           accessoryLeft={renderMapAction}
           accessoryRight={headerRight}
-          style={styles.header}
+          style={{ marginTop: insets.top }}
           alignment="center"
         ></TopNavigation>
         <Divider />
@@ -174,9 +176,6 @@ export default function Touruebersicht() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   button: {
     position: "absolute",

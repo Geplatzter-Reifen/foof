@@ -32,6 +32,7 @@ import {
 } from "@/components/Buttons/MapButtons";
 import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -42,6 +43,7 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
   const [loading, setLoading] = useState(true); // Ladezustand
 
   const [activeTour, setActiveTour] = useState<Tour>();
@@ -155,7 +157,7 @@ export default function HomeScreen() {
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}
-          style={styles.header}
+          style={[styles.header, { marginTop: insets.top }]}
           alignment="center"
         ></TopNavigation>
         <Divider />
@@ -227,7 +229,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "column",
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   layout: {
     flex: 1,

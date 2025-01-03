@@ -1,8 +1,8 @@
-import { Tour } from "@/model/model";
+import { Tour } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Text, Card, Layout } from "@ui-kitten/components";
 import { Link } from "expo-router";
-import { DATE, dateFormat } from "@/utils/dateUtil";
+import { DATE, formatDate } from "@/utils/dateUtil";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const TourList = ({ tours }: { tours: Tour[] }) => {
@@ -25,13 +25,13 @@ const TourList = ({ tours }: { tours: Tour[] }) => {
               {tour.startedAt && (
                 <Layout style={{ flexDirection: "row" }}>
                   <FontAwesomeIcon icon="clock" />
-                  <Text> {dateFormat(new Date(tour.startedAt), DATE)}</Text>
+                  <Text> {formatDate(new Date(tour.startedAt), DATE)}</Text>
                 </Layout>
               )}
               {tour.finishedAt && (
                 <Layout style={{ flexDirection: "row" }}>
                   <FontAwesomeIcon icon="flag" />
-                  <Text> {dateFormat(new Date(tour.finishedAt), DATE)}</Text>
+                  <Text> {formatDate(new Date(tour.finishedAt), DATE)}</Text>
                 </Layout>
               )}
             </Layout>

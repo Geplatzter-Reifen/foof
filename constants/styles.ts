@@ -2,17 +2,17 @@ import { StyleSheet } from "react-native";
 
 const customStyles = StyleSheet.create({
   basicCard: {
-    borderRadius: 5,
+    borderRadius: 8,
+    borderWidth: 0,
   },
   basicShadow: {
-    // iOS
+    // Schatten für iOS
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.5,
-
-    // Android
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    // Schatten für Android
+    elevation: 3,
   },
 });
 

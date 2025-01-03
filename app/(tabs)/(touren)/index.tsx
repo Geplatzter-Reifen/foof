@@ -1,11 +1,7 @@
 import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import {
-  getActiveTour,
-  getAllStagesByTourIdQuery,
-} from "@/model/database_functions";
 import React, { useEffect, useState } from "react";
-import { Tour } from "@/model/model";
+import { Tour } from "@/database/model/model";
 import {
   Layout,
   Button,
@@ -15,13 +11,16 @@ import {
   TopNavigation,
   TopNavigationAction,
   Divider,
+  useTheme,
 } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtil";
-import { foofTheme } from "@/constants/custom-theme";
-import StageList from "@/components/Tour/StageList";
+import { StageList } from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
+import { getActiveTour } from "@/services/data/tourService";
+import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
+import { shareTour } from "@/services/sharingService";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -35,6 +34,10 @@ const EditIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="edit" style={[props?.style, { height: 24 }]} />
 );
 
+const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="share-nodes" style={[props?.style, { height: 24 }]} />
+);
+
 const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
     {...props}
@@ -45,6 +48,7 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 
 export default function Touruebersicht() {
   const [activeTour, setActiveTour] = useState<Tour>();
+  const theme = useTheme();
 
   useEffect(() => {
     (async () => {
@@ -55,17 +59,31 @@ export default function Touruebersicht() {
     })();
   }, []);
 
-  const Header = ({ tour }: { tour: Tour }) => (
-    <Text category="h4">{tour.title}</Text>
+  const renderMapAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={MapIcon}
+      hitSlop={15}
+      onPress={() => {
+        if (activeTour) {
+          router.push({
+            pathname: "./stagesMapViewWrapper",
+            params: {
+              tourId: activeTour.id,
+            },
+          });
+        }
+      }}
+    />
   );
 
-  const enhance = withObservables([], () => ({
-    tour: activeTour!,
-  }));
-  const EnhancedHeader = enhance(Header);
-
-  const renderMapAction = (): React.ReactElement => (
-    <TopNavigationAction icon={MapIcon} hitSlop={15} />
+  const renderShareAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ShareIcon}
+      hitSlop={15}
+      onPress={() => {
+        shareTour();
+      }}
+    />
   );
 
   const renderEditAction = (): React.ReactElement => (
@@ -84,6 +102,24 @@ export default function Touruebersicht() {
     />
   );
 
+  const Header = ({ tour }: { tour: Tour }) => (
+    <Text category="h4">{tour.title}</Text>
+  );
+
+  const headerRight = () => {
+    return (
+      <>
+        {renderEditAction()}
+        {renderShareAction()}
+      </>
+    );
+  };
+
+  const enhance = withObservables([], () => ({
+    tour: activeTour!,
+  }));
+  const EnhancedHeader = enhance(Header);
+
   if (!activeTour) {
     return null;
   }
@@ -94,29 +130,30 @@ export default function Touruebersicht() {
         <TopNavigation
           title={EnhancedHeader}
           accessoryLeft={renderMapAction}
-          accessoryRight={renderEditAction}
+          accessoryRight={headerRight}
           style={styles.header}
           alignment="center"
         ></TopNavigation>
         <Divider />
       </Layout>
+
+      {/* Tourstatistiken in orangem Kasten */}
       <TourStats tour={activeTour} />
-      <Text category="h5" style={styles.stagesHeader}>
-        Etappen
-      </Text>
+
+      {/* Liste mit Etappen innerhalb einer Scrollview mit Fade */}
       <RNFadedScrollView
         allowStartFade={true}
         horizontal={false}
-        fadeSize={10}
+        fadeSize={15}
         fadeColors={[
-          hexToRgba(foofTheme["color-basic-200"], 0.18),
-          hexToRgba(foofTheme["color-basic-200"], 0.9),
+          hexToRgba(theme["background-basic-color-2"], 0.3),
+          hexToRgba(theme["background-basic-color-2"], 0.9),
         ]}
-        // startFadeStyle={styles.fadeStyle}
-        // endFadeStyle={styles.fadeStyle}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>
+
+      {/* Button zum erstellen einer manuellen Etappe */}
       <Button
         style={styles.button}
         accessoryLeft={PlusIcon}
@@ -125,10 +162,11 @@ export default function Touruebersicht() {
             pathname: "./createManualStage",
             params: {
               tourId: activeTour?.id,
+              tour: activeTour?.title,
             },
           })
         }
-      ></Button>
+      />
     </Layout>
   );
 }
@@ -139,10 +177,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  stagesHeader: {
-    marginHorizontal: 15,
-    marginVertical: 10,
   },
   button: {
     position: "absolute",

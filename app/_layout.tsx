@@ -12,7 +12,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaView } from "react-native";
 import { useEffect, useState } from "react";
-import { initializeDatabase } from "@/model/database_functions";
+import { initializeDatabase } from "@/database/model/database_functions";
 import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
@@ -30,7 +30,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [LayoutLoaded, setLayoutLoaded] = useState(false);
+  const [layoutLoaded, setLayoutLoaded] = useState(false);
 
   const theme = USE_DARK_THEME
     ? { ...eva.dark, ...foofDarkTheme }
@@ -58,10 +58,10 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (LayoutLoaded) {
+    if (layoutLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [LayoutLoaded]);
+  }, [layoutLoaded]);
 
   if (!appIsReady) {
     return null;

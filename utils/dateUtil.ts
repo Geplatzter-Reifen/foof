@@ -1,11 +1,15 @@
 import { differenceInMilliseconds, format } from "date-fns";
 
-export const DATE: string = "dd.MM.yyyy";
-export const TIME: string = "HH:mm";
-export const TIME_UHR: string = "HH:mm Uhr";
-export const DATE_TIME: string = "dd.MM.yyyy HH:mm";
+export enum DateFormat {
+  DATE = "dd.MM.yyyy",
+  TIME = "HH:mm",
+  DATE_TIME = "dd.MM.yyyy HH:mm",
+}
 
-export function dateFormat(date: Date | number, formatString: string): string {
+export function formatDate(
+  date: Date | number,
+  formatString: DateFormat,
+): string {
   if (typeof date === "number") {
     return format(new Date(date), formatString);
   }
@@ -18,19 +22,20 @@ export function getDurationInMs(start: Date, end: Date) {
 }
 
 export function getDurationFormatted(start: Date, end: Date): string {
-  const totalMinutes = Math.ceil(getDurationInMs(start, end) / 60000);
+  if (end < start) {
+    throw new Error("End date is before start date");
+  }
 
-  const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
-  const minutes = String(totalMinutes % 60).padStart(2, "0");
-
-  return `${hours}:${minutes} h`;
+  return getDurationMsFormatted(getDurationInMs(start, end));
 }
 
-export function getTotalMillisecondsString(totalMilliseconds: number): string {
-  const totalMinutes = Math.ceil(totalMilliseconds / 60000);
+export function getDurationMsFormatted(ms: number) {
+  const totalMinutes = Math.floor(ms / 60000);
 
-  const hours = String(Math.floor(totalMinutes / 60)).padStart(2, "0");
-  const minutes = String(totalMinutes % 60).padStart(2, "0");
+  const days = Math.floor(totalMinutes / 1440); // 1 Tag = 1440 Minuten
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
 
-  return `${hours}:${minutes} h`;
+  const dayPart = days >= 1 ? `${days}d ` : ""; // Nur anzeigen, wenn Tage >= 1
+  return `${dayPart}${hours}h ${minutes}m`;
 }

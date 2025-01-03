@@ -1,0 +1,385 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TourProgressBar renders correctly for < 18% Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "17.5%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#000000",
+          "fontSize": 19,
+          "left": "21.50%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    17.5%
+  </Text>
+</View>
+`;
+
+exports[`TourProgressBar renders correctly for > 18% Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "54.300000000000004%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#fff",
+          "fontSize": 19,
+          "left": "41.80%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    54.3%
+  </Text>
+</View>
+`;
+
+exports[`TourProgressBar renders correctly for > 100% Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#fff",
+          "fontSize": 19,
+          "left": "44%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    123.4%
+  </Text>
+</View>
+`;
+
+exports[`TourProgressBar renders correctly for 0 Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "0%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#000000",
+          "fontSize": 19,
+          "left": "4.00%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    0.0%
+  </Text>
+</View>
+`;
+
+exports[`TourProgressBar renders correctly for 18% Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "18%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#fff",
+          "fontSize": 19,
+          "left": "5.50%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    18.0%
+  </Text>
+</View>
+`;
+
+exports[`TourProgressBar renders correctly for 100% Percent 1`] = `
+<View>
+  <View
+    appearance="default"
+    onLayout={[Function]}
+    size="small"
+    status="primary"
+    style={
+      [
+        {
+          "backgroundColor": "rgba(51, 102, 255, 0.24)",
+          "borderRadius": 6,
+          "height": 27,
+        },
+        {
+          "overflow": "hidden",
+        },
+        {
+          "backgroundColor": "#eaeaea",
+          "borderRadius": 6,
+          "height": 27,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "#FF6E14",
+          "borderRadius": 6,
+          "height": 27,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "color": "#fff",
+          "fontSize": 19,
+          "left": "44%",
+          "position": "absolute",
+          "top": "28%",
+        },
+      ]
+    }
+  >
+    100.0%
+  </Text>
+</View>
+`;

@@ -1,38 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ImageProps,
-  Platform,
-  StatusBar,
-} from "react-native";
-import * as Location from "expo-location";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import * as TaskManager from "expo-task-manager";
+
 import {
+  LOCATION_TASK_NAME,
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
-import MapboxGL, { Camera } from "@rnmapbox/maps";
+
+import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
+
 import {
-  Layout,
   ButtonGroup,
-  IconElement,
-  Icon,
-  TopNavigation,
   Divider,
-  TopNavigationAction,
+  Layout,
+  Spinner,
   Text,
+  TopNavigation,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
-import { getActiveTour } from "@/model/database_functions";
+import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Route, Tour } from "@/model/model";
+import { Route, Tour } from "@/database/model/model";
+import { timeout } from "@/utils/utils";
+import { getActiveStage } from "@/services/data/stageService";
+import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import SmallIconButton from "@/components/Buttons/SmallIconButton";
 
-void MapboxGL.setAccessToken(
-  "pk.eyJ1Ijoia2F0emFibGFuY2thIiwiYSI6ImNtM2N4am40cTIyZnkydnNjODBldXR1Y20ifQ.q0I522XSqixPNIe6HwJdOg",
-);
+MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
 enum ButtonStates {
   NotCycling,
@@ -41,65 +37,35 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
-  const [, setTracking] = useState(false); //TaskManager.isTaskRegisteredAsync("background-location-task") PROBLEM
-  const [latitude, setLatitude] = useState(50.0826); // Default to Wiesbaden
-  const [longitude, setLongitude] = useState(8.24); // Default to Wiesbaden
-  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [loading, setLoading] = useState(true); // Ladezustand
+
   const [activeTour, setActiveTour] = useState<Tour>();
-  const buttonIconSize = 60;
+  const [activeStageId, setActiveStageId] = useState<string | null>();
+
+  const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
+  const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
+
   const camera = useRef<Camera>(null);
+  const buttonIconSize = 60;
 
   let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
 
   useEffect(() => {
-    void getCurrentLocation();
-    TaskManager.isTaskRegisteredAsync("background-location-task").then(
-      (result) => setTracking(result),
-    );
-    getActiveTour().then((tour) => {
-      if (tour) {
-        setActiveTour(tour);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    camera.current?.setCamera({
-      centerCoordinate: [longitude, latitude],
-      zoomLevel: 13,
-      animationDuration: 2000,
-      animationMode: "flyTo",
-    });
-  }, [latitude, longitude]);
-
-  const getCurrentLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission denied",
-        "Allow the app to use location services",
-        [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => console.log("OK Pressed") },
-        ],
-      );
-      return; // Exit the function if permission is not granted
-    }
-
-    try {
-      const { coords } = await Location.getCurrentPositionAsync();
-      if (coords) {
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      }
-    } catch (error) {
-      console.log("Error getting location:", error);
-    }
-  };
+    const prepare = async () => {
+      TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME).then((result) => {
+        if (result) {
+          setButtonState(ButtonStates.Cycling);
+        }
+      });
+      getActiveTour().then((tour) => {
+        if (tour) {
+          setActiveTour(tour);
+        }
+      });
+      setLoading(false);
+    };
+    void prepare();
+  }, [activeTour]);
 
   const StartButton = () => {
     return (
@@ -114,7 +80,11 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          void startAutomaticTracking();
+          startAutomaticTracking().then(() =>
+            getActiveStage().then((stage) => {
+              setActiveStageId(stage?.id!);
+            }),
+          );
         }}
       />
     );
@@ -140,68 +110,92 @@ export default function HomeScreen() {
         onPress={() => {
           setButtonState(ButtonStates.NotCycling);
           void stopAutomaticTracking();
+          setActiveStageId(null);
         }}
       />
     );
   };
 
+  // Function to display the route on the map by adjusting the camera to fit the route's bounds
   const showRoute = async () => {
-    if (geoJSON) {
-      // Find the outermost coordinates
-      let minLat = Infinity,
-        maxLat = -Infinity,
-        minLng = Infinity,
-        maxLng = -Infinity;
-      geoJSON.features.forEach((feature) => {
-        if (feature.geometry.type === "LineString") {
-          (feature.geometry as GeoJSON.LineString).coordinates.forEach(
-            ([lng, lat]) => {
-              if (lat < minLat) minLat = lat;
-              if (lat > maxLat) maxLat = lat;
-              if (lng < minLng) minLng = lng;
-              if (lng > maxLng) maxLng = lng;
-            },
-          );
-        } else if (feature.geometry.type === "Point") {
-          const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
-          if (lat < minLat) minLat = lat;
-          if (lat > maxLat) maxLat = lat;
-          if (lng < minLng) minLng = lng;
-          if (lng > maxLng) maxLng = lng;
-        }
-      });
-
-      const bounds = {
-        ne: [maxLng, maxLat],
-        sw: [minLng, minLat],
-      };
-
-      camera.current?.setCamera({
-        bounds: bounds,
-        padding: {
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingTop: 30,
-          paddingBottom: 150,
-        },
-        animationDuration: 2000,
-        heading: 0,
-        animationMode: "flyTo",
-      });
+    if (!geoJSON) {
+      throw new Error("Keine Route importiert!");
     }
+
+    setUserCentered(false);
+    // Find the outermost coordinates
+    let minLat = Infinity,
+      maxLat = -Infinity,
+      minLng = Infinity,
+      maxLng = -Infinity;
+    geoJSON.features.forEach((feature) => {
+      if (feature.geometry.type === "LineString") {
+        (feature.geometry as GeoJSON.LineString).coordinates.forEach(
+          ([lng, lat]) => {
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+            if (lng < minLng) minLng = lng;
+            if (lng > maxLng) maxLng = lng;
+          },
+        );
+      } else if (feature.geometry.type === "Point") {
+        const [lng, lat] = (feature.geometry as GeoJSON.Point).coordinates;
+        if (lat < minLat) minLat = lat;
+        if (lat > maxLat) maxLat = lat;
+        if (lng < minLng) minLng = lng;
+        if (lng > maxLng) maxLng = lng;
+      }
+    });
+
+    const bounds = {
+      ne: [maxLng, maxLat],
+      sw: [minLng, minLat],
+    };
+
+    camera.current?.setCamera({
+      bounds: bounds,
+      padding: {
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 30,
+        paddingBottom: 150,
+      },
+      animationDuration: 2000,
+      heading: 0,
+      animationMode: "flyTo",
+    });
   };
 
-  const RouteIcon = (props?: Partial<ImageProps>): IconElement => (
-    <Icon
-      {...props}
-      name="route"
-      style={[props?.style, { height: 40, width: "auto" }]}
+  const CenterButton = () => (
+    <SmallIconButton
+      icon="location-crosshairs"
+      style={styles.mapButton}
+      onPress={() => setUserCentered(true)}
     />
   );
 
-  const renderRouteAction = (): React.ReactElement => (
-    <TopNavigationAction icon={RouteIcon} onPress={showRoute} hitSlop={15} />
-  );
+  const RouteButton = ({ routeCount }: { routeCount: number }) => {
+    if (routeCount === 0) {
+      return null;
+    }
+    return (
+      <SmallIconButton
+        icon="route"
+        style={[styles.mapButton, styles.routeButton]}
+        onPress={async () => {
+          setUserCentered(false);
+          await timeout(100);
+          showRoute();
+        }}
+      />
+    );
+  };
+
+  const enhance = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routeCount: tour.routes.observeCount(),
+  }));
+
+  const EnhancedRouteButton = enhance(RouteButton);
 
   const toggleButtons = (buttonState: ButtonStates) => {
     switch (buttonState) {
@@ -222,14 +216,15 @@ export default function HomeScreen() {
   const ShapeSource = ({ route }: { route: Route }) => {
     geoJSON = JSON.parse(route.geoJson);
     return (
-      <MapboxGL.ShapeSource id="route" shape={geoJSON}>
+      <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
         <MapboxGL.LineLayer
-          id="route"
+          id="routeLayer"
           belowLayerID="road-label"
           style={{
             lineColor: "#b8b8b8",
             lineWidth: 5,
             lineJoin: "round",
+            lineCap: "round",
           }}
         />
         <MapboxGL.CircleLayer
@@ -237,7 +232,7 @@ export default function HomeScreen() {
           filter={["==", "$type", "Point"]}
           style={{
             circleColor: "black",
-            circleRadius: 6,
+            circleRadius: 5,
           }}
         />
       </MapboxGL.ShapeSource>
@@ -245,11 +240,14 @@ export default function HomeScreen() {
   };
 
   // observe the route (tracks updates to the route)
-  const enhance = withObservables(["route"], ({ route }: { route: Route }) => ({
-    route,
-  }));
+  const enhanceV1 = withObservables(
+    ["route"],
+    ({ route }: { route: Route }) => ({
+      route,
+    }),
+  );
 
-  const EnhancedShapeSource = enhance(ShapeSource);
+  const EnhancedShapeSource = enhanceV1(ShapeSource);
 
   // observe routes of a tour (only tracks create and delete in the routes table)
   const Bridge = ({ routes }: { routes: Route[] }) => {
@@ -263,38 +261,79 @@ export default function HomeScreen() {
 
   const EnhancedShapeSourceV2 = enhanceV2(Bridge);
 
+  if (loading) {
+    return (
+      <Layout level="2" style={styles.loadingContainer}>
+        <Spinner size="giant" />
+      </Layout>
+    );
+  }
+
   return (
     <Layout style={styles.container}>
       <Layout>
         <TopNavigation
           title={() => <Text category="h4">Home</Text>}
-          accessoryRight={renderRouteAction}
           style={styles.header}
           alignment="center"
         ></TopNavigation>
         <Divider />
       </Layout>
       <Layout style={styles.layout}>
-        <MapboxGL.MapView style={styles.map}>
+        {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
+        <MapboxGL.MapView
+          style={styles.map}
+          scaleBarEnabled={false}
+          compassEnabled={true}
+          compassPosition={{ top: 8, right: 8 }}
+          logoPosition={{ top: 8, left: 8 }}
+          attributionPosition={{ top: 8, left: 96 }}
+          onTouchMove={() => {
+            setUserCentered(false);
+          }}
+        >
           {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
-          <MapboxGL.Camera ref={camera} />
+          {activeStageId && <StageLine stageId={activeStageId} />}
+          {/* Kamera, die dem User folgt */}
+          <MapboxGL.Camera
+            followZoomLevel={17}
+            animationMode="flyTo"
+            followUserMode={UserTrackingMode.Follow}
+            followUserLocation={userCentered}
+            ref={camera}
+          />
+          {/* Blauer Punkt */}
+          <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
+      <View style={styles.mapButtonsContainer}>
+        {/* Button zum Route anzeigen */}
+        {activeTour && <EnhancedRouteButton tour={activeTour} />}
+        {/* Button zum Zentrieren der Karte auf den User */}
+        {!userCentered && <CenterButton />}
+      </View>
       <View style={styles.button_container}>{toggleButtons(buttonState)}</View>
     </Layout>
   );
 }
 
 const styles = StyleSheet.create({
-  map: {
+  loadingContainer: {
     flex: 1,
-    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
     flex: 1,
     flexDirection: "column",
+    justifyContent: "center",
+  },
+  map: {
+    flex: 1,
+    flexDirection: "row",
   },
   header: {
+    flexDirection: "column",
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   layout: {
@@ -307,5 +346,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     bottom: 15,
+  },
+  mapButtonsContainer: {
+    position: "absolute",
+    flexDirection: "column",
+    alignSelf: "center",
+    top: 175,
+    right: 11,
+  },
+  mapButton: {
+    backgroundColor: "#fff",
+  },
+  routeButton: {
+    marginBottom: 11,
   },
 });

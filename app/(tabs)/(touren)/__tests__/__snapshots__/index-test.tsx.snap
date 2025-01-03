@@ -1,0 +1,1030 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Touruebersicht should render correctly 1`] = `
+<View
+  appearance="default"
+  level="2"
+  style={
+    [
+      {
+        "backgroundColor": "#eaeaea",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    appearance="default"
+    level="1"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "minHeight": 56,
+            "paddingHorizontal": 8,
+            "paddingVertical": 8,
+          },
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          {
+            "justifyContent": "space-between",
+          },
+          {
+            "marginTop": 0,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={15}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "marginHorizontal": 8,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": "#000000",
+                    "fontSize": 24,
+                  },
+                  {
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "bottom": 0,
+            "justifyContent": "center",
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <Text
+          appearance="default"
+          category="h4"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontSize": 26,
+                "fontWeight": "800",
+              },
+              undefined,
+            ]
+          }
+        >
+          Coole Tour
+        </Text>
+      </View>
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "zIndex": 1,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={15}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "marginHorizontal": 8,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": "#000000",
+                    "fontSize": 24,
+                  },
+                  {
+                    "width": 24,
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={15}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "marginHorizontal": 8,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": "#000000",
+                    "fontSize": 24,
+                  },
+                  {
+                    "width": 24,
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "rgba(255, 110, 20, 0.26)",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "margin": 10,
+          "marginBottom": 0,
+          "padding": 8,
+        }
+      }
+    >
+      <View
+        appearance="default"
+        onLayout={[Function]}
+        size="small"
+        status="primary"
+        style={
+          [
+            {
+              "backgroundColor": "rgba(51, 102, 255, 0.24)",
+              "borderRadius": 6,
+              "height": 27,
+            },
+            {
+              "overflow": "hidden",
+            },
+            {
+              "backgroundColor": "#eaeaea",
+              "borderRadius": 6,
+              "height": 27,
+            },
+          ]
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "backgroundColor": "#FF6E14",
+              "borderRadius": 6,
+              "height": 27,
+              "width": "0%",
+            }
+          }
+        />
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "color": "#000000",
+              "fontSize": 19,
+              "left": "4.00%",
+              "position": "absolute",
+              "top": "28%",
+            },
+          ]
+        }
+      >
+        0.0%
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": "auto",
+          "paddingBottom": 10,
+          "paddingHorizontal": 20,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "flex-start",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            0.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            0 m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            0.0 km/h
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            0 kcal
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "flex-start",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            --
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 15,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "marginHorizontal": 4,
+                    "minWidth": 17,
+                    "width": "100%",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                undefined,
+              ]
+            }
+          >
+            0h 0m
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+        },
+        undefined,
+        {
+          "flexDirection": "column",
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      allowDivider={false}
+      allowEndFade={true}
+      allowStartFade={true}
+      fadeColors={
+        [
+          "rgba(234, 234, 234, 0.3)",
+          "rgba(234, 234, 234, 0.9)",
+        ]
+      }
+      fadeSize={15}
+      horizontal={false}
+      innerRef={null}
+      isRtl={false}
+      onContentSizeChange={[Function]}
+      onScroll={[Function]}
+      scrollEventThrottle={16}
+      scrollThreshold={10}
+      style={
+        [
+          {
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View>
+        <View
+          style={
+            {
+              "marginTop": 15,
+            }
+          }
+        >
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "fontSize": 20,
+                  "marginTop": 15,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Starte eine Etappe!
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FF6E14",
+        "borderColor": "#FF6E14",
+        "borderRadius": 50,
+        "borderWidth": 1,
+        "bottom": 35,
+        "elevation": 3,
+        "flexDirection": "row",
+        "height": 80,
+        "justifyContent": "center",
+        "minHeight": 40,
+        "minWidth": 40,
+        "opacity": 1,
+        "paddingHorizontal": 10,
+        "paddingVertical": 12,
+        "position": "absolute",
+        "right": 15,
+        "width": 80,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#FFFFFF",
+              "fontSize": 40,
+            },
+            {
+              "marginHorizontal": 10,
+              "width": "auto",
+            },
+            {
+              "fontFamily": "FontAwesome6Free-Solid",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {
+              "fontWeight": "900",
+            },
+          ]
+        }
+      >
+        +
+      </Text>
+    </View>
+  </View>
+</View>
+`;

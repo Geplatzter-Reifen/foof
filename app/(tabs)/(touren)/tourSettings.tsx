@@ -9,13 +9,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from "@ui-kitten/components";
-import {
-  ImageProps,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { ImageProps, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/services/data/tourService";

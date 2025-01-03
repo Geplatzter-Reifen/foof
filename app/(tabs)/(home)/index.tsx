@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Platform, StatusBar } from "react-native";
+import { View, StyleSheet } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";

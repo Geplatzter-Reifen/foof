@@ -106,6 +106,14 @@ const CreateManualStage: React.FC = () => {
   );
 
   const onSubmitStage = async () => {
+    if (startDate >= endDate) {
+      Alert.alert(
+        "Ungültige Eingabe",
+        "Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit liegen.",
+      );
+      return;
+    }
+
     try {
       await createManualStageFn(
         stageTitle,

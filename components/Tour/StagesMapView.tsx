@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
-import { Stage, Location } from "@/database/model/model";
+import React, { useState, useEffect } from "react";
+import { Stage, Location, Route, Tour } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
 import StageMapLine from "@/components/Tour/StageMapLine";
+import * as TaskManager from "expo-task-manager";
+import { LOCATION_TASK_NAME } from "@/services/tracking";
+import { getActiveTour } from "@/services/data/tourService";
 
 type stagesMapViewProps = {
   stages: Stage[];
@@ -14,8 +17,47 @@ const StagesMapView = ({ stages }: stagesMapViewProps) => {
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
+  const [activeTour, setActiveTour] = useState<Tour>();
+  useEffect(() => {
+    const prepare = async () => {
+      getActiveTour().then((tour) => {
+        if (tour) {
+          setActiveTour(tour);
+        }
+      });
+    };
+    void prepare();
+  }, [activeTour]);
+  // observe the route (tracks updates to the route)
+  const enhanceV1 = withObservables(
+    ["route"],
+    ({ route }: { route: Route }) => ({
+      route,
+    }),
+  );
+  let geoJSON: GeoJSON.FeatureCollection | undefined = undefined;
+  const ShapeSource = ({ route }: { route: Route }) => {
+    geoJSON = JSON.parse(route.geoJson);
+    return (
+      <StageMapLine
+        routeGeoJSON={geoJSON}
+        stageId={"planned-route"}
+        planed={true}
+      />
+    );
+  };
+  const EnhancedShapeSource = enhanceV1(ShapeSource);
+  // observe routes of a tour (only tracks create and delete in the routes table)
+  const Bridge = ({ routes }: { routes: Route[] }) => {
+    if (routes.length === 0) return null;
+    return <EnhancedShapeSource route={routes[0]} />;
+  };
 
-  // Fetch locations for all stages
+  const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+    routes: tour.routes,
+  }));
+
+  const EnhancedShapeSourceV2 = enhanceV2(Bridge);
 
   useEffect(() => {
     const fetchStagesWithLocations = async () => {
@@ -64,6 +106,7 @@ const StagesMapView = ({ stages }: stagesMapViewProps) => {
           />
         );
       })}
+      {activeTour && <EnhancedShapeSourceV2 tour={activeTour} />}
     </MapboxGL.MapView>
   );
 };

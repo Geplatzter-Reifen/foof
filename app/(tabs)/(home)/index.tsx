@@ -27,6 +27,7 @@ import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import SmallIconButton from "@/components/Buttons/SmallIconButton";
+import StageMapLine from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -216,26 +217,11 @@ export default function HomeScreen() {
   const ShapeSource = ({ route }: { route: Route }) => {
     geoJSON = JSON.parse(route.geoJson);
     return (
-      <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
-        <MapboxGL.LineLayer
-          id="routeLayer"
-          belowLayerID="road-label"
-          style={{
-            lineColor: "#b8b8b8",
-            lineWidth: 5,
-            lineJoin: "round",
-            lineCap: "round",
-          }}
-        />
-        <MapboxGL.CircleLayer
-          id="pointLayer"
-          filter={["==", "$type", "Point"]}
-          style={{
-            circleColor: "black",
-            circleRadius: 5,
-          }}
-        />
-      </MapboxGL.ShapeSource>
+      <StageMapLine
+        routeGeoJSON={geoJSON}
+        stageId={"planned-route"}
+        planed={true}
+      />
     );
   };
 

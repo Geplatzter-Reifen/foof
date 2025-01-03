@@ -3,74 +3,94 @@ import MapboxGL from "@rnmapbox/maps";
 import { lineString, point, featureCollection } from "@turf/helpers";
 import { useTheme } from "@ui-kitten/components";
 import React from "react";
-import type { Feature, FeatureCollection, LineString, Point } from "geojson";
+import type { FeatureCollection, LineString, Point } from "geojson";
 
 type stageMapLineProps = {
-  locations: Location[];
+  locations?: Location[]; // Optional, for location-based input
+  routeGeoJSON?: FeatureCollection; // Optional, for direct GeoJSON input
   stageId: string;
   active?: boolean;
+  planed?: boolean;
 };
+
 const StageMapLine = ({
   locations,
+  routeGeoJSON,
   stageId,
   active = false,
+  planed = false,
 }: stageMapLineProps) => {
   const theme = useTheme();
 
-  const locationsUnpacked = locations.map((loc) => ({
-    latitude: loc.latitude,
-    longitude: loc.longitude,
-  }));
+  // If GeoJSON is provided, use it directly
+  let collection: FeatureCollection;
+  if (routeGeoJSON) {
+    collection = routeGeoJSON;
+  } else if (locations) {
+    // If locations are provided, generate GeoJSON
+    const locationsUnpacked = locations.map((loc) => ({
+      latitude: loc.latitude,
+      longitude: loc.longitude,
+    }));
 
-  const coords = locationsUnpacked.map((location) => [
-    location.longitude,
-    location.latitude,
-  ]);
+    const coords = locationsUnpacked.map((location) => [
+      location.longitude,
+      location.latitude,
+    ]);
 
-  // Create individual features
-  const stage: Feature<LineString> = lineString(coords, { name: "Stage" });
-  const firstPoint: Feature<Point> = point(coords[0], { name: "Start" });
-  const lastPoint: Feature<Point> = point(coords[coords.length - 1], {
-    name: "End",
-  });
+    const stage = lineString(coords, { name: "Stage" });
+    const firstPoint = point(coords[0], { name: "Start" });
+    const lastPoint = point(coords[coords.length - 1], { name: "End" });
 
-  const collection: FeatureCollection = active
-    ? featureCollection<Point | LineString>([stage, firstPoint])
-    : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
+    collection = active
+      ? featureCollection<Point | LineString>([stage, firstPoint])
+      : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
+  } else {
+    throw new Error("Either 'locations' or 'routeGeoJSON' must be provided.");
+  }
+
+  // Define dynamic colors based on the `planed` parameter
+  const lineColor = planed
+    ? theme["color-basic-400"]
+    : theme["color-primary-500"];
+  const circleColor = planed
+    ? theme["color-basic-300"]
+    : theme["color-primary-100"];
+  const circleStrokeColor = planed
+    ? theme["color-basic-600"]
+    : theme["color-primary-500"];
+
   return (
     <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
       <MapboxGL.LineLayer
         id={`lineLayer-${stageId}`}
         belowLayerID="road-label"
-        // aboveLayerID="routeSource"
         style={{
-          lineColor: theme["color-primary-500"],
-          lineWidth: 4, // Thickness
-          lineOpacity: 1, // Transparency
+          lineColor,
+          lineWidth: 4,
+          lineOpacity: 1,
           lineCap: "round",
           lineJoin: "round",
         }}
       />
       <MapboxGL.CircleLayer
         id={`startPointLayer-${stageId}`}
-        // aboveLayerID="routeSource"
-        filter={["==", "name", "Start"]}
+        filter={["any", ["==", "name", "Start"], ["==", "$type", "Point"]]}
         style={{
-          circleColor: theme["color-primary-100"],
-          circleRadius: 6, // Size of the circle
+          circleColor: circleColor,
+          circleRadius: 6,
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
       <MapboxGL.CircleLayer
         id={`endPointLayer-${stageId}`}
-        filter={["==", "name", "End"]}
-        // aboveLayerID="routeSource"
+        filter={["any", ["==", "name", "End"], ["==", "$type", "Point"]]}
         style={{
-          circleColor: theme["color-primary-100"],
-          circleRadius: 6, // Size of the circle
+          circleColor: circleColor,
+          circleRadius: 6,
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
     </MapboxGL.ShapeSource>

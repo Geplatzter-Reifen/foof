@@ -28,6 +28,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
 import customStyles from "@/constants/styles";
+import { ModalWindow } from "@/components/ModalWindow/ModalWindow";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
@@ -64,24 +65,15 @@ export default function Settings() {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
-  useEffect(() => {
-    if (showPopup) {
-      Alert.alert(
-        "Bestätigung",
-        "Möchten Sie die Standard-Guideline wirklich löschen?",
-        [
-          { text: "Abbrechen", onPress: () => setShowPopup(false) },
-          {
-            text: "Löschen",
-            onPress: () => {
-              // Add delete logic here
-              setShowPopup(false);
-            },
-          },
-        ],
-      );
-    }
-  }, [showPopup]);
+  const handleDeleteGuideroute = () => {
+    //Add delete logic here
+  };
+  const popupModalContent = (
+    <Text>
+      Möchten Sie die <Text style={styles.accentText}>Standard-Guideline</Text>{" "}
+      wirklich löschen?
+    </Text>
+  );
 
   const updateTourname = (newTourName: string) => {
     updateTourNameById(tourId, newTourName).then(() => {
@@ -105,9 +97,9 @@ export default function Settings() {
     }
   };
   const handleLinkPress = () => {
-    Linking.openURL("http://exmaple.com").catch((err) =>
-      console.error("Failed to open URL:", err),
-    );
+    Linking.openURL(
+      "http://brouter.de/brouter-web/#map=6/50.324/14.381/standard",
+    ).catch((err) => console.error("Failed to open URL:", err));
   };
   return (
     <Layout style={styles.container} level="2">
@@ -188,7 +180,7 @@ export default function Settings() {
                 dient dazu, um deine Navigation an dem Fahren zu erleichtern. Du
                 kannst auch selbst deine Guide-Route importieren:
               </Text>
-              <Text style={styles.bulletText}>
+              <Text>
                 {"\u2022"} besuche{" "}
                 <Text
                   style={[
@@ -197,17 +189,19 @@ export default function Settings() {
                   ]}
                   onPress={handleLinkPress}
                 >
-                  example.link.geojson.com
+                  brouter.de
                 </Text>
               </Text>
-              <Text style={styles.bulletText}>
-                {"\u2022"} erstelle deine route
+              <Text>
+                {"\u2022"} setze Punkte auf der Karte, um deine Route zu planen.
+                Beachte, dass das Planen der Route länger dauern kann, wenn die
+                Punkte weiter auseinander liegen.
               </Text>
-              <Text style={styles.bulletText}>
-                {"\u2022"} exportiere als GeoJSON auf dein Device
+              <Text>
+                {"\u2022"} exportiere die Route als GeoJSON-Datei auf dein Gerät
               </Text>
-              <Text style={styles.bulletText}>
-                {"\u2022"} importiere es hier
+              <Text>
+                {"\u2022"} importiere die Datei hier, um sie zu verwenden.
               </Text>
             </View>
             {selectedFile?.assets?.at(0)?.name && (
@@ -219,6 +213,16 @@ export default function Settings() {
           </View>
         </Card>
       </Layout>
+      {showPopup && (
+        <ModalWindow
+          modalContent={popupModalContent}
+          buttonCancelText={"BESTÄTIGEN"}
+          buttonOkText={"ABBRECHEN"}
+          setShowModal={setShowPopup}
+          showModal={showPopup}
+          onOkPressFunction={handleDeleteGuideroute}
+        />
+      )}
     </Layout>
   );
 }
@@ -280,10 +284,6 @@ const makeStyles = (theme: ThemeType) =>
     },
     settingContainer: {
       marginBottom: 15,
-    },
-    bulletText: {
-      marginTop: 5,
-      color: theme["color-basic-800"],
     },
     accentText: {
       color: theme["color-primary-600"],

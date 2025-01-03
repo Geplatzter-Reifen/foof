@@ -1,15 +1,9 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import {
-  Button,
-  Card,
-  Modal,
-  Text,
-  ThemeType,
-  useTheme,
-} from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { RecordId } from "@nozbe/watermelondb";
 import { deleteStage } from "@/services/data/stageService";
+import { ModalWindow } from "@/components/ModalWindow/ModalWindow";
 
 type DeleteStageModalProps = {
   stageName: string;
@@ -43,58 +37,30 @@ export const DeleteStageModal = ({
     setShowDeleteModal(false);
   };
 
-  return (
-    <Modal
-      visible={showDeleteModal}
-      backdropStyle={styles.backdrop}
-      onBackdropPress={() => setShowDeleteModal(false)}
-    >
-      <View style={styles.modalContent}>
-        {/* Text Card */}
-        <Card disabled={true} style={styles.card}>
-          <Text category={"p1"} style={styles.moduleText}>
-            Sind Sie sicher, dass Sie{" "}
-            <Text style={styles.highlightedText}>{stageName}</Text> löschen
-            möchten? Dieser Vorgang kann{" "}
-            <Text style={styles.highlightedText}>nicht rückgängig</Text> gemacht
-            werden!
-          </Text>
-        </Card>
+  const modalText = (
+    <Text category={"p1"} style={styles.moduleText}>
+      Sind Sie sicher, dass Sie{" "}
+      <Text style={styles.highlightedText}>{stageName}</Text> löschen möchten?
+      Dieser Vorgang kann{" "}
+      <Text style={styles.highlightedText}>nicht rückgängig</Text> gemacht
+      werden!
+    </Text>
+  );
 
-        {/* Button Group */}
-        <View style={styles.buttonGroup}>
-          <Button
-            onPress={() => setShowDeleteModal(false)}
-            status={"basic"}
-            style={styles.button}
-          >
-            ABBRECHEN
-          </Button>
-          <Button onPress={handleDelete} style={styles.button}>
-            LÖSCHEN
-          </Button>
-        </View>
-      </View>
-    </Modal>
+  return (
+    <ModalWindow
+      modalContent={modalText}
+      buttonCancelText={"BESTÄTIGEN"}
+      buttonOkText={"ABBRECHEN"}
+      setShowModal={setShowDeleteModal}
+      showModal={showDeleteModal}
+      onOkPressFunction={handleDelete}
+    />
   );
 };
 
 const makeStyles = (theme: ThemeType): any => {
   return StyleSheet.create({
-    backdrop: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-    modalContent: {
-      width: 320,
-      backgroundColor: "transparent",
-      alignItems: "center",
-    },
-    card: {
-      width: "100%",
-      paddingHorizontal: 5,
-      paddingVertical: 5,
-      alignItems: "center",
-    },
     highlightedText: {
       color: theme["color-primary-600"],
     },
@@ -102,18 +68,6 @@ const makeStyles = (theme: ThemeType): any => {
       textAlign: "center",
       fontSize: 16,
       fontWeight: "normal",
-    },
-    buttonGroup: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      width: "100%",
-      marginTop: 5,
-      marginHorizontal: 2.5,
-    },
-    button: {
-      flex: 1,
-      marginHorizontal: 2.5,
     },
   });
 };

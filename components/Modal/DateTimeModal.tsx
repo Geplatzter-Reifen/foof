@@ -1,7 +1,8 @@
-import { Modal, StyleSheet, View } from "react-native";
-import { Button, Layout, Text } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Button, Layout, Text, Modal, Card } from "@ui-kitten/components";
 import DateTimeButton from "@/components/Modal/DateTimeButton";
 import { useState } from "react";
+import customStyles from "@/constants/styles";
 
 type DateTimeModalProps = {
   modalVisible: boolean;
@@ -40,73 +41,67 @@ function DateTimeModal(props: DateTimeModalProps) {
   return (
     <Modal
       animationType="fade"
-      transparent={true}
       visible={modalVisible}
-      statusBarTranslucent={true}
+      backdropStyle={styles.backdrop}
+      onBackdropPress={onClose}
+      style={styles.modal}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text category="h5">Startzeit</Text>
-          <Layout style={styles.row}>
-            <DateTimeButton
-              date={startDate}
-              mode={"date"}
-              onDateChange={handleStartDateChange}
-            />
-            <DateTimeButton
-              date={startDate}
-              mode={"time"}
-              onDateChange={handleStartDateChange}
-            />
-          </Layout>
-          <Text category="h5">Endzeit</Text>
-          <Layout style={styles.row}>
-            <DateTimeButton
-              date={endDate}
-              mode={"date"}
-              onDateChange={handleEndDateChange}
-            />
-            <DateTimeButton
-              date={endDate}
-              mode={"time"}
-              onDateChange={handleEndDateChange}
-            />
-          </Layout>
-          <Layout style={styles.row}>
-            <Button style={styles.button} onPress={onClose}>
-              Abbrechen
-            </Button>
-            <Button style={styles.button} onPress={onSave}>
-              Speichern
-            </Button>
-          </Layout>
-        </View>
-      </View>
+      <Card
+        disabled={true}
+        style={{
+          ...customStyles.basicCard,
+          ...customStyles.basicShadow,
+        }}
+      >
+        <Text category="h5" style={styles.header}>
+          Startzeit
+        </Text>
+        <Layout style={styles.row}>
+          <DateTimeButton
+            date={startDate}
+            mode={"date"}
+            onDateChange={handleStartDateChange}
+          />
+          <DateTimeButton
+            date={startDate}
+            mode={"time"}
+            onDateChange={handleStartDateChange}
+          />
+        </Layout>
+        <Text category="h5" style={styles.header}>
+          Endzeit
+        </Text>
+        <Layout style={styles.row}>
+          <DateTimeButton
+            date={endDate}
+            mode={"date"}
+            onDateChange={handleEndDateChange}
+          />
+          <DateTimeButton
+            date={endDate}
+            mode={"time"}
+            onDateChange={handleEndDateChange}
+          />
+        </Layout>
+        <Layout style={styles.row}>
+          <Button onPress={onClose} style={styles.button}>
+            Abbrechen
+          </Button>
+          <Button onPress={onSave} style={styles.button}>
+            Speichern
+          </Button>
+        </Layout>
+      </Card>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  modal: {
+    width: "90%",
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  header: {
+    textAlign: "center",
   },
   row: {
     flexDirection: "row", // Arrange inputs horizontally
@@ -115,12 +110,12 @@ const styles = StyleSheet.create({
     marginBottom: 5, // Add spacing between rows
   },
   button: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 5,
-    alignSelf: "center",
+    flex: 1, // Make inputs share space equally
+    marginHorizontal: 4, // Add space between inputs
+    marginTop: 5,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 

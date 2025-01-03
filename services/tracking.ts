@@ -31,6 +31,11 @@ export async function createManualStage(
     throw new Error("Bitte gib einen Tournamen an");
   }
 
+  if (startTime >= endTime) {
+    throw new Error(
+      "Die Endzeit muss nach der Startzeit liegen. Bitte überprüfe deine Eingaben.",
+    );
+  }
   const tour = tourId ? await getTourByTourId(tourId) : await getActiveTour();
 
   if (tour === null) {

@@ -69,22 +69,20 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SafeAreaProvider>
       <IconRegistry icons={FontAwesomeIconsPack} />
       <ApplicationProvider {...eva} customMapping={mapping} theme={theme}>
-        <SafeAreaProvider>
-          <View
-            onLayout={() => setLayoutLoaded(true)}
-            style={{
-              flex: 1,
-            }}
-          >
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-          </View>
-        </SafeAreaProvider>
+        <View
+          onLayout={() => setLayoutLoaded(true)}
+          style={{
+            flex: 1,
+          }}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+        </View>
       </ApplicationProvider>
-    </>
+    </SafeAreaProvider>
   );
 }

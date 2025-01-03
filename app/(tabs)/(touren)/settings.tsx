@@ -180,7 +180,7 @@ export default function Settings() {
                 dient dazu, um deine Navigation an dem Fahren zu erleichtern. Du
                 kannst auch selbst deine Guide-Route importieren:
               </Text>
-              <Text>
+              <Text style={styles.description}>
                 {"\u2022"} besuche{" "}
                 <Text
                   style={[
@@ -192,15 +192,15 @@ export default function Settings() {
                   brouter.de
                 </Text>
               </Text>
-              <Text>
+              <Text style={styles.description}>
                 {"\u2022"} setze Punkte auf der Karte, um deine Route zu planen.
                 Beachte, dass das Planen der Route länger dauern kann, wenn die
                 Punkte weiter auseinander liegen.
               </Text>
-              <Text>
+              <Text style={styles.description}>
                 {"\u2022"} exportiere die Route als GeoJSON-Datei auf dein Gerät
               </Text>
-              <Text>
+              <Text style={styles.description}>
                 {"\u2022"} importiere die Datei hier, um sie zu verwenden.
               </Text>
             </View>

@@ -98,7 +98,7 @@ export default function Settings() {
   };
   const handleLinkPress = () => {
     Linking.openURL(
-      "http://brouter.de/brouter-web/#map=6/50.324/14.381/standard",
+      "https://maps.openrouteservice.org/#/place/@11.832275390625002,48.622016428468406,7",
     ).catch((err) => console.error("Failed to open URL:", err));
   };
   return (
@@ -125,6 +125,9 @@ export default function Settings() {
           disabled={true}
         >
           {/* Tour Name Section */}
+          <Text style={styles.settingsSectionName} category={"h5"}>
+            Tour Einstellungen
+          </Text>
           <Layout style={styles.settingContainer}>
             <Text category={"s2"} style={styles.settingHeader}>
               Tourname
@@ -161,11 +164,11 @@ export default function Settings() {
           {/* Route Guideline Section */}
           <View style={styles.settingContainer}>
             <Text category={"s2"} style={styles.settingHeader}>
-              Tour-Guideline
+              Tour Geplante-Route
             </Text>
             <Divider style={styles.divider} />
             <View style={styles.inlineContainer}>
-              <Text category={"h6"}>Default Guideline</Text>
+              <Text category={"h6"}>MyRoute.json</Text>
               <View style={styles.iconGroup}>
                 <TopNavigationAction
                   icon={DeleteIcon}
@@ -176,12 +179,13 @@ export default function Settings() {
             </View>
             <View>
               <Text style={styles.description}>
-                Guideline wird als eine graue Linie auf deine Map gezeichnet und
-                dient dazu, um deine Navigation an dem Fahren zu erleichtern. Du
-                kannst auch selbst deine Guide-Route importieren:
+                Geplante-Route wird als eine graue Linie auf deine Map
+                gezeichnet und dient dazu, um deine Navigation an dem Fahren zu
+                erleichtern. Du kannst auch selbst deine Geplante-Route
+                importieren:
               </Text>
               <Text style={styles.description}>
-                {"\u2022"} besuche{" "}
+                {"\u2022"} Besuche{" "}
                 <Text
                   style={[
                     styles.accentText,
@@ -189,19 +193,20 @@ export default function Settings() {
                   ]}
                   onPress={handleLinkPress}
                 >
-                  brouter.de
+                  openrouteservice.org
                 </Text>
               </Text>
               <Text style={styles.description}>
-                {"\u2022"} setze Punkte auf der Karte, um deine Route zu planen.
+                {"\u2022"} Setze Punkte auf der Karte, um deine Route zu planen.
                 Beachte, dass das Planen der Route länger dauern kann, wenn die
                 Punkte weiter auseinander liegen.
               </Text>
               <Text style={styles.description}>
-                {"\u2022"} exportiere die Route als GeoJSON-Datei auf dein Gerät
+                {"\u2022"} Exportiere die Route als Geo-JSON Datei auf dein
+                Gerät
               </Text>
               <Text style={styles.description}>
-                {"\u2022"} importiere die Datei hier, um sie zu verwenden.
+                {"\u2022"} Importiere die Datei hier, um sie zu verwenden.
               </Text>
             </View>
             {selectedFile?.assets?.at(0)?.name && (
@@ -232,6 +237,11 @@ const makeStyles = (theme: ThemeType) =>
     container: {
       flex: 1,
     },
+    settingsSectionName: {
+      textAlign: "center",
+      color: theme["color-primary-500"],
+      marginVertical: 3,
+    },
     centeringContainer: {
       flex: 1,
       justifyContent: "center",
@@ -249,7 +259,7 @@ const makeStyles = (theme: ThemeType) =>
       backgroundColor: theme["color-basic-400"],
       height: 1,
       alignSelf: "stretch",
-      marginVertical: 10,
+      marginVertical: 3,
     },
     settingHeader: {
       color: theme["color-basic-500"],

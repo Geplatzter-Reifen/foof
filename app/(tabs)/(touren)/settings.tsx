@@ -189,7 +189,7 @@ export default function Settings() {
                 kannst auch selbst deine Guide-Route importieren:
               </Text>
               <Text style={styles.bulletText}>
-                besuche{" "}
+                {"\u2022"} besuche{" "}
                 <Text
                   style={[
                     styles.accentText,
@@ -200,11 +200,15 @@ export default function Settings() {
                   example.link.geojson.com
                 </Text>
               </Text>
-              <Text style={styles.bulletText}>erstelle deine route</Text>
               <Text style={styles.bulletText}>
-                exportiere als GeoJSON auf dein Device
+                {"\u2022"} erstelle deine route
               </Text>
-              <Text style={styles.bulletText}>importiere es hier</Text>
+              <Text style={styles.bulletText}>
+                {"\u2022"} exportiere als GeoJSON auf dein Device
+              </Text>
+              <Text style={styles.bulletText}>
+                {"\u2022"} importiere es hier
+              </Text>
             </View>
             {selectedFile?.assets?.at(0)?.name && (
               <Text style={styles.successMessage}>

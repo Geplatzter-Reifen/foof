@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@/test-utils/test-utils";
 import DateTimeButton from "@/components/Modal/DateTimeButton";
+import { formatDate, DateFormat } from "@/utils/dateUtil";
 
 describe("DateTimeButton Component", () => {
   const mockOnDateChange = jest.fn();
@@ -13,22 +14,27 @@ describe("DateTimeButton Component", () => {
     onDateChange: mockOnDateChange,
   };
 
+  it("matches the snapshot", () => {
+    const { toJSON } = render(<DateTimeButton {...defaultProps} />);
+    expect(toJSON()).toMatchSnapshot();
+  });
+
   it("renders correctly with initial date", () => {
     const { getByText } = render(<DateTimeButton {...defaultProps} />);
-    expect(getByText(date.toLocaleDateString())).toBeTruthy();
+    expect(getByText(formatDate(date, DateFormat.DATE))).toBeTruthy();
   });
 
   it("renders correctly with initial time", () => {
     const props = { ...defaultProps, mode: "time" as "date" | "time" };
     const { getByText } = render(<DateTimeButton {...props} />);
-    expect(getByText(date.toLocaleTimeString())).toBeTruthy();
+    expect(getByText(formatDate(date, DateFormat.TIME))).toBeTruthy();
   });
 
   it("opens date picker on button press", () => {
     const { getByText, getByTestId } = render(
       <DateTimeButton {...defaultProps} />,
     );
-    fireEvent.press(getByText(date.toLocaleDateString()));
+    fireEvent.press(getByText(formatDate(date, DateFormat.DATE)));
     expect(getByTestId("dateTimePicker")).toBeTruthy();
   });
 
@@ -37,7 +43,7 @@ describe("DateTimeButton Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeButton {...defaultProps} />,
     );
-    fireEvent.press(getByText(date.toLocaleDateString()));
+    fireEvent.press(getByText(formatDate(date, DateFormat.DATE)));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: newDate.getTime() },
     });
@@ -48,7 +54,7 @@ describe("DateTimeButton Component", () => {
     const newDate = new Date(2024, 0, 1, 13, 0, 0);
     const props = { ...defaultProps, mode: "time" as "date" | "time" };
     const { getByText, getByTestId } = render(<DateTimeButton {...props} />);
-    fireEvent.press(getByText(date.toLocaleTimeString()));
+    fireEvent.press(getByText(formatDate(date, DateFormat.TIME)));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: newDate.getTime() },
     });

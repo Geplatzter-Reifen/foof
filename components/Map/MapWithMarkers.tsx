@@ -36,6 +36,10 @@ function MapWithMarkers({
   centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
   zoomLevel = zoomLevel || 5; // Zoom-Level für Deutschland
 
+  /**
+   * The start coordinate is initialized if coordinates are provided and are numbers.
+   * Else, the start coordinate is set to null.
+   */
   const [startMarkerCoordinate, setStartMarkerCoordinate] =
     useState<Position | null>(
       initialStartCoordinate &&
@@ -45,6 +49,10 @@ function MapWithMarkers({
         : null,
     );
 
+  /**
+   * The end coordinate is initialized if coordinates are provided and are numbers.
+   * Else, the end coordinate is set to null.
+   */
   const [endMarkerCoordinate, setEndMarkerCoordinate] =
     useState<Position | null>(
       initialEndCoordinate &&
@@ -54,6 +62,12 @@ function MapWithMarkers({
         : null,
     );
 
+  /**
+   * Handles the event when the map is clicked.
+   * If the clicked feature is a point, it updates the coordinates.
+   * Depending on the current marker index, it sets either the start or end coordinate.
+   * @param feature - The clicked feature containing the geometry.
+   */
   const handleMapPress = (feature: Feature) => {
     const geometry = feature.geometry;
     if (geometry.type === "Point") {
@@ -66,7 +80,14 @@ function MapWithMarkers({
     }
   };
 
-  const setCoordinate = (index: number, coordinates: Position) => {
+  /**
+   * Updates the marker coordinates.
+   * If the index is 0, the start marker coordinate is updated.
+   * If the index is 1, the end marker coordinate is updated.
+   * @param index - The index of the marker.
+   * @param coordinates - The new coordinates.
+   */
+  const updateMarkerCoordinate = (index: number, coordinates: Position) => {
     onCoordinateChange(coordinates);
     if (index === 0) {
       setStartMarkerCoordinate(coordinates);
@@ -77,6 +98,7 @@ function MapWithMarkers({
 
   return (
     <Layout style={styles.container}>
+      {/** MapboxGL MapView component that displays the map. */}
       <MapboxGL.MapView
         style={styles.map}
         onPress={handleMapPress}
@@ -85,6 +107,7 @@ function MapWithMarkers({
         scaleBarEnabled={false}
         compassEnabled={true}
       >
+        {/** MapboxGL Camera component that controls the camera settings of the map. */}
         <MapboxGL.Camera
           centerCoordinate={centerCoordinate}
           zoomLevel={zoomLevel}
@@ -92,26 +115,29 @@ function MapWithMarkers({
           heading={heading}
           pitch={pitch}
         />
+        {/** Marker component for the start point, if the start coordinate is set. */}
         {startMarkerCoordinate && (
           <Marker
             id="startMarker"
             coordinate={startMarkerCoordinate}
             markerIndex={0}
             currentIndex={markerIndex}
-            onCoordinateChange={setCoordinate}
+            onCoordinateChange={updateMarkerCoordinate}
             selectedColor={theme["color-primary-default"]}
           />
         )}
+        {/** Marker component for the end point, if the end coordinate is set. */}
         {endMarkerCoordinate && (
           <Marker
             id="endMarker"
             coordinate={endMarkerCoordinate}
             markerIndex={1}
             currentIndex={markerIndex}
-            onCoordinateChange={setCoordinate}
+            onCoordinateChange={updateMarkerCoordinate}
             selectedColor={theme["color-primary-default"]}
           />
         )}
+        {/** StageMapLine component that displays the lines from already existing stages. */}
         {stagesWithLocations?.map((stage) => {
           if (stage.locations.length <= 1) return;
           return (

@@ -25,15 +25,20 @@ import { Location, Stage } from "@/database/model/model";
 import { roundNumber } from "@/utils/utils";
 
 type TopTapBarProps = {
-  selectedMarkerIndex: number;
+  selectedIndex: number;
   onSelect: (index: number) => void;
 };
 
-const TopTapBar = ({ selectedMarkerIndex, onSelect }: TopTapBarProps) => {
+/**
+ * Component for the top tab bar.
+ * @param selectedIndex - The index of the currently selected marker.
+ * @param onSelect - Function called when a tab is selected.
+ */
+const TopTapBar = ({ selectedIndex, onSelect }: TopTapBarProps) => {
   return (
     <TabBar
       style={{ height: 50 }}
-      selectedIndex={selectedMarkerIndex}
+      selectedIndex={selectedIndex}
       onSelect={onSelect}
     >
       <Tab title="Start" />
@@ -49,11 +54,13 @@ export default function CreateManualStage() {
   //switches title from plain text to the input field
   const [titleBeingChanged, setTitleBeingChanged] = useState(false);
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
+  // Switching between coordinate input and map input
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
+  // Switching between start and end coordinate input for map input
+  const [selectedTopTapBarIndex, setSelectedTopTapBarIndex] = useState(0);
+  const [timeModalVisible, setTimeModalVisible] = useState(false);
   const router = useRouter();
-  // compass input
+  // Variables for user input
   const startLatitude = useRef<number>();
   const startLongitude = useRef<number>();
   const endLatitude = useRef<number>();
@@ -61,6 +68,7 @@ export default function CreateManualStage() {
   const startDate = useRef(new Date());
   const endDate = useRef(new Date());
 
+  // Camera properties for the map
   const centerCoordinate = useRef<Position>();
   const zoomLevel = useRef<number>();
   const heading = useRef<number>();
@@ -69,8 +77,6 @@ export default function CreateManualStage() {
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
-
-  ////////////on the map input
 
   const titleInput = useMemo(
     () => (
@@ -140,6 +146,12 @@ export default function CreateManualStage() {
     fetchStagesWithLocations();
   }, [tourId]);
 
+  /**
+   * Submits the stage to the database.
+   * Creates a new stage with the given data.
+   * If the creation is successful, it navigates back to the previous screen.
+   * If an error occurs, it displays an alert with the error message.
+   */
   const submitStage = async () => {
     try {
       await createManualStageFn(
@@ -160,8 +172,14 @@ export default function CreateManualStage() {
     }
   };
 
+  /**
+   * Sets the coordinates based on the selected tab.
+   * If the start tab is selected, it sets the start coordinates.
+   * If the end tab is selected, it sets the end coordinates.
+   * @param coordinate - The coordinates to set.
+   */
   const setCoordinate = (coordinate: Position) => {
-    if (selectedMarkerIndex === 0) {
+    if (selectedTopTapBarIndex === 0) {
       startLongitude.current = coordinate[0];
       startLatitude.current = coordinate[1];
     } else {
@@ -170,17 +188,27 @@ export default function CreateManualStage() {
     }
   };
 
+  /**
+   * Handles the create button press event.
+   * Depending on the selected index, it either submits the stage data
+   * or displays the DateTimeModal for date and time selection.
+   */
   const handleCreateButton = async () => {
     switch (selectedIndex) {
       case 0:
         await submitStage();
         break;
       case 1:
-        setVisible(true);
+        setTimeModalVisible(true);
         break;
     }
   };
 
+  /**
+   * Renders the coordinate input component for the start coordinates.
+   * It includes inputs for latitude, longitude, and date/time.
+   * The initial values are set based on the current state.
+   */
   const renderStartCoordinateInput = (
     <CoordinateInput
       onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
@@ -192,6 +220,11 @@ export default function CreateManualStage() {
     />
   );
 
+  /**
+   * Renders the coordinate input component for the end coordinates.
+   * It includes inputs for latitude, longitude, and date/time.
+   * The initial values are set based on the current state.
+   */
   const renderEndCoordinateInput = (
     <CoordinateInput
       onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
@@ -203,6 +236,11 @@ export default function CreateManualStage() {
     />
   );
 
+  /**
+   * Handles the event when the map goes idle.
+   * Updates the camera properties based on the current map state.
+   * @param state - The current state of the map.
+   */
   const handleMapIdle = (state: MapState) => {
     const properties = state.properties;
     centerCoordinate.current = properties.center;
@@ -235,11 +273,11 @@ export default function CreateManualStage() {
         return (
           <>
             <TopTapBar
-              selectedMarkerIndex={selectedMarkerIndex}
-              onSelect={(index) => setSelectedMarkerIndex(index)}
+              selectedIndex={selectedTopTapBarIndex}
+              onSelect={setSelectedTopTapBarIndex}
             />
             <MapWithMarkers
-              markerIndex={selectedMarkerIndex}
+              markerIndex={selectedTopTapBarIndex}
               onCoordinateChange={setCoordinate}
               initialStartCoordinate={initialStartCoordinate}
               initialEndCoordinate={initialEndCoordinate}
@@ -273,8 +311,8 @@ export default function CreateManualStage() {
         </Button>
       </ButtonSwitch>
       <DateTimeModal
-        modalVisible={visible}
-        onClose={() => setVisible(false)}
+        modalVisible={timeModalVisible}
+        onClose={() => setTimeModalVisible(false)}
         onSave={submitStage}
         onStartDateChange={(date) => (startDate.current = date)}
         onEndDateChange={(date) => (endDate.current = date)}

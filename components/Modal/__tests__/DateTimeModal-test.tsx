@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@/test-utils/test-utils";
 import DateTimeModal from "@/components/Modal/DateTimeModal";
+import { formatDate, DateFormat } from "@/utils/dateUtil";
 
 describe("DateTimeModal Component", () => {
   const mockOnClose = jest.fn();
@@ -21,16 +22,21 @@ describe("DateTimeModal Component", () => {
     initialEndDate: endDate,
   };
 
+  it("matches the snapshot", () => {
+    const { toJSON } = render(<DateTimeModal {...defaultProps} />);
+    expect(toJSON()).toMatchSnapshot();
+  });
+
   it("renders correctly", () => {
     const { getByText } = render(<DateTimeModal {...defaultProps} />);
     // Startzeit
     expect(getByText("Startzeit")).toBeTruthy();
-    expect(getByText(startDate.toLocaleDateString())).toBeTruthy();
-    expect(getByText(startDate.toLocaleTimeString())).toBeTruthy();
+    expect(getByText(formatDate(startDate, DateFormat.DATE))).toBeTruthy();
+    expect(getByText(formatDate(startDate, DateFormat.TIME))).toBeTruthy();
     // Endzeit
     expect(getByText("Endzeit")).toBeTruthy();
-    expect(getByText(endDate.toLocaleDateString())).toBeTruthy();
-    expect(getByText(endDate.toLocaleTimeString())).toBeTruthy();
+    expect(getByText(formatDate(endDate, DateFormat.DATE))).toBeTruthy();
+    expect(getByText(formatDate(endDate, DateFormat.TIME))).toBeTruthy();
   });
 
   it("calls onClose when Abbrechen button is pressed", () => {
@@ -50,7 +56,7 @@ describe("DateTimeModal Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(getByText(startDate.toLocaleDateString()));
+    fireEvent.press(getByText(formatDate(startDate, DateFormat.DATE)));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: newStartDate.getTime() },
     });
@@ -62,7 +68,7 @@ describe("DateTimeModal Component", () => {
     const { getByText, getByTestId } = render(
       <DateTimeModal {...defaultProps} />,
     );
-    fireEvent.press(getByText(endDate.toLocaleTimeString()));
+    fireEvent.press(getByText(formatDate(endDate, DateFormat.TIME)));
     fireEvent(getByTestId("dateTimePicker"), "onChange", {
       nativeEvent: { timestamp: newEndDate.getTime() },
     });

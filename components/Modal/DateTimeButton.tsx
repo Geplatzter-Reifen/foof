@@ -5,6 +5,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { DateFormat, formatDate } from "@/utils/dateUtil";
 
 type DateTimeButtonProps = {
   date: Date;
@@ -37,8 +38,8 @@ const DateTimeButton = ({ date, mode, onDateChange }: DateTimeButtonProps) => {
         }
       >
         {mode === "date"
-          ? date.toLocaleDateString()
-          : date.toLocaleTimeString()}
+          ? formatDate(date, DateFormat.DATE)
+          : formatDate(date, DateFormat.TIME)}
       </Button>
 
       {showPicker && (

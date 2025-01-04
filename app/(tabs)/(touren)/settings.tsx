@@ -124,10 +124,6 @@ export default function Settings() {
           }}
           disabled={true}
         >
-          {/* Tour Name Section */}
-          <Text style={styles.settingsSectionName} category={"h5"}>
-            Tour Einstellungen
-          </Text>
           <Layout style={styles.settingContainer}>
             <Text category={"s2"} style={styles.settingHeader}>
               Tourname
@@ -164,7 +160,7 @@ export default function Settings() {
           {/* Route Guideline Section */}
           <View style={styles.settingContainer}>
             <Text category={"s2"} style={styles.settingHeader}>
-              Tour Geplante-Route
+              Geplante Route
             </Text>
             <Divider style={styles.divider} />
             <View style={styles.inlineContainer}>
@@ -179,10 +175,10 @@ export default function Settings() {
             </View>
             <View>
               <Text style={styles.description}>
-                Geplante-Route wird als eine graue Linie auf deine Map
-                gezeichnet und dient dazu, um deine Navigation an dem Fahren zu
-                erleichtern. Du kannst auch selbst deine Geplante-Route
-                importieren:
+                Die geplante Route wird als graue Linie auf der Karte
+                dargestellt und kann während dem Fahren zur Navigation benutzt
+                werden. Falls du eine eigene Route erstellen möchtest, gehe wie
+                folgt vor:
               </Text>
               <Text style={styles.description}>
                 {"\u2022"} Besuche{" "}
@@ -236,11 +232,6 @@ const makeStyles = (theme: ThemeType) =>
   StyleSheet.create({
     container: {
       flex: 1,
-    },
-    settingsSectionName: {
-      textAlign: "center",
-      color: theme["color-primary-500"],
-      marginVertical: 3,
     },
     centeringContainer: {
       flex: 1,

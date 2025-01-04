@@ -73,7 +73,6 @@ export function calculateBounds(geoJson: FeatureCollection): {
   ) {
     throw new Error("No valid coordinates found");
   }
-  console.log(bounds);
   return bounds;
 }
 

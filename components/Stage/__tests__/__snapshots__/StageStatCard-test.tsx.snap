@@ -6,7 +6,7 @@ exports[`StageStatCard does not render Start and End Point for Stage with less t
     {
       "busy": undefined,
       "checked": undefined,
-      "disabled": undefined,
+      "disabled": true,
       "expanded": undefined,
       "selected": undefined,
     }
@@ -362,7 +362,7 @@ exports[`StageStatCard renders correctly 1`] = `
     {
       "busy": undefined,
       "checked": undefined,
-      "disabled": undefined,
+      "disabled": true,
       "expanded": undefined,
       "selected": undefined,
     }
@@ -632,7 +632,9 @@ exports[`StageStatCard renders correctly 1`] = `
                     "fontSize": 23,
                   },
                   {
-                    "color": "#494949",
+                    "color": "#7e7e7e",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": 25,
                   },
                   {
@@ -703,7 +705,9 @@ exports[`StageStatCard renders correctly 1`] = `
                     "fontSize": 23,
                   },
                   {
-                    "color": "#494949",
+                    "color": "#7e7e7e",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": 25,
                   },
                   {
@@ -838,6 +842,8 @@ exports[`StageStatCard renders correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -909,6 +915,8 @@ exports[`StageStatCard renders correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -980,6 +988,8 @@ exports[`StageStatCard renders correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {

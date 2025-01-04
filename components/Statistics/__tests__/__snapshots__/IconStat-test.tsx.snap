@@ -81,6 +81,8 @@ exports[`TourStats should render the icon and font in correct size 1`] = `
           },
           {
             "color": "#FF6E14",
+            "textAlign": "center",
+            "textAlignVertical": "center",
             "width": 35,
           },
           {

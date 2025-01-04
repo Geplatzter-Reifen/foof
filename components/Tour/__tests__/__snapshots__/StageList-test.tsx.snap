@@ -154,6 +154,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -225,6 +227,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -296,6 +300,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -505,6 +511,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -576,6 +584,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -647,6 +657,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -856,6 +868,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -927,6 +941,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -998,6 +1014,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1207,6 +1225,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1278,6 +1298,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1349,6 +1371,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1558,6 +1582,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1629,6 +1655,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1700,6 +1728,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1909,6 +1939,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -1980,6 +2012,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -2051,6 +2085,8 @@ exports[`StageList renders correctly for many stages 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -2304,6 +2340,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -2375,6 +2413,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {
@@ -2446,6 +2486,8 @@ exports[`StageList renders correctly for one stage 1`] = `
                   },
                   {
                     "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
                     "width": "auto",
                   },
                   {

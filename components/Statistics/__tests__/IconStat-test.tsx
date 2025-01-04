@@ -26,7 +26,7 @@ describe("TourStats", () => {
       const { getByTestId } = render(<IconStat icon="home" status="basic" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
-      expect(icon.props.style.color).toBe(foofTheme["color-basic-500"]);
+      expect(icon.props.style.color).toBe(foofTheme["color-basic-400"]);
     });
     test("success", () => {
       const { getByTestId } = render(<IconStat icon="home" status="success" />);

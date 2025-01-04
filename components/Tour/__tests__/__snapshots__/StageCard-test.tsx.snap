@@ -147,6 +147,8 @@ exports[`StageCard renders basic stage correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -218,6 +220,8 @@ exports[`StageCard renders basic stage correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -289,6 +293,8 @@ exports[`StageCard renders basic stage correctly 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -501,6 +507,8 @@ exports[`StageCard renders correctly for active stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -572,6 +580,8 @@ exports[`StageCard renders correctly for active stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -643,6 +653,8 @@ exports[`StageCard renders correctly for active stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -855,6 +867,8 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -926,6 +940,8 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {
@@ -997,6 +1013,8 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
                 },
                 {
                   "color": "#FF6E14",
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
                   "width": "auto",
                 },
                 {

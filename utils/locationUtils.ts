@@ -65,6 +65,15 @@ export function calculateBounds(geoJson: FeatureCollection): {
       bounds = updateBounds(coords, bounds);
     }
   }
+  if (
+    bounds.ne[0] === -Infinity ||
+    bounds.ne[1] === -Infinity ||
+    bounds.sw[0] === Infinity ||
+    bounds.sw[1] === Infinity
+  ) {
+    throw new Error("No valid coordinates found");
+  }
+  console.log(bounds);
   return bounds;
 }
 
@@ -80,10 +89,12 @@ function updateBounds(
 ): { ne: number[]; sw: number[] } {
   for (const coord of coords) {
     const [lon, lat] = coord;
-    bounds = {
-      ne: [Math.max(bounds.ne[0], lon), Math.max(bounds.ne[1], lat)],
-      sw: [Math.min(bounds.sw[0], lon), Math.min(bounds.sw[1], lat)],
-    };
+    if (coord.length === 2) {
+      bounds = {
+        ne: [Math.max(bounds.ne[0], lon), Math.max(bounds.ne[1], lat)],
+        sw: [Math.min(bounds.sw[0], lon), Math.min(bounds.sw[1], lat)],
+      };
+    }
   }
   return bounds;
 }

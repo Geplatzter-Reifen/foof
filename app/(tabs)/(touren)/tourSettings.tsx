@@ -56,10 +56,14 @@ export default function TourSettings() {
     });
     if (!file.canceled) {
       const content = await FileSystem.readAsStringAsync(file.assets[0].uri);
-      if (Gjv.valid(JSON.parse(content))) {
-        setSelectedFile(file);
-        await setTourRoute(tourId, content);
-      } else {
+      try {
+        if (Gjv.valid(JSON.parse(content))) {
+          setSelectedFile(file);
+          await setTourRoute(tourId, content);
+        } else {
+          Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
+        }
+      } catch {
         Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
       }
     }

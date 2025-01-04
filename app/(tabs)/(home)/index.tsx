@@ -176,6 +176,7 @@ export default function HomeScreen() {
             setUserCentered(false);
           }}
         >
+          {/* renders the route of the active tour on the map */}
           {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
           {activeStageId && <StageLine stageId={activeStageId} />}
           {/* Kamera, die dem User folgt */}

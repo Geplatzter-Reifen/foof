@@ -1,3 +1,9 @@
+// This file defines the `RenderRoute` component, which is responsible for rendering a route on a Mapbox map using GeoJSON data.
+// The `RenderRoute` component uses Mapbox GL's `ShapeSource`, `LineLayer`, and `CircleLayer` to display the route and its points.
+// The `EnhancedRenderRoute` component is an observable version of `RenderRoute` that tracks updates to the route.
+// The `Bridge` component checks if there is a route associated with a tour and renders the `EnhancedRenderRoute` component if a route exists.
+// The `EnhancedRenderRouteV2` component is an observable version of `Bridge` that tracks create and delete operations in the routes table of a tour.
+
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/database/model/model";
 import React from "react";

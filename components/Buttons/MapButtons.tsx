@@ -1,3 +1,7 @@
+// This file defines the `CenterButton` and `RouteButton` components, which are used as map control buttons in the application.
+// The `CenterButton` recenters the map on the user's location, while the `RouteButton` displays the route on the map if there are any routes available.
+// These buttons can be utilized to provide map interaction functionalities.
+
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Tour } from "@/database/model/model";
 import React from "react";

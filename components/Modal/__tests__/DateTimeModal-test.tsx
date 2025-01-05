@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent } from "@/test-utils/test-utils";
 import DateTimeModal from "@/components/Modal/DateTimeModal";
 import { formatDate, DateFormat } from "@/utils/dateUtils";

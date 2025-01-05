@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Button, useTheme } from "@ui-kitten/components";
 import DateTimePicker, {

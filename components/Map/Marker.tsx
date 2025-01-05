@@ -1,4 +1,3 @@
-import React from "react";
 import MapboxGL from "@rnmapbox/maps";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import type { Feature, Position } from "geojson";

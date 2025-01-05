@@ -7,7 +7,7 @@ import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { Input } from "@ui-kitten/components";
-import { createManualStage as createManualStageFn } from "@/services/tracking";
+import { createManualStage as createManualStageFn } from "@/services/trackingService";
 import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 

@@ -2,7 +2,7 @@ import {
   parseCoordinates,
   ensurePermissions,
   validateManualStageInput,
-} from "@/services/tracking";
+} from "@/services/trackingService";
 
 import * as Location from "expo-location";
 

@@ -6,7 +6,7 @@ import {
   LOCATION_TASK_NAME,
   startAutomaticTracking,
   stopAutomaticTracking,
-} from "@/services/tracking";
+} from "@/services/trackingService";
 
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 

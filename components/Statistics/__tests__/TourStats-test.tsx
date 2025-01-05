@@ -1,4 +1,3 @@
-import { MockTour } from "@/__mocks__/tour";
 import TourStats from "../TourStats";
 import { render, waitFor } from "@/test-utils/test-utils";
 import { createTour } from "@/services/data/tourService";

@@ -7,7 +7,7 @@ import {
   getTourDistanceString,
   getTourDurationString,
 } from "@/services/statisticsService";
-import { formatDate, DateFormat } from "@/utils/dateUtil";
+import { formatDate, DateFormat } from "@/utils/dateUtils";
 const shareStageMaker = (
   title: string,
   distance: string,

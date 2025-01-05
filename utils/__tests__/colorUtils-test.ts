@@ -1,4 +1,4 @@
-import * as ColorUtils from "../colorUtil";
+import * as ColorUtils from "../colorUtils";
 
 describe("ColorUtil", () => {
   describe("isHexValid", () => {

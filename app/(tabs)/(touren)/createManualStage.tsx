@@ -288,6 +288,15 @@ export default function CreateManualStage() {
               onMapIdle={handleMapIdle}
               stagesWithLocations={stagesWithLocations}
             />
+            <DateTimeModal
+              modalVisible={timeModalVisible}
+              onClose={() => setTimeModalVisible(false)}
+              onSave={submitStage}
+              onStartDateChange={(date) => (startDate.current = date)}
+              onEndDateChange={(date) => (endDate.current = date)}
+              initialStartDate={startDate.current}
+              initialEndDate={endDate.current}
+            />
           </>
         );
       default:
@@ -310,16 +319,6 @@ export default function CreateManualStage() {
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
       </ButtonSwitch>
-      <DateTimeModal
-        modalVisible={timeModalVisible}
-        onClose={() => setTimeModalVisible(false)}
-        onSave={submitStage}
-        onStartDateChange={(date) => (startDate.current = date)}
-        onEndDateChange={(date) => (endDate.current = date)}
-        initialStartDate={startDate.current}
-        initialEndDate={endDate.current}
-      />
-
       <Layout style={styles.cardsContainer} level="2">
         {renderContent()}
       </Layout>

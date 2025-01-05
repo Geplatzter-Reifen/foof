@@ -87,8 +87,8 @@ function updateBounds(
   bounds: { ne: number[]; sw: number[] },
 ): { ne: number[]; sw: number[] } {
   for (const coord of coords) {
-    const [lon, lat] = coord;
     if (coord.length === 2) {
+      const [lon, lat] = coord;
       bounds = {
         ne: [Math.max(bounds.ne[0], lon), Math.max(bounds.ne[1], lat)],
         sw: [Math.min(bounds.sw[0], lon), Math.min(bounds.sw[1], lat)],

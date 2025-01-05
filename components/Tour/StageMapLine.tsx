@@ -4,6 +4,7 @@ import { lineString, point, featureCollection } from "@turf/helpers";
 import { useTheme } from "@ui-kitten/components";
 import React from "react";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
+import { length } from "@turf/turf";
 
 /**
  * Converts degrees to radians.
@@ -20,13 +21,10 @@ const toRadians = (degrees: number): number => (degrees * Math.PI) / 180;
  * @returns The angle in degrees.
  */
 const toDegrees = (radians: number): number => (radians * 180) / Math.PI;
+
 /**
  * Calculates a point 45% of the way between two geographic coordinates. Solves the overlapping
  * problem between active stage line and user location point
- *
- * This function interpolates a point along the great circle path between two
- * geographic coordinates (latitude and longitude), simulating a partial
- * progression between the two points.
  *
  * @param coord1 - The starting coordinate as [longitude, latitude].
  * @param coord2 - The ending coordinate as [longitude, latitude].
@@ -58,6 +56,7 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
 
   return [toDegrees(Lon), toDegrees(Lat)]; // Convert back to degrees
 };
+
 /**
  * StageMapLine Component
  *
@@ -65,11 +64,17 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
  * The line can include a gradient effect if the `active` prop is set to `true`.
  * It also displays start and end points using CircleLayer.
  *
- * Props:
- * - locations: Location[] - An array of location objects containing latitude and longitude.
- * - stageId: string - A unique identifier for the stage, used for layer and source IDs.
- * - active: boolean - Determines whether the line should include a gradient effect or display statically.
+ * @component
+ * @param {Object} props - The props for the StageMapLine component.
+ * @param {Object[]} [props.locations] - An array of location objects, each containing `latitude` and `longitude`.
+ * @param {Object} [props.routeGeoJSON] - A GeoJSON object representing the route (optional).
+ * @param {string} props.stageId - A unique identifier for the stage, used for layer and source IDs.
+ * @param {boolean} [props.active=false] - Determines whether the line should include a gradient effect or display statically.
+ * @param {boolean} [props.planed=false] - Determines if the route is planned; changes line and circle styles accordingly.
+ *
+ * @returns {JSX.Element} A Mapbox line and optionally styled start/end points.
  */
+
 type stageMapLineProps = {
   locations: Location[];
   stageId: string;
@@ -87,9 +92,10 @@ const StageMapLine = ({
     location.latitude,
   ]);
 
-  if (active && coords.length >= 2) {
-    console.log("i am in altering if ");
+  let gradientStart = 0; // Default starting point for gradient
+  let gradientEnd = 1; // Default ending point for gradient
 
+  if (active && coords.length >= 2) {
     // Adjust the last coordinate
     const lastCoord = calculateLastPoint(
       coords[coords.length - 1],
@@ -97,9 +103,13 @@ const StageMapLine = ({
     );
     // Replace the last coordinate in the array
     coords = [...coords.slice(0, -1), lastCoord];
+    const geojsonLine = lineString(coords);
+    const totalLineLength = length(geojsonLine); // Total line length
+    const segmentLineLength = length(
+      lineString([coords[coords.length - 2], coords[coords.length - 1]]),
+    ); // Last segment length
+    gradientStart = (totalLineLength - segmentLineLength) / totalLineLength;
   }
-
-  console.log("Coordinates for the line:", coords);
 
   // Create individual features
   const stage: Feature<LineString> = lineString(coords, { name: "Stage" });
@@ -130,9 +140,9 @@ const StageMapLine = ({
                   ["line-progress"],
                   0,
                   theme["color-primary-500"], // Fully opaque
-                  0.9,
+                  gradientStart,
                   theme["color-primary-500"], // Near the end
-                  1,
+                  gradientEnd,
                   "rgba(0, 0, 0, 0)", // Transparent at the end
                 ],
               }

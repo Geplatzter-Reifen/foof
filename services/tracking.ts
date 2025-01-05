@@ -69,16 +69,19 @@ export async function initializeManualStage(
     stageName,
     startTime.getTime(),
     endTime.getTime(),
+    false,
+    calculateDistance(startingCoordinates, endCoordinates),
   );
   await stage.addLocation(
     startingCoordinates.latitude,
     startingCoordinates.longitude,
   );
-  await stage.addLocation(endCoordinates.latitude, endCoordinates.longitude);
-  const distance = calculateDistance(startingCoordinates, endCoordinates);
-  await setStageDistance(stage.id, distance);
-  const speed = getStageAvgSpeedInKmh(stage);
+  await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+
+  let speed = getStageAvgSpeedInKmh(stage);
+
   await setStageAvgSpeed(stage.id, speed);
+
   return stage;
 }
 

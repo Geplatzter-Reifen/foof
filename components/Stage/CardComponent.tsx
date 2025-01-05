@@ -2,6 +2,7 @@ import React from "react";
 
 import { Card, Text, Layout, useTheme } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
+import customStyles from "@/constants/styles";
 
 interface cardProps {
   form: React.ReactElement;
@@ -28,7 +29,15 @@ function CardComponent(props: cardProps) {
   const { form, title } = props;
   return (
     <Layout style={style.flexContainer} level="2">
-      <Card style={style.card} header={() => CardHeder({ title })}>
+      <Card
+        style={{
+          ...customStyles.basicCard,
+          ...customStyles.basicShadow,
+          ...style.card,
+        }}
+        header={() => CardHeder({ title })}
+        disabled={true}
+      >
         {form}
       </Card>
     </Layout>
@@ -40,15 +49,6 @@ export default CardComponent;
 const style = StyleSheet.create({
   card: {
     flex: 1, // Allow the element to grow
-    borderRadius: 8,
-    borderWidth: 0,
-    // Schatten für iOS
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    // Schatten für Android
-    elevation: 3,
   },
   flexContainer: {
     flex: 1,

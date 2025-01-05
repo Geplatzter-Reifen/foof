@@ -9,13 +9,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from "@ui-kitten/components";
-import {
-  ImageProps,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { ImageProps, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/services/data/tourService";
@@ -23,6 +17,7 @@ import { setTourRoute } from "@/services/data/routeService";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const BackIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
@@ -33,7 +28,8 @@ type TourenParams = {
   tourTitle: string;
 };
 
-export default function Touren() {
+export default function TourSettings() {
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams() as TourenParams;
   const { tourId, tourTitle } = params;
   const [tourname, setTourname] = useState(tourTitle);
@@ -54,16 +50,20 @@ export default function Touren() {
     />
   );
 
-  const importTour = async () => {
+  const importRouteForTour = async () => {
     const file = await DocumentPicker.getDocumentAsync({
       type: "application/json",
     });
     if (!file.canceled) {
       const content = await FileSystem.readAsStringAsync(file.assets[0].uri);
-      if (Gjv.valid(JSON.parse(content))) {
-        setSelectedFile(file);
-        await setTourRoute(tourId, content);
-      } else {
+      try {
+        if (Gjv.valid(JSON.parse(content))) {
+          setSelectedFile(file);
+          await setTourRoute(tourId, content);
+        } else {
+          Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
+        }
+      } catch {
         Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
       }
     }
@@ -74,8 +74,8 @@ export default function Touren() {
       <TopNavigation
         title={() => <Text category={"h4"}>Touren</Text>}
         accessoryLeft={renderBackAction}
-        style={styles.header}
         alignment={"center"}
+        style={{ marginTop: insets.top }}
       ></TopNavigation>
       <Divider />
       <Layout style={styles.body}>
@@ -86,7 +86,7 @@ export default function Touren() {
           onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
         ></Input>
         <Text>Die Route kann nur als GeoJSON importiert werden.</Text>
-        <Button onPress={importTour}>Route importieren</Button>
+        <Button onPress={importRouteForTour}>Route importieren</Button>
         {selectedFile?.assets?.at(0)?.name && (
           <Text>
             {selectedFile?.assets?.at(0)!.name} {"\n"} wurde erfolgreich
@@ -101,9 +101,6 @@ export default function Touren() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   body: {
     margin: 15,

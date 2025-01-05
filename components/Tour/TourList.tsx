@@ -2,7 +2,7 @@ import { Tour } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { Text, Card, Layout } from "@ui-kitten/components";
 import { Link } from "expo-router";
-import { DATE, formatDate } from "@/utils/dateUtil";
+import { DATE, formatDate } from "@/utils/dateUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const TourList = ({ tours }: { tours: Tour[] }) => {

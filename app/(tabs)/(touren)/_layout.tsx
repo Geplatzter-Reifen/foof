@@ -20,7 +20,7 @@ export default function ReiseStackLayout() {
         }}
       />
       <Stack.Screen
-        name={"touren"}
+        name={"tourSettings"}
         options={{
           headerShown: false,
         }}
@@ -36,7 +36,7 @@ export default function ReiseStackLayout() {
         name="stagesMapViewWrapper"
         options={{
           headerShown: true,
-          title: "Etappenübersicht",
+          title: "Tourübersicht",
         }}
       />
     </Stack>

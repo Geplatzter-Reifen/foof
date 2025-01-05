@@ -10,13 +10,14 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { SafeAreaView } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/database/model/database_functions";
 import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import { default as mapping } from "@/mapping.json";
+import { View } from "react-native";
 
 library.add(far, fas, fab);
 
@@ -68,10 +69,10 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SafeAreaProvider>
       <IconRegistry icons={FontAwesomeIconsPack} />
       <ApplicationProvider {...eva} customMapping={mapping} theme={theme}>
-        <SafeAreaView
+        <View
           onLayout={() => setLayoutLoaded(true)}
           style={{
             flex: 1,
@@ -80,8 +81,8 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
-        </SafeAreaView>
+        </View>
       </ApplicationProvider>
-    </>
+    </SafeAreaProvider>
   );
 }

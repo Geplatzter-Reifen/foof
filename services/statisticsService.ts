@@ -3,7 +3,7 @@ import {
   getDurationFormatted,
   getDurationInMs,
   getDurationMsFormatted,
-} from "@/utils/dateUtil";
+} from "@/utils/dateUtils";
 
 /* DISTANCE */
 /** Returns the total TOUR distance in km */

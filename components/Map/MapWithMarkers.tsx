@@ -114,6 +114,7 @@ function MapWithMarkers({
           animationDuration={0}
           heading={heading}
           pitch={pitch}
+          minZoomLevel={0.1}
         />
         {/** Marker component for the start point, if the start coordinate is set. */}
         {startMarkerCoordinate && (

@@ -271,14 +271,6 @@ export default function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
-      <Layout>
-        <TopNavigation
-          title={() => <Text category="h4">Home</Text>}
-          style={styles.header}
-          alignment="center"
-        ></TopNavigation>
-        <Divider />
-      </Layout>
       <Layout style={styles.layout}>
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView

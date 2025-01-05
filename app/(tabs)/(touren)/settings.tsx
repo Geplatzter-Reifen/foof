@@ -14,12 +14,12 @@ import {
 } from "@ui-kitten/components";
 import {
   ImageProps,
-  Platform,
-  StatusBar,
   StyleSheet,
   Alert,
   View,
   Linking,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/services/data/tourService";
@@ -103,18 +103,21 @@ export default function Settings() {
   };
   return (
     <Layout style={styles.container} level="2">
-      <TopNavigation
-        title={() => <Text category={"h4"}>Einstellungen</Text>}
-        accessoryLeft={() => (
-          <TopNavigationAction
-            icon={BackIcon}
-            hitSlop={15}
-            onPress={() => router.back()}
-          />
-        )}
-        style={styles.header}
-        alignment={"center"}
-      />
+      <View style={styles.headerWrapper}>
+        <TopNavigation
+          style={styles.header}
+          title={() => <Text category={"h4"}>Einstellungen</Text>}
+          accessoryLeft={() => (
+            <TopNavigationAction
+              icon={BackIcon}
+              hitSlop={15}
+              onPress={() => router.back()}
+            />
+          )}
+          alignment={"center"}
+        />
+      </View>
+
       <Layout style={styles.centeringContainer} level="2">
         <Card
           style={{
@@ -191,6 +194,7 @@ export default function Settings() {
                 >
                   openrouteservice.org
                 </Text>
+                .
               </Text>
               <Text style={styles.description}>
                 {"\u2022"} Setze Punkte auf der Karte, um deine Route zu planen.
@@ -199,7 +203,7 @@ export default function Settings() {
               </Text>
               <Text style={styles.description}>
                 {"\u2022"} Exportiere die Route als Geo-JSON Datei auf dein
-                Gerät
+                Gerät.
               </Text>
               <Text style={styles.description}>
                 {"\u2022"} Importiere die Datei hier, um sie zu verwenden.
@@ -236,13 +240,15 @@ const makeStyles = (theme: ThemeType) =>
     centeringContainer: {
       flex: 1,
     },
-    header: {
-      marginTop: Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0,
+    headerWrapper: {
+      backgroundColor: theme["color-basic-100"], // Set explicit background color
       shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 5,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
+      elevation: 8, // For Android
+      zIndex: 1, // Ensure it stays above other elements
+      padding: 2,
     },
     divider: {
       backgroundColor: theme["color-basic-400"],
@@ -287,5 +293,8 @@ const makeStyles = (theme: ThemeType) =>
     },
     accentText: {
       color: theme["color-primary-600"],
+    },
+    header: {
+      marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     },
   });

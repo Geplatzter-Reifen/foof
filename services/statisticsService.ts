@@ -5,6 +5,8 @@ import {
   getDurationMsFormatted,
 } from "@/utils/dateUtils";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
+import { flensburg, oberstdorf } from "@/services/StageConnection/data";
+import { getCorrectedLatitude } from "@/utils/locationUtils";
 
 /* DISTANCE */
 /** Returns the total TOUR distance in km */
@@ -86,17 +88,50 @@ export function getStageAvgSpeedString(
 }
 
 /* TOUR PROGRESS */
-const fLat = 54.7937;
-const oLat = 47.4099;
 
-type Interval = { startLat: number; endLat: number };
+// Latitude of Flensburg and Oberstdorf
+const flLat: number = flensburg.latitude;
+const obLat: number = oberstdorf.latitude;
 
-/** Returns latitude between Flensburg and Oberstdorf */
-function getCorrectedLatitude(coordLat: number): number {
-  if (coordLat >= fLat) return fLat;
-  if (coordLat <= oLat) return oLat;
+export type Interval = { startLat: number; endLat: number };
 
-  return coordLat;
+/** Calculates the Progress of a Tour by Projecting Stages onto the Latitude-Line between Flensburg and Oberstdorf */
+export async function getTourProgress(stages: Stage[]) {
+  // Array for saving Latitude of each Stage's start and end point
+  const intervals: Interval[] = [];
+
+  for (const stage of stages) {
+    // get the stage's locations
+    const locations = await getAllLocationsByStageId(stage.id);
+
+    if (locations.length < 2) continue;
+
+    // correct the latitudes to be between F and O
+    const startLat = getCorrectedLatitude(locations[0].latitude);
+    const endLat = getCorrectedLatitude(
+      locations[locations.length - 1].latitude,
+    );
+
+    // start should be the northern latitude
+    const start = Math.min(startLat, endLat);
+    const end = Math.max(startLat, endLat);
+
+    // add the stage's start and end points to the array
+    if (start !== end) {
+      intervals.push({ startLat: start, endLat: end });
+    }
+  }
+
+  // Wenn sich Etappen überlappen, verschmelze sie zu einer
+  const mergedIntervals = mergeIntervals(intervals);
+
+  // Gesamtlänge der Intervalle berechnen
+  let totalLat = 0;
+  mergedIntervals.forEach((interval) => {
+    totalLat += interval.endLat - interval.startLat;
+  });
+
+  return totalLat / (flLat - obLat);
 }
 
 /** Merges overlapping Stage Intervals */
@@ -128,39 +163,4 @@ function mergeIntervals(intervals: Interval[]): Interval[] {
 
   return merged;
 }
-
-/** Calculates the Progress of a Tour by Projecting Stages onto the Latitude-Line between Flensburg and Oberstdorf */
-export async function getTourProgress(stages: Stage[]) {
-  // speichert von jeder Etappe Start- und Ziel-Breitengrad, wobei Start immer über End liegt
-  const intervals: Interval[] = [];
-
-  for (const stage of stages) {
-    if (!stage.isActive) {
-      const locations = await getAllLocationsByStageId(stage.id);
-      if (locations.length >= 2) {
-        const startLat = getCorrectedLatitude(locations[0].latitude);
-        const endLat = getCorrectedLatitude(
-          locations[locations.length - 1].latitude,
-        );
-
-        const start = Math.min(startLat, endLat);
-        const end = Math.max(startLat, endLat);
-
-        if (start !== end) {
-          intervals.push({ startLat: start, endLat: end });
-        }
-      }
-    }
-  }
-
-  // Wenn sich Etappen überlappen, verschmelze sie zu einer
-  const mergedIntervals = mergeIntervals(intervals);
-
-  // Gesamtlänge der Intervalle berechnen
-  let totalLat = 0;
-  mergedIntervals.forEach((interval) => {
-    totalLat += interval.endLat - interval.startLat;
-  });
-
-  return totalLat / (fLat - oLat);
-}
+export { mergeIntervals as mergeIntervalsForTesting };

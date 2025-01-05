@@ -33,8 +33,6 @@ function TourStats({
     void calculateProgress();
   }, [stages]);
 
-  //const progress = getTourProgress(stages);
-
   return (
     <View style={styles.container}>
       {/* Fortschrittsbalken über die Tourdistanz*/}

@@ -1,4 +1,5 @@
 import type { FeatureCollection, Position } from "geojson";
+import { flensburg, oberstdorf } from "@/services/StageConnection/data";
 
 export type MapPoint = {
   latitude: number;
@@ -96,4 +97,12 @@ function updateBounds(
     }
   }
   return bounds;
+}
+
+/** Corrects a Latitude to be between Flensburg and Oberstdorf */
+export function getCorrectedLatitude(coordLat: number): number {
+  if (coordLat <= oberstdorf.latitude) return oberstdorf.latitude;
+  if (coordLat >= flensburg.latitude) return flensburg.latitude;
+
+  return coordLat;
 }

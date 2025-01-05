@@ -23,8 +23,8 @@ const toRadians = (degrees: number): number => (degrees * Math.PI) / 180;
 const toDegrees = (radians: number): number => (radians * 180) / Math.PI;
 
 /**
- * Calculates a point 45% of the way between two geographic coordinates. Solves the overlapping
- * problem between active stage line and user location point
+ * Calculates a point 45% of the way between two geographic coordinates.
+ * This helps solve the overlapping problem between the active stage line and the user location point.
  *
  * @param coord1 - The starting coordinate as [longitude, latitude].
  * @param coord2 - The ending coordinate as [longitude, latitude].
@@ -54,7 +54,7 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
       Math.cos(lat1) + (4.5 / 10) * (Bx - Math.cos(lat1)),
     );
 
-  return [toDegrees(Lon), toDegrees(Lat)]; // Convert back to degrees
+  return [toDegrees(Lon), toDegrees(Lat)];
 };
 
 /**
@@ -66,16 +66,15 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
  *
  * @component
  * @param {Object} props - The props for the StageMapLine component.
- * @param {Object[]} [props.locations] - An array of location objects, each containing `latitude` and `longitude`.
- * @param {Object} [props.routeGeoJSON] - A GeoJSON object representing the route (optional).
+ * @param {Object[]} props.locations - An array of location objects, each containing `latitude` and `longitude`.
  * @param {string} props.stageId - A unique identifier for the stage, used for layer and source IDs.
  * @param {boolean} [props.active=false] - Determines whether the line should include a gradient effect or display statically.
- * @param {boolean} [props.planed=false] - Determines if the route is planned; changes line and circle styles accordingly.
- *
+ * @param {string} [props.lineColor] - Custom color for the line.
+ * @param {string} [props.circleColor] - Custom color for the circles at the start and end points.
+ * @param {string} [props.circleStrokeColor] - Custom stroke color for the circles at the start and end points.
  * @returns {JSX.Element} A Mapbox line and optionally styled start/end points.
  */
-
-type stageMapLineProps = {
+type StageMapLineProps = {
   locations: Location[];
   stageId: string;
   active?: boolean;
@@ -83,6 +82,7 @@ type stageMapLineProps = {
   circleColor?: string;
   circleStrokeColor?: string;
 };
+
 const StageMapLine = ({
   locations,
   stageId,
@@ -90,13 +90,15 @@ const StageMapLine = ({
   lineColor,
   circleColor,
   circleStrokeColor,
-}: stageMapLineProps) => {
+}: StageMapLineProps) => {
   const theme = useTheme();
 
+  // Fallback to default theme colors if none are provided
   lineColor = lineColor || theme["color-primary-500"];
   circleColor = circleColor || theme["color-primary-100"];
   circleStrokeColor = circleStrokeColor || theme["color-primary-500"];
 
+  // Unpack location coordinates
   const locationsUnpacked = locations.map((loc) => ({
     latitude: loc.latitude,
     longitude: loc.longitude,
@@ -107,26 +109,27 @@ const StageMapLine = ({
     location.latitude,
   ]);
 
-  let gradientStart = 0; // Default starting point for gradient
-  let gradientEnd = 1; // Default ending point for gradient
-
-  if (active && coords.length >= 2) {
-    // Adjust the last coordinate
-    const lastCoord = calculateLastPoint(
-      coords[coords.length - 1],
-      coords[coords.length - 2],
-    );
-    // Replace the last coordinate in the array
-    coords = [...coords.slice(0, -1), lastCoord];
-    const geojsonLine = lineString(coords);
-    const totalLineLength = length(geojsonLine); // Total line length
-    const segmentLineLength = length(
-      lineString([coords[coords.length - 2], coords[coords.length - 1]]),
-    ); // Last segment length
-    gradientStart = (totalLineLength - segmentLineLength) / totalLineLength;
+  // Gradient start and end points for active stages
+  let gradientStart = 0;
+  if (active) {
+    if (coords.length >= 2) {
+      const lastCoord = calculateLastPoint(
+        coords[coords.length - 1],
+        coords[coords.length - 2],
+      );
+      coords = [...coords.slice(0, -1), lastCoord];
+      const geojsonLine = lineString(coords);
+      const totalLineLength = length(geojsonLine);
+      const segmentLineLength = length(
+        lineString([coords[coords.length - 2], coords[coords.length - 1]]),
+      );
+      gradientStart = (totalLineLength - segmentLineLength) / totalLineLength;
+    } else {
+      gradientStart = 0;
+    }
   }
 
-  // Create individual features
+  // Create GeoJSON features
   const stage: Feature<LineString> = lineString(coords, { name: "Stage" });
   const firstPoint: Feature<Point> = point(coords[0], { name: "Start" });
   const lastPoint: Feature<Point> = point(coords[coords.length - 1], {
@@ -138,30 +141,32 @@ const StageMapLine = ({
     : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
 
   return (
-    <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
+    <MapboxGL.ShapeSource
+      id={`lineSource-${stageId}`}
+      shape={collection}
+      lineMetrics={true}
+    >
       <MapboxGL.LineLayer
         id={`lineLayer-${stageId}`}
         belowLayerID="road-label"
-        // aboveLayerID="routeSource"
         style={{
-          ...(active
+          ...(active && gradientStart != 0
             ? {
                 lineGradient: [
                   "interpolate",
                   ["linear"],
                   ["line-progress"],
                   0,
-                  theme["color-primary-500"], // Fully opaque
+                  theme["color-primary-500"],
                   gradientStart,
-                  theme["color-primary-500"], // Near the end
-                  gradientEnd,
-                  "rgba(0, 0, 0, 0)", // Transparent at the end
+                  theme["color-primary-500"],
+                  1,
+                  "rgba(0, 0, 0, 0)",
                 ],
               }
             : {
-                lineColor: theme["color-primary-500"], // Static color if not active stage
+                lineColor: lineColor,
               }),
-          lineColor: lineColor,
           lineWidth: 4,
           lineOpacity: 1,
           lineCap: "round",
@@ -170,11 +175,10 @@ const StageMapLine = ({
       />
       <MapboxGL.CircleLayer
         id={`startPointLayer-${stageId}`}
-        // aboveLayerID="routeSource"
         filter={["==", "name", "Start"]}
         style={{
           circleColor: circleColor,
-          circleRadius: 6, // Size of the circle
+          circleRadius: 6,
           circleStrokeWidth: 2,
           circleStrokeColor: circleStrokeColor,
         }}
@@ -182,10 +186,9 @@ const StageMapLine = ({
       <MapboxGL.CircleLayer
         id={`endPointLayer-${stageId}`}
         filter={["==", "name", "End"]}
-        // aboveLayerID="routeSource"
         style={{
           circleColor: circleColor,
-          circleRadius: 6, // Size of the circle
+          circleRadius: 6,
           circleStrokeWidth: 2,
           circleStrokeColor: circleStrokeColor,
         }}

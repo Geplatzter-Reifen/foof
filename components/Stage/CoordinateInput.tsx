@@ -42,7 +42,6 @@ function CoordinateInput(props: CoordinateInputProps) {
       <Layout style={styles.row}>
         <Input
           value={latitude}
-          editable={true}
           style={styles.input}
           label="Latitude"
           onChangeText={(nextValue) => {

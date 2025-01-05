@@ -9,7 +9,7 @@ import { Route, Tour } from "@/database/model/model";
 import React from "react";
 import MapboxGL from "@rnmapbox/maps";
 
-const RenderRoute = ({ route }: { route: Route }) => {
+export const RenderRoute = ({ route }: { route: Route }) => {
   const geoJSON = JSON.parse(route.geoJson);
   return (
     <MapboxGL.ShapeSource shape={geoJSON} id="routeSource">
@@ -18,7 +18,7 @@ const RenderRoute = ({ route }: { route: Route }) => {
         belowLayerID="road-label"
         style={{
           lineColor: "#b8b8b8",
-          lineWidth: 5,
+          lineWidth: 4,
           lineJoin: "round",
           lineCap: "round",
         }}
@@ -27,8 +27,10 @@ const RenderRoute = ({ route }: { route: Route }) => {
         id="pointLayer"
         filter={["==", "$type", "Point"]}
         style={{
-          circleColor: "black",
-          circleRadius: 5,
+          circleColor: "#eaeaea",
+          circleRadius: 6,
+          circleStrokeWidth: 2,
+          circleStrokeColor: "#000000",
         }}
       />
     </MapboxGL.ShapeSource>
@@ -52,6 +54,4 @@ const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
   routes: tour.routes,
 }));
 
-const EnhancedRenderRouteV2 = enhanceV2(Bridge);
-
-export { EnhancedRenderRouteV2 };
+export const EnhancedRenderRouteV2 = enhanceV2(Bridge);

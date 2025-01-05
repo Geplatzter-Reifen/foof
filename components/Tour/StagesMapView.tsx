@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
-import { Stage, Location } from "@/database/model/model";
+import { Stage, Location, Route } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import MapboxGL from "@rnmapbox/maps";
 import StageMapLine from "@/components/Tour/StageMapLine";
+import { RenderRoute } from "@/components/Route/RenderRoute";
+import { getTourRoute } from "@/services/data/routeService";
 
 type stagesMapViewProps = {
+  tourId: string;
   stages: Stage[];
 };
 // Define the StagesMapView component
-const StagesMapView = ({ stages }: stagesMapViewProps) => {
+const StagesMapView = ({ tourId, stages }: stagesMapViewProps) => {
   const [stagesWithLocations, setStagesWithLocations] = useState<
     { stage: Stage; locations: Location[] }[]
   >([]);
+  const [route, setRoute] = useState<Route | null>(null);
 
   // Fetch locations for all stages
 
@@ -33,37 +37,36 @@ const StagesMapView = ({ stages }: stagesMapViewProps) => {
     fetchStagesWithLocations();
   }, [stages]); // Re-run if `stages` changes
 
+  useEffect(() => {
+    const fetchRoute = async () => {
+      const route = await getTourRoute(tourId);
+      setRoute(route);
+    };
+    fetchRoute();
+  }, [tourId]);
+
   // Fallback if stages are still being resolved
   if (!stagesWithLocations.length) {
     return <MapboxGL.MapView style={{ flex: 1 }} />;
   }
 
   return (
-    <MapboxGL.MapView
-      zoomEnabled={true}
-      scrollEnabled={true}
-      pitchEnabled={true}
-      rotateEnabled={true}
-      style={{ flex: 1 }}
-    >
+    <MapboxGL.MapView style={{ flex: 1 }}>
       <MapboxGL.Camera
-        minZoomLevel={5}
-        maxZoomLevel={15}
         zoomLevel={5}
         centerCoordinate={[10.4515, 51.1657]}
-        animationMode="flyTo"
-        animationDuration={1000}
+        animationDuration={0}
       />
-      {stagesWithLocations.map((stage) => {
-        if (stage.locations.length <= 1) return;
-        return (
+      {stagesWithLocations
+        .filter((stage) => stage.locations.length > 1)
+        .map((stage) => (
           <StageMapLine
             locations={stage.locations}
             stageId={stage.stage.id}
             key={stage.stage.id}
           />
-        );
-      })}
+        ))}
+      {route && <RenderRoute route={route} />}
     </MapboxGL.MapView>
   );
 };

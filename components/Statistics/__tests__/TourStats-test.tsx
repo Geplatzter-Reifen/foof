@@ -1,14 +1,18 @@
 import { MockTour } from "@/__mocks__/tour";
 import TourStats from "../TourStats";
-import { render } from "@/test-utils/test-utils";
+import { render, waitFor } from "@/test-utils/test-utils";
+import { createTour } from "@/services/data/tourService";
 
 describe("TourStats", () => {
   it("should render correctly", async () => {
-    const tour = new MockTour();
-
-    // Hier wird eine Warning ausgegeben, dass soll aber anscheinend so
-    // @ts-ignore
-    const view = render(<TourStats tour={tour} />);
+    const tour = await createTour(
+      "Mock Title",
+      new Date("2024-12-03 12:00").getTime(),
+    );
+    let view;
+    waitFor(() => {
+      view = render(<TourStats tour={tour} />);
+    });
 
     expect(view).toMatchSnapshot();
   });

@@ -277,7 +277,7 @@ export default function HomeScreen() {
           style={styles.map}
           scaleBarEnabled={false}
           compassEnabled={true}
-          compassPosition={{ top: 8, right: 8 }}
+          compassPosition={{ top: 110, right: 8 }}
           logoPosition={{ top: 8, left: 8 }}
           attributionPosition={{ top: 8, left: 96 }}
           onTouchMove={() => {

@@ -33,7 +33,6 @@ import {
 import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SmallIconButton from "@/components/Buttons/SmallIconButton";
 import { router } from "expo-router";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);

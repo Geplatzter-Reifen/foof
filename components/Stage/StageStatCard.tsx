@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DateFormat, formatDate } from "@/utils/dateUtil";
+import { DateFormat, formatDate } from "@/utils/dateUtils";
 
 import { Location, Stage } from "@/database/model/model";
 

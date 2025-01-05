@@ -1,0 +1,546 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CoordinateInput matches the snapshot 1`] = `
+[
+  <View
+    appearance="default"
+    level="1"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginBottom": 5,
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "flex": 1,
+          "marginHorizontal": 8,
+          "marginVertical": 3,
+          "opacity": 1,
+        }
+      }
+      testID="@undefined/container"
+    >
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            [
+              {
+                "color": "#494949",
+                "fontFamily": "System",
+                "fontSize": 12,
+                "fontWeight": "800",
+                "marginBottom": 4,
+              },
+              {
+                "textAlign": "left",
+              },
+            ],
+          ]
+        }
+      >
+        Latitude
+      </Text>
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderColor": "#7e7e7e",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "minHeight": 40,
+              "paddingHorizontal": 8,
+              "paddingVertical": 7,
+            },
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <TextInput
+          appearance="default"
+          editable={true}
+          keyboardType="numeric"
+          maxLength={20}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          placeholderTextColor="#494949"
+          size="medium"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontSize": 15,
+                "fontWeight": "normal",
+                "marginHorizontal": 8,
+              },
+              {
+                "flexBasis": "auto",
+                "flexGrow": 1,
+                "flexShrink": 1,
+              },
+              null,
+              undefined,
+            ]
+          }
+          testID="@undefined/input"
+          value="52.52"
+        />
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "flex": 1,
+          "marginHorizontal": 8,
+          "marginVertical": 3,
+          "opacity": 1,
+        }
+      }
+      testID="@undefined/container"
+    >
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            [
+              {
+                "color": "#494949",
+                "fontFamily": "System",
+                "fontSize": 12,
+                "fontWeight": "800",
+                "marginBottom": 4,
+              },
+              {
+                "textAlign": "left",
+              },
+            ],
+          ]
+        }
+      >
+        Longitude
+      </Text>
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderColor": "#7e7e7e",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "minHeight": 40,
+              "paddingHorizontal": 8,
+              "paddingVertical": 7,
+            },
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "width": "100%",
+            },
+          ]
+        }
+      >
+        <TextInput
+          appearance="default"
+          editable={true}
+          keyboardType="numeric"
+          maxLength={20}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          placeholderTextColor="#494949"
+          size="medium"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontSize": 15,
+                "fontWeight": "normal",
+                "marginHorizontal": 8,
+              },
+              {
+                "flexBasis": "auto",
+                "flexGrow": 1,
+                "flexShrink": 1,
+              },
+              null,
+              undefined,
+            ]
+          }
+          testID="@undefined/input"
+          value="13.405"
+        />
+      </View>
+    </View>
+  </View>,
+  <View
+    appearance="default"
+    level="1"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginBottom": 5,
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderColor": "#FF6E14",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginHorizontal": 8,
+          "marginVertical": 3,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "color": "#FF6E14",
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+          ]
+        }
+      >
+        01.01.2024
+      </Text>
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={20}
+        bbWidth={20}
+        focusable={false}
+        height={20}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "height": 20,
+              "marginHorizontal": 10,
+              "tintColor": "#FF6E14",
+              "width": 20,
+            },
+            {
+              "flex": 0,
+              "height": 20,
+              "width": 20,
+            },
+          ]
+        }
+        vbHeight={512}
+        vbWidth={448}
+        width={20}
+      >
+        <RNSVGGroup
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGPath
+            d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"
+            fill={
+              {
+                "payload": 4294929940,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderColor": "#FF6E14",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginHorizontal": 8,
+          "marginVertical": 3,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "color": "#FF6E14",
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+          ]
+        }
+      >
+        14:00
+      </Text>
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={20}
+        bbWidth={20}
+        focusable={false}
+        height={20}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "height": 20,
+              "marginHorizontal": 10,
+              "tintColor": "#FF6E14",
+              "width": 20,
+            },
+            {
+              "flex": 0,
+              "height": 20,
+              "width": 20,
+            },
+          ]
+        }
+        vbHeight={512}
+        vbWidth={512}
+        width={20}
+      >
+        <RNSVGGroup
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        >
+          <RNSVGPath
+            d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+            fill={
+              {
+                "payload": 4294929940,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>,
+]
+`;

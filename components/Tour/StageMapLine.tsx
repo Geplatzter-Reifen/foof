@@ -79,15 +79,30 @@ type stageMapLineProps = {
   locations: Location[];
   stageId: string;
   active?: boolean;
+  lineColor?: string;
+  circleColor?: string;
+  circleStrokeColor?: string;
 };
 const StageMapLine = ({
   locations,
   stageId,
   active = false,
+  lineColor,
+  circleColor,
+  circleStrokeColor,
 }: stageMapLineProps) => {
   const theme = useTheme();
-  // Derive coordinates from locations
-  let coords = locations.map((location) => [
+
+  lineColor = lineColor || theme["color-primary-500"];
+  circleColor = circleColor || theme["color-primary-100"];
+  circleStrokeColor = circleStrokeColor || theme["color-primary-500"];
+
+  const locationsUnpacked = locations.map((loc) => ({
+    latitude: loc.latitude,
+    longitude: loc.longitude,
+  }));
+
+  let coords = locationsUnpacked.map((location) => [
     location.longitude,
     location.latitude,
   ]);
@@ -123,14 +138,11 @@ const StageMapLine = ({
     : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
 
   return (
-    <MapboxGL.ShapeSource
-      id={`lineSource-${stageId}`}
-      shape={collection}
-      lineMetrics={true}
-    >
+    <MapboxGL.ShapeSource id={`lineSource-${stageId}`} shape={collection}>
       <MapboxGL.LineLayer
         id={`lineLayer-${stageId}`}
         belowLayerID="road-label"
+        // aboveLayerID="routeSource"
         style={{
           ...(active
             ? {
@@ -149,7 +161,7 @@ const StageMapLine = ({
             : {
                 lineColor: theme["color-primary-500"], // Static color if not active stage
               }),
-          lineColor: theme["color-primary-500"],
+          lineColor: lineColor,
           lineWidth: 4,
           lineOpacity: 1,
           lineCap: "round",
@@ -158,22 +170,24 @@ const StageMapLine = ({
       />
       <MapboxGL.CircleLayer
         id={`startPointLayer-${stageId}`}
+        // aboveLayerID="routeSource"
         filter={["==", "name", "Start"]}
         style={{
-          circleColor: theme["color-primary-100"],
+          circleColor: circleColor,
           circleRadius: 6, // Size of the circle
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
       <MapboxGL.CircleLayer
         id={`endPointLayer-${stageId}`}
         filter={["==", "name", "End"]}
+        // aboveLayerID="routeSource"
         style={{
-          circleColor: theme["color-primary-100"],
+          circleColor: circleColor,
           circleRadius: 6, // Size of the circle
           circleStrokeWidth: 2,
-          circleStrokeColor: theme["color-primary-500"],
+          circleStrokeColor: circleStrokeColor,
         }}
       />
     </MapboxGL.ShapeSource>

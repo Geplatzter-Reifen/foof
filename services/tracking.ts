@@ -37,7 +37,7 @@ export function parseCoordinates(coordinateString: string): Coordinates | null {
 }
 
 // Validate input for manual stage creation
-function validateManualStageInput(
+export function validateManualStageInput(
   stageName: string,
   startTime: Date,
   endTime: Date,
@@ -56,7 +56,7 @@ function validateManualStageInput(
 }
 
 // Create a new stage and save locations
-async function initializeManualStage(
+export async function initializeManualStage(
   tourId: string,
   stageName: string,
   startTime: Date,
@@ -118,7 +118,7 @@ export async function createManualStage(
 }
 
 // Check and request necessary permissions
-async function ensurePermissions(): Promise<void> {
+export async function ensurePermissions(): Promise<void> {
   const { status: foregroundStatus } =
     await Location.requestForegroundPermissionsAsync();
   if (foregroundStatus !== "granted") {

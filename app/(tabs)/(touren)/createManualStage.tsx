@@ -10,6 +10,8 @@ import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
+import { isFinished } from "@/services/StageConnection/stageConnection";
+import { getActiveTour } from "@/services/data/tourService";
 
 const CreateManualStage: React.FC = () => {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
@@ -122,6 +124,10 @@ const CreateManualStage: React.FC = () => {
       } else {
         Alert.alert("Unknown Error", "An unexpected error occurred.");
       }
+    }
+    const tour = await getActiveTour();
+    if (tour && (await isFinished(tour))) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
   };
 

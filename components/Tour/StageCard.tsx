@@ -13,11 +13,13 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { ImageProps, StyleSheet, View } from "react-native";
+import { Alert, ImageProps, StyleSheet, View } from "react-native";
 import customStyles from "../../constants/styles";
 import { foofDarkTheme } from "@/constants/custom-theme";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { shareStage } from "@/services/sharingService";
+import { getActiveTour } from "@/services/data/tourService";
+import { isFinished } from "@/services/StageConnection/stageConnection";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -33,6 +35,14 @@ const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
     style={[props?.style, { height: 18, width: "auto" }]}
   />
 );
+
+const deleteStageAndCheckIfFinished = async (stageId: string) => {
+  deleteStage(stageId);
+  const tour = await getActiveTour();
+  if (tour && (await isFinished(tour))) {
+    Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+  }
+};
 
 function StageCard({ stage }: { stage: Stage }) {
   const startedAt: Date = new Date(stage.startedAt);
@@ -61,7 +71,7 @@ function StageCard({ stage }: { stage: Stage }) {
             status="basic"
             appearance="ghost"
             accessoryLeft={TrashIcon}
-            onPress={() => deleteStage(stage.id)}
+            onPress={() => deleteStageAndCheckIfFinished(stage.id)}
           ></Button>
           <Button
             status="basic"

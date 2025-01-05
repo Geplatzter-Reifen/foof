@@ -105,8 +105,8 @@ export async function stopAutomaticTracking(): Promise<boolean> {
     let stage = await getActiveStage();
     await finishStage(stage!.id);
     lastActiveStageId = undefined;
-    const tour = await getActiveTour();
     console.log("Tracking stopped.");
+    const tour = await getActiveTour();
     if (tour) {
       return await isFinished(tour);
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   Divider,
@@ -235,8 +235,6 @@ const makeStyles = (theme: ThemeType) =>
     },
     centeringContainer: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
     },
     header: {
       marginTop: Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0,
@@ -256,8 +254,9 @@ const makeStyles = (theme: ThemeType) =>
       color: theme["color-basic-500"],
     },
     card: {
+      marginTop: 10,
+      alignSelf: "flex-start",
       paddingHorizontal: 15,
-      marginVertical: 10,
       marginHorizontal: 10,
     },
     inlineContainer: {

@@ -13,28 +13,14 @@ import {
 import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtil";
 import { LocationObject } from "expo-location";
+import { Coordinates, parseCoordinates } from "@/utils/locationUtil";
 
 import { Stage, Tour } from "@/database/model/model";
-
-type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
 
 export const LOCATION_TASK_NAME = "location-task";
 
 let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
-
-// Utility to parse coordinates
-export function parseCoordinates(coordinateString: string): Coordinates | null {
-  const regex =
-    /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
-  const match = coordinateString.match(regex);
-  return match
-    ? { latitude: parseFloat(match[1]), longitude: parseFloat(match[4]) }
-    : null;
-}
 
 // Validate input for manual stage creation
 export function validateManualStageInput(
@@ -56,7 +42,7 @@ export function validateManualStageInput(
 }
 
 // Create a new stage and save locations
-export async function initializeManualStage(
+async function initializeManualStage(
   tourId: string,
   stageName: string,
   startTime: Date,
@@ -190,7 +176,6 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
     };
     const updatedDistance =
       activeStage.distance + calculateDistance(latestLocation, currentLocation);
-    console.log("Updated distance for active stage:", updatedDistance);
     await setStageDistance(activeStage.id, updatedDistance);
   }
 

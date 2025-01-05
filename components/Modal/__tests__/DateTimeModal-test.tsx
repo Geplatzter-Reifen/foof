@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@/test-utils/test-utils";
 import DateTimeModal from "@/components/Modal/DateTimeModal";
-import { formatDate, DateFormat } from "@/utils/dateUtil";
+import { formatDate, DateFormat } from "@/utils/dateUtils";
 
 describe("DateTimeModal Component", () => {
   const mockOnClose = jest.fn();

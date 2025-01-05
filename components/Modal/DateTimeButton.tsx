@@ -5,7 +5,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { DateFormat, formatDate } from "@/utils/dateUtil";
+import { DateFormat, formatDate } from "@/utils/dateUtils";
 
 type DateTimeButtonProps = {
   date: Date;

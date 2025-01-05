@@ -1,5 +1,5 @@
 import { Location } from "@/database/model/model";
-import { getCoordinateString } from "@/utils/locationUtil";
+import { getCoordinateString } from "@/utils/locationUtils";
 
 export const fetchPlaceName = async (location: Location) => {
   const accessToken = process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null;

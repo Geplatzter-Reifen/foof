@@ -2,6 +2,14 @@ import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
 import { Stage, Tour } from "@/database/model/model";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
+import { validateManualStageInput } from "@/services/trackingService";
+import {
+  calculateDistance,
+  Coordinates,
+  parseCoordinates,
+} from "@/utils/locationUtil";
+import { getActiveTour, getTourByTourId } from "@/services/data/tourService";
+import { getStageAvgSpeedInKmh } from "@/services/statisticsService";
 
 // CREATE
 
@@ -128,3 +136,68 @@ export const deleteStage = async (stageId: string) => {
     await stage.destroyPermanently();
   });
 };
+
+// Create a new stage and save locations
+async function initializeManualStage(
+  tourId: string,
+  stageName: string,
+  startTime: Date,
+  endTime: Date,
+  startingCoordinates: Coordinates,
+  endCoordinates: Coordinates,
+): Promise<Stage> {
+  const stage: Stage = await createStage(
+    tourId,
+    stageName,
+    startTime.getTime(),
+    endTime.getTime(),
+    false,
+    calculateDistance(startingCoordinates, endCoordinates),
+  );
+  await stage.addLocation(
+    startingCoordinates.latitude,
+    startingCoordinates.longitude,
+  );
+  await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+
+  let speed = getStageAvgSpeedInKmh(stage);
+
+  await setStageAvgSpeed(stage.id, speed);
+
+  return stage;
+}
+
+export async function createManualStage(
+  stageName: string,
+  startingCoordinatesString: string,
+  endCoordinatesString: string,
+  startTime: Date,
+  endTime: Date,
+  tourId?: string,
+): Promise<Stage> {
+  const tour: Tour | null = tourId
+    ? await getTourByTourId(tourId)
+    : await getActiveTour();
+  if (!tour) {
+    throw new Error("Keine Aktive Tour gesetzt");
+  }
+
+  const startingCoordinates = parseCoordinates(startingCoordinatesString);
+  const endCoordinates = parseCoordinates(endCoordinatesString);
+  validateManualStageInput(
+    stageName,
+    startTime,
+    endTime,
+    startingCoordinates,
+    endCoordinates,
+  );
+
+  return initializeManualStage(
+    tour.id,
+    stageName,
+    startTime,
+    endTime,
+    startingCoordinates!,
+    endCoordinates!,
+  );
+}

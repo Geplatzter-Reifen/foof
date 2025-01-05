@@ -1,5 +1,4 @@
 import {
-  parseCoordinates,
   ensurePermissions,
   validateManualStageInput,
 } from "@/services/trackingService";

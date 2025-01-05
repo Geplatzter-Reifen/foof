@@ -22,11 +22,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Route, Tour } from "@/database/model/model";
+import { Route, Stage, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import SmallIconButton from "@/components/Buttons/SmallIconButton";
+import MapStatisticsBox from "@/components/Statistics/LiveStats";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -40,6 +41,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
 
   const [activeTour, setActiveTour] = useState<Tour>();
+  const [activeStage, setActiveStage] = useState<Stage>();
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -60,6 +62,11 @@ export default function HomeScreen() {
       getActiveTour().then((tour) => {
         if (tour) {
           setActiveTour(tour);
+        }
+      });
+      getActiveStage().then((stage) => {
+        if (stage) {
+          setActiveStage(stage);
         }
       });
       setLoading(false);
@@ -272,6 +279,8 @@ export default function HomeScreen() {
   return (
     <Layout style={styles.container}>
       <Layout style={styles.layout}>
+        {activeStage && <MapStatisticsBox stage={activeStage} />}
+
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}

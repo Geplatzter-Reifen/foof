@@ -1,5 +1,6 @@
 import * as StatisticsService from "../statisticsService";
 import { MockStage } from "@/__mocks__/stage";
+import { mergeIntervalsForTesting } from "../statisticsService";
 
 describe("statisticsService", () => {
   beforeEach(() => {
@@ -198,6 +199,39 @@ describe("statisticsService", () => {
         expect(StatisticsService.getStageAvgSpeedString(stageOnlyStart)).toBe(
           "7.0 km/h",
         );
+      });
+    });
+  });
+
+  describe("Tour Progress", () => {
+    describe("mergeIntervals", () => {
+      it("should not merge intervals that don't overlap", () => {
+        const intervals: [number, number][] = [
+          [48, 49],
+          [50, 51],
+          [52, 53],
+        ];
+        expect(mergeIntervalsForTesting(intervals)).toEqual(intervals);
+      });
+      it("should merge two overlapping intervals into one", () => {
+        const intervals: [number, number][] = [
+          [53, 54],
+          [48, 51],
+          [50, 52],
+        ];
+        const expected = [
+          [48, 52],
+          [53, 54],
+        ];
+        expect(mergeIntervalsForTesting(intervals)).toEqual(expected);
+      });
+      it("should merge two intervals where one is inside the other", () => {
+        const intervals: [number, number][] = [
+          [48, 53],
+          [50, 51],
+        ];
+        const expected = [[48, 53]];
+        expect(mergeIntervalsForTesting(intervals)).toEqual(expected);
       });
     });
   });

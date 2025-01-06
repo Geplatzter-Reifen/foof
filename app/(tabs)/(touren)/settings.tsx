@@ -42,7 +42,4 @@ const makeStyles = (theme: ThemeType) =>
       paddingHorizontal: 15,
       marginHorizontal: 10,
     },
-    settingContainer: {
-      marginBottom: 15,
-    },
   });

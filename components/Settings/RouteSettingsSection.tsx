@@ -22,7 +22,7 @@ import InlineRow from "@/components/Settings/InlineRow";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
 /**
- * RouteGuidelineSettingsSection
+ * RouteSettingsSection
  *
  * This component provides a settings section for managing a planned route.
  * Users can view, delete, and import routes while receiving guidance on
@@ -32,7 +32,6 @@ import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
  *
  *
  */
-
 const DeleteIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="trash-can" style={[props?.style, { height: 24 }]} />
 );

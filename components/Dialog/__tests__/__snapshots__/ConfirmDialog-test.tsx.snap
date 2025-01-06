@@ -4,6 +4,7 @@ exports[`ConfirmDialog is not visible when requested 1`] = `null`;
 
 exports[`ConfirmDialog renders default texts 1`] = `
 <Modal
+  animationType="fade"
   hardwareAccelerated={false}
   onDismiss={[Function]}
   onRequestClose={[Function]}
@@ -64,6 +65,7 @@ exports[`ConfirmDialog renders default texts 1`] = `
       testID="@backdrop"
     />
     <View
+      animationType="fade"
       backdropStyle={
         {
           "backgroundColor": "rgba(0, 0, 0, 0.5)",

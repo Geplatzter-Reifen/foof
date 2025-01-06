@@ -4,13 +4,10 @@ import {
   getTourProgress,
   mergeIntervalsForTesting,
 } from "../statisticsService";
-import { Location } from "@/database/model/model";
-import { MockLocation } from "@/__mocks__/location";
 import { createStage } from "@/services/data/stageService";
 import { createTour } from "@/services/data/tourService";
 import { createLocation } from "@/services/data/locationService";
 import { flensburg, oberstdorf } from "@/services/StageConnection/data";
-import { MockTour } from "@/__mocks__/tour";
 
 describe("statisticsService", () => {
   beforeEach(() => {

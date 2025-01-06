@@ -23,6 +23,8 @@ class Tour extends Model {
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
   // @ts-ignore
+  @children("stages") stages;
+  // @ts-ignore
   @children("routes") routes;
 
   //@ts-ignore
@@ -46,10 +48,6 @@ class Tour extends Model {
       stage.tour.set(this);
     });
   }
-
-  get stages() {
-    return this.collections.get<Stage>("stages").query();
-  }
 }
 
 class Stage extends Model {
@@ -57,6 +55,7 @@ class Stage extends Model {
   static associations: Associations = {
     tours: { type: "belongs_to", key: "tour_id" },
     locations: { type: "has_many", foreignKey: "stage_id" },
+    routes: { type: "has_many", foreignKey: "stage_id" },
   };
   // @ts-ignore
   @text("title") title: string;
@@ -72,6 +71,10 @@ class Stage extends Model {
   @field("avg_speed") avgSpeed: number;
   // @ts-ignore
   @relation("tours", "tour_id") tour;
+  // @ts-ignore
+  @children("locations") locations;
+  // @ts-ignore
+  @children("routes") routes;
   // @ts-ignore
   @writer async addLocation(
     latitude: number,

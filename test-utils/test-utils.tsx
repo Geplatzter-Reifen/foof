@@ -18,6 +18,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
 
 // Iconpacks laden
 library.add(far, fas, fab);
@@ -35,12 +39,12 @@ const AllTheProviders = ({ children, use_dark_theme = false }: Props) => {
     ? { ...eva.dark, ...foofDarkTheme }
     : { ...eva.light, ...foofLightTheme };
   return (
-    <>
+    <SafeAreaProvider>
       <IconRegistry icons={FontAwesomeIconsPack} />
       <ApplicationProvider {...eva} customMapping={mapping} theme={theme}>
         {children}
       </ApplicationProvider>
-    </>
+    </SafeAreaProvider>
   );
 };
 

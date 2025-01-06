@@ -32,18 +32,6 @@ function TourStats({
       {/* Fortschrittsbalken über die Tourdistanz*/}
       <TourProgressBar progress={progress} style={styles.progressBar} />
 
-      {/* Start- und Enddatum der Tour */}
-      <View style={styles.dateContainer}>
-        <IconStat icon="calendar-plus" status="text">
-          {tour.startedAt ? formatDate(tour.startedAt, DateFormat.DATE) : "--"}
-        </IconStat>
-        <IconStat icon="calendar-check" status="text" reversed>
-          {tour.finishedAt
-            ? formatDate(tour.finishedAt, DateFormat.DATE)
-            : "--"}
-        </IconStat>
-      </View>
-
       {/* Tourstatistiken */}
       <View style={styles.statsContainer}>
         {/*Distanz*/}
@@ -75,6 +63,18 @@ function TourStats({
           iconSize={30}
         >
           {getTourAverageSpeedString(stages)}
+        </IconStat>
+      </View>
+
+      {/* Start- und Enddatum der Tour */}
+      <View style={styles.dateContainer}>
+        <IconStat icon="calendar-plus" status="text">
+          {tour.startedAt ? formatDate(tour.startedAt, DateFormat.DATE) : "--"}
+        </IconStat>
+        <IconStat icon="calendar-check" status="text" reversed>
+          {tour.finishedAt
+            ? formatDate(tour.finishedAt, DateFormat.DATE)
+            : "--"}
         </IconStat>
       </View>
     </View>
@@ -124,23 +124,15 @@ const makeStyles = (theme: ThemeType) => {
       flexDirection: "row",
       height: "auto",
       justifyContent: "space-between",
-      marginTop: 2,
-      marginHorizontal: 5,
+      marginTop: 14,
+      marginBottom: 3,
+      marginHorizontal: 2,
     },
     statsContainer: {
       flexDirection: "row",
       height: "auto",
       justifyContent: "space-between",
       marginTop: 8,
-    },
-    stat_column: {
-      flex: 1,
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
-    },
-    stat_row: {
-      flexDirection: "row",
-      alignItems: "center",
     },
   });
 };

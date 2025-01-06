@@ -1,4 +1,4 @@
-import * as locationUtil from "../locationUtil";
+import * as locationUtil from "../locationUtils";
 describe("LocationUtil", () => {
   const wiesbaden = {
     latitude: 50.0826,

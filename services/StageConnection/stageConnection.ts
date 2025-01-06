@@ -1,5 +1,5 @@
 import { Tour, Location } from "@/database/model/model";
-import { calculateDistance, MapPoint } from "@/utils/locationUtil";
+import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { getAllLocationsByStageId } from "../data/locationService";
 import { flensburg, oberstdorf } from "./data";
 import { updateFinishedAtFromTour } from "../data/tourService";

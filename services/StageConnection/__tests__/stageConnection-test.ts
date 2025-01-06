@@ -10,7 +10,7 @@ import {
 } from "../stageConnection";
 import { flensburg, hannover, wuerzburg, oberstdorf, wiesbaden } from "../data";
 import { Location, Tour } from "@/database/model/model";
-import { MapPoint } from "@/utils/locationUtil";
+import { MapPoint } from "@/utils/locationUtils";
 
 const dateNowMock = new Date("2024-01-01 21:00").getTime();
 

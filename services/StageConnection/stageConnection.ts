@@ -9,6 +9,9 @@ const maxDistanceFromCenterOberstdorf = 10;
 
 export async function isFinished(tour: Tour): Promise<boolean> {
   const stageList = await tour.stages.fetch();
+  if (stageList.length === 0) {
+    return false;
+  }
 
   // Falls eine der Stages alleine schon von Flensburg nach Oberstdorf geht
   for (let stage of stageList) {

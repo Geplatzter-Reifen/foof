@@ -119,6 +119,15 @@ describe("stageConnection", () => {
       tour = await getTourByTourId(tour.id);
       expect(tour.finishedAt).toBeNull();
     });
+    it("should return false when no stages exist", () => {
+      // Arrange
+
+      // Act
+      const status = isFinished(tour);
+
+      // Assert
+      expect(status).resolves.toBeFalsy();
+    });
   });
   describe("areHeadAndTailInFlensburgAndOberstdorf", () => {
     it("should return true when head and tail are in Flensburg and Oberstdorf", () => {

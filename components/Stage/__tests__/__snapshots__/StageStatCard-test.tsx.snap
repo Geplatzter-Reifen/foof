@@ -1,366 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StageCard renders basic stage correctly 1`] = `
-<View
-  accessibilityState={
-    {
-      "busy": undefined,
-      "checked": undefined,
-      "disabled": false,
-      "expanded": undefined,
-      "selected": undefined,
-    }
-  }
-  accessibilityValue={
-    {
-      "max": undefined,
-      "min": undefined,
-      "now": undefined,
-      "text": undefined,
-    }
-  }
-  accessible={true}
-  collapsable={false}
-  focusable={true}
-  onClick={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    {
-      "backgroundColor": "#FFFFFF",
-      "borderColor": "#7e7e7e",
-      "borderRadius": 8,
-      "borderWidth": 0,
-      "elevation": 3,
-      "flex": 1,
-      "marginBottom": 15,
-      "marginHorizontal": 10,
-      "opacity": 1,
-      "overflow": "hidden",
-      "shadowColor": "#000",
-      "shadowOffset": {
-        "height": 2,
-        "width": 0,
-      },
-      "shadowOpacity": 0.25,
-      "shadowRadius": 2,
-    }
-  }
-  testID="stage-card"
->
-  <View
-    style={
-      {
-        "backgroundColor": undefined,
-        "height": 0,
-      }
-    }
-  />
-  <Text
-    appearance="default"
-    category="h5"
-    status="basic"
-    style={
-      [
-        {
-          "color": "#000000",
-          "fontFamily": "System",
-          "fontSize": 22,
-          "fontWeight": "800",
-        },
-        {
-          "marginLeft": 15,
-          "marginVertical": 8,
-        },
-      ]
-    }
-  >
-    Basic Stage
-  </Text>
-  <View
-    appearance="default"
-    style={
-      [
-        {
-          "backgroundColor": "#b8b8b8",
-          "height": 1,
-        },
-        undefined,
-      ]
-    }
-  />
-  <View
-    style={
-      [
-        {
-          "flexShrink": 1,
-        },
-        {
-          "paddingHorizontal": 24,
-          "paddingVertical": 16,
-        },
-      ]
-    }
-  >
-    <View
-      style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-          "flexWrap": "wrap",
-          "justifyContent": "space-between",
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-        testID="container"
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              {
-                "flexShrink": 1,
-                "flexWrap": "wrap",
-                "fontSize": 18,
-                "marginLeft": 8,
-              },
-            ]
-          }
-        >
-          0.0 km
-        </Text>
-      </View>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-        testID="container"
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              {
-                "flexShrink": 1,
-                "flexWrap": "wrap",
-                "fontSize": 18,
-                "marginLeft": 8,
-              },
-            ]
-          }
-        >
-          7h 15m
-        </Text>
-      </View>
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-        testID="container"
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              {
-                "flexShrink": 1,
-                "flexWrap": "wrap",
-                "fontSize": 18,
-                "marginLeft": 8,
-              },
-            ]
-          }
-        >
-          0.0 km/h
-        </Text>
-      </View>
-    </View>
-    <Text
-      appearance="hint"
-      category="p1"
-      status="basic"
-      style={
-        [
-          {
-            "color": "#494949",
-            "fontFamily": "System",
-            "fontSize": 15,
-            "fontWeight": "400",
-          },
-          {
-            "marginTop": 9,
-          },
-        ]
-      }
-    >
-      01.01.2024 10:30
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`StageCard renders correctly for active stage 1`] = `
+exports[`StageStatCard does not render Start and End Point for Stage with less than two Locations 1`] = `
 <View
   accessibilityState={
     {
@@ -381,7 +21,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -396,9 +36,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
       "borderRadius": 8,
       "borderWidth": 0,
       "elevation": 3,
-      "flex": 1,
       "marginBottom": 15,
-      "marginHorizontal": 10,
       "opacity": 1,
       "overflow": "hidden",
       "shadowColor": "#000",
@@ -410,37 +48,137 @@ exports[`StageCard renders correctly for active stage 1`] = `
       "shadowRadius": 2,
     }
   }
-  testID="stage-card"
 >
   <View
     style={
       {
-        "backgroundColor": "#FF6E14",
-        "height": 4,
+        "backgroundColor": undefined,
+        "height": 0,
       }
     }
   />
-  <Text
-    appearance="default"
-    category="h5"
-    status="basic"
+  <View
     style={
-      [
-        {
-          "color": "#000000",
-          "fontFamily": "System",
-          "fontSize": 22,
-          "fontWeight": "800",
-        },
-        {
-          "marginLeft": 15,
-          "marginVertical": 8,
-        },
-      ]
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
     }
   >
-    Etappe 1
-  </Text>
+    <View
+      style={
+        {
+          "alignItems": "baseline",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="h5"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 22,
+              "fontWeight": "800",
+            },
+            {
+              "marginBottom": 10,
+              "marginLeft": 15,
+              "marginTop": 10,
+            },
+          ]
+        }
+      >
+        Statistiken
+      </Text>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "fontSize": 18,
+              "marginLeft": 10,
+            },
+          ]
+        }
+      >
+        vom 
+        03.12.2024
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderColor": "transparent",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text />
+      </View>
+    </View>
+  </View>
   <View
     appearance="default"
     style={
@@ -469,10 +207,9 @@ exports[`StageCard renders correctly for active stage 1`] = `
     <View
       style={
         {
-          "flex": 1,
-          "flexDirection": "row",
-          "flexWrap": "wrap",
+          "gap": 3,
           "justifyContent": "space-between",
+          "marginTop": 15,
         }
       }
     >
@@ -496,34 +233,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             }
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
+          <Text />
         </View>
         <Text
           appearance="default"
@@ -540,13 +250,13 @@ exports[`StageCard renders correctly for active stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
           }
         >
-          0.0 km
+          42.2 km
         </Text>
       </View>
       <View
@@ -569,34 +279,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             }
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
+          <Text />
         </View>
         <Text
           appearance="default"
@@ -613,13 +296,13 @@ exports[`StageCard renders correctly for active stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
           }
         >
-          0h 0m
+          7h 21m
         </Text>
       </View>
       <View
@@ -642,34 +325,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             }
           }
         >
-          <Text
-            allowFontScaling={false}
-            selectable={false}
-            style={
-              [
-                {
-                  "color": undefined,
-                  "fontSize": 22,
-                },
-                {
-                  "color": "#FF6E14",
-                  "textAlign": "center",
-                  "textAlignVertical": "center",
-                  "width": "auto",
-                },
-                {
-                  "fontFamily": "FontAwesome6Free-Solid",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                {
-                  "fontWeight": "900",
-                },
-              ]
-            }
-          >
-            
-          </Text>
+          <Text />
         </View>
         <Text
           appearance="default"
@@ -686,47 +342,27 @@ exports[`StageCard renders correctly for active stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
           }
         >
-          NaN km/h
+          5.7 km/h
         </Text>
       </View>
     </View>
-    <Text
-      appearance="hint"
-      category="p1"
-      status="basic"
-      style={
-        [
-          {
-            "color": "#494949",
-            "fontFamily": "System",
-            "fontSize": 15,
-            "fontWeight": "400",
-          },
-          {
-            "marginTop": 9,
-          },
-        ]
-      }
-    >
-      01.01.2024 21:00
-    </Text>
   </View>
 </View>
 `;
 
-exports[`StageCard renders correctly for manually created stage 1`] = `
+exports[`StageStatCard renders correctly 1`] = `
 <View
   accessibilityState={
     {
       "busy": undefined,
       "checked": undefined,
-      "disabled": false,
+      "disabled": true,
       "expanded": undefined,
       "selected": undefined,
     }
@@ -741,7 +377,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
   }
   accessible={true}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -756,9 +392,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
       "borderRadius": 8,
       "borderWidth": 0,
       "elevation": 3,
-      "flex": 1,
       "marginBottom": 15,
-      "marginHorizontal": 10,
       "opacity": 1,
       "overflow": "hidden",
       "shadowColor": "#000",
@@ -770,7 +404,6 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
       "shadowRadius": 2,
     }
   }
-  testID="stage-card"
 >
   <View
     style={
@@ -780,27 +413,153 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
       }
     }
   />
-  <Text
-    appearance="default"
-    category="h5"
-    status="basic"
+  <View
     style={
-      [
-        {
-          "color": "#000000",
-          "fontFamily": "System",
-          "fontSize": 22,
-          "fontWeight": "800",
-        },
-        {
-          "marginLeft": 15,
-          "marginVertical": 8,
-        },
-      ]
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
     }
   >
-    Manual Stage
-  </Text>
+    <View
+      style={
+        {
+          "alignItems": "baseline",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="h5"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 22,
+              "fontWeight": "800",
+            },
+            {
+              "marginBottom": 10,
+              "marginLeft": 15,
+              "marginTop": 10,
+            },
+          ]
+        }
+      >
+        Statistiken
+      </Text>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "fontSize": 18,
+              "marginLeft": 10,
+            },
+          ]
+        }
+      >
+        vom 
+        01.12.2024
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderColor": "transparent",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": "#FF6E14",
+                "fontSize": 20,
+              },
+              {
+                "marginHorizontal": 10,
+                "width": "auto",
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+  </View>
   <View
     appearance="default"
     style={
@@ -829,10 +588,226 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
     <View
       style={
         {
-          "flex": 1,
           "flexDirection": "row",
-          "flexWrap": "wrap",
           "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 6,
+            "gap": 7,
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 23,
+                  },
+                  {
+                    "color": "#7e7e7e",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": 25,
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "400",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            Startpunkt
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 23,
+                  },
+                  {
+                    "color": "#7e7e7e",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": 25,
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            Endpunkt
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flex": 1,
+            "gap": 7,
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <Text
+          appearance="hint"
+          category="p1"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#494949",
+                "fontFamily": "System",
+                "fontSize": 15,
+                "fontWeight": "400",
+              },
+              {
+                "fontSize": 17,
+                "textAlign": "right",
+              },
+            ]
+          }
+        >
+          10:28
+        </Text>
+        <Text
+          appearance="hint"
+          category="p1"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#494949",
+                "fontFamily": "System",
+                "fontSize": 15,
+                "fontWeight": "400",
+              },
+              {
+                "fontSize": 17,
+                "textAlign": "right",
+              },
+            ]
+          }
+        >
+          17:43
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "gap": 3,
+          "justifyContent": "space-between",
+          "marginTop": 15,
         }
       }
     >
@@ -900,7 +875,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
@@ -973,13 +948,13 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
           }
         >
-          8h 36m
+          7h 15m
         </Text>
       </View>
       <View
@@ -1046,36 +1021,16 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               {
                 "flexShrink": 1,
                 "flexWrap": "wrap",
-                "fontSize": 18,
+                "fontSize": 20,
                 "marginLeft": 8,
               },
             ]
           }
         >
-          9.2 km/h
+          10.9 km/h
         </Text>
       </View>
     </View>
-    <Text
-      appearance="hint"
-      category="p1"
-      status="basic"
-      style={
-        [
-          {
-            "color": "#494949",
-            "fontFamily": "System",
-            "fontSize": 15,
-            "fontWeight": "400",
-          },
-          {
-            "marginTop": 9,
-          },
-        ]
-      }
-    >
-      03.12.2024 08:13
-    </Text>
   </View>
 </View>
 `;

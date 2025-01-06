@@ -39,6 +39,12 @@ export default function ReiseStackLayout() {
           title: "Tourübersicht",
         }}
       />
+      <Stack.Screen
+        name="stage"
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 }

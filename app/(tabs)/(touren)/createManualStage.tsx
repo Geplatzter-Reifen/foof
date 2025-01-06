@@ -153,6 +153,14 @@ export default function CreateManualStage() {
    * If an error occurs, it displays an alert with the error message.
    */
   const submitStage = async () => {
+    if (startDate >= endDate) {
+      Alert.alert(
+        "Ungültige Eingabe",
+        "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
+      );
+      return;
+    }
+
     try {
       await createManualStageFn(
         stageTitle,

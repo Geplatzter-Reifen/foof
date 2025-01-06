@@ -8,6 +8,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { Route, Tour } from "@/database/model/model";
 import React from "react";
 import MapboxGL from "@rnmapbox/maps";
+import { foofTheme } from "@/constants/custom-theme";
 
 export const RenderRoute = ({ route }: { route: Route }) => {
   const geoJSON = JSON.parse(route.geoJson);
@@ -17,7 +18,7 @@ export const RenderRoute = ({ route }: { route: Route }) => {
         id="routeLayer"
         belowLayerID="road-label"
         style={{
-          lineColor: "#b8b8b8",
+          lineColor: foofTheme["color-basic-300"],
           lineWidth: 4,
           lineJoin: "round",
           lineCap: "round",
@@ -27,10 +28,10 @@ export const RenderRoute = ({ route }: { route: Route }) => {
         id="pointLayer"
         filter={["==", "$type", "Point"]}
         style={{
-          circleColor: "#eaeaea",
+          circleColor: foofTheme["color-basic-200"],
           circleRadius: 6,
           circleStrokeWidth: 2,
-          circleStrokeColor: "#000000",
+          circleStrokeColor: foofTheme["color-basic-500"],
         }}
       />
     </MapboxGL.ShapeSource>

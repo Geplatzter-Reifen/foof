@@ -8,18 +8,13 @@ import {
   TopNavigationAction,
   useTheme,
 } from "@ui-kitten/components";
-import { ImageProps, StyleSheet, Alert } from "react-native";
+import { ImageProps, StyleSheet } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { updateTourNameById } from "@/services/data/tourService";
-import { setTourRoute } from "@/services/data/routeService";
-import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
-import * as Gjv from "geojson-validation";
-import SettingsContainer from "@/components/SettingsConatiner/SettingsContainer";
+
 import SingleSettingLayout from "@/components/SingleSettingLayout/SingleSettingLayout";
+
 import InlineRow from "@/components/InlineRow/InlineRow";
-import RouteGuidelineSettingsSection from "@/components/RouteGuidelineSettingsSection/RouteGuidelineSettingsSection";
-import TourNameSettingsSection from "@/components/TourNameSettingsSection/TourNameSettingsSection";
+import { updateTourNameById } from "@/services/data/tourService";
 
 const OkayIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="check" style={[props?.style, { height: 24 }]} />
@@ -34,45 +29,55 @@ type TourenParams = {
   tourTitle: string;
 };
 
-export default function Settings() {
+export default function TourNameSettingsSection() {
   const params = useLocalSearchParams() as TourenParams;
-  const { tourId, tourTitle } = params;
+  const { tourTitle, tourId } = params;
   const [tourname, setTourname] = useState(tourTitle);
   const [titleBeingEdited, setTitleBeingEdited] = useState(false);
-  const [selectedFile, setSelectedFile] =
-    useState<DocumentPicker.DocumentPickerResult>();
 
   const theme = useTheme();
   const styles = makeStyles(theme);
-
   const updateTourname = (newTourName: string) => {
     updateTourNameById(tourId, newTourName).then(() => {
       setTourname(newTourName);
       setTitleBeingEdited(false);
     });
   };
-
-  const importTour = async () => {
-    const file = await DocumentPicker.getDocumentAsync({
-      type: "application/json",
-    });
-    if (!file.canceled) {
-      const content = await FileSystem.readAsStringAsync(file.assets[0].uri);
-      if (Gjv.valid(JSON.parse(content))) {
-        setSelectedFile(file);
-        await setTourRoute(tourId, content);
-      } else {
-        Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
-      }
-    }
-  };
   return (
-    <SettingsContainer>
-      <>
-        <TourNameSettingsSection />
-        <RouteGuidelineSettingsSection />
-      </>
-    </SettingsContainer>
+    <SingleSettingLayout settingName={"Tourname"}>
+      {titleBeingEdited ? (
+        <InlineRow
+          leftComponent={
+            <Input
+              style={styles.input}
+              value={tourname}
+              onChangeText={setTourname}
+              onSubmitEditing={(event) =>
+                updateTourname(event.nativeEvent.text)
+              }
+            />
+          }
+          actions={
+            <TopNavigationAction
+              icon={OkayIcon}
+              onPress={() => {
+                updateTourname(tourname);
+              }}
+            />
+          }
+        />
+      ) : (
+        <InlineRow
+          leftComponent={<Text category={"h6"}>{tourname}</Text>}
+          actions={
+            <TopNavigationAction
+              icon={EditIcon}
+              onPress={() => setTitleBeingEdited(true)}
+            />
+          }
+        />
+      )}
+    </SingleSettingLayout>
   );
 }
 

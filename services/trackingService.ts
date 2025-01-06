@@ -195,7 +195,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     // @ts-ignore
     const [location]: LocationObject[] = data.locations;
     try {
-      console.log("New location received:", location);
       await processLocationUpdate(location);
     } catch (err) {
       // @ts-ignore

@@ -1,4 +1,4 @@
-import { MapPoint } from "@/utils/locationUtil";
+import { MapPoint } from "@/utils/locationUtils";
 
 export const flensburg: MapPoint = {
   latitude: 54.789356,

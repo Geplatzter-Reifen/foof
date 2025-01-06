@@ -23,7 +23,7 @@ let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
 
 // Validate input for manual stage creation
-export function validateManualStageInput(
+function validateManualStageInput(
   stageName: string,
   startTime: Date,
   endTime: Date,
@@ -204,3 +204,5 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     console.warn("No data received in location task.");
   }
 });
+
+export const validateManualStageInputForTesting = validateManualStageInput;

@@ -1,6 +1,6 @@
 import {
   ensurePermissions,
-  validateManualStageInput,
+  validateManualStageInputForTesting,
 } from "@/services/trackingService";
 
 import * as Location from "expo-location";
@@ -49,7 +49,7 @@ describe("Tracking", () => {
     });
   });
 
-  describe("validateManualStageInput", () => {
+  describe("validateManualStageInputForTesting", () => {
     const mockStartTime = new Date("2025-01-01T10:00:00Z");
     const mockEndTime = new Date("2025-01-01T11:00:00Z");
     const invalidStartTime = new Date("2025-01-01T12:00:00Z");
@@ -57,7 +57,7 @@ describe("Tracking", () => {
 
     it("should not throw an error for valid input", () => {
       expect(() =>
-        validateManualStageInput(
+        validateManualStageInputForTesting(
           "Stage Name",
           mockStartTime,
           mockEndTime,
@@ -69,7 +69,7 @@ describe("Tracking", () => {
 
     it("should throw an error for empty stage name", () => {
       expect(() =>
-        validateManualStageInput(
+        validateManualStageInputForTesting(
           "",
           mockStartTime,
           mockEndTime,
@@ -81,7 +81,7 @@ describe("Tracking", () => {
 
     it("should throw an error for invalid coordinates", () => {
       expect(() =>
-        validateManualStageInput(
+        validateManualStageInputForTesting(
           "Stage Name",
           mockStartTime,
           mockEndTime,
@@ -93,7 +93,7 @@ describe("Tracking", () => {
 
     it("should throw an error for invalid times", () => {
       expect(() =>
-        validateManualStageInput(
+        validateManualStageInputForTesting(
           "Stage Name",
           invalidStartTime,
           invalidEndTime,

@@ -150,7 +150,7 @@ const StageMapLine = ({
         id={`lineLayer-${stageId}`}
         belowLayerID="road-label"
         style={{
-          ...(active && gradientStart != 0
+          ...(active && gradientStart !== 0
             ? {
                 lineGradient: [
                   "interpolate",

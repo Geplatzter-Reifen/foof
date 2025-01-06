@@ -7,11 +7,15 @@ type IconStatPropType = React.PropsWithChildren<TextProps> & {
   icon: string;
   iconSize?: number;
   fontSize?: number;
+  centered?: boolean;
+  reversed?: boolean;
 };
 
 export default function IconStat(props: IconStatPropType) {
   const iconSize = props.iconSize ?? 22;
   const fontSize = props.fontSize ?? 18;
+  const centered = props.centered ?? false;
+  const reversed = props.reversed ?? false;
 
   // Iconfarbe wird durch den EvaStatus (oder "text") bestimmt
   const theme = useTheme();
@@ -36,12 +40,21 @@ export default function IconStat(props: IconStatPropType) {
   const iconColorString = getColorStringByStatus(props.status ?? "primary");
 
   return (
-    <View style={styles.view} testID="container">
+    <View
+      style={
+        centered
+          ? styles.viewCentered
+          : reversed
+            ? styles.viewReversed
+            : styles.view
+      }
+      testID="container"
+    >
       <Icon
         name={props.icon}
         style={{ height: iconSize, width: "auto", color: iconColorString }}
       />
-      <Text style={{ fontSize: fontSize, marginLeft: 8 }}>
+      <Text style={{ fontSize: fontSize, marginHorizontal: 8 }}>
         {props.children}
       </Text>
     </View>
@@ -52,5 +65,14 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     flexDirection: "row",
+  },
+  viewReversed: {
+    flex: 1,
+    flexDirection: "row-reverse",
+  },
+  viewCentered: {
+    flex: 1,
+    alignItems: "center",
+    gap: 4,
   },
 });

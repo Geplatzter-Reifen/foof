@@ -1,16 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { formatDate, DateFormat } from "@/utils/dateUtils";
-import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
-import { Tour, Stage } from "@/database/model/model";
+import { DateFormat, formatDate } from "@/utils/dateUtils";
+import { ThemeType, useTheme } from "@ui-kitten/components";
+import { Stage, Tour } from "@/database/model/model";
 import {
-  getTourDistance,
-  getTourDurationString,
-  getTourDistanceString,
   getTourAverageSpeedString,
+  getTourDistance,
+  getTourDistanceString,
+  getTourDurationString,
 } from "@/services/statisticsService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
+import IconStat from "@/components/Statistics/IconStat";
 
 function TourStats({
   stage,
@@ -29,47 +30,47 @@ function TourStats({
   return (
     <View style={styles.container}>
       {/* Fortschrittsbalken über die Tourdistanz*/}
-      <TourProgressBar progress={progress} style={styles.progressContainer} />
+      <TourProgressBar progress={progress} style={styles.progressBar} />
+
+      <View style={styles.dateContainer}>
+        <IconStat icon="calendar-plus" status="basic">
+          {tour.startedAt ? formatDate(tour.startedAt, DateFormat.DATE) : "--"}
+        </IconStat>
+        <IconStat icon="calendar-check" status="basic" reversed>
+          {tour.finishedAt
+            ? formatDate(tour.finishedAt, DateFormat.DATE)
+            : "--"}
+        </IconStat>
+      </View>
 
       <View style={styles.statsContainer}>
-        <View style={styles.stat_column}>
-          <View style={styles.stat_row}>
-            <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistanceString(stages)}</Text>
-          </View>
-          <View style={styles.stat_row}>
-            <Icon name="arrow-up-right-dots" style={styles.icon_style} />
-            <Text>{"0 m"}</Text>
-          </View>
-          <View style={styles.stat_row}>
-            <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeedString(stages)}</Text>
-          </View>
-          <View style={styles.stat_row}>
-            <Icon name="bolt" style={styles.icon_style} />
-            <Text>{0 + " kcal"}</Text>
-          </View>
-        </View>
-        <View style={styles.stat_column}>
-          <View style={styles.stat_row}>
-            <Icon name="calendar-plus" style={styles.icon_style} />
-            <Text>
-              {tour.startedAt
-                ? formatDate(tour.startedAt, DateFormat.DATE)
-                : "--"}
-            </Text>
-          </View>
-          {tour.finishedAt && (
-            <View style={styles.stat_row}>
-              <Icon name="calendar-check" style={styles.icon_style} />
-              <Text>{formatDate(tour.finishedAt, DateFormat.DATE)}</Text>
-            </View>
-          )}
-          <View style={styles.stat_row}>
-            <Icon name="clock" style={styles.icon_style} />
-            <Text>{getTourDurationString(stages)}</Text>
-          </View>
-        </View>
+        <IconStat
+          icon="arrows-left-right"
+          centered
+          status="primary"
+          fontSize={20}
+          iconSize={30}
+        >
+          {getTourDistanceString(stages)}
+        </IconStat>
+        <IconStat
+          icon="clock-rotate-left"
+          centered
+          status="primary"
+          fontSize={20}
+          iconSize={30}
+        >
+          {getTourDurationString(stages)}
+        </IconStat>
+        <IconStat
+          icon="gauge-high"
+          centered
+          status="primary"
+          fontSize={20}
+          iconSize={30}
+        >
+          {getTourAverageSpeedString(stages)}
+        </IconStat>
       </View>
     </View>
   );
@@ -107,26 +108,25 @@ export default EnhancedTourStatsV2;
 const makeStyles = (theme: ThemeType) => {
   return StyleSheet.create({
     container: {
+      paddingHorizontal: 20,
+      paddingVertical: 10,
       backgroundColor: theme["color-primary-transparent-500"],
     },
-    progressContainer: {
-      padding: 8,
-      margin: 10,
-      marginBottom: 0,
-    },
     progressBar: {
-      height: 27,
-      //@ts-ignore
-      indicatorColor: theme["color-primary-500"],
-      backgroundColor: theme["background-basic-color-2"],
-      borderRadius: 6,
+      marginVertical: 8,
+    },
+    dateContainer: {
+      flexDirection: "row",
+      height: "auto",
+      justifyContent: "space-between",
+      marginTop: 2,
+      marginHorizontal: 5,
     },
     statsContainer: {
       flexDirection: "row",
-      alignItems: "center",
       height: "auto",
-      paddingHorizontal: 20,
-      paddingBottom: 10,
+      justifyContent: "space-between",
+      marginTop: 8,
     },
     stat_column: {
       flex: 1,
@@ -136,13 +136,6 @@ const makeStyles = (theme: ThemeType) => {
     stat_row: {
       flexDirection: "row",
       alignItems: "center",
-    },
-    icon_style: {
-      alignSelf: "center",
-      marginHorizontal: 4,
-      height: 15,
-      width: "100%",
-      minWidth: 17,
     },
   });
 };

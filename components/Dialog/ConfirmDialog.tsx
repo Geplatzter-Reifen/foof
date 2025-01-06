@@ -12,7 +12,7 @@ type ConfirmDialogProps = {
   cancelString?: string;
 };
 
-const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
+const ConfirmDialog = ({
   visible,
   onConfirm,
   onCancel,

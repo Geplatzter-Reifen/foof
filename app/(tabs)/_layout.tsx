@@ -6,7 +6,6 @@ import {
   IconElement,
 } from "@ui-kitten/components";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { FC } from "react";
 import { ImageProps } from "react-native";
 import { useTheme } from "@ui-kitten/components";
 
@@ -18,7 +17,7 @@ const HomeIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name={"location-arrow"} />
 );
 
-const BottomTabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
+const BottomTabBar = ({ navigation, state }: BottomTabBarProps) => {
   return (
     <BottomNavigation
       selectedIndex={state.index}

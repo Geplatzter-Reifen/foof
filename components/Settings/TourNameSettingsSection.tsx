@@ -49,12 +49,14 @@ export default function TourNameSettingsSection(): React.ReactElement {
 
   const theme = useTheme();
   const styles = makeStyles(theme);
+
   const updateTourname = (newTourName: string) => {
     updateTourNameById(tourId, newTourName).then(() => {
       setTourname(newTourName);
       setTitleBeingEdited(false);
     });
   };
+
   return (
     <SingleSettingLayout settingName={"Tourname"}>
       {titleBeingEdited ? (
@@ -69,7 +71,7 @@ export default function TourNameSettingsSection(): React.ReactElement {
               }
             />
           }
-          actions={
+          buttons={
             <TopNavigationAction
               icon={OkayIcon}
               onPress={() => {
@@ -81,7 +83,7 @@ export default function TourNameSettingsSection(): React.ReactElement {
       ) : (
         <InlineRow
           leftComponent={<Text category={"h6"}>{tourname}</Text>}
-          actions={
+          buttons={
             <TopNavigationAction
               icon={EditIcon}
               onPress={() => setTitleBeingEdited(true)}

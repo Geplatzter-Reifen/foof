@@ -51,11 +51,16 @@ const StagesMapView = ({ tourId, stages }: stagesMapViewProps) => {
   }
 
   return (
-    <MapboxGL.MapView style={{ flex: 1 }}>
+    <MapboxGL.MapView
+      localizeLabels
+      scaleBarEnabled={false}
+      style={{ flex: 1 }}
+    >
       <MapboxGL.Camera
         zoomLevel={5}
         centerCoordinate={[10.4515, 51.1657]}
         animationDuration={0}
+        minZoomLevel={5}
       />
       {stagesWithLocations
         .filter((stage) => stage.locations.length > 1)

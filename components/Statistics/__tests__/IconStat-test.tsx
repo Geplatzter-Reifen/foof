@@ -9,7 +9,7 @@ describe("TourStats", () => {
   });
   it("should render the icon and font in correct size", () => {
     const view = render(
-      <IconStat icon="home" iconSize={30} fontSize={21}>
+      <IconStat icon="home" iconHeight={30} iconWidth={35} fontSize={21}>
         1001km
       </IconStat>,
     );
@@ -26,7 +26,7 @@ describe("TourStats", () => {
       const { getByTestId } = render(<IconStat icon="home" status="basic" />);
       const view = getByTestId("container");
       const icon = view.props.children[0];
-      expect(icon.props.style.color).toBe(foofTheme["color-basic-500"]);
+      expect(icon.props.style.color).toBe(foofTheme["color-basic-400"]);
     });
     test("success", () => {
       const { getByTestId } = render(<IconStat icon="home" status="success" />);

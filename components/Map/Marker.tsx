@@ -1,6 +1,7 @@
 import MapboxGL from "@rnmapbox/maps";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import type { Feature, Position } from "geojson";
+import { foofTheme } from "@/constants/custom-theme";
 
 type MarkerProps = {
   id: string;
@@ -45,7 +46,11 @@ function Marker({
       {markerIndex === currentIndex ? (
         <Icon name="location-dot" size={30} color={selectedColor} />
       ) : (
-        <Icon name="location-dot" size={30} color="#373737" />
+        <Icon
+          name="location-dot"
+          size={30}
+          color={foofTheme["color-basic-600"]}
+        />
       )}
     </MapboxGL.PointAnnotation>
   );

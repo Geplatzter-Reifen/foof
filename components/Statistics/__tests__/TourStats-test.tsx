@@ -29,7 +29,6 @@ describe("TourStats", () => {
     );
     const view = await waitFor(() => render(<TourStats tour={tour} />));
     expect(view).toMatchSnapshot();
-    //TODO: mit der neuen Fortschrittsanzeige wird hier 0% Fortschritt angezeigt, weil keine Locations an den Stages vorhanden sind. Man sollte auch mal mit Locations testen.
   });
   //TODO: Add more tests
 });

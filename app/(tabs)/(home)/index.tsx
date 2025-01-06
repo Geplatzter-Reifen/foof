@@ -41,7 +41,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
 
   const [activeTour, setActiveTour] = useState<Tour>();
-  const [activeStage, setActiveStage] = useState<Stage>();
+  const [activeStage, setActiveStage] = useState<Stage | null>();
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -64,11 +64,7 @@ export default function HomeScreen() {
           setActiveTour(tour);
         }
       });
-      getActiveStage().then((stage) => {
-        if (stage) {
-          setActiveStage(stage);
-        }
-      });
+
       setLoading(false);
     };
     void prepare();
@@ -87,11 +83,16 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking().then(() =>
+          startAutomaticTracking().then(() => {
             getActiveStage().then((stage) => {
               setActiveStageId(stage?.id!);
-            }),
-          );
+            });
+            getActiveStage().then((stage) => {
+              if (stage) {
+                setActiveStage(stage);
+              }
+            });
+          });
         }}
       />
     );
@@ -118,6 +119,7 @@ export default function HomeScreen() {
           setButtonState(ButtonStates.NotCycling);
           void stopAutomaticTracking();
           setActiveStageId(null);
+          setActiveStage(null);
         }}
       />
     );

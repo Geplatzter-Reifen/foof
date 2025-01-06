@@ -29,6 +29,18 @@ type TourenParams = {
   tourTitle: string;
 };
 
+/**
+ * TourNameSettingsSection
+ *
+ * A React component for managing the tour name in the application settings.
+ * Users can view, edit, and update the name of the current tour.
+ *
+ * @component
+ *
+ * @returns {React.ReactElement}
+ *
+ */
+
 export default function TourNameSettingsSection() {
   const params = useLocalSearchParams() as TourenParams;
   const { tourTitle, tourId } = params;

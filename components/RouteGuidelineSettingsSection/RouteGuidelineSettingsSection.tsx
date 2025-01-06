@@ -18,6 +18,18 @@ import SingleSettingLayout from "@/components/SingleSettingLayout/SingleSettingL
 import CustomLink from "@/components/CustomLink/CustomLink";
 import InlineRow from "@/components/InlineRow/InlineRow";
 
+/**
+ * RouteGuidelineSettingsSection
+ *
+ * This component provides a settings section for managing a planned route.
+ * Users can view, delete, and import routes while receiving guidance on
+ * creating and uploading their own route files.
+ *
+ * @returns {React.ReactElement}
+ *
+ *
+ */
+
 const DeleteIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="trash" style={[props?.style, { height: 24 }]} />
 );
@@ -135,11 +147,6 @@ const makeStyles = (theme: ThemeType) =>
     successMessage: {
       marginTop: 10,
       color: theme["color-primary-600"],
-    },
-    input: {
-      marginTop: 5,
-      alignSelf: "stretch",
-      width: "80%",
     },
     description: {
       marginTop: 5,

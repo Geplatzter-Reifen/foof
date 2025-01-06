@@ -17,6 +17,8 @@ import { ModalWindow } from "@/components/ModalWindow/ModalWindow";
 import SingleSettingLayout from "@/components/SingleSettingLayout/SingleSettingLayout";
 import CustomLink from "@/components/CustomLink/CustomLink";
 import InlineRow from "@/components/InlineRow/InlineRow";
+import { ConfigFile } from "@babel/core/src/config/files/index-browser";
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
 /**
  * RouteGuidelineSettingsSection
@@ -31,7 +33,7 @@ import InlineRow from "@/components/InlineRow/InlineRow";
  */
 
 const DeleteIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="trash" style={[props?.style, { height: 24 }]} />
+  <Icon {...props} name="trash-can" style={[props?.style, { height: 24 }]} />
 );
 
 const DownloadIcon = (props?: Partial<ImageProps>): IconElement => (
@@ -48,7 +50,7 @@ export default function RouteGuidelineSettingsSection() {
   const { tourId } = params;
   const [selectedFile, setSelectedFile] =
     useState<DocumentPicker.DocumentPickerResult>();
-  const [showPopup, setShowPopup] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const theme = useTheme();
   const styles = makeStyles(theme);
 
@@ -86,7 +88,7 @@ export default function RouteGuidelineSettingsSection() {
               <>
                 <TopNavigationAction
                   icon={DeleteIcon}
-                  onPress={() => setShowPopup(true)}
+                  onPress={() => setShowDialog(true)}
                 />
                 <TopNavigationAction icon={DownloadIcon} onPress={importTour} />
               </>
@@ -128,16 +130,14 @@ export default function RouteGuidelineSettingsSection() {
           )}
         </>
       </SingleSettingLayout>
-      {showPopup && (
-        <ModalWindow
-          modalContent={popupModalContent}
-          buttonCancelText={"BESTÄTIGEN"}
-          buttonOkText={"ABBRECHEN"}
-          setShowModal={setShowPopup}
-          showModal={showPopup}
-          onOkPressFunction={handleDeleteGuideroute}
-        />
-      )}
+      <ConfirmDialog
+        title={"Delete Geplante Route "}
+        visible={showDialog}
+        onConfirm={handleDeleteGuideroute}
+        onCancel={() => {
+          setShowDialog(false);
+        }}
+      />
     </>
   );
 }

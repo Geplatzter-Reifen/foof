@@ -5,6 +5,8 @@ import {
   Icon,
   useTheme,
   ThemeType,
+  TopNavigationAction,
+  IconElement,
 } from "@ui-kitten/components";
 import { useLocalSearchParams, useNavigation, router } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -15,7 +17,13 @@ import {
 } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { Location, Stage } from "@/database/model/model";
-import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  ImageProps,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
 import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
@@ -54,46 +62,26 @@ export default function StageScreen() {
       }
     })();
   }, [stage, stageId]);
-
-  // Button zum Löschen der Etappe & zurücknavigieren
-  const DeleteButton = useCallback(() => {
-    const handleConfirm = () => {
-      void deleteStage(stageId);
-      setIsDeleteDialogVisible(false);
-      navigation.goBack();
-    };
-
+  const handleConfirm = () => {
+    void deleteStage(stageId);
+    setIsDeleteDialogVisible(false);
+    navigation.goBack();
+  };
+  //zum Löschen der Etappe & zurücknavigieren
+  const DeleteButton = () => {
     return (
-      <View style={styles.deleteButton}>
-        <TouchableOpacity
-          onPress={() => {
-            setIsDeleteDialogVisible(true);
-          }}
-        >
-          <Icon name="trash-can" style={styles.deleteIcon} />
-        </TouchableOpacity>
-
-        {/*Öffnet einen Dialog zum Bestätigen*/}
-        <ConfirmDialog
-          visible={isDeleteDialogVisible}
-          title="Etappe löschen"
-          message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
-          confirmString="Löschen"
-          onConfirm={handleConfirm}
-          onCancel={() => {
-            setIsDeleteDialogVisible(false);
-          }}
-        />
-      </View>
+      <TopNavigationAction
+        icon={TrashIcon}
+        onPress={() => {
+          setIsDeleteDialogVisible(true);
+        }}
+      />
     );
-  }, [
-    isDeleteDialogVisible,
-    navigation,
-    stage?.title,
-    stageId,
-    styles.deleteButton,
-    styles.deleteIcon,
-  ]);
+  };
+
+  const TrashIcon = (props?: Partial<ImageProps>): IconElement => (
+    <Icon {...props} name="trash-can" style={[props?.style, { height: 24 }]} />
+  );
 
   // Input-Feld, in dem der Etappentitel eingegeben wird
   const titleInput = useMemo(
@@ -153,7 +141,6 @@ export default function StageScreen() {
     changeTitleButton,
     titleBeingChanged,
     stageTitleVal,
-    DeleteButton,
   ]);
 
   return (
@@ -174,6 +161,16 @@ export default function StageScreen() {
           <StageMapView stageId={stageId} locations={stageLocations} />
         </View>
       )}
+      <ConfirmDialog
+        visible={isDeleteDialogVisible}
+        title="Etappe löschen"
+        message={`Möchtest du die Etappe \"${stage?.title}\" wirklich löschen?`}
+        confirmString="Löschen"
+        onConfirm={handleConfirm}
+        onCancel={() => {
+          setIsDeleteDialogVisible(false);
+        }}
+      />
     </Layout>
   );
 }

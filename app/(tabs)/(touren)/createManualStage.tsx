@@ -109,7 +109,7 @@ const CreateManualStage: React.FC = () => {
     if (startDate >= endDate) {
       Alert.alert(
         "Ungültige Eingabe",
-        "Das Startdatum und die Startzeit müssen vor dem Enddatum und der Endzeit liegen.",
+        "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
       );
       return;
     }

@@ -48,9 +48,6 @@ export async function createManualStage(
   if (startingCoordinates === null || endCoordinates === null) {
     throw new Error("Ungültiges Koordinatenformat");
   }
-  if (endTime < startTime) {
-    throw new Error("Start und Endzeit sind ungültig");
-  }
 
   let stage = await createStage(
     tour.id,

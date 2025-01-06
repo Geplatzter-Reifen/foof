@@ -35,8 +35,7 @@ export default function StageMapView({
       {/* Kamera hält sich an die Bounds */}
       <MapboxGL.Camera
         minZoomLevel={5}
-        maxZoomLevel={15}
-        animationMode="easeTo"
+        animationMode="none"
         bounds={bounds}
         padding={{
           paddingTop: 60,

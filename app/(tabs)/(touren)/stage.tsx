@@ -6,7 +6,7 @@ import {
   useTheme,
   ThemeType,
 } from "@ui-kitten/components";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation, router } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteStage,
@@ -15,7 +15,7 @@ import {
 } from "@/services/data/stageService";
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { Location, Stage } from "@/database/model/model";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
 import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
@@ -45,7 +45,8 @@ export default function StageScreen() {
         setStage(dbStage);
         setStageTitleVal(stage?.title ?? "Etappe");
       } else {
-        throw new Error("Stage does not exist");
+        router.back();
+        Alert.alert("Stage does not exist");
       }
       const dbLocations = await getAllLocationsByStageId(stageId);
       if (dbLocations) {
@@ -158,7 +159,15 @@ export default function StageScreen() {
   return (
     <Layout level="2" style={styles.layout}>
       {/*Kachel mit den Statistiken der Etappe*/}
-      {stage && <StageStatCard stage={stage} locations={stageLocations} />}
+      {stage && stageLocations.length !== 0 && (
+        <StageStatCard stage={stage} locations={stageLocations} />
+      )}
+      {/*Falls keine / nur eine Location vorhanden ist: Hinweistext*/}
+      {stage && stageLocations.length < 2 && (
+        <Text style={{ textAlign: "center" }}>
+          Diese Etappe ist leer. Bitte lösche sie.
+        </Text>
+      )}
       {/*Karte, auf der die gefahrene Etappe angezeigt wird*/}
       {stageLocations.length > 1 && (
         <View style={styles.mapContainer}>

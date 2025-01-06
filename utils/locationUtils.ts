@@ -99,6 +99,7 @@ function updateBounds(
   return bounds;
 }
 
+/** Converts a Location's Coordinates into a formatted String */
 export function getCoordinateString(loc: Location) {
   const toDMS = (coord: number, posChar: string, negChar: string) => {
     const absolute = Math.abs(coord);

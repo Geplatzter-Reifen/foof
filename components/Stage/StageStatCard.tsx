@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { DateFormat, formatDate } from "@/utils/dateUtils";
-
 import { Location, Stage } from "@/database/model/model";
-
-import { Button, Card, Icon, IconElement, Text } from "@ui-kitten/components";
-import { ImageProps, StyleSheet, View } from "react-native";
-import customStyles from "../../constants/styles";
 import { shareStage } from "@/services/sharingService";
-import IconStat from "@/components/Statistics/IconStat";
 import {
   getStageAvgSpeedString,
   getStageDistanceString,
   getStageDurationString,
 } from "@/services/statisticsService";
 import { fetchPlaceName } from "@/services/geoService";
+import { Button, Card, Icon, IconElement, Text } from "@ui-kitten/components";
+import { ImageProps, StyleSheet, View } from "react-native";
+import customStyles from "../../constants/styles";
+import IconStat from "@/components/Statistics/IconStat";
 
 const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -22,6 +20,97 @@ const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
     style={[props?.style, { height: 20, width: "auto" }]}
   />
 );
+
+// Header der Kachel: Titel, Datum, Teilen-Button
+const Header = ({ date, stage }: { date: string; stage: Stage }) => {
+  return (
+    <View style={styles.header}>
+      <View style={{ flexDirection: "row", alignItems: "baseline" }}>
+        <Text category="h5" style={styles.title}>
+          Statistiken
+        </Text>
+        <Text appearance="hint" style={styles.date}>
+          vom {date}
+        </Text>
+      </View>
+      <Button
+        status="primary"
+        appearance="ghost"
+        accessoryLeft={ShareIcon}
+        onPress={() => shareStage(stage)}
+      />
+    </View>
+  );
+};
+
+// Start- und Zieladressen, Start- und Endzeitpunkt
+const StartEnd = ({
+  startName,
+  endName,
+  startLocation,
+  endLocation,
+}: {
+  startName: string;
+  endName: string;
+  startLocation: Location;
+  endLocation: Location;
+}) => {
+  return (
+    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={styles.startEndContainer}>
+        <IconStat
+          icon="dot-circle"
+          iconWidth={25}
+          iconHeight={23}
+          status="basic"
+        >
+          {startName}
+        </IconStat>
+        <IconStat
+          icon="location-dot"
+          iconWidth={25}
+          iconHeight={23}
+          status="basic"
+        >
+          {endName}
+        </IconStat>
+      </View>
+      <View style={styles.startEndTimeContainer}>
+        <Text appearance="hint" style={styles.timeString}>
+          {formatDate(startLocation.recordedAt ?? 0, DateFormat.TIME)}
+        </Text>
+        <Text appearance="hint" style={styles.timeString}>
+          {formatDate(endLocation.recordedAt ?? 0, DateFormat.TIME)}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
+// Distanz, Dauer, Durchschnittsgeschwindigkeit
+const Stats = ({
+  distance,
+  duration,
+  avgSpeed,
+}: {
+  distance: string;
+  duration: string;
+  avgSpeed: string;
+}) => {
+  return (
+    <View style={styles.statContainer}>
+      <IconStat icon="arrows-left-right" status="primary" fontSize={20}>
+        {distance}
+      </IconStat>
+      <IconStat icon="clock-rotate-left" status="primary" fontSize={20}>
+        {duration}
+      </IconStat>
+      <IconStat icon="gauge-high" status="primary" fontSize={20}>
+        {avgSpeed}
+      </IconStat>
+    </View>
+  );
+};
 
 export default function StageStatCard({
   stage,
@@ -55,79 +144,6 @@ export default function StageStatCard({
     void getStartAndEndNames();
   }, [startLocation, endLocation]);
 
-  // Header der Kachel: Titel, Datum, Teilen-Button
-  const Header = () => {
-    return (
-      <View style={styles.header}>
-        <View style={{ flexDirection: "row", alignItems: "baseline" }}>
-          <Text category="h5" style={styles.title}>
-            Statistiken
-          </Text>
-          <Text appearance="hint" style={styles.date}>
-            vom {date}
-          </Text>
-        </View>
-        <Button
-          status="primary"
-          appearance="ghost"
-          accessoryLeft={ShareIcon}
-          onPress={() => shareStage(stage)}
-        />
-      </View>
-    );
-  };
-
-  // Start- und Zieladressen, Start- und Endzeitpunkt
-  const StartEnd = () => {
-    return (
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <View style={styles.startEndContainer}>
-          <IconStat
-            icon="dot-circle"
-            iconWidth={25}
-            iconHeight={23}
-            status="basic"
-          >
-            {startName}
-          </IconStat>
-          <IconStat
-            icon="location-dot"
-            iconWidth={25}
-            iconHeight={23}
-            status="basic"
-          >
-            {endName}
-          </IconStat>
-        </View>
-        <View style={styles.startEndTimeContainer}>
-          <Text appearance="hint" style={styles.timeString}>
-            {formatDate(startLocation.recordedAt ?? 0, DateFormat.TIME)}
-          </Text>
-          <Text appearance="hint" style={styles.timeString}>
-            {formatDate(endLocation.recordedAt ?? 0, DateFormat.TIME)}
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  // Distanz, Dauer, Durchschnittsgeschwindigkeit
-  const Stats = () => {
-    return (
-      <View style={styles.statContainer}>
-        <IconStat icon="arrows-left-right" status="primary" fontSize={20}>
-          {distanceString}
-        </IconStat>
-        <IconStat icon="clock-rotate-left" status="primary" fontSize={20}>
-          {durationString}
-        </IconStat>
-        <IconStat icon="gauge-high" status="primary" fontSize={20}>
-          {avgSpeedString}
-        </IconStat>
-      </View>
-    );
-  };
-
   return (
     <Card
       style={{
@@ -135,11 +151,22 @@ export default function StageStatCard({
         ...customStyles.basicShadow,
         ...styles.card,
       }}
-      header={<Header />}
+      header={<Header date={date} stage={stage} />}
       disabled={true}
     >
-      {locations?.length > 0 && <StartEnd />}
-      <Stats />
+      {locations?.length > 0 && (
+        <StartEnd
+          startName={startName}
+          endName={endName}
+          startLocation={startLocation}
+          endLocation={endLocation}
+        />
+      )}
+      <Stats
+        distance={distanceString}
+        duration={durationString}
+        avgSpeed={avgSpeedString}
+      />
     </Card>
   );
 }

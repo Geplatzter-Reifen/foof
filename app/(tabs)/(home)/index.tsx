@@ -33,7 +33,7 @@ import {
 import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -44,6 +44,8 @@ enum ButtonStates {
 }
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
+
   const insets = useSafeAreaInsets();
   const [loading, setLoading] = useState(true); // Ladezustand
 
@@ -125,11 +127,11 @@ export default function HomeScreen() {
           void stopAutomaticTracking();
           router.navigate({ pathname: "../(touren)" });
           await timeout(10);
-          router.navigate({
-            pathname: "../(touren)/stage",
-            params: {
-              stageId: activeStageId,
-            },
+          // @ts-ignore Typescript erwartet "never"
+          navigation.navigate("(touren)", {
+            screen: "stage",
+            params: { stageId: activeStageId },
+            initial: false,
           });
           setActiveStageId(null);
         }}

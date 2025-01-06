@@ -69,7 +69,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
       testID="stage-card"
       disabled={stage.isActive}
       onPress={() =>
-        router.push({
+        router.navigate({
           pathname: "./stage",
           params: {
             stageId: stage.id,

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Card, Text, Button } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 
-interface ConfirmDialogProps {
+type ConfirmDialogProps = {
   visible: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -10,7 +10,7 @@ interface ConfirmDialogProps {
   message?: string;
   confirmString?: string;
   cancelString?: string;
-}
+};
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   visible,
@@ -20,12 +20,13 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   message = "Möchtest du wirklich fortfahren?",
   confirmString = "Bestätigen",
   cancelString = "Abbrechen",
-}) => {
+}: ConfirmDialogProps) => {
   return (
     <Modal
       visible={visible}
       backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       onBackdropPress={onCancel}
+      animationType="fade"
     >
       <Card disabled style={{ marginHorizontal: 25 }}>
         <Text category="h6" style={{ marginBottom: 10 }}>

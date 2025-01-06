@@ -6,7 +6,7 @@ import {
   IconElement,
 } from "@ui-kitten/components";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { ImageProps } from "react-native";
 import { useTheme } from "@ui-kitten/components";
 
@@ -19,13 +19,10 @@ const HomeIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 const BottomTabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
-  //const [selectedIndex, setSelectedIndex] = useState(0);
-
   return (
     <BottomNavigation
       selectedIndex={state.index}
       onSelect={(index) => {
-        //setSelectedIndex(index);
         navigation.navigate(state.routeNames[index]);
       }}
     >

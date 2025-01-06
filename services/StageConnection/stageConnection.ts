@@ -2,6 +2,7 @@ import { Tour, Location } from "@/database/model/model";
 import { calculateDistance, MapPoint } from "@/utils/locationUtil";
 import { getAllLocationsByStageId } from "../data/locationService";
 import { flensburg, oberstdorf } from "./data";
+import { updateFinishedAtFromTour } from "../data/tourService";
 
 const maxDistanceFromCenterFlensburg = 5;
 const maxDistanceFromCenterOberstdorf = 10;
@@ -18,6 +19,7 @@ export async function isFinished(tour: Tour): Promise<boolean> {
     const firstLocation = getFirstLocation(locations);
     const lastLocation = getLastLocation(locations);
     if (areHeadAndTailInFlensburgAndOberstdorf(firstLocation, lastLocation)) {
+      updateFinishedAtFromTour(tour, Date.now());
       return true;
     }
   }
@@ -98,7 +100,12 @@ export async function isFinished(tour: Tour): Promise<boolean> {
   if (!head || !tail) {
     return false;
   }
-  return areHeadAndTailInFlensburgAndOberstdorf(head, tail);
+  if (areHeadAndTailInFlensburgAndOberstdorf(head, tail)) {
+    updateFinishedAtFromTour(tour, Date.now());
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export function areHeadAndTailInFlensburgAndOberstdorf(

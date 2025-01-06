@@ -1,6 +1,6 @@
 import { createLocationWithRecordedAt } from "../../data/locationService";
 import { createStage } from "../../data/stageService";
-import { createTour } from "../../data/tourService";
+import { createTour, getTourByTourId } from "../../data/tourService";
 import {
   isFinished,
   areHeadAndTailInFlensburgAndOberstdorf,
@@ -12,6 +12,8 @@ import { flensburg, hannover, wuerzburg, oberstdorf, wiesbaden } from "../data";
 import { Location, Tour } from "@/database/model/model";
 import { MapPoint } from "@/utils/locationUtil";
 
+const dateNowMock = new Date("2024-01-01 21:00").getTime();
+
 describe("stageConnection", () => {
   describe("isFinished", () => {
     let tour: Tour;
@@ -20,6 +22,7 @@ describe("stageConnection", () => {
         "Test Tour",
         new Date("2024-01-01T20:30:00.000").getTime(),
       );
+      jest.spyOn(global.Date, "now").mockImplementation(() => dateNowMock);
     });
     it("should return true when a continous route from flensburg to oberstdorf exists", async () => {
       // Flensburg -> Hannover -> Oberstdorf
@@ -42,6 +45,8 @@ describe("stageConnection", () => {
 
       // Assert
       expect(result).toBeTruthy();
+      tour = await getTourByTourId(tour.id);
+      expect(tour.finishedAt).toBe(dateNowMock);
     });
     it("should return true when a direct route from flensburg to oberstdorf exists", async () => {
       // Flensburg -> Oberstdorf
@@ -58,6 +63,8 @@ describe("stageConnection", () => {
 
       // Assert
       expect(result).toBeTruthy();
+      tour = await getTourByTourId(tour.id);
+      expect(tour.finishedAt).toBe(dateNowMock);
     });
     it("should return true when a scrambled route from flensburg to oberstdorf exists", async () => {
       //Hannover -> Flensburg; Hannover -> Wuerzburg; Wuerzburg -> Wiesbaden; Oberstdorf -> Wiesbaden
@@ -91,6 +98,8 @@ describe("stageConnection", () => {
 
       // Assert
       expect(result).toBeTruthy();
+      tour = await getTourByTourId(tour.id);
+      expect(tour.finishedAt).toBe(dateNowMock);
     });
     it("should return false when no continous route from flensburg to oberstdorf exists", async () => {
       // Würzburg -> Hannover
@@ -107,6 +116,8 @@ describe("stageConnection", () => {
 
       // Assert
       expect(status).toBe(false);
+      tour = await getTourByTourId(tour.id);
+      expect(tour.finishedAt).toBeNull();
     });
   });
   describe("areHeadAndTailInFlensburgAndOberstdorf", () => {

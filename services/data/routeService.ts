@@ -2,21 +2,29 @@ import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
 import { Tour, Route } from "@/database/model/model";
 
-/** Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise. */
+/**
+ * Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise.
+ * @param tourId The id of the tour
+ * @param geoJson The GeoJSON string of the route
+ * @returns The created or updated route
+ */
 export const setTourRoute = async (tourId: string, geoJson: string) => {
   return database.write(async () => {
+    // Check if a route for the tour already exists
     const existingRoute = await database
       .get<Route>("routes")
       .query(Q.where("tour_id", tourId))
       .fetch();
 
     if (existingRoute.length === 0) {
+      // Create a new route
       const tour = await database.get<Tour>("tours").find(tourId);
       return database.get<Route>("routes").create((route) => {
         route.tour.set(tour);
         route.geoJson = geoJson;
       });
     } else {
+      // Update the existing route
       return existingRoute[0].update((route) => {
         route.geoJson = geoJson;
       });
@@ -24,7 +32,10 @@ export const setTourRoute = async (tourId: string, geoJson: string) => {
   });
 };
 
-/** Returns the route for a tour, or null if no route exists. */
+/**
+ * @param tourId The id of the tour
+ * @returns The route for the tour, or null if no route exists
+ */
 export const getTourRoute = async (tourId: string) => {
   const route = await database
     .get<Route>("routes")

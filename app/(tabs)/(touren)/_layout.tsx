@@ -38,7 +38,7 @@ export default function ReiseStackLayout() {
         name="stagesMapViewWrapper"
         options={{
           headerShown: true,
-          title: "Etappenübersicht",
+          title: "Tourübersicht",
         }}
       />
     </Stack>

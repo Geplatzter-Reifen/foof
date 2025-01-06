@@ -9,22 +9,13 @@ import {
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
-
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
-import {
-  ButtonGroup,
-  Layout,
-  Spinner,
-  TopNavigation,
-  Divider,
-  Text,
-} from "@ui-kitten/components";
+import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
-import { withObservables } from "@nozbe/watermelondb/react";
-import { Route, Stage, Tour } from "@/database/model/model";
+import { Stage, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";

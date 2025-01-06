@@ -1,12 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { Card, Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
+import { Card } from "@ui-kitten/components";
 import {
   getStageAvgSpeedString,
   getStageDistanceString,
   getStageDurationString,
-  getTourAverageSpeedString,
-  getTourDistanceString,
-  getTourDurationString,
 } from "@/services/statisticsService";
 import { Stage } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
@@ -15,9 +12,6 @@ import IconStat from "@/components/Statistics/IconStat";
 import React from "react";
 
 function MapStatisticsBox({ stage }: { stage: Stage }) {
-  const theme = useTheme();
-  const styles = makeStyles(theme);
-
   if (!stage) {
     return null;
   }
@@ -77,16 +71,15 @@ const EnhancedMapStatistics = enhance(MapStatisticsBox);
 
 export default EnhancedMapStatistics;
 
-const makeStyles = (theme: ThemeType) =>
-  StyleSheet.create({
-    container: {},
-    statsRow: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-    },
-    statItem: {
-      flexDirection: "row",
-      alignItems: "center",
-    },
-  });
+const styles = StyleSheet.create({
+  container: {},
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  statItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});

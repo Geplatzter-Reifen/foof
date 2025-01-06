@@ -174,19 +174,17 @@ export default function HomeScreen() {
   }
 
   return (
-    <Layout style={styles.container}>
+    <Layout style={{ ...styles.container, ...{ marginTop: insets.top } }}>
       <Layout style={styles.layout}>
-        {activeStage && <MapStatisticsBox stage={activeStage} />}
-
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
           localizeLabels={true}
           compassEnabled={true}
-          compassPosition={{ top: 110, right: 8 }}
-          logoPosition={{ top: 50, left: 8 }}
-          attributionPosition={{ top: 50, left: 96 }}
+          compassPosition={{ top: activeStage ? 113 : 8, right: 8 }}
+          logoPosition={{ top: activeStage ? 113 : 8, left: 8 }}
+          attributionPosition={{ top: activeStage ? 113 : 8, left: 96 }}
           onTouchMove={() => {
             setUserCentered(false);
           }}
@@ -206,7 +204,18 @@ export default function HomeScreen() {
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
-      <View style={styles.mapButtonsContainer}>
+      {activeStage && (
+        <View style={styles.statisticsBox}>
+          <MapStatisticsBox stage={activeStage} />
+        </View>
+      )}
+      <View
+        style={{
+          ...styles.mapButtonsContainer,
+          top: activeStage ? 166 : 65,
+          right: 11,
+        }}
+      >
         {/* Button zum Route anzeigen */}
         {activeTour && (
           <EnhancedRouteButton
@@ -261,7 +270,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "column",
     alignSelf: "center",
-    top: 175,
-    right: 11,
+  },
+  statisticsBox: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    right: 10,
   },
 });

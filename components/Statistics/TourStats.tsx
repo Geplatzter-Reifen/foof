@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { formatDate, DateFormat } from "@/utils/dateUtil";
+import { formatDate, DateFormat } from "@/utils/dateUtils";
 import { Icon, Text, ThemeType, useTheme } from "@ui-kitten/components";
 import { Tour, Stage } from "@/database/model/model";
 import {
@@ -12,14 +12,19 @@ import {
 import { withObservables } from "@nozbe/watermelondb/react";
 import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
 
-let activeTour: Tour | undefined = undefined;
-let tourStages: Stage[] = [];
-
-function TourStats() {
+function TourStats({
+  stage,
+  stages,
+  tour,
+}: {
+  stage?: Stage;
+  stages: Stage[];
+  tour: Tour;
+}) {
   const theme = useTheme();
   const styles = makeStyles(theme);
 
-  const progress = getTourDistance(tourStages) / 1001;
+  const progress = getTourDistance(stages) / 1001;
 
   return (
     <View style={styles.container}>
@@ -30,7 +35,7 @@ function TourStats() {
         <View style={styles.stat_column}>
           <View style={styles.stat_row}>
             <Icon name="arrows-left-right" style={styles.icon_style} />
-            <Text>{getTourDistanceString(tourStages)}</Text>
+            <Text>{getTourDistanceString(stages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="arrow-up-right-dots" style={styles.icon_style} />
@@ -38,7 +43,7 @@ function TourStats() {
           </View>
           <View style={styles.stat_row}>
             <Icon name="gauge-high" style={styles.icon_style} />
-            <Text>{getTourAverageSpeedString(tourStages)}</Text>
+            <Text>{getTourAverageSpeedString(stages)}</Text>
           </View>
           <View style={styles.stat_row}>
             <Icon name="bolt" style={styles.icon_style} />
@@ -49,20 +54,20 @@ function TourStats() {
           <View style={styles.stat_row}>
             <Icon name="calendar-plus" style={styles.icon_style} />
             <Text>
-              {activeTour!.startedAt
-                ? formatDate(activeTour!.startedAt, DateFormat.DATE)
+              {tour.startedAt
+                ? formatDate(tour.startedAt, DateFormat.DATE)
                 : "--"}
             </Text>
           </View>
-          {activeTour!.finishedAt && (
+          {tour.finishedAt && (
             <View style={styles.stat_row}>
               <Icon name="calendar-check" style={styles.icon_style} />
-              <Text>{formatDate(activeTour!.finishedAt, DateFormat.DATE)}</Text>
+              <Text>{formatDate(tour.finishedAt, DateFormat.DATE)}</Text>
             </View>
           )}
           <View style={styles.stat_row}>
             <Icon name="clock" style={styles.icon_style} />
-            <Text>{getTourDurationString(tourStages)}</Text>
+            <Text>{getTourDurationString(stages)}</Text>
           </View>
         </View>
       </View>
@@ -78,20 +83,19 @@ const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
 const EnhancedTourStats = enhance(TourStats);
 
 // Bridge component that determines which TourStats component to render based on the active stage.
-const Bridge = ({ stages }: { stages: Stage[] }) => {
-  tourStages = stages;
+const Bridge = ({ tour, stages }: { tour: Tour; stages: Stage[] }) => {
   for (const stage of stages) {
     if (stage.isActive) {
-      return <EnhancedTourStats stage={stage} />;
+      return <EnhancedTourStats stage={stage} stages={stages} tour={tour} />;
     }
   }
-  return <TourStats />;
+  return <TourStats stages={stages} tour={tour} />;
 };
 
 // observe stages of a tour (only tracks create and delete in the stages table)
 const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => {
-  activeTour = tour;
   return {
+    tour,
     stages: tour.stages,
   };
 });

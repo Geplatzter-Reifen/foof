@@ -1,5 +1,5 @@
 import React from "react";
-import { DateFormat, formatDate } from "@/utils/dateUtil";
+import { DateFormat, formatDate } from "@/utils/dateUtils";
 
 import { Stage } from "@/database/model/model";
 import { deleteStage } from "@/services/data/stageService";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Icon,
   IconElement,
@@ -9,7 +9,11 @@ import {
 } from "@ui-kitten/components";
 import { ImageProps, StyleSheet, Alert, View, Linking } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { setTourRoute } from "@/services/data/routeService";
+import {
+  deleteRoute,
+  getTourRoute,
+  setTourRoute,
+} from "@/services/data/routeService";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
@@ -18,7 +22,7 @@ import InlineRow from "@/components/Settings/InlineRow";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
 /**
- * RouteGuidelineSettingsSection
+ * RouteSettingsSection
  *
  * This component provides a settings section for managing a planned route.
  * Users can view, delete, and import routes while receiving guidance on
@@ -28,13 +32,12 @@ import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
  *
  *
  */
-
 const DeleteIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="trash-can" style={[props?.style, { height: 24 }]} />
 );
 
-const DownloadIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="download" style={[props?.style, { height: 24 }]} />
+const ImportIcon = (props?: Partial<ImageProps>): IconElement => (
+  <Icon {...props} name="file-import" style={[props?.style, { height: 24 }]} />
 );
 
 type TourenParams = {
@@ -42,17 +45,31 @@ type TourenParams = {
   tourTitle: string;
 };
 
-export default function RouteGuidelineSettingsSection() {
+export default function RouteSettingsSection() {
   const params = useLocalSearchParams() as TourenParams;
   const { tourId } = params;
   const [selectedFile, setSelectedFile] =
     useState<DocumentPicker.DocumentPickerResult>();
   const [showDialog, setShowDialog] = useState(false);
+  const [routeExists, setRouteExists] = useState(false);
   const theme = useTheme();
   const styles = makeStyles(theme);
 
-  const handleDeleteRoute = () => {
-    //TODO: Add delete logic here
+  useEffect(() => {
+    const fetchRoute = async () => {
+      const route = await getTourRoute(tourId);
+      if (route) {
+        setRouteExists(true);
+      }
+    };
+
+    void fetchRoute();
+  }, [tourId]);
+
+  const handleDeleteRoute = async () => {
+    await deleteRoute(tourId);
+    setRouteExists(false);
+    setShowDialog(false);
   };
 
   const importTour = async () => {
@@ -64,23 +81,27 @@ export default function RouteGuidelineSettingsSection() {
       if (Gjv.valid(JSON.parse(content))) {
         setSelectedFile(file);
         await setTourRoute(tourId, content);
+        setRouteExists(true);
       } else {
         Alert.alert("Fehler", "Die Datei ist kein gültiges GeoJSON");
       }
     }
   };
+
   return (
     <SingleSettingLayout settingName={"Geplante Route"}>
       <>
         <InlineRow
-          leftComponent={<Text category={"h6"}>MyRoute.json</Text>}
-          actions={
+          leftComponent={<Text category={"h6"}>GeoJSON-Datei</Text>}
+          buttons={
             <>
-              <TopNavigationAction
-                icon={DeleteIcon}
-                onPress={() => setShowDialog(true)}
-              />
-              <TopNavigationAction icon={DownloadIcon} onPress={importTour} />
+              {routeExists && (
+                <TopNavigationAction
+                  icon={DeleteIcon}
+                  onPress={() => setShowDialog(true)}
+                />
+              )}
+              <TopNavigationAction icon={ImportIcon} onPress={importTour} />
             </>
           }
         />

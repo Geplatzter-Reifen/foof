@@ -1,6 +1,8 @@
 import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
 import { Tour, Route } from "@/database/model/model";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
+import { getStageByStageId } from "@/services/data/stageService";
 
 /**
  * Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise.
@@ -45,4 +47,17 @@ export const getTourRoute = async (tourId: string) => {
     return null;
   }
   return route[0];
+};
+
+/** Deletes a Tour's Route
+ * @param tourId The id of the tour
+ */
+export const deleteRoute = async (tourId: string) => {
+  void database.write(async () => {
+    const routes = await database
+      .get<Route>("routes")
+      .query(Q.where("tour_id", tourId))
+      .fetch();
+    routes.forEach((r) => r.destroyPermanently());
+  });
 };

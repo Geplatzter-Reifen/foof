@@ -21,14 +21,14 @@ import { View, StyleSheet } from "react-native";
 
 interface InlineRowProps {
   leftComponent: React.ReactNode;
-  actions: React.ReactNode;
+  buttons: React.ReactNode;
 }
 
-export default function InlineRow({ leftComponent, actions }: InlineRowProps) {
+export default function InlineRow({ leftComponent, buttons }: InlineRowProps) {
   return (
     <View style={styles.inlineContainer}>
       <View style={styles.leftContainer}>{leftComponent}</View>
-      <View style={styles.iconGroup}>{actions}</View>
+      <View style={styles.iconGroup}>{buttons}</View>
     </View>
   );
 }

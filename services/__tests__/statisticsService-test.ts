@@ -1,6 +1,16 @@
 import * as StatisticsService from "../statisticsService";
 import { MockStage } from "@/__mocks__/stage";
-import { mergeIntervalsForTesting } from "../statisticsService";
+import {
+  getTourProgress,
+  mergeIntervalsForTesting,
+} from "../statisticsService";
+import { Location } from "@/database/model/model";
+import { MockLocation } from "@/__mocks__/location";
+import { createStage } from "@/services/data/stageService";
+import { createTour } from "@/services/data/tourService";
+import { createLocation } from "@/services/data/locationService";
+import { flensburg, oberstdorf } from "@/services/StageConnection/data";
+import { MockTour } from "@/__mocks__/tour";
 
 describe("statisticsService", () => {
   beforeEach(() => {
@@ -232,6 +242,124 @@ describe("statisticsService", () => {
         ];
         const expected = [[48, 53]];
         expect(mergeIntervalsForTesting(intervals)).toEqual(expected);
+      });
+    });
+    describe("getTourProgress", () => {
+      it("returns 0 for stages outside of the valid latitude area", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const northStage = await createStage(tour.id, "North Stage");
+        const southStage = await createStage(tour.id, "South Stage");
+        await createLocation(northStage.id, 60, 8);
+        await createLocation(northStage.id, 61, 8);
+        await createLocation(southStage.id, 40, 8);
+        await createLocation(southStage.id, 41, 8);
+
+        expect(await getTourProgress([northStage, southStage])).toBe(0);
+      });
+      it("returns 0 for stages without locations", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage1 = await createStage(tour.id, "Stage 1");
+        const stage2 = await createStage(tour.id, "Stage 2");
+
+        expect(await getTourProgress([stage1, stage2])).toBe(0);
+      });
+      it("returns 0 for stages with same start and end point", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage = await createStage(tour.id, "Stage");
+        await createLocation(stage.id, 50, 8);
+        await createLocation(stage.id, 50, 8);
+
+        expect(await getTourProgress([stage])).toBe(0);
+      });
+      it("returns 1 for a stage from Flensburg to Oberstdorf", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage = await createStage(tour.id, "Stage");
+        await createLocation(stage.id, flensburg.latitude, flensburg.longitude);
+        await createLocation(
+          stage.id,
+          oberstdorf.latitude,
+          oberstdorf.longitude,
+        );
+
+        expect(await getTourProgress([stage])).toBe(1);
+      });
+      it("returns 1 for two partly overlapping stages from Flensburg to Oberstdorf", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage1 = await createStage(tour.id, "Stage 1");
+        const stage2 = await createStage(tour.id, "Stage 2");
+        await createLocation(
+          stage1.id,
+          flensburg.latitude,
+          flensburg.longitude,
+        );
+        await createLocation(stage1.id, 50, 8);
+        await createLocation(stage2.id, 51, 8);
+        await createLocation(
+          stage2.id,
+          oberstdorf.latitude,
+          oberstdorf.longitude,
+        );
+
+        expect(await getTourProgress([stage1, stage2])).toBe(1);
+      });
+      it("returns 1 for two joining stages from Flensburg to Oberstdorf", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage1 = await createStage(tour.id, "Stage 1");
+        const stage2 = await createStage(tour.id, "Stage 2");
+        await createLocation(
+          stage1.id,
+          flensburg.latitude,
+          flensburg.longitude,
+        );
+        await createLocation(stage1.id, 50, 8);
+        await createLocation(stage2.id, 50, 8);
+        await createLocation(
+          stage2.id,
+          oberstdorf.latitude,
+          oberstdorf.longitude,
+        );
+
+        expect(await getTourProgress([stage1, stage2])).toBe(1);
+      });
+      it("returns 1 for a stage from north of F to south of O", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage = await createStage(tour.id, "Stage");
+        await createLocation(stage.id, 55, 8);
+        await createLocation(stage.id, 47, 8);
+
+        expect(await getTourProgress([stage])).toBe(1);
+      });
+      it("returns 0.5 for two unjoined stages that add up to half the tour", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage1 = await createStage(tour.id, "Stage 1");
+        const stage2 = await createStage(tour.id, "Stage 2");
+        await createLocation(
+          stage1.id,
+          flensburg.latitude,
+          flensburg.longitude,
+        );
+        await createLocation(stage1.id, 52.94, 8);
+        await createLocation(stage2.id, 49.25, 8);
+        await createLocation(
+          stage2.id,
+          oberstdorf.latitude,
+          oberstdorf.longitude,
+        );
+
+        expect(await getTourProgress([stage1, stage2])).toBeCloseTo(0.5);
+      });
+      it("returns 0.5 for two overlapping stages that add up to half the tour", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage1 = await createStage(tour.id, "Stage 1");
+        const stage2 = await createStage(tour.id, "Stage 2");
+        await createLocation(
+          stage1.id,
+          flensburg.latitude,
+          flensburg.longitude,
+        );
+        await createLocation(stage1.id, 53, 8);
+        await createLocation(stage2.id, 52, 8);
+        await createLocation(stage2.id, 52.94, 8);
       });
     });
   });

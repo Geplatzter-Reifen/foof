@@ -90,7 +90,7 @@ export function getStageAvgSpeedString(
 /* TOUR PROGRESS */
 
 /** Calculates the Progress of a Tour by Projecting Stages onto the Latitude-Line between Flensburg and Oberstdorf */
-export async function getTourProgress(stages: Stage[]) {
+export async function getTourProgress(stages: Stage[]): Promise<number> {
   // Array for saving Latitude of each Stage's start and end point
   const intervals: [number, number][] = [];
 

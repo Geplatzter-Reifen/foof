@@ -32,6 +32,7 @@ function TourStats({
       {/* Fortschrittsbalken über die Tourdistanz*/}
       <TourProgressBar progress={progress} style={styles.progressBar} />
 
+      {/* Start- und Enddatum der Tour */}
       <View style={styles.dateContainer}>
         <IconStat icon="calendar-plus" status="text">
           {tour.startedAt ? formatDate(tour.startedAt, DateFormat.DATE) : "--"}
@@ -43,7 +44,9 @@ function TourStats({
         </IconStat>
       </View>
 
+      {/* Tourstatistiken */}
       <View style={styles.statsContainer}>
+        {/*Distanz*/}
         <IconStat
           icon="arrows-left-right"
           centered
@@ -53,6 +56,7 @@ function TourStats({
         >
           {getTourDistanceString(stages)}
         </IconStat>
+        {/*Dauer*/}
         <IconStat
           icon="clock-rotate-left"
           centered
@@ -62,6 +66,7 @@ function TourStats({
         >
           {getTourDurationString(stages)}
         </IconStat>
+        {/*Durchschnittsgeschwindigkeit*/}
         <IconStat
           icon="gauge-high"
           centered

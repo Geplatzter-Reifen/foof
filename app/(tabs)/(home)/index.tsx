@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
@@ -116,26 +116,31 @@ export default function HomeScreen() {
     );
   };
 
+  const onStopButtonPress = async () => {
+    setButtonState(ButtonStates.NotCycling);
+    const isFinished = await stopAutomaticTracking();
+    setActiveStageId(null);
+    setActiveStage(null);
+    router.navigate({ pathname: "../(touren)" });
+    await timeout(10);
+    // @ts-ignore Typescript erwartet "never"
+    navigation.navigate("(touren)", {
+      screen: "stage",
+      params: { stageId: activeStageId },
+      initial: false,
+    });
+    if (isFinished) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+    }
+  };
+
   const StopButton = () => {
     return (
       <BigRoundButton
         icon={
           <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
         }
-        onPress={async () => {
-          setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-          router.navigate({ pathname: "../(touren)" });
-          await timeout(10);
-          // @ts-ignore Typescript erwartet "never"
-          navigation.navigate("(touren)", {
-            screen: "stage",
-            params: { stageId: activeStageId },
-            initial: false,
-          });
-          setActiveStageId(null);
-          setActiveStage(null);
-        }}
+        onPress={onStopButtonPress}
       />
     );
   };

@@ -7,7 +7,7 @@ import {
 } from "@/services/data/stageService";
 import { StageCardForTest as StageCard } from "../StageCard";
 import { createTour } from "@/services/data/tourService";
-import { createManualStage } from "@/services/data/stageService";
+import { createManualStage } from "@/services/trackingService";
 import { waitFor } from "@testing-library/react-native";
 
 describe("StageCard", () => {

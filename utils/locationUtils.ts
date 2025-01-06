@@ -1,5 +1,6 @@
 import type { FeatureCollection, Position } from "geojson";
 import { flensburg, oberstdorf } from "@/services/StageConnection/data";
+import { Location } from "@/database/model/model";
 
 export type MapPoint = {
   latitude: number;
@@ -105,4 +106,21 @@ export function getCorrectedLatitude(coordLat: number): number {
   if (coordLat >= flensburg.latitude) return flensburg.latitude;
 
   return coordLat;
+}
+
+/** Converts a Location's Coordinates into a formatted String */
+export function getCoordinateString(loc: Location) {
+  const toDMS = (coord: number, posChar: string, negChar: string) => {
+    const absolute = Math.abs(coord);
+    const degrees = Math.floor(absolute);
+    const minutes = Math.floor((absolute - degrees) * 60);
+    const seconds = ((absolute - degrees - minutes / 60) * 3600).toFixed(2);
+    const direction = coord >= 0 ? posChar : negChar;
+    return `${degrees}°${minutes}'${seconds}"${direction}`;
+  };
+
+  const lat = toDMS(loc.latitude, "N", "S");
+  const lon = toDMS(loc.longitude, "E", "W");
+
+  return `${lat}, ${lon}`;
 }

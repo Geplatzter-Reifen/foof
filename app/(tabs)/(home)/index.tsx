@@ -23,14 +23,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
-import { Tour } from "@/database/model/model";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { Route, Stage, Tour } from "@/database/model/model";
+import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import MapStatisticsBox from "@/components/Statistics/LiveStats";
 import {
   CenterButton,
   EnhancedRouteButton,
 } from "@/components/Buttons/MapButtons";
-import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
@@ -50,6 +52,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
 
   const [activeTour, setActiveTour] = useState<Tour>();
+  const [activeStage, setActiveStage] = useState<Stage | null>();
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -77,6 +80,7 @@ export default function HomeScreen() {
           setActiveTour(tour);
         }
       });
+
       setLoading(false);
     };
     void prepare();
@@ -95,11 +99,16 @@ export default function HomeScreen() {
         }
         onPress={() => {
           setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking().then(() =>
+          startAutomaticTracking().then(() => {
             getActiveStage().then((stage) => {
               setActiveStageId(stage?.id!);
-            }),
-          );
+            });
+            getActiveStage().then((stage) => {
+              if (stage) {
+                setActiveStage(stage);
+              }
+            });
+          });
         }}
       />
     );
@@ -134,6 +143,7 @@ export default function HomeScreen() {
             initial: false,
           });
           setActiveStageId(null);
+          setActiveStage(null);
         }}
       />
     );
@@ -165,24 +175,18 @@ export default function HomeScreen() {
 
   return (
     <Layout style={styles.container}>
-      <Layout>
-        <TopNavigation
-          title={() => <Text category="h4">Home</Text>}
-          style={[styles.header, { marginTop: insets.top }]}
-          alignment="center"
-        ></TopNavigation>
-        <Divider />
-      </Layout>
       <Layout style={styles.layout}>
+        {activeStage && <MapStatisticsBox stage={activeStage} />}
+
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
           localizeLabels={true}
           compassEnabled={true}
-          compassPosition={{ top: 8, right: 8 }}
-          logoPosition={{ top: 8, left: 8 }}
-          attributionPosition={{ top: 8, left: 96 }}
+          compassPosition={{ top: 110, right: 8 }}
+          logoPosition={{ top: 50, left: 8 }}
+          attributionPosition={{ top: 50, left: 96 }}
           onTouchMove={() => {
             setUserCentered(false);
           }}

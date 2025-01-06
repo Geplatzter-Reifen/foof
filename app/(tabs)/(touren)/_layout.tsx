@@ -22,7 +22,9 @@ export default function ReiseStackLayout() {
       <Stack.Screen
         name={"settings"}
         options={{
-          headerShown: false,
+          headerShown: true,
+          title: "Einstellungen",
+          headerTitleAlign: "center",
         }}
       />
       <Stack.Screen

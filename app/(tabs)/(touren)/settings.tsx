@@ -103,20 +103,20 @@ export default function Settings() {
   };
   return (
     <Layout style={styles.container} level="2">
-      <View style={styles.headerWrapper}>
-        <TopNavigation
-          style={styles.header}
-          title={() => <Text category={"h4"}>Einstellungen</Text>}
-          accessoryLeft={() => (
-            <TopNavigationAction
-              icon={BackIcon}
-              hitSlop={15}
-              onPress={() => router.back()}
-            />
-          )}
-          alignment={"center"}
-        />
-      </View>
+      {/*<View style={styles.headerWrapper}>*/}
+      {/*  <TopNavigation*/}
+      {/*    style={styles.header}*/}
+      {/*    title={() => <Text category={"h4"}>Einstellungen</Text>}*/}
+      {/*    accessoryLeft={() => (*/}
+      {/*      <TopNavigationAction*/}
+      {/*        icon={BackIcon}*/}
+      {/*        hitSlop={15}*/}
+      {/*        onPress={() => router.back()}*/}
+      {/*      />*/}
+      {/*    )}*/}
+      {/*    alignment={"center"}*/}
+      {/*  />*/}
+      {/*</View>*/}
 
       <Layout style={styles.centeringContainer} level="2">
         <Card

@@ -33,10 +33,10 @@ function TourStats({
       <TourProgressBar progress={progress} style={styles.progressBar} />
 
       <View style={styles.dateContainer}>
-        <IconStat icon="calendar-plus" status="basic">
+        <IconStat icon="calendar-plus" status="text">
           {tour.startedAt ? formatDate(tour.startedAt, DateFormat.DATE) : "--"}
         </IconStat>
-        <IconStat icon="calendar-check" status="basic" reversed>
+        <IconStat icon="calendar-check" status="text" reversed>
           {tour.finishedAt
             ? formatDate(tour.finishedAt, DateFormat.DATE)
             : "--"}

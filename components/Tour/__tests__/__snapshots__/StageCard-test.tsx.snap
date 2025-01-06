@@ -366,7 +366,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -436,7 +436,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -506,7 +506,7 @@ exports[`StageCard renders basic stage correctly 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -905,7 +905,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -975,7 +975,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -1045,7 +1045,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -1444,7 +1444,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -1514,7 +1514,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }
@@ -1584,7 +1584,7 @@ exports[`StageCard renders correctly for manually created stage 1`] = `
               },
               {
                 "fontSize": 18,
-                "marginLeft": 8,
+                "marginHorizontal": 8,
               },
             ]
           }

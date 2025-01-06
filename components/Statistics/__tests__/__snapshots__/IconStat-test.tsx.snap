@@ -38,7 +38,7 @@ exports[`TourStats should render the correct icon 1`] = `
         },
         {
           "fontSize": 18,
-          "marginLeft": 8,
+          "marginHorizontal": 8,
         },
       ]
     }
@@ -111,7 +111,7 @@ exports[`TourStats should render the icon and font in correct size 1`] = `
         },
         {
           "fontSize": 21,
-          "marginLeft": 8,
+          "marginHorizontal": 8,
         },
       ]
     }

@@ -14,28 +14,25 @@ export function TourProgressBar(props: TourProgressBarProps) {
 
   return (
     <View {...rest}>
-      {/*<Text style={{ marginBottom: 5, fontSize: 17 }}>Fortschritt:</Text>*/}
-      <View>
-        <ProgressBar
-          progress={progress}
-          animating={false}
-          style={styles.progressBar}
-        />
-        <Text
-          style={{
-            position: "absolute",
-            left: (progress < 0.18
-              ? `${((progress + 0.015) * 100).toFixed(2)}%`
-              : progress < 1
-                ? `${((progress - 0.145) * 100).toFixed(2)}%`
-                : "44%") as DimensionValue,
-            color: progress < 0.18 ? theme["text-basic-color"] : "#fff",
-            fontSize: 19,
-          }}
-        >
-          {(progress * 100).toFixed(1) + "%"}
-        </Text>
-      </View>
+      <ProgressBar
+        progress={progress}
+        animating={false}
+        style={styles.progressBar}
+      />
+      <Text
+        style={{
+          position: "absolute",
+          left: (progress < 0.18
+            ? `${((progress + 0.015) * 100).toFixed(2)}%`
+            : progress < 1
+              ? `${((progress - 0.145) * 100).toFixed(2)}%`
+              : "44%") as DimensionValue,
+          color: progress < 0.18 ? theme["text-basic-color"] : "#fff",
+          fontSize: 19,
+        }}
+      >
+        {(progress * 100).toFixed(1) + "%"}
+      </Text>
     </View>
   );
 }

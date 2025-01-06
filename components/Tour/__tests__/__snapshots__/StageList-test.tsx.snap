@@ -373,7 +373,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -443,7 +443,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -513,7 +513,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -909,7 +909,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -979,7 +979,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -1049,7 +1049,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -1445,7 +1445,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -1515,7 +1515,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -1585,7 +1585,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -1981,7 +1981,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -2051,7 +2051,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -2121,7 +2121,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -2517,7 +2517,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -2587,7 +2587,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -2657,7 +2657,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3053,7 +3053,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3123,7 +3123,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3193,7 +3193,7 @@ exports[`StageList renders correctly for many stages 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3633,7 +3633,7 @@ exports[`StageList renders correctly for one stage 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3703,7 +3703,7 @@ exports[`StageList renders correctly for one stage 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }
@@ -3773,7 +3773,7 @@ exports[`StageList renders correctly for one stage 1`] = `
                 },
                 {
                   "fontSize": 18,
-                  "marginLeft": 8,
+                  "marginHorizontal": 8,
                 },
               ]
             }

@@ -1,10 +1,13 @@
 import {
   Button,
+  Card,
   Divider,
   Input,
   Layout,
   Text,
+  ThemeType,
   TopNavigation,
+  useTheme,
 } from "@ui-kitten/components";
 import { StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
@@ -16,6 +19,9 @@ import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import renderBackAction from "@/components/TopNavigation/renderBackAction";
+import customStyles from "@/constants/styles";
+import TourNameSettingsSection from "@/components/Settings/TourNameSettingsSection";
+import RouteGuidelineSettingsSection from "@/components/Settings/RouteGuidelineSettingsSection";
 
 type TourenParams = {
   tourId: string;
@@ -29,6 +35,9 @@ export default function TourSettings() {
   const [tourname, setTourname] = useState(tourTitle);
   const [selectedFile, setSelectedFile] =
     useState<DocumentPicker.DocumentPickerResult>();
+
+  const theme = useTheme();
+  const styles = makeStyles(theme);
 
   const updateTourname = (newTourName: string) => {
     updateTourNameById(tourId, newTourName).then(() => {
@@ -64,32 +73,47 @@ export default function TourSettings() {
         style={{ marginTop: insets.top }}
       ></TopNavigation>
       <Divider />
-      <Layout style={styles.body}>
-        <Text category={"h4"}>Tourname ändern</Text>
-        <Text>Aktueller Tourname: {tourname}</Text>
-        <Input
-          placeholder={"Neuer Tourname"}
-          onSubmitEditing={(event) => updateTourname(event.nativeEvent.text)}
-        ></Input>
-        <Text>Die Route kann nur als GeoJSON importiert werden.</Text>
-        <Button onPress={importRouteForTour}>Route importieren</Button>
-        {selectedFile?.assets?.at(0)?.name && (
-          <Text>
-            {selectedFile?.assets?.at(0)!.name} {"\n"} wurde erfolgreich
-            importiert!
-          </Text>
-        )}
+      <Layout style={styles.container} level="2">
+        <Layout style={styles.centeringContainer} level="2">
+          <Card
+            style={{
+              ...customStyles.basicCard,
+              ...customStyles.basicShadow,
+              ...styles.card,
+            }}
+            disabled={true}
+          >
+            <TourNameSettingsSection />
+            <RouteGuidelineSettingsSection />
+          </Card>
+        </Layout>
       </Layout>
     </Layout>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  body: {
-    margin: 15,
-    alignItems: "center",
-  },
-});
+const makeStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    headerWrapper: {
+      backgroundColor: theme["color-basic-100"], // Set explicit background color
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
+      elevation: 8, // For Android
+      zIndex: 1, // Ensure it stays above other elements
+      padding: 2,
+    },
+    centeringContainer: {
+      flex: 1,
+    },
+    card: {
+      marginTop: 10,
+      alignSelf: "flex-start",
+      paddingHorizontal: 15,
+      marginHorizontal: 10,
+    },
+  });

@@ -336,6 +336,7 @@ export default function CreateManualStage() {
           onPress={() => {
             router.back();
           }}
+          status="basic"
         >
           <Text category="h1">ABBRECHEN</Text>
         </Button>

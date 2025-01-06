@@ -120,10 +120,12 @@ export default function HomeScreen() {
         icon={
           <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
         }
-        onPress={() => {
+        onPress={async () => {
           setButtonState(ButtonStates.NotCycling);
           void stopAutomaticTracking();
-          router.push({
+          router.navigate({ pathname: "../(touren)" });
+          await timeout(10);
+          router.navigate({
             pathname: "../(touren)/stage",
             params: {
               stageId: activeStageId,

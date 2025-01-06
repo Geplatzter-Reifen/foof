@@ -19,13 +19,13 @@ const HomeIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 const BottomTabBar: FC<BottomTabBarProps> = ({ navigation, state }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  //const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <BottomNavigation
-      selectedIndex={selectedIndex}
+      selectedIndex={state.index}
       onSelect={(index) => {
-        setSelectedIndex(index);
+        //setSelectedIndex(index);
         navigation.navigate(state.routeNames[index]);
       }}
     >

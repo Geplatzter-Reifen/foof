@@ -11,11 +11,11 @@ import {
   finishStage,
 } from "@/services/data/stageService";
 import { createLocation } from "@/services/data/locationService";
-import { calculateDistance } from "@/utils/locationUtil";
+import { calculateDistance, Coordinates } from "@/utils/locationUtils";
 import { LocationObject } from "expo-location";
-import { Coordinates, parseCoordinates } from "@/utils/locationUtil";
 
 import { Stage, Tour } from "@/database/model/model";
+import { parseCoordinates } from "@/utils/locationUtils";
 
 export const LOCATION_TASK_NAME = "location-task";
 

@@ -13,7 +13,7 @@ import { Alert, StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { createManualStage as createManualStageFn } from "@/services/tracking";
+import { createManualStage as createManualStageFn } from "@/services/trackingService";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";

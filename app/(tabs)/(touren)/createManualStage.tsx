@@ -1,38 +1,85 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Text, Layout, Button } from "@ui-kitten/components";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Button,
+  Input,
+  Layout,
+  Tab,
+  TabBar,
+  Text,
+} from "@ui-kitten/components";
 import ButtonGroup from "../../../components/Buttons/ButtonGroup";
 import CoordinateInput from "../../../components/Stage/CoordinateInput";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { Input } from "@ui-kitten/components";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
-import { Alert } from "react-native";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 import { isFinished } from "@/services/StageConnection/stageConnection";
 import { getActiveTour } from "@/services/data/tourService";
+import type { Position } from "geojson";
+import MapWithMarkers from "@/components/Map/MapWithMarkers";
+import DateTimeModal from "@/components/Modal/DateTimeModal";
+import { MapState } from "@rnmapbox/maps";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
+import { getAllStagesByTourId } from "@/services/data/stageService";
+import { Location, Stage } from "@/database/model/model";
+import { roundNumber } from "@/utils/utils";
+import React from "react";
 
-const CreateManualStage: React.FC = () => {
+type TopTapBarProps = {
+  selectedIndex: number;
+  onSelect: (index: number) => void;
+};
+
+/**
+ * Component for the top tab bar.
+ * @param selectedIndex - The index of the currently selected marker.
+ * @param onSelect - Function called when a tab is selected.
+ */
+const TopTapBar = ({ selectedIndex, onSelect }: TopTapBarProps) => {
+  return (
+    <TabBar
+      style={{ height: 50 }}
+      selectedIndex={selectedIndex}
+      onSelect={onSelect}
+    >
+      <Tab title="Start" />
+      <Tab title="Ende" />
+    </TabBar>
+  );
+};
+
+export default function CreateManualStage() {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
   // changing the title of the page
   const navigation = useNavigation();
   //switches title from plain text to the input field
   const [titleBeingChanged, setTitleBeingChanged] = useState(false);
   const [stageTitle, setStageTitle] = useState("Etappe"); ///the name of the title
+  // Switching between coordinate input and map input
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  // Switching between start and end coordinate input for map input
+  const [selectedTopTapBarIndex, setSelectedTopTapBarIndex] = useState(0);
+  const [timeModalVisible, setTimeModalVisible] = useState(false);
   const router = useRouter();
-  // compass input
-  const [startLatitude, setStartLatitude] = useState("");
-  const [startLongitude, setStartLongitude] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
+  // Variables for user input
+  const startLatitude = useRef<number>();
+  const startLongitude = useRef<number>();
+  const endLatitude = useRef<number>();
+  const endLongitude = useRef<number>();
+  const startDate = useRef(new Date());
+  const endDate = useRef(new Date());
 
-  const [endLatitude, setEndLatitude] = useState("");
-  const [endLongitude, setEndLongitude] = useState("");
-  const [endDate, setEndDate] = useState(new Date());
+  // Camera properties for the map
+  const centerCoordinate = useRef<Position>();
+  const zoomLevel = useRef<number>();
+  const heading = useRef<number>();
+  const pitch = useRef<number>();
 
-  ////////////address input
-
-  ////////////on the map input
+  const [stagesWithLocations, setStagesWithLocations] = useState<
+    { stage: Stage; locations: Location[] }[]
+  >([]);
 
   const titleInput = useMemo(
     () => (
@@ -85,36 +132,45 @@ const CreateManualStage: React.FC = () => {
     stageTitle,
   ]);
 
-  const startCoordInput = (
-    <CoordinateInput
-      latitude={startLatitude}
-      longitude={startLongitude}
-      setLatitude={setStartLatitude}
-      setLongitude={setStartLongitude}
-      date={startDate}
-      setDate={setStartDate}
-    />
-  );
+  useEffect(() => {
+    const fetchStagesWithLocations = async () => {
+      const stages = await getAllStagesByTourId(tourId);
+      const finishedStages = stages.filter((stage) => {
+        return !stage.isActive;
+      });
+      const upgradedStages = await Promise.all(
+        finishedStages.map(async (stage) => {
+          const locations = await getAllLocationsByStageId(stage.id);
+          return { stage, locations };
+        }),
+      );
+      setStagesWithLocations(upgradedStages); // Set the resolved array
+    };
+    fetchStagesWithLocations();
+  }, [tourId]);
 
-  const endCoordInput = (
-    <CoordinateInput
-      latitude={endLatitude}
-      longitude={endLongitude}
-      setLatitude={setEndLatitude}
-      setLongitude={setEndLongitude}
-      date={endDate}
-      setDate={setEndDate}
-    />
-  );
+  /**
+   * Submits the stage to the database.
+   * Creates a new stage with the given data.
+   * If the creation is successful, it navigates back to the previous screen.
+   * If an error occurs, it displays an alert with the error message.
+   */
+  const submitStage = async () => {
+    if (startDate >= endDate) {
+      Alert.alert(
+        "Ungültige Eingabe",
+        "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
+      );
+      return;
+    }
 
-  const onSubmitStage = async () => {
     try {
       await createManualStageFn(
         stageTitle,
-        startLatitude + ", " + startLongitude,
-        endLatitude + ", " + endLongitude,
-        startDate,
-        endDate,
+        startLatitude.current + ", " + startLongitude.current,
+        endLatitude.current + ", " + endLongitude.current,
+        startDate.current,
+        endDate.current,
         tourId,
       );
       router.back();
@@ -131,12 +187,144 @@ const CreateManualStage: React.FC = () => {
     }
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  /**
+   * Sets the coordinates based on the selected tab.
+   * If the start tab is selected, it sets the start coordinates.
+   * If the end tab is selected, it sets the end coordinates.
+   * @param coordinate - The coordinates to set.
+   */
+  const setCoordinate = (coordinate: Position) => {
+    if (selectedTopTapBarIndex === 0) {
+      startLongitude.current = coordinate[0];
+      startLatitude.current = coordinate[1];
+    } else {
+      endLongitude.current = coordinate[0];
+      endLatitude.current = coordinate[1];
+    }
+  };
+
+  /**
+   * Handles the create button press event.
+   * Depending on the selected index, it either submits the stage data
+   * or displays the DateTimeModal for date and time selection.
+   */
+  const handleCreateButton = async () => {
+    switch (selectedIndex) {
+      case 0:
+        await submitStage();
+        break;
+      case 1:
+        setTimeModalVisible(true);
+        break;
+    }
+  };
+
+  /**
+   * Renders the coordinate input component for the start coordinates.
+   * It includes inputs for latitude, longitude, and date/time.
+   * The initial values are set based on the current state.
+   */
+  const renderStartCoordinateInput = (
+    <CoordinateInput
+      onLatitudeChange={(latitude) => (startLatitude.current = latitude)}
+      onLongitudeChange={(longitude) => (startLongitude.current = longitude)}
+      onDateTimeChange={(date) => (startDate.current = date)}
+      initialLatitude={roundNumber(6, startLatitude.current)}
+      initialLongitude={roundNumber(6, startLongitude.current)}
+      initialDate={startDate.current}
+    />
+  );
+
+  /**
+   * Renders the coordinate input component for the end coordinates.
+   * It includes inputs for latitude, longitude, and date/time.
+   * The initial values are set based on the current state.
+   */
+  const renderEndCoordinateInput = (
+    <CoordinateInput
+      onLatitudeChange={(latitude) => (endLatitude.current = latitude)}
+      onLongitudeChange={(longitude) => (endLongitude.current = longitude)}
+      onDateTimeChange={(date) => (endDate.current = date)}
+      initialLatitude={roundNumber(6, endLatitude.current)}
+      initialLongitude={roundNumber(6, endLongitude.current)}
+      initialDate={endDate.current}
+    />
+  );
+
+  /**
+   * Handles the event when the map goes idle.
+   * Updates the camera properties based on the current map state.
+   * @param state - The current state of the map.
+   */
+  const handleMapIdle = (state: MapState) => {
+    const properties = state.properties;
+    centerCoordinate.current = properties.center;
+    zoomLevel.current = properties.zoom;
+    heading.current = properties.heading;
+    pitch.current = properties.pitch;
+  };
+
+  /** Render the content based on the selected index */
+  const renderContent = () => {
+    switch (selectedIndex) {
+      // Coordinate input
+      case 0:
+        return (
+          <>
+            <CardComponent title="Start" form={renderStartCoordinateInput} />
+            <CardComponent title="Ende" form={renderEndCoordinateInput} />
+          </>
+        );
+      // Map input
+      case 1:
+        const initialStartCoordinate: Position = [
+          startLongitude.current ?? NaN,
+          startLatitude.current ?? NaN,
+        ];
+        const initialEndCoordinate: Position = [
+          endLongitude.current ?? NaN,
+          endLatitude.current ?? NaN,
+        ];
+        return (
+          <>
+            <TopTapBar
+              selectedIndex={selectedTopTapBarIndex}
+              onSelect={setSelectedTopTapBarIndex}
+            />
+            <MapWithMarkers
+              markerIndex={selectedTopTapBarIndex}
+              onCoordinateChange={setCoordinate}
+              initialStartCoordinate={initialStartCoordinate}
+              initialEndCoordinate={initialEndCoordinate}
+              centerCoordinate={centerCoordinate.current}
+              zoomLevel={zoomLevel.current}
+              heading={heading.current}
+              pitch={pitch.current}
+              onMapIdle={handleMapIdle}
+              stagesWithLocations={stagesWithLocations}
+            />
+            <DateTimeModal
+              modalVisible={timeModalVisible}
+              onClose={() => setTimeModalVisible(false)}
+              onSave={submitStage}
+              onStartDateChange={(date) => (startDate.current = date)}
+              onEndDateChange={(date) => (endDate.current = date)}
+              initialStartDate={startDate.current}
+              initialEndDate={endDate.current}
+            />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <Layout style={styles.layout} level="2">
       <ButtonSwitch
-        onSelect={(index) => setSelectedIndex(index)}
+        onSelect={(index) => {
+          setSelectedIndex(index);
+        }}
         selectedIndex={selectedIndex}
       >
         <Button style={styles.button}>
@@ -145,15 +333,9 @@ const CreateManualStage: React.FC = () => {
         <Button style={styles.button}>
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
-        <Button style={styles.button}>
-          <FontAwesomeIcon icon="city" size={25} />
-        </Button>
       </ButtonSwitch>
-
       <Layout style={styles.cardsContainer} level="2">
-        <CardComponent title="Start" form={startCoordInput} />
-
-        <CardComponent title="Ende" form={endCoordInput} />
+        {renderContent()}
       </Layout>
       <ButtonGroup>
         <Button
@@ -164,15 +346,13 @@ const CreateManualStage: React.FC = () => {
         >
           <Text category="h1">ABBRECHEN</Text>
         </Button>
-        <Button style={styles.button} onPress={onSubmitStage}>
+        <Button style={styles.button} onPress={handleCreateButton}>
           <Text category="h1">ERSTELLEN</Text>
         </Button>
       </ButtonGroup>
     </Layout>
   );
-};
-
-export default CreateManualStage;
+}
 
 const styles = StyleSheet.create({
   cardsContainer: {

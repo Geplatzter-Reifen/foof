@@ -1,4 +1,4 @@
-import { ImageProps, Platform, StatusBar, StyleSheet } from "react-native";
+import { ImageProps, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Tour } from "@/database/model/model";
@@ -15,12 +15,13 @@ import {
 } from "@ui-kitten/components";
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
-import { hexToRgba } from "@/utils/colorUtil";
-import StageList from "@/components/Tour/StageList";
+import { hexToRgba } from "@/utils/colorUtils";
+import { StageList } from "@/components/Tour/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import { shareTour } from "@/services/sharingService";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const MapIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon
@@ -47,6 +48,7 @@ const PlusIcon = (props?: Partial<ImageProps>): IconElement => (
 );
 
 export default function Touruebersicht() {
+  const insets = useSafeAreaInsets();
   const [activeTour, setActiveTour] = useState<Tour>();
   const theme = useTheme();
 
@@ -65,7 +67,7 @@ export default function Touruebersicht() {
       hitSlop={15}
       onPress={() => {
         if (activeTour) {
-          router.push({
+          router.navigate({
             pathname: "./stagesMapViewWrapper",
             params: {
               tourId: activeTour.id,
@@ -91,8 +93,8 @@ export default function Touruebersicht() {
       icon={EditIcon}
       hitSlop={15}
       onPress={() =>
-        router.push({
-          pathname: "./touren",
+        router.navigate({
+          pathname: "./tourSettings",
           params: {
             tourId: activeTour?.id,
             tourTitle: activeTour?.title,
@@ -131,31 +133,34 @@ export default function Touruebersicht() {
           title={EnhancedHeader}
           accessoryLeft={renderMapAction}
           accessoryRight={headerRight}
-          style={styles.header}
+          style={{ marginTop: insets.top }}
           alignment="center"
         ></TopNavigation>
         <Divider />
       </Layout>
+
+      {/* Tourstatistiken in orangem Kasten */}
       <TourStats tour={activeTour} />
-      <Text category="h5" style={styles.stagesHeader}>
-        Etappen
-      </Text>
+
+      {/* Liste mit Etappen innerhalb einer Scrollview mit Fade */}
       <RNFadedScrollView
         allowStartFade={true}
         horizontal={false}
-        fadeSize={10}
+        fadeSize={15}
         fadeColors={[
-          hexToRgba(theme["background-basic-color-2"], 0.18),
+          hexToRgba(theme["background-basic-color-2"], 0.3),
           hexToRgba(theme["background-basic-color-2"], 0.9),
         ]}
       >
         <StageList stages={getAllStagesByTourIdQuery(activeTour.id)} />
       </RNFadedScrollView>
+
+      {/* Button zum erstellen einer manuellen Etappe */}
       <Button
         style={styles.button}
         accessoryLeft={PlusIcon}
         onPress={() =>
-          router.push({
+          router.navigate({
             pathname: "./createManualStage",
             params: {
               tourId: activeTour?.id,
@@ -163,7 +168,7 @@ export default function Touruebersicht() {
             },
           })
         }
-      ></Button>
+      />
     </Layout>
   );
 }
@@ -171,13 +176,6 @@ export default function Touruebersicht() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  stagesHeader: {
-    marginHorizontal: 15,
-    marginVertical: 10,
   },
   button: {
     position: "absolute",

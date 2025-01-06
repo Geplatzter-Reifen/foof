@@ -1,0 +1,2555 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StageList renders correctly for many stages 1`] = `
+<View
+  style={
+    {
+      "marginTop": 15,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`StageList renders correctly for no existing stages 1`] = `
+<View
+  style={
+    {
+      "marginTop": 15,
+    }
+  }
+>
+  <Text
+    appearance="default"
+    category="p1"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#000000",
+          "fontFamily": "System",
+          "fontSize": 15,
+          "fontWeight": "400",
+        },
+        {
+          "fontSize": 20,
+          "marginTop": 15,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    Starte eine Etappe!
+  </Text>
+</View>
+`;
+
+exports[`StageList renders correctly for one stage 1`] = `
+<View
+  style={
+    {
+      "marginTop": 15,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#7e7e7e",
+        "borderRadius": 8,
+        "borderWidth": 0,
+        "elevation": 3,
+        "flex": 1,
+        "marginBottom": 15,
+        "marginHorizontal": 10,
+        "opacity": 1,
+        "overflow": "hidden",
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 2,
+      }
+    }
+    testID="stage-card"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": undefined,
+          "height": 0,
+        }
+      }
+    />
+    <Text
+      appearance="default"
+      category="h5"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#000000",
+            "fontFamily": "System",
+            "fontSize": 22,
+            "fontWeight": "800",
+          },
+          {
+            "marginLeft": 15,
+            "marginVertical": 8,
+          },
+        ]
+      }
+    >
+      Test Stage
+    </Text>
+    <View
+      appearance="default"
+      style={
+        [
+          {
+            "backgroundColor": "#b8b8b8",
+            "height": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        [
+          {
+            "flexShrink": 1,
+          },
+          {
+            "paddingHorizontal": 24,
+            "paddingVertical": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            57.0 km
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7h 15m
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "flexDirection": "row",
+            }
+          }
+          testID="container"
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                [
+                  {
+                    "color": undefined,
+                    "fontSize": 22,
+                  },
+                  {
+                    "color": "#FF6E14",
+                    "textAlign": "center",
+                    "textAlignVertical": "center",
+                    "width": "auto",
+                  },
+                  {
+                    "fontFamily": "FontAwesome6Free-Solid",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  {
+                    "fontWeight": "900",
+                  },
+                ]
+              }
+            >
+              
+            </Text>
+          </View>
+          <Text
+            appearance="default"
+            category="p1"
+            status="basic"
+            style={
+              [
+                {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontSize": 15,
+                  "fontWeight": "400",
+                },
+                {
+                  "flexShrink": 1,
+                  "flexWrap": "wrap",
+                  "fontSize": 18,
+                  "marginLeft": 8,
+                },
+              ]
+            }
+          >
+            7.9 km/h
+          </Text>
+        </View>
+      </View>
+      <Text
+        appearance="hint"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#494949",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "marginTop": 9,
+            },
+          ]
+        }
+      >
+        01.01.2024 10:30
+      </Text>
+    </View>
+  </View>
+</View>
+`;

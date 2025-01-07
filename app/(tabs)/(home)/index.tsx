@@ -9,32 +9,24 @@ import {
   startAutomaticTracking,
   stopAutomaticTracking,
 } from "@/services/tracking";
-
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
-import {
-  ButtonGroup,
-  Layout,
-  Spinner,
-  TopNavigation,
-  Divider,
-  Text,
-} from "@ui-kitten/components";
+import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { Stage, Tour } from "@/database/model/model";
+import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
+import MapStatisticsBox from "@/components/Statistics/LiveStats";
 import {
   CenterButton,
   EnhancedRouteButton,
 } from "@/components/Buttons/MapButtons";
-import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
-import MapStatisticsBox from "@/components/Statistics/LiveStats";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -124,26 +116,28 @@ export default function HomeScreen() {
     );
   };
 
+  const onStopButtonPress = async () => {
+    setButtonState(ButtonStates.NotCycling);
+    await stopAutomaticTracking();
+    setActiveStageId(null);
+    setActiveStage(null);
+    router.navigate({ pathname: "../(touren)" });
+    await timeout(10);
+    // @ts-ignore Typescript erwartet "never"
+    navigation.navigate("(touren)", {
+      screen: "stage",
+      params: { stageId: activeStageId },
+      initial: false,
+    });
+  };
+
   const StopButton = () => {
     return (
       <BigRoundButton
         icon={
           <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
         }
-        onPress={async () => {
-          setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-          router.navigate({ pathname: "../(touren)" });
-          await timeout(10);
-          // @ts-ignore Typescript erwartet "never"
-          navigation.navigate("(touren)", {
-            screen: "stage",
-            params: { stageId: activeStageId },
-            initial: false,
-          });
-          setActiveStageId(null);
-          setActiveStage(null);
-        }}
+        onPress={onStopButtonPress}
       />
     );
   };
@@ -173,19 +167,17 @@ export default function HomeScreen() {
   }
 
   return (
-    <Layout style={styles.container}>
+    <Layout style={{ ...styles.container, ...{ marginTop: insets.top } }}>
       <Layout style={styles.layout}>
-        {activeStage && <MapStatisticsBox stage={activeStage} />}
-
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
           style={styles.map}
           scaleBarEnabled={false}
           localizeLabels={true}
           compassEnabled={true}
-          compassPosition={{ top: 110, right: 8 }}
-          logoPosition={{ top: 50, left: 8 }}
-          attributionPosition={{ top: 50, left: 96 }}
+          compassPosition={{ top: activeStage ? 113 : 8, right: 8 }}
+          logoPosition={{ top: activeStage ? 113 : 8, left: 8 }}
+          attributionPosition={{ top: activeStage ? 113 : 8, left: 96 }}
           onTouchMove={() => {
             setUserCentered(false);
           }}
@@ -205,7 +197,18 @@ export default function HomeScreen() {
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
-      <View style={styles.mapButtonsContainer}>
+      {activeStage && (
+        <View style={styles.statisticsBox}>
+          <MapStatisticsBox stage={activeStage} />
+        </View>
+      )}
+      <View
+        style={{
+          ...styles.mapButtonsContainer,
+          top: activeStage ? 166 : 65,
+          right: 11,
+        }}
+      >
         {/* Button zum Route anzeigen */}
         {activeTour && (
           <EnhancedRouteButton
@@ -260,7 +263,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "column",
     alignSelf: "center",
-    top: 175,
-    right: 11,
+  },
+  statisticsBox: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    right: 10,
   },
 });

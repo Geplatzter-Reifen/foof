@@ -7,6 +7,7 @@ import {
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { flensburg, oberstdorf } from "@/services/StageConnection/data";
 import { getCorrectedLatitude } from "@/utils/locationUtils";
+import { getTourByTourId } from "@/services/data/tourService";
 
 /* DISTANCE */
 /** Returns the total TOUR distance in km */
@@ -125,8 +126,11 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
     totalLat += interval[1] - interval[0];
   });
 
+  const tour = await stages[0].tour.fetch;
+  const maxValue = tour.finishedAt ? 1 : 0.99;
+
   return Math.min(
-    1,
+    maxValue,
     totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03),
   );
 }

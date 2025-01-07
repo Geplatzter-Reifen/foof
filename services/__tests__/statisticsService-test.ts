@@ -240,7 +240,18 @@ describe("statisticsService", () => {
         const expected = [[48, 53]];
         expect(mergeIntervalsForTesting(intervals)).toEqual(expected);
       });
+      it("should merge two intervals that are almost joined", () => {
+        const intervals: [number, number][] = [
+          [49.003, 51],
+          [48, 49],
+        ];
+        expect(mergeIntervalsForTesting(intervals)).toEqual([[48, 51]]);
+      });
+      it("should return an empty array if an empty array was given", () => {
+        expect(mergeIntervalsForTesting([])).toEqual([]);
+      });
     });
+
     describe("getTourProgress", () => {
       it("returns 0 for stages outside of the valid latitude area", async () => {
         const tour = await createTour("Progress Test Tour");
@@ -279,6 +290,20 @@ describe("statisticsService", () => {
         );
 
         expect(await getTourProgress([stage])).toBe(1);
+      });
+      it("returns 1 for a stage from just south of F to just north of O", async () => {
+        const tour = await createTour("Progress Test Tour");
+        const stage = await createStage(tour.id, "Stage");
+        await createLocation(
+          stage.id,
+          flensburg.latitude - 0.01,
+          flensburg.longitude,
+        );
+        await createLocation(
+          stage.id,
+          oberstdorf.latitude + 0.01,
+          oberstdorf.longitude,
+        );
       });
       it("returns 1 for two partly overlapping stages from Flensburg to Oberstdorf", async () => {
         const tour = await createTour("Progress Test Tour");
@@ -354,9 +379,13 @@ describe("statisticsService", () => {
           flensburg.latitude,
           flensburg.longitude,
         );
-        await createLocation(stage1.id, 53, 8);
-        await createLocation(stage2.id, 52, 8);
-        await createLocation(stage2.id, 52.94, 8);
+        await createLocation(stage1.id, 52, 8);
+        await createLocation(stage2.id, 53, 8);
+        await createLocation(stage2.id, 51.098, 8);
+        expect(await getTourProgress([stage1, stage2])).toBeCloseTo(0.5);
+      });
+      it("returns 0 for empty stage list", async () => {
+        expect(await getTourProgress([])).toBe(0);
       });
     });
   });

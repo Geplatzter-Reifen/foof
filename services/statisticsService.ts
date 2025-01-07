@@ -95,6 +95,8 @@ export function getStageAvgSpeedString(
 
 /** Calculates the Progress of a Tour by Projecting Stages onto the Latitude-Line between Flensburg and Oberstdorf */
 export async function getTourProgress(stages: Stage[]): Promise<number> {
+  if (!stages.length) return 0;
+
   // Array for saving Latitude of each Stage's start and end point
   const intervals: [number, number][] = [];
 
@@ -110,7 +112,7 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
       locations[locations.length - 1].latitude,
     );
 
-    // start should be the northern latitude
+    // start should be the southern latitude
     const start = Math.min(startLat, endLat);
     const end = Math.max(startLat, endLat);
 
@@ -120,10 +122,10 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
     }
   }
 
-  // Wenn sich Etappen überlappen, verschmelze sie zu einer
+  // if intervals join/overlap, merge them into one
   const mergedIntervals = mergeIntervals(intervals);
 
-  // Gesamtlänge der Intervalle berechnen
+  // calculate the intervals' total length
   let totalLat = 0;
   mergedIntervals.forEach((interval) => {
     totalLat += interval[1] - interval[0];
@@ -131,7 +133,7 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
 
   const result = Math.min(
     1,
-    totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03),
+    totalLat / (flensburg.latitude - oberstdorf.latitude - 0.02),
   );
 
   const tour: Tour = await stages[0].tour.fetch();
@@ -145,11 +147,12 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
   return result;
 }
 
-/** Merges overlapping Stage Intervals */
+/** Merges overlapping Stage Intervals.
+ *  Each interval has to start with the smaller (southern) latitude */
 function mergeIntervals(intervals: [number, number][]): [number, number][] {
   if (!intervals.length) return [];
 
-  // Sortiere Intervalle basierend auf dem größeren Breitengrad (nördlichster zuerst)
+  // sort intervals based on ascending end point latitude (south to north)
   intervals.sort((a, b) => a[0] - b[0]);
 
   const merged: [number, number][] = [intervals[0]];
@@ -158,9 +161,8 @@ function mergeIntervals(intervals: [number, number][]): [number, number][] {
     const [currentStart, currentEnd] = intervals[i];
     const [lastStart, lastEnd] = merged[merged.length - 1];
 
-    // Falls der Startpunkt der aktuellen Etappe nördlicher ist als der Endpunkt der letzten gemergten Etappe
-    if (currentStart <= lastEnd) {
-      // zusammenführen
+    // if start of current stage and end of last stage are close to each other, merge the stages
+    if (currentStart <= lastEnd + 0.01) {
       merged[merged.length - 1] = [lastStart, Math.max(lastEnd, currentEnd)];
     } else {
       merged.push([currentStart, currentEnd]);

@@ -125,7 +125,10 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
     totalLat += interval[1] - interval[0];
   });
 
-  return totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03);
+  return Math.min(
+    1,
+    totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03),
+  );
 }
 
 /** Merges overlapping Stage Intervals */

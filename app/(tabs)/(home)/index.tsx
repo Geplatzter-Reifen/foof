@@ -25,7 +25,6 @@ import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { Tour } from "@/database/model/model";
 import { getActiveStage } from "@/services/data/stageService";
-import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import {
   CenterButton,
   EnhancedRouteButton,
@@ -33,7 +32,8 @@ import {
 import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
+import { EnhancedStageMapLineV2 } from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -124,14 +124,14 @@ export default function HomeScreen() {
         }
         onPress={async () => {
           setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-          router.navigate({ pathname: "../(touren)" });
-          await timeout(10);
-          // @ts-ignore Typescript erwartet "never"
-          navigation.navigate("(touren)", {
-            screen: "stage",
-            params: { stageId: activeStageId },
-            initial: false,
+          const stageId = activeStageId;
+          stopAutomaticTracking().then(() => {
+            // @ts-ignore Typescript erwartet "never"
+            navigation.navigate("(touren)", {
+              screen: "stage",
+              params: { stageId: stageId },
+              initial: false,
+            });
           });
           setActiveStageId(null);
         }}
@@ -189,7 +189,7 @@ export default function HomeScreen() {
         >
           {/* renders the route of the active tour on the map */}
           {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
-          {activeStageId && <StageLine stageId={activeStageId} />}
+          {activeTour && <EnhancedStageMapLineV2 tour={activeTour} />}
           {/* Kamera, die dem User folgt */}
           <MapboxGL.Camera
             followZoomLevel={17}

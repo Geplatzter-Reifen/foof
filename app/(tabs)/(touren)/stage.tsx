@@ -171,7 +171,7 @@ export default function StageScreen() {
       {/*Karte, auf der die gefahrene Etappe angezeigt wird*/}
       {stageLocations.length > 1 && (
         <View style={styles.mapContainer}>
-          <StageMapView stageId={stageId} locations={stageLocations} />
+          {stage && <StageMapView stage={stage} locations={stageLocations} />}
         </View>
       )}
     </Layout>

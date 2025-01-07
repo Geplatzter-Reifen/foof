@@ -238,17 +238,17 @@ exports[`Touruebersicht should render correctly 1`] = `
                     "width": 24,
                   },
                   {
-                    "fontFamily": "FontAwesome6Free-Regular",
+                    "fontFamily": "FontAwesome6Free-Solid",
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
                   {
-                    "fontWeight": "400",
+                    "fontWeight": "900",
                   },
                 ]
               }
             >
-              
+              
             </Text>
           </View>
         </View>

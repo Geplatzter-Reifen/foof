@@ -123,10 +123,9 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
   let totalLat = 0;
   mergedIntervals.forEach((interval) => {
     totalLat += interval[1] - interval[0];
-    // totalLat += interval.endLat - interval.startLat;
   });
 
-  return totalLat / (flensburg.latitude - oberstdorf.latitude);
+  return totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03);
 }
 
 /** Merges overlapping Stage Intervals */

@@ -1,4 +1,4 @@
-import { Stage } from "@/database/model/model";
+import { Stage, Tour } from "@/database/model/model";
 import {
   getDurationFormatted,
   getDurationInMs,
@@ -7,7 +7,10 @@ import {
 import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { flensburg, oberstdorf } from "@/services/StageConnection/data";
 import { getCorrectedLatitude } from "@/utils/locationUtils";
-import { getTourByTourId } from "@/services/data/tourService";
+import {
+  removeFinishedAtFromTour,
+  updateFinishedAtFromTour,
+} from "@/services/data/tourService";
 
 /* DISTANCE */
 /** Returns the total TOUR distance in km */
@@ -126,13 +129,20 @@ export async function getTourProgress(stages: Stage[]): Promise<number> {
     totalLat += interval[1] - interval[0];
   });
 
-  const tour = await stages[0].tour.fetch;
-  const maxValue = tour.finishedAt ? 1 : 0.99;
-
-  return Math.min(
-    maxValue,
+  const result = Math.min(
+    1,
     totalLat / (flensburg.latitude - oberstdorf.latitude - 0.03),
   );
+
+  const tour: Tour = await stages[0].tour.fetch();
+  if (result >= 1 && !tour.finishedAt) {
+    await updateFinishedAtFromTour(tour, Date.now());
+  }
+  if (result < 1 && tour.finishedAt) {
+    await removeFinishedAtFromTour(tour);
+  }
+
+  return result;
 }
 
 /** Merges overlapping Stage Intervals */

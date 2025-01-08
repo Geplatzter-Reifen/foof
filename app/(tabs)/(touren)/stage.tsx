@@ -19,6 +19,8 @@ import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
 import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
+import { isFinished } from "@/services/StageConnection/stageConnection";
+import { getActiveTour } from "@/services/data/tourService";
 
 export default function StageScreen() {
   // Etappen-ID aus dem Pfad holen
@@ -57,8 +59,19 @@ export default function StageScreen() {
 
   // Button zum Löschen der Etappe & zurücknavigieren
   const DeleteButton = useCallback(() => {
-    const handleConfirm = () => {
-      void deleteStage(stageId);
+    const handleConfirm = async () => {
+      deleteStage(stageId).then(() => {
+        getActiveTour().then(async (tour) => {
+          if (tour != null) {
+            isFinished(tour).then((result) => {
+              if (result) {
+                Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+              }
+            });
+          }
+        });
+      });
+
       setIsDeleteDialogVisible(false);
       navigation.goBack();
     };

@@ -82,158 +82,6 @@ exports[`TourStats should render correctly 1`] = `
         "flexDirection": "row",
         "height": "auto",
         "justifyContent": "space-between",
-        "marginHorizontal": 5,
-        "marginTop": 2,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "flex": 1,
-          "flexDirection": "row",
-        }
-      }
-      testID="container"
-    >
-      <View
-        collapsable={false}
-        style={
-          {
-            "transform": [
-              {
-                "scale": 1,
-              },
-            ],
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            [
-              {
-                "color": undefined,
-                "fontSize": 22,
-              },
-              {
-                "color": "#000000",
-                "width": "auto",
-              },
-              {
-                "fontFamily": "FontAwesome6Free-Regular",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              {
-                "fontWeight": "400",
-              },
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-      <Text
-        appearance="default"
-        category="p1"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 15,
-              "fontWeight": "400",
-            },
-            {
-              "fontSize": 18,
-              "marginHorizontal": 8,
-            },
-          ]
-        }
-      >
-        01.01.2024
-      </Text>
-    </View>
-    <View
-      style={
-        {
-          "flex": 1,
-          "flexDirection": "row-reverse",
-        }
-      }
-      testID="container"
-    >
-      <View
-        collapsable={false}
-        style={
-          {
-            "transform": [
-              {
-                "scale": 1,
-              },
-            ],
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          selectable={false}
-          style={
-            [
-              {
-                "color": undefined,
-                "fontSize": 22,
-              },
-              {
-                "color": "#000000",
-                "width": "auto",
-              },
-              {
-                "fontFamily": "FontAwesome6Free-Regular",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              {
-                "fontWeight": "400",
-              },
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-      <Text
-        appearance="default"
-        category="p1"
-        status="basic"
-        style={
-          [
-            {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontSize": 15,
-              "fontWeight": "400",
-            },
-            {
-              "fontSize": 18,
-              "marginHorizontal": 8,
-            },
-          ]
-        }
-      >
-        --
-      </Text>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "height": "auto",
-        "justifyContent": "space-between",
         "marginTop": 8,
       }
     }
@@ -271,7 +119,9 @@ exports[`TourStats should render correctly 1`] = `
               },
               {
                 "color": "#FF6E14",
-                "width": "auto",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
               },
               {
                 "fontFamily": "FontAwesome6Free-Solid",
@@ -300,6 +150,8 @@ exports[`TourStats should render correctly 1`] = `
               "fontWeight": "400",
             },
             {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
               "fontSize": 20,
               "marginHorizontal": 8,
             },
@@ -342,7 +194,9 @@ exports[`TourStats should render correctly 1`] = `
               },
               {
                 "color": "#FF6E14",
-                "width": "auto",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
               },
               {
                 "fontFamily": "FontAwesome6Free-Solid",
@@ -371,6 +225,8 @@ exports[`TourStats should render correctly 1`] = `
               "fontWeight": "400",
             },
             {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
               "fontSize": 20,
               "marginHorizontal": 8,
             },
@@ -413,7 +269,9 @@ exports[`TourStats should render correctly 1`] = `
               },
               {
                 "color": "#FF6E14",
-                "width": "auto",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
               },
               {
                 "fontFamily": "FontAwesome6Free-Solid",
@@ -442,6 +300,8 @@ exports[`TourStats should render correctly 1`] = `
               "fontWeight": "400",
             },
             {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
               "fontSize": 20,
               "marginHorizontal": 8,
             },
@@ -449,6 +309,166 @@ exports[`TourStats should render correctly 1`] = `
         }
       >
         18.2 km/h
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "height": "auto",
+        "justifyContent": "space-between",
+        "marginBottom": 3,
+        "marginHorizontal": 2,
+        "marginTop": 14,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+        }
+      }
+      testID="container"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": undefined,
+                "fontSize": 22,
+              },
+              {
+                "color": "#000000",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": "auto",
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Regular",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "400",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 18,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        01.01.2024
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "flex": 1,
+          "flexDirection": "row-reverse",
+        }
+      }
+      testID="container"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": undefined,
+                "fontSize": 22,
+              },
+              {
+                "color": "#000000",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": "auto",
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Regular",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "400",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 18,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        --
       </Text>
     </View>
   </View>

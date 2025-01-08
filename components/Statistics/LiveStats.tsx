@@ -42,10 +42,6 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
     };
   }, []);
 
-  if (!stage) {
-    return null;
-  }
-
   return (
     <Card
       style={{

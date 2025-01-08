@@ -8,7 +8,7 @@ import {
   TopNavigationAction,
   useTheme,
 } from "@ui-kitten/components";
-import { ImageProps, StyleSheet } from "react-native";
+import { ImageProps, StyleSheet, TouchableOpacity } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 import SingleSettingLayout from "@/components/Settings/SingleSettingLayout";
@@ -72,22 +72,18 @@ export default function TourNameSettingsSection(): React.ReactElement {
             />
           }
           buttons={
-            <TopNavigationAction
-              icon={OkayIcon}
-              onPress={() => {
-                updateTourname(tourname);
-              }}
-            />
+            <TouchableOpacity onPress={() => updateTourname(tourname)}>
+              <OkayIcon style={styles.iconStyle} />
+            </TouchableOpacity>
           }
         />
       ) : (
         <InlineRow
           leftComponent={<Text category={"h6"}>{tourname}</Text>}
           buttons={
-            <TopNavigationAction
-              icon={EditIcon}
-              onPress={() => setTitleBeingEdited(true)}
-            />
+            <TouchableOpacity onPress={() => setTitleBeingEdited(true)}>
+              <EditIcon style={styles.iconStyle} />
+            </TouchableOpacity>
           }
         />
       )}
@@ -112,5 +108,10 @@ const makeStyles = (theme: ThemeType) =>
     },
     accentText: {
       color: theme["color-primary-600"],
+    },
+    iconStyle: {
+      height: 25,
+      width: "auto",
+      color: theme["color-primary-500"],
     },
   });

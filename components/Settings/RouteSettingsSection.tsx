@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import {
+  Button,
   Icon,
   IconElement,
+  Layout,
   Text,
   ThemeType,
   TopNavigationAction,
   useTheme,
 } from "@ui-kitten/components";
-import { ImageProps, StyleSheet, Alert, View, Linking } from "react-native";
+import {
+  ImageProps,
+  StyleSheet,
+  Alert,
+  View,
+  Linking,
+  TouchableOpacity,
+} from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import {
   deleteRoute,
@@ -36,9 +45,17 @@ const DeleteIcon = (props?: Partial<ImageProps>): IconElement => (
   <Icon {...props} name="trash-can" style={[props?.style, { height: 24 }]} />
 );
 
-const ImportIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="file-import" style={[props?.style, { height: 24 }]} />
-);
+const ImportIcon = (props?: Partial<ImageProps>): IconElement => {
+  const theme = useTheme(); // Access the theme
+  return (
+    <Icon
+      {...props}
+      name="file-import"
+      style={[props?.style, { height: 24 }]} // Size of the icon
+      fill={theme["color-primary-600"]} // Set the color explicitly
+    />
+  );
+};
 
 type TourenParams = {
   tourId: string;
@@ -96,12 +113,13 @@ export default function RouteSettingsSection() {
           buttons={
             <>
               {routeExists && (
-                <TopNavigationAction
-                  icon={DeleteIcon}
-                  onPress={() => setShowDialog(true)}
-                />
+                <TouchableOpacity onPress={() => setShowDialog(true)}>
+                  <DeleteIcon style={styles.iconStyle} />
+                </TouchableOpacity>
               )}
-              <TopNavigationAction icon={ImportIcon} onPress={importTour} />
+              <TouchableOpacity onPress={importTour}>
+                <ImportIcon style={styles.iconStyle} />
+              </TouchableOpacity>
             </>
           }
         />
@@ -171,5 +189,10 @@ const makeStyles = (theme: ThemeType) =>
     },
     accentText: {
       color: theme["color-primary-600"],
+    },
+    iconStyle: {
+      height: 25,
+      width: "auto",
+      color: theme["color-primary-500"],
     },
   });

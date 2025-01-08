@@ -22,7 +22,7 @@ export default function TourSettings() {
   const styles = makeStyles(theme);
 
   return (
-    <Layout style={styles.container}>
+    <Layout testID="layout" style={styles.container}>
       <TopNavigation
         title={() => <Text category={"h4"}>Touren</Text>}
         accessoryLeft={renderBackAction}
@@ -30,9 +30,10 @@ export default function TourSettings() {
         style={{ marginTop: insets.top }}
       ></TopNavigation>
       <Divider />
-      <Layout style={styles.container} level="2">
-        <Layout style={styles.centeringContainer} level="2">
+      <Layout style={styles.container} testID="layout" level="2">
+        <Layout style={styles.centeringContainer} testID="layout" level="2">
           <Card
+            testID="card"
             style={{
               ...customStyles.basicCard,
               ...customStyles.basicShadow,

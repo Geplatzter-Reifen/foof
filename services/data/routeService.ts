@@ -1,8 +1,6 @@
 import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
 import { Tour, Route } from "@/database/model/model";
-import { getAllLocationsByStageId } from "@/services/data/locationService";
-import { getStageByStageId } from "@/services/data/stageService";
 
 /**
  * Sets the route for a tour. Creates a new route if none exists, updates the existing route otherwise.

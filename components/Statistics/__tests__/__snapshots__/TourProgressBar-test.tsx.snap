@@ -52,9 +52,8 @@ exports[`TourProgressBar renders correctly for < 18% Percent 1`] = `
         {
           "color": "#000000",
           "fontSize": 19,
-          "left": "21.50%",
+          "left": "19.00%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }
@@ -116,9 +115,8 @@ exports[`TourProgressBar renders correctly for > 18% Percent 1`] = `
         {
           "color": "#fff",
           "fontSize": 19,
-          "left": "41.80%",
+          "left": "39.80%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }
@@ -182,7 +180,6 @@ exports[`TourProgressBar renders correctly for > 100% Percent 1`] = `
           "fontSize": 19,
           "left": "44%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }
@@ -244,9 +241,8 @@ exports[`TourProgressBar renders correctly for 0 Percent 1`] = `
         {
           "color": "#000000",
           "fontSize": 19,
-          "left": "4.00%",
+          "left": "1.50%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }
@@ -308,9 +304,8 @@ exports[`TourProgressBar renders correctly for 18% Percent 1`] = `
         {
           "color": "#fff",
           "fontSize": 19,
-          "left": "5.50%",
+          "left": "3.50%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }
@@ -374,7 +369,6 @@ exports[`TourProgressBar renders correctly for 100% Percent 1`] = `
           "fontSize": 19,
           "left": "44%",
           "position": "absolute",
-          "top": "28%",
         },
       ]
     }

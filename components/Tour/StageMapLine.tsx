@@ -68,18 +68,9 @@ type StageMapLineProps = {
 };
 
 /**
- * StageMapLine Component
- *
  * This component renders a dynamic line on a Mapbox map, representing a stage route.
- * The line can include a gradient effect if the `active` prop is set to `true`.
+ * The line includes a gradient effect if the stage is active.
  * It also displays start and end points using CircleLayer.
- *
- * @component
- * @param stage - The stage
- * @param stageLocations - The locations of the stage
- * @param lineColor - Custom color for the line.
- * @param circleColor - Custom color for the circles at the start and end points.
- * @param circleStrokeColor - Custom stroke color for the circles at the start and end points.
  */
 export const StageMapLine = ({
   stage,
@@ -91,6 +82,7 @@ export const StageMapLine = ({
   const theme = useTheme();
   const [locations, setLocations] = useState<Location[]>([]);
   const stageId = stage.id;
+  const active = active;
 
   useEffect(() => {
     const fetchStageLocations = async () => {
@@ -113,20 +105,11 @@ export const StageMapLine = ({
   circleColor = circleColor || theme["color-primary-100"];
   circleStrokeColor = circleStrokeColor || theme["color-primary-500"];
 
-  // Unpack location coordinates
-  const locationsUnpacked = locations.map((loc) => ({
-    latitude: loc.latitude,
-    longitude: loc.longitude,
-  }));
-
-  let coords = locationsUnpacked.map((location) => [
-    location.longitude,
-    location.latitude,
-  ]);
+  let coords = locations.map((loc) => [loc.longitude, loc.latitude]);
 
   // Gradient start and end points for active stages
   let gradientStart = 0;
-  if (stage.isActive) {
+  if (active) {
     if (coords.length >= 2) {
       const lastCoord = calculateLastPoint(
         coords[coords.length - 1],
@@ -153,7 +136,7 @@ export const StageMapLine = ({
     name: "End",
   });
 
-  const collection: FeatureCollection = stage.isActive
+  const collection: FeatureCollection = active
     ? featureCollection<Point | LineString>([stageLine, firstPoint])
     : featureCollection<Point | LineString>([stageLine, firstPoint, lastPoint]);
 
@@ -167,7 +150,7 @@ export const StageMapLine = ({
         id={`lineLayer-${stageId}`}
         belowLayerID="road-label"
         style={{
-          ...(stage.isActive && gradientStart !== 0
+          ...(active && gradientStart !== 0
             ? {
                 lineGradient: [
                   "interpolate",
@@ -227,6 +210,10 @@ const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
   stageLocations: stage.locations,
 }));
 
+/**
+ * This component is a higher-order component that provides the stage and stageLocations props to the StageMapLine component.
+ * It observes the stage object and re-renders when the stage is updated or Locations are added.
+ */
 const EnhancedStageMapLine = enhance(StageMapLine);
 
 const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
@@ -237,7 +224,7 @@ const Bridge = ({ stages }: { stages: Stage[] }) => {
   return (
     <>
       {stages.map((stage) => {
-        if (stage.isActive) {
+        if (active) {
           return <EnhancedStageMapLine key={stage.id} stage={stage} />;
         } else {
           return <StageMapLine key={stage.id} stage={stage} />;
@@ -247,4 +234,10 @@ const Bridge = ({ stages }: { stages: Stage[] }) => {
   );
 };
 
-export const EnhancedStageMapLineV2 = enhanceV2(Bridge);
+/**
+ * This component is a higher-order component that provides the tour prop to the Bridge component.
+ * The Bridge component renders a StageMapLine components for each stage in a tour
+ * and re-renders when a stage is added or removed from the tour table.
+ * Active stages are observed a second time to update when the stage changes or a Location is added.
+ */
+export const EnhancedStageMapLines = enhanceV2(Bridge);

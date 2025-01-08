@@ -33,7 +33,7 @@ import {
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
-import { EnhancedStageMapLineV2 } from "@/components/Tour/StageMapLine";
+import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -191,8 +191,12 @@ export default function HomeScreen() {
           }}
         >
           {/* renders the route of the active tour on the map */}
-          {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
-          {activeTour && <EnhancedStageMapLineV2 tour={activeTour} />}
+          {activeTour && (
+            <>
+              <EnhancedRenderRouteV2 tour={activeTour} />
+              <EnhancedStageMapLines tour={activeTour} />
+            </>
+          )}
           {/* Kamera, die dem User folgt */}
           <MapboxGL.Camera
             followZoomLevel={17}

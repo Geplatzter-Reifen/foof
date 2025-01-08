@@ -167,8 +167,8 @@ export default function CreateManualStage() {
     try {
       await createManualStageFn(
         stageTitle,
-        startLatitude.current + ", " + startLongitude.current,
-        endLatitude.current + ", " + endLongitude.current,
+        { latitude: startLatitude.current, longitude: startLongitude.current },
+        { latitude: endLatitude.current, longitude: endLongitude.current },
         startDate.current,
         endDate.current,
         tourId,

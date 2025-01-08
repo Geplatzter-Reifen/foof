@@ -13,10 +13,7 @@ import {
 import { createLocation } from "@/services/data/locationService";
 import { calculateDistance, Coordinates } from "@/utils/locationUtils";
 import { LocationObject } from "expo-location";
-
 import { Stage, Tour } from "@/database/model/model";
-import { parseCoordinates } from "@/utils/locationUtils";
-
 export const LOCATION_TASK_NAME = "location-task";
 
 let lastLocation: LocationObject | undefined = undefined;
@@ -73,8 +70,8 @@ async function initializeManualStage(
 
 export async function createManualStage(
   stageName: string,
-  startingCoordinatesString: string,
-  endCoordinatesString: string,
+  startingCoordinates: Coordinates,
+  endCoordinates: Coordinates,
   startTime: Date,
   endTime: Date,
   tourId?: string,
@@ -86,8 +83,6 @@ export async function createManualStage(
     throw new Error("Keine Aktive Tour gesetzt");
   }
 
-  const startingCoordinates = parseCoordinates(startingCoordinatesString);
-  const endCoordinates = parseCoordinates(endCoordinatesString);
   validateManualStageInput(
     stageName,
     startTime,

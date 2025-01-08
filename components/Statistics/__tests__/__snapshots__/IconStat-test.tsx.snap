@@ -4,7 +4,6 @@ exports[`TourStats should render the correct icon 1`] = `
 <View
   style={
     {
-      "flex": 1,
       "flexDirection": "row",
     }
   }
@@ -37,6 +36,8 @@ exports[`TourStats should render the correct icon 1`] = `
           "fontWeight": "400",
         },
         {
+          "flexShrink": 1,
+          "flexWrap": "wrap",
           "fontSize": 18,
           "marginHorizontal": 8,
         },
@@ -52,7 +53,6 @@ exports[`TourStats should render the icon and font in correct size 1`] = `
 <View
   style={
     {
-      "flex": 1,
       "flexDirection": "row",
     }
   }
@@ -81,7 +81,9 @@ exports[`TourStats should render the icon and font in correct size 1`] = `
           },
           {
             "color": "#FF6E14",
-            "width": "auto",
+            "textAlign": "center",
+            "textAlignVertical": "center",
+            "width": 35,
           },
           {
             "fontFamily": "FontAwesome6Free-Regular",
@@ -110,6 +112,8 @@ exports[`TourStats should render the icon and font in correct size 1`] = `
           "fontWeight": "400",
         },
         {
+          "flexShrink": 1,
+          "flexWrap": "wrap",
           "fontSize": 21,
           "marginHorizontal": 8,
         },

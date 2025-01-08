@@ -1,27 +1,21 @@
 import {
   Button,
   Divider,
-  Icon,
-  IconElement,
   Input,
   Layout,
   Text,
   TopNavigation,
-  TopNavigationAction,
 } from "@ui-kitten/components";
-import { ImageProps, StyleSheet, Alert } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { updateTourNameById } from "@/services/data/tourService";
 import { setTourRoute } from "@/services/data/routeService";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-const BackIcon = (props?: Partial<ImageProps>): IconElement => (
-  <Icon {...props} name="chevron-left" style={[props?.style, { height: 24 }]} />
-);
+import renderBackAction from "@/components/TopNavigation/renderBackAction";
 
 type TourenParams = {
   tourId: string;
@@ -41,14 +35,6 @@ export default function TourSettings() {
       setTourname(newTourName);
     });
   };
-
-  const renderBackAction = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={BackIcon}
-      hitSlop={15}
-      onPress={() => router.back()}
-    />
-  );
 
   const importRouteForTour = async () => {
     const file = await DocumentPicker.getDocumentAsync({

@@ -101,6 +101,15 @@ export const setStageAvgSpeed = async (stageId: string, speed: number) => {
   });
 };
 
+export const setStageTitle = async (stageId: string, newTitle: string) => {
+  void database.write(async () => {
+    const stage = await getStageByStageId(stageId);
+    await stage.update(() => {
+      stage.title = newTitle;
+    });
+  });
+};
+
 const setActiveStageInactive = async () => {
   await database.write(async () => {
     const allStages = await database

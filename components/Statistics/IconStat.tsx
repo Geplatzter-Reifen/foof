@@ -5,14 +5,16 @@ import { EvaStatus } from "@ui-kitten/components/devsupport";
 
 type IconStatPropType = React.PropsWithChildren<TextProps> & {
   icon: string;
-  iconSize?: number;
+  iconHeight?: number;
+  iconWidth?: number;
   fontSize?: number;
   centered?: boolean;
   reversed?: boolean;
 };
 
 export default function IconStat(props: IconStatPropType) {
-  const iconSize = props.iconSize ?? 22;
+  const iconHeight = props.iconHeight ?? 22;
+  const iconWidth = props.iconWidth ?? "auto";
   const fontSize = props.fontSize ?? 18;
   const centered = props.centered ?? false;
   const reversed = props.reversed ?? false;
@@ -22,7 +24,7 @@ export default function IconStat(props: IconStatPropType) {
   function getColorStringByStatus(iconStatus: EvaStatus): string {
     switch (iconStatus) {
       case "basic":
-        return theme["color-basic-500"];
+        return theme["color-basic-400"];
       case "success":
         return theme["color-success-500"];
       case "info":
@@ -52,9 +54,15 @@ export default function IconStat(props: IconStatPropType) {
     >
       <Icon
         name={props.icon}
-        style={{ height: iconSize, width: "auto", color: iconColorString }}
+        style={{
+          height: iconHeight,
+          width: iconWidth,
+          color: iconColorString,
+          textAlign: "center",
+          textAlignVertical: "center",
+        }}
       />
-      <Text style={{ fontSize: fontSize, marginHorizontal: 8 }}>
+      <Text style={{ fontSize: fontSize, ...styles.text }}>
         {props.children}
       </Text>
     </View>
@@ -63,7 +71,6 @@ export default function IconStat(props: IconStatPropType) {
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
     flexDirection: "row",
   },
   viewReversed: {
@@ -74,5 +81,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     gap: 4,
+  },
+  text: {
+    marginHorizontal: 8,
+    flexShrink: 1,
+    flexWrap: "wrap",
   },
 });

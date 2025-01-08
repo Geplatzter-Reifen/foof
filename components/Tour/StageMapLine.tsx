@@ -82,7 +82,7 @@ export const StageMapLine = ({
   const theme = useTheme();
   const [locations, setLocations] = useState<Location[]>([]);
   const stageId = stage.id;
-  const active = active;
+  const active = stage.isActive;
 
   useEffect(() => {
     const fetchStageLocations = async () => {
@@ -224,7 +224,7 @@ const StageMapLines = ({ stages }: { stages: Stage[] }) => {
   return (
     <>
       {stages.map((stage) => {
-        if (active) {
+        if (stage.isActive) {
           return <EnhancedStageMapLine key={stage.id} stage={stage} />;
         } else {
           return <StageMapLine key={stage.id} stage={stage} />;

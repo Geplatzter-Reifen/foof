@@ -40,7 +40,8 @@ function TourStats({
           centered
           status="primary"
           fontSize={20}
-          iconSize={30}
+          iconWidth={30}
+          iconHeight={30}
         >
           {getTourDistanceString(stages)}
         </IconStat>
@@ -50,7 +51,8 @@ function TourStats({
           centered
           status="primary"
           fontSize={20}
-          iconSize={30}
+          iconWidth={30}
+          iconHeight={30}
         >
           {getTourDurationString(stages)}
         </IconStat>
@@ -60,7 +62,8 @@ function TourStats({
           centered
           status="primary"
           fontSize={20}
-          iconSize={30}
+          iconWidth={30}
+          iconHeight={30}
         >
           {getTourAverageSpeedString(stages)}
         </IconStat>

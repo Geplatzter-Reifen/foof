@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    bottom: 35,
+    bottom: 15,
     right: 15,
     width: 80,
     height: 80,

@@ -88,19 +88,7 @@ export default function HomeScreen() {
             color="white"
           />
         }
-        onPress={() => {
-          setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking().then(() => {
-            getActiveStage().then((stage) => {
-              setActiveStageId(stage?.id!);
-            });
-            getActiveStage().then((stage) => {
-              if (stage) {
-                setActiveStage(stage);
-              }
-            });
-          });
-        }}
+        onPress={onStartButtonPress}
       />
     );
   };
@@ -114,6 +102,20 @@ export default function HomeScreen() {
         onPress={() => setButtonState(ButtonStates.Paused)}
       />
     );
+  };
+
+  const onStartButtonPress = async () => {
+    setButtonState(ButtonStates.Cycling);
+    startAutomaticTracking().then(() => {
+      getActiveStage().then((stage) => {
+        setActiveStageId(stage?.id!);
+      });
+      getActiveStage().then((stage) => {
+        if (stage) {
+          setActiveStage(stage);
+        }
+      });
+    });
   };
 
   const onStopButtonPress = async () => {

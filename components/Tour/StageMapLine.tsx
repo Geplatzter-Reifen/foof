@@ -220,7 +220,7 @@ const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
   stages: tour.stages,
 }));
 
-const Bridge = ({ stages }: { stages: Stage[] }) => {
+const StageMapLines = ({ stages }: { stages: Stage[] }) => {
   return (
     <>
       {stages.map((stage) => {
@@ -235,9 +235,9 @@ const Bridge = ({ stages }: { stages: Stage[] }) => {
 };
 
 /**
- * This component is a higher-order component that provides the tour prop to the Bridge component.
- * The Bridge component renders a StageMapLine components for each stage in a tour
+ * This component is a higher-order component that provides the tour prop to the StageMapLines component.
+ * The StageMapLines component renders a StageMapLine component for each stage in a tour
  * and re-renders when a stage is added or removed from the tour table.
  * Active stages are observed a second time to update when the stage changes or a Location is added.
  */
-export const EnhancedStageMapLines = enhanceV2(Bridge);
+export const EnhancedStageMapLines = enhanceV2(StageMapLines);

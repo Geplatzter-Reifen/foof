@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
@@ -118,7 +118,7 @@ export default function HomeScreen() {
 
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
-    await stopAutomaticTracking();
+    const isFinished = await stopAutomaticTracking();
     setActiveStageId(null);
     setActiveStage(null);
     router.navigate({ pathname: "../(touren)" });
@@ -129,6 +129,9 @@ export default function HomeScreen() {
       params: { stageId: activeStageId },
       initial: false,
     });
+    if (isFinished) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+    }
   };
 
   const StopButton = () => {

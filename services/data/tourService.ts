@@ -85,6 +85,17 @@ export const updateTourNameById = async (
   });
 };
 
+export const updateFinishedAtFromTour = async (
+  tour: Tour,
+  finishedAt: number,
+) => {
+  await database.write(async () => {
+    await tour.update(() => {
+      tour.finishedAt = finishedAt;
+    });
+  });
+};
+
 // DELETE
 
 export const deleteTour = (tourId: string) => {

@@ -13,7 +13,6 @@ import { Alert, StyleSheet } from "react-native";
 import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { createManualStage as createManualStageFn } from "@/services/trackingService";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
 import { isFinished } from "@/services/StageConnection/stageConnection";
 import { getActiveTour } from "@/services/data/tourService";
@@ -26,6 +25,7 @@ import { getAllStagesByTourId } from "@/services/data/stageService";
 import { Location, Stage } from "@/database/model/model";
 import { roundNumber } from "@/utils/utils";
 import React from "react";
+import { createManualStage as createManualStageFn } from "@/services/manualStageInputService";
 
 type TopTapBarProps = {
   selectedIndex: number;

@@ -7,8 +7,8 @@ import {
 } from "@/services/data/stageService";
 import { StageCardForTest as StageCard } from "../StageCard";
 import { createTour } from "@/services/data/tourService";
-import { createManualStage } from "@/services/trackingService";
 import { waitFor } from "@testing-library/react-native";
+import { createManualStage } from "@/services/manualStageInputService";
 
 describe("StageCard", () => {
   beforeEach(() => {

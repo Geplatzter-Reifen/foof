@@ -66,7 +66,7 @@ describe("RouteSettingsSection", () => {
     await waitFor(() => {
       expect(getByTestId("delete-button")).toBeTruthy();
     });
-
+    fireEvent.press(getByTestId("delete-button"));
     expect(findByText("Route löschen")).toBeTruthy();
   });
 

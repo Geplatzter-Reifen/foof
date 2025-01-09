@@ -876,7 +876,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                   ]
                 }
               >
-                19:16
+                19:22
               </Text>
               <RNSVGSvgView
                 align="xMidYMid"
@@ -1540,7 +1540,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                   ]
                 }
               >
-                19:16
+                19:22
               </Text>
               <RNSVGSvgView
                 align="xMidYMid"

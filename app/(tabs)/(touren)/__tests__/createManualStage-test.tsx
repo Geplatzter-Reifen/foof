@@ -39,7 +39,10 @@ describe("CreateManualStage Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.useRealTimers();
+  });
   test("matches snapshot", async () => {
     const view = render(<CreateManualStage />);
     expect(view).toMatchSnapshot();

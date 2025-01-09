@@ -1,7 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateManualStage Component the component is being created 1`] = `
-<div>
+exports[`CreateManualStage Component matches snapshot 1`] = `
+<View
+  appearance="default"
+  level="2"
+  style={
+    [
+      {
+        "backgroundColor": "#eaeaea",
+      },
+      {
+        "alignItems": "stretch",
+        "flex": 1,
+        "paddingVertical": 5,
+      },
+    ]
+  }
+>
   <View
     onSelect={[Function]}
     selectedIndex={0}
@@ -18,87 +33,265 @@ exports[`CreateManualStage Component the component is being created 1`] = `
       ]
     }
   >
-    <div
-      aria-label="Compass button"
-      onPress={[Function]}
-      status="primary"
-      style={
-        [
-          {
-            "alignItems": "center",
-            "alignSelf": "center",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "margin": 5,
-          },
-          undefined,
-        ]
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
       }
-    >
-      <div>
-        MockedIcon(icon: 
-        compass
-        , size: 
-        25
-        )
-      </div>
-    </div>
-    <div
-      aria-label="Map Pin button"
-      onPress={[Function]}
-      status="basic"
-      style={
-        [
-          {
-            "alignItems": "center",
-            "alignSelf": "center",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "margin": 5,
-          },
-          undefined,
-        ]
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
       }
-    >
-      <div>
-        MockedIcon(icon: 
-        map-pin
-        , size: 
-        25
-        )
-      </div>
-    </div>
-    <div
-      aria-label="City button"
-      onPress={[Function]}
-      status="basic"
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
-        [
-          {
-            "alignItems": "center",
-            "alignSelf": "center",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "margin": 5,
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#FF6E14",
+          "borderColor": "#FF6E14",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "margin": 5,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
       }
+      testID="compass"
     >
-      <div>
-        MockedIcon(icon: 
-        city
-        , size: 
-        25
-        )
-      </div>
-    </div>
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={25}
+        bbWidth={25}
+        focusable={false}
+        height={25}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+            {
+              "flex": 0,
+              "height": 25,
+              "width": 25,
+            },
+          ]
+        }
+        vbHeight={512}
+        vbWidth={512}
+        width={25}
+      >
+        <RNSVGGroup
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          font={
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          <RNSVGPath
+            d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"
+            fill={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "backgroundColor": "#b8b8b8",
+          "borderColor": "#b8b8b8",
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "margin": 5,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
+        }
+      }
+      testID="map-pin"
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={25}
+        bbWidth={25}
+        focusable={false}
+        height={25}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+            {
+              "flex": 0,
+              "height": 25,
+              "width": 25,
+            },
+          ]
+        }
+        vbHeight={512}
+        vbWidth={320}
+        width={25}
+      >
+        <RNSVGGroup
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          font={
+            {
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          <RNSVGPath
+            d="M16 144a144 144 0 1 1 288 0A144 144 0 1 1 16 144zM160 80c8.8 0 16-7.2 16-16s-7.2-16-16-16c-53 0-96 43-96 96c0 8.8 7.2 16 16 16s16-7.2 16-16c0-35.3 28.7-64 64-64zM128 480l0-162.9c10.4 1.9 21.1 2.9 32 2.9s21.6-1 32-2.9L192 480c0 17.7-14.3 32-32 32s-32-14.3-32-32z"
+            fill={
+              {
+                "payload": 4280295456,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "fill",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
   </View>
-  <div>
-    <div>
+  <View
+    appearance="default"
+    level="2"
+    style={
+      [
+        {
+          "backgroundColor": "#eaeaea",
+        },
+        {
+          "flex": 7,
+          "flexDirection": "column",
+        },
+      ]
+    }
+  >
+    <View
+      appearance="default"
+      level="2"
+      style={
+        [
+          {
+            "backgroundColor": "#eaeaea",
+          },
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "marginHorizontal": 10,
+            "marginVertical": 5,
+          },
+        ]
+      }
+    >
       <View
         accessibilityState={
           {
@@ -129,8 +322,8 @@ exports[`CreateManualStage Component the component is being created 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "backgroundColor": "#373737",
-            "borderColor": "#FFFFFF",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7e7e7e",
             "borderRadius": 8,
             "borderWidth": 0,
             "elevation": 3,
@@ -146,6 +339,7 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             "shadowRadius": 2,
           }
         }
+        testID="start-input"
       >
         <View
           style={
@@ -155,15 +349,34 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             }
           }
         />
-        <span>
+        <Text
+          appearance="default"
+          category="h4"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontSize": 26,
+                "fontWeight": "800",
+              },
+              {
+                "borderBottomColor": "#494949",
+                "padding": 5,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
           Start
-        </span>
+        </Text>
         <View
           appearance="default"
           style={
             [
               {
-                "backgroundColor": "#202020",
+                "backgroundColor": "#b8b8b8",
                 "height": 1,
               },
               undefined,
@@ -183,72 +396,566 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             ]
           }
         >
-          <div>
-            <input
-              onChange={[Function]}
-              value=""
-            />
-            <input
-              onChange={[Function]}
-              value=""
-            />
-          </div>
-          <div>
-            <div
-              accessoryRight={
-                <FontAwesomeIcon
-                  icon="calendar"
-                  size={20}
-                  style={
-                    {
-                      "alignSelf": "flex-end",
-                    }
-                  }
-                />
+          <View
+            appearance="default"
+            level="1"
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                },
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "marginBottom": 5,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
               }
-              appearance="outline"
-              onPress={[Function]}
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "backgroundColor": "transparent",
                   "flex": 1,
                   "marginHorizontal": 8,
                   "marginVertical": 3,
+                  "opacity": 1,
                 }
               }
+              testID="@undefined/container"
             >
-              12/25/2024
-            </div>
-            <div
-              accessoryRight={
-                <FontAwesomeIcon
-                  icon="clock"
-                  size={20}
-                  style={
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
                     {
-                      "alignSelf": "flex-end",
-                    }
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    [
+                      {
+                        "color": "#494949",
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "800",
+                        "marginBottom": 4,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Latitude
+              </Text>
+              <View
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#7e7e7e",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "minHeight": 40,
+                      "paddingHorizontal": 8,
+                      "paddingVertical": 7,
+                    },
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "width": "100%",
+                    },
+                  ]
+                }
+              >
+                <TextInput
+                  accessibilityLabel="Latitude"
+                  appearance="default"
+                  editable={true}
+                  keyboardType="numeric"
+                  maxLength={20}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  placeholderTextColor="#494949"
+                  size="medium"
+                  status="basic"
+                  style={
+                    [
+                      {
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontSize": 15,
+                        "fontWeight": "normal",
+                        "marginHorizontal": 8,
+                      },
+                      {
+                        "flexBasis": "auto",
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                      },
+                      null,
+                      undefined,
+                    ]
                   }
+                  testID="@undefined/input"
                 />
+              </View>
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
               }
-              appearance="outline"
-              onPress={[Function]}
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "backgroundColor": "transparent",
                   "flex": 1,
                   "marginHorizontal": 8,
                   "marginVertical": 3,
+                  "opacity": 1,
+                }
+              }
+              testID="@undefined/container"
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    [
+                      {
+                        "color": "#494949",
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "800",
+                        "marginBottom": 4,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Longitude
+              </Text>
+              <View
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#7e7e7e",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "minHeight": 40,
+                      "paddingHorizontal": 8,
+                      "paddingVertical": 7,
+                    },
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "width": "100%",
+                    },
+                  ]
+                }
+              >
+                <TextInput
+                  accessibilityLabel="Longitude"
+                  appearance="default"
+                  editable={true}
+                  keyboardType="numeric"
+                  maxLength={20}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  placeholderTextColor="#494949"
+                  size="medium"
+                  status="basic"
+                  style={
+                    [
+                      {
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontSize": 15,
+                        "fontWeight": "normal",
+                        "marginHorizontal": 8,
+                      },
+                      {
+                        "flexBasis": "auto",
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                      },
+                      null,
+                      undefined,
+                    ]
+                  }
+                  testID="@undefined/input"
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            appearance="default"
+            level="1"
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                },
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "marginBottom": 5,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderColor": "#FF6E14",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
                 }
               }
             >
-              10:49:23 PM
-            </div>
-          </div>
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#FF6E14",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                09.01.2025
+              </Text>
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={20}
+                bbWidth={20}
+                focusable={false}
+                height={20}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "height": 20,
+                      "marginHorizontal": 10,
+                      "tintColor": "#FF6E14",
+                      "width": 20,
+                    },
+                    {
+                      "flex": 0,
+                      "height": 20,
+                      "width": 20,
+                    },
+                  ]
+                }
+                vbHeight={512}
+                vbWidth={448}
+                width={20}
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                >
+                  <RNSVGPath
+                    d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"
+                    fill={
+                      {
+                        "payload": 4294929940,
+                        "type": 0,
+                      }
+                    }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderColor": "#FF6E14",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#FF6E14",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                17:16
+              </Text>
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={20}
+                bbWidth={20}
+                focusable={false}
+                height={20}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "height": 20,
+                      "marginHorizontal": 10,
+                      "tintColor": "#FF6E14",
+                      "width": 20,
+                    },
+                    {
+                      "flex": 0,
+                      "height": 20,
+                      "width": 20,
+                    },
+                  ]
+                }
+                vbHeight={512}
+                vbWidth={512}
+                width={20}
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                >
+                  <RNSVGPath
+                    d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                    fill={
+                      {
+                        "payload": 4294929940,
+                        "type": 0,
+                      }
+                    }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+          </View>
         </View>
       </View>
-    </div>
-    <div>
+    </View>
+    <View
+      appearance="default"
+      level="2"
+      style={
+        [
+          {
+            "backgroundColor": "#eaeaea",
+          },
+          {
+            "flex": 1,
+            "flexDirection": "row",
+            "marginHorizontal": 10,
+            "marginVertical": 5,
+          },
+        ]
+      }
+    >
       <View
         accessibilityState={
           {
@@ -279,8 +986,8 @@ exports[`CreateManualStage Component the component is being created 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "backgroundColor": "#373737",
-            "borderColor": "#FFFFFF",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7e7e7e",
             "borderRadius": 8,
             "borderWidth": 0,
             "elevation": 3,
@@ -296,6 +1003,7 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             "shadowRadius": 2,
           }
         }
+        testID="end-input"
       >
         <View
           style={
@@ -305,15 +1013,34 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             }
           }
         />
-        <span>
+        <Text
+          appearance="default"
+          category="h4"
+          status="basic"
+          style={
+            [
+              {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontSize": 26,
+                "fontWeight": "800",
+              },
+              {
+                "borderBottomColor": "#494949",
+                "padding": 5,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
           Ende
-        </span>
+        </Text>
         <View
           appearance="default"
           style={
             [
               {
-                "backgroundColor": "#202020",
+                "backgroundColor": "#b8b8b8",
                 "height": 1,
               },
               undefined,
@@ -333,109 +1060,716 @@ exports[`CreateManualStage Component the component is being created 1`] = `
             ]
           }
         >
-          <div>
-            <input
-              onChange={[Function]}
-              value=""
-            />
-            <input
-              onChange={[Function]}
-              value=""
-            />
-          </div>
-          <div>
-            <div
-              accessoryRight={
-                <FontAwesomeIcon
-                  icon="calendar"
-                  size={20}
-                  style={
-                    {
-                      "alignSelf": "flex-end",
-                    }
-                  }
-                />
+          <View
+            appearance="default"
+            level="1"
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                },
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "marginBottom": 5,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
               }
-              appearance="outline"
-              onPress={[Function]}
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "backgroundColor": "transparent",
                   "flex": 1,
                   "marginHorizontal": 8,
                   "marginVertical": 3,
+                  "opacity": 1,
                 }
               }
+              testID="@undefined/container"
             >
-              12/25/2024
-            </div>
-            <div
-              accessoryRight={
-                <FontAwesomeIcon
-                  icon="clock"
-                  size={20}
-                  style={
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
                     {
-                      "alignSelf": "flex-end",
-                    }
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    [
+                      {
+                        "color": "#494949",
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "800",
+                        "marginBottom": 4,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Latitude
+              </Text>
+              <View
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#7e7e7e",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "minHeight": 40,
+                      "paddingHorizontal": 8,
+                      "paddingVertical": 7,
+                    },
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "width": "100%",
+                    },
+                  ]
+                }
+              >
+                <TextInput
+                  accessibilityLabel="Latitude"
+                  appearance="default"
+                  editable={true}
+                  keyboardType="numeric"
+                  maxLength={20}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  placeholderTextColor="#494949"
+                  size="medium"
+                  status="basic"
+                  style={
+                    [
+                      {
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontSize": 15,
+                        "fontWeight": "normal",
+                        "marginHorizontal": 8,
+                      },
+                      {
+                        "flexBasis": "auto",
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                      },
+                      null,
+                      undefined,
+                    ]
                   }
+                  testID="@undefined/input"
                 />
+              </View>
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
               }
-              appearance="outline"
-              onPress={[Function]}
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "backgroundColor": "transparent",
                   "flex": 1,
                   "marginHorizontal": 8,
                   "marginVertical": 3,
+                  "opacity": 1,
+                }
+              }
+              testID="@undefined/container"
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    [
+                      {
+                        "color": "#494949",
+                        "fontFamily": "System",
+                        "fontSize": 12,
+                        "fontWeight": "800",
+                        "marginBottom": 4,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Longitude
+              </Text>
+              <View
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#7e7e7e",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "minHeight": 40,
+                      "paddingHorizontal": 8,
+                      "paddingVertical": 7,
+                    },
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "width": "100%",
+                    },
+                  ]
+                }
+              >
+                <TextInput
+                  accessibilityLabel="Longitude"
+                  appearance="default"
+                  editable={true}
+                  keyboardType="numeric"
+                  maxLength={20}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  placeholderTextColor="#494949"
+                  size="medium"
+                  status="basic"
+                  style={
+                    [
+                      {
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontSize": 15,
+                        "fontWeight": "normal",
+                        "marginHorizontal": 8,
+                      },
+                      {
+                        "flexBasis": "auto",
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                      },
+                      null,
+                      undefined,
+                    ]
+                  }
+                  testID="@undefined/input"
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            appearance="default"
+            level="1"
+            style={
+              [
+                {
+                  "backgroundColor": "#FFFFFF",
+                },
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "marginBottom": 5,
+                },
+              ]
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderColor": "#FF6E14",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
                 }
               }
             >
-              10:49:23 PM
-            </div>
-          </div>
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#FF6E14",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                09.01.2025
+              </Text>
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={20}
+                bbWidth={20}
+                focusable={false}
+                height={20}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "height": 20,
+                      "marginHorizontal": 10,
+                      "tintColor": "#FF6E14",
+                      "width": 20,
+                    },
+                    {
+                      "flex": 0,
+                      "height": 20,
+                      "width": 20,
+                    },
+                  ]
+                }
+                vbHeight={512}
+                vbWidth={448}
+                width={20}
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                >
+                  <RNSVGPath
+                    d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"
+                    fill={
+                      {
+                        "payload": 4294929940,
+                        "type": 0,
+                      }
+                    }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderColor": "#FF6E14",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "marginHorizontal": 8,
+                  "marginVertical": 3,
+                  "minHeight": 40,
+                  "minWidth": 40,
+                  "opacity": 1,
+                  "paddingHorizontal": 10,
+                  "paddingVertical": 12,
+                }
+              }
+            >
+              <Text
+                appearance="default"
+                category="p1"
+                status="basic"
+                style={
+                  [
+                    {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontSize": 15,
+                      "fontWeight": "400",
+                    },
+                    {
+                      "color": "#FF6E14",
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                      "marginHorizontal": 10,
+                    },
+                  ]
+                }
+              >
+                17:16
+              </Text>
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={20}
+                bbWidth={20}
+                focusable={false}
+                height={20}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "height": 20,
+                      "marginHorizontal": 10,
+                      "tintColor": "#FF6E14",
+                      "width": 20,
+                    },
+                    {
+                      "flex": 0,
+                      "height": 20,
+                      "width": 20,
+                    },
+                  ]
+                }
+                vbHeight={512}
+                vbWidth={512}
+                width={20}
+              >
+                <RNSVGGroup
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                >
+                  <RNSVGPath
+                    d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                    fill={
+                      {
+                        "payload": 4294929940,
+                        "type": 0,
+                      }
+                    }
+                    propList={
+                      [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+          </View>
         </View>
       </View>
-    </div>
-  </div>
-  <div>
-    <div
-      aria-label="Cancel button"
-      onPress={[Function]}
+    </View>
+  </View>
+  <View
+    appearance="default"
+    level="2"
+    style={
+      [
+        {
+          "backgroundColor": "#eaeaea",
+        },
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginHorizontal": 5,
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         {
           "alignItems": "center",
           "alignSelf": "center",
+          "backgroundColor": "#FF6E14",
+          "borderColor": "#FF6E14",
+          "borderRadius": 4,
+          "borderWidth": 1,
           "flex": 1,
           "flexDirection": "row",
           "justifyContent": "center",
           "margin": 5,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
         }
       }
+      testID="cancel-button"
     >
-      <span>
+      <Text
+        appearance="default"
+        category="h1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 36,
+              "fontWeight": "800",
+            },
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+          ]
+        }
+      >
         ABBRECHEN
-      </span>
-    </div>
-    <div
-      aria-label="Submit button"
-      onPress={[Function]}
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         {
           "alignItems": "center",
           "alignSelf": "center",
+          "backgroundColor": "#FF6E14",
+          "borderColor": "#FF6E14",
+          "borderRadius": 4,
+          "borderWidth": 1,
           "flex": 1,
           "flexDirection": "row",
           "justifyContent": "center",
           "margin": 5,
+          "minHeight": 40,
+          "minWidth": 40,
+          "opacity": 1,
+          "paddingHorizontal": 10,
+          "paddingVertical": 12,
         }
       }
+      testID="ok-button"
     >
-      <span>
+      <Text
+        appearance="default"
+        category="h1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 36,
+              "fontWeight": "800",
+            },
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "System",
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "marginHorizontal": 10,
+            },
+          ]
+        }
+      >
         ERSTELLEN
-      </span>
-    </div>
-  </div>
-</div>
+      </Text>
+    </View>
+  </View>
+</View>
 `;

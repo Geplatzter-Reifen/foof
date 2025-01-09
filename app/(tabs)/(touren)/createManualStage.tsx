@@ -271,8 +271,16 @@ export default function CreateManualStage() {
       case 0:
         return (
           <>
-            <CardComponent title="Start" form={renderStartCoordinateInput} />
-            <CardComponent title="Ende" form={renderEndCoordinateInput} />
+            <CardComponent
+              testID={"start-input"}
+              title="Start"
+              form={renderStartCoordinateInput}
+            />
+            <CardComponent
+              testID={"end-input"}
+              title="Ende"
+              form={renderEndCoordinateInput}
+            />
           </>
         );
       // Map input
@@ -327,10 +335,10 @@ export default function CreateManualStage() {
         }}
         selectedIndex={selectedIndex}
       >
-        <Button style={styles.button}>
+        <Button style={styles.button} testID={"compass"}>
           <FontAwesomeIcon icon="compass" size={25} />
         </Button>
-        <Button style={styles.button}>
+        <Button style={styles.button} testID={"map-pin"}>
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
       </ButtonSwitch>
@@ -340,13 +348,18 @@ export default function CreateManualStage() {
       <ButtonGroup>
         <Button
           style={styles.button}
+          testID={"cancel-button"}
           onPress={() => {
             router.back();
           }}
         >
           <Text category="h1">ABBRECHEN</Text>
         </Button>
-        <Button style={styles.button} onPress={handleCreateButton}>
+        <Button
+          style={styles.button}
+          testID={"ok-button"}
+          onPress={handleCreateButton}
+        >
           <Text category="h1">ERSTELLEN</Text>
         </Button>
       </ButtonGroup>

@@ -7,6 +7,7 @@ import customStyles from "@/constants/styles";
 interface cardProps {
   form: React.ReactElement;
   title: string;
+  testID?: string;
 }
 
 const CardHeder = ({ title }: { title: string }): React.ReactElement => {
@@ -26,10 +27,11 @@ const CardHeder = ({ title }: { title: string }): React.ReactElement => {
 };
 
 function CardComponent(props: cardProps) {
-  const { form, title } = props;
+  const { form, title, testID } = props;
   return (
     <Layout style={style.flexContainer} level="2">
       <Card
+        testID={testID}
         style={{
           ...customStyles.basicCard,
           ...customStyles.basicShadow,

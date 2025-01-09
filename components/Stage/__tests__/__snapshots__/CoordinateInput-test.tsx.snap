@@ -107,6 +107,7 @@ exports[`CoordinateInput matches the snapshot 1`] = `
         }
       >
         <TextInput
+          accessibilityLabel="Latitude"
           appearance="default"
           editable={true}
           keyboardType="numeric"
@@ -230,6 +231,7 @@ exports[`CoordinateInput matches the snapshot 1`] = `
         }
       >
         <TextInput
+          accessibilityLabel="Longitude"
           appearance="default"
           editable={true}
           keyboardType="numeric"

@@ -1,6 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import { ApplicationProvider, Text } from "@ui-kitten/components";
+import { render, fireEvent, waitFor } from "@/test-utils/test-utils";
 import * as eva from "@eva-design/eva";
 import TourNameSettingsSection from "@/components/Settings/TourNameSettingsSection";
 
@@ -22,15 +21,6 @@ jest.mock("@/components/Settings/SingleSettingLayout", () => {
   );
 });
 
-//mok the ui kitten icon
-jest.mock("@ui-kitten/components", () => {
-  const originalModule = jest.requireActual("@ui-kitten/components");
-  return {
-    ...originalModule,
-    Icon: jest.fn(({ name }) => <>{`Icon(${name})`}</>),
-  };
-});
-
 // Mock InlineRow
 jest.mock("@/components/Settings/InlineRow", () => {
   const React = require("react");
@@ -49,14 +39,6 @@ jest.mock("@/components/Settings/InlineRow", () => {
   );
 });
 
-// Mock useLocalSearchParams
-jest.mock("expo-router", () => ({
-  useLocalSearchParams: jest.fn(() => ({
-    tourId: "mock-tour-id",
-    tourTitle: "Mock Tour Title",
-  })),
-}));
-
 // Mock updateTourNameById
 jest.mock("@/services/data/tourService", () => ({
   updateTourNameById: jest.fn(() => Promise.resolve(true)),
@@ -64,21 +46,13 @@ jest.mock("@/services/data/tourService", () => ({
 
 describe("TourNameSettingsSection", () => {
   it("displays the initial tour name", () => {
-    const { getByText } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <TourNameSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { getByText } = render(<TourNameSettingsSection />);
 
-    expect(getByText("Mock Tour Title")).toBeTruthy();
+    expect(getByText("Tourname")).toBeTruthy();
   });
 
   it("shows input and allows editing when the edit button is pressed", async () => {
-    const { getByTestId, getByText } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <TourNameSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { getByTestId, getByText } = render(<TourNameSettingsSection />);
 
     // Press the edit button
     fireEvent.press(getByTestId("edit-button"));
@@ -100,20 +74,14 @@ describe("TourNameSettingsSection", () => {
   });
 
   it("does not show input initially", () => {
-    const { queryByTestId } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <TourNameSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { queryByTestId } = render(<TourNameSettingsSection />);
 
     expect(queryByTestId("@tour-name-input/input")).toBeNull();
   });
 
   it("hides input and shows new name after editing", async () => {
     const { getByTestId, queryByTestId, getByText } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <TourNameSettingsSection />
-      </ApplicationProvider>,
+      <TourNameSettingsSection />,
     );
 
     // Press the edit button

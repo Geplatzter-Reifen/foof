@@ -1,7 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import { ApplicationProvider } from "@ui-kitten/components";
-import * as eva from "@eva-design/eva";
+import { render, fireEvent, waitFor } from "@/test-utils/test-utils";
 import RouteSettingsSection from "../RouteSettingsSection";
 import { Alert } from "react-native";
 
@@ -37,31 +35,15 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-jest.mock("@ui-kitten/components", () => {
-  const originalModule = jest.requireActual("@ui-kitten/components");
-  return {
-    ...originalModule,
-    Icon: jest.fn(({ name }) => `MockedIcon(${name})`), // Mock Icon rendering
-  };
-});
-
 describe("RouteSettingsSection", () => {
   it("matches the snapshot on initial render", () => {
-    const { toJSON } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <RouteSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { toJSON } = render(<RouteSettingsSection />);
 
     expect(toJSON()).toMatchSnapshot(); // Save the snapshot for initial render
   });
 
   it("handles deleting a route by showing modal", async () => {
-    const { getByTestId, findByText } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <RouteSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { getByTestId, findByText } = render(<RouteSettingsSection />);
 
     await waitFor(() => {
       expect(getByTestId("delete-button")).toBeTruthy();
@@ -84,11 +66,7 @@ describe("RouteSettingsSection", () => {
     );
     require("geojson-validation").valid.mockReturnValue(false);
 
-    const { getByTestId } = render(
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <RouteSettingsSection />
-      </ApplicationProvider>,
-    );
+    const { getByTestId } = render(<RouteSettingsSection />);
 
     fireEvent.press(getByTestId("import-button"));
 

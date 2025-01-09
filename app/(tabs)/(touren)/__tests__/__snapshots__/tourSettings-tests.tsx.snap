@@ -34,7 +34,7 @@ exports[`TourSettings renders correctly 1`] = `
           "justifyContent": "space-between",
         },
         {
-          "marginTop": 10,
+          "marginTop": 0,
         },
       ]
     }
@@ -67,7 +67,7 @@ exports[`TourSettings renders correctly 1`] = `
         style={
           [
             {
-              "color": "#222B45",
+              "color": "#000000",
               "fontFamily": "System",
               "fontSize": 26,
               "fontWeight": "800",
@@ -96,7 +96,7 @@ exports[`TourSettings renders correctly 1`] = `
     style={
       [
         {
-          "backgroundColor": "#EDF1F7",
+          "backgroundColor": "#b8b8b8",
           "height": 1,
         },
         undefined,
@@ -109,7 +109,7 @@ exports[`TourSettings renders correctly 1`] = `
     style={
       [
         {
-          "backgroundColor": "#F7F9FC",
+          "backgroundColor": "#eaeaea",
         },
         {
           "flex": 1,
@@ -124,7 +124,7 @@ exports[`TourSettings renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#F7F9FC",
+            "backgroundColor": "#eaeaea",
           },
           {
             "flex": 1,
@@ -165,7 +165,7 @@ exports[`TourSettings renders correctly 1`] = `
           {
             "alignSelf": "flex-start",
             "backgroundColor": "#FFFFFF",
-            "borderColor": "#E4E9F2",
+            "borderColor": "#7e7e7e",
             "borderRadius": 8,
             "borderWidth": 1,
             "marginHorizontal": 10,

@@ -22,13 +22,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
     style={
       [
         {
-          "color": "#222B45",
+          "color": "#000000",
           "fontFamily": "System",
           "fontSize": 13,
           "fontWeight": "600",
         },
         {
-          "color": "#C5CEE0",
+          "color": "#494949",
         },
       ]
     }
@@ -40,12 +40,12 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
     style={
       [
         {
-          "backgroundColor": "#EDF1F7",
+          "backgroundColor": "#b8b8b8",
           "height": 1,
         },
         {
           "alignSelf": "stretch",
-          "backgroundColor": "#E4E9F2",
+          "backgroundColor": "#7e7e7e",
           "height": 1,
           "marginVertical": 3,
         },
@@ -76,7 +76,7 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
         style={
           [
             {
-              "color": "#222B45",
+              "color": "#000000",
               "fontFamily": "System",
               "fontSize": 18,
               "fontWeight": "800",
@@ -131,7 +131,20 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
         }
         testID="import-button"
       >
-        MockedIcon(file-import)
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "scale": 1,
+                },
+              ],
+            }
+          }
+        >
+          <Text />
+        </View>
       </View>
     </View>
   </View>
@@ -143,13 +156,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#C5CEE0",
+            "color": "#494949",
             "marginTop": 5,
           },
         ]
@@ -164,13 +177,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#C5CEE0",
+            "color": "#494949",
             "marginTop": 5,
           },
         ]
@@ -187,14 +200,14 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
         style={
           [
             {
-              "color": "#222B45",
+              "color": "#000000",
               "fontFamily": "System",
               "fontSize": 15,
               "fontWeight": "400",
             },
             [
               {
-                "color": "#274BDB",
+                "color": "#DB500E",
               },
               {
                 "textDecorationLine": "underline",
@@ -214,13 +227,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#C5CEE0",
+            "color": "#494949",
             "marginTop": 5,
           },
         ]
@@ -236,13 +249,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#C5CEE0",
+            "color": "#494949",
             "marginTop": 5,
           },
         ]
@@ -258,13 +271,13 @@ exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
       style={
         [
           {
-            "color": "#222B45",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#C5CEE0",
+            "color": "#494949",
             "marginTop": 5,
           },
         ]

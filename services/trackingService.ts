@@ -11,7 +11,7 @@ import {
   startStage,
 } from "@/services/data/stageService";
 import { createLocation } from "@/services/data/locationService";
-import { calculateDistance, Coordinates } from "@/utils/locationUtils";
+import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
 
 export const LOCATION_TASK_NAME = "location-task";
@@ -72,7 +72,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   if (!activeStage) {
     throw new Error("No active stage set");
   }
-  const currentLocation: Coordinates = {
+  const currentLocation: MapPoint = {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
   };
@@ -83,7 +83,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   );
 
   if (lastLocation && lastActiveStageId === activeStage.id) {
-    const latestLocation: Coordinates = {
+    const latestLocation: MapPoint = {
       latitude: lastLocation.coords.latitude,
       longitude: lastLocation.coords.longitude,
     };

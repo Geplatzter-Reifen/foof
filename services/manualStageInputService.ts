@@ -1,4 +1,4 @@
-import { calculateDistance, Coordinates } from "@/utils/locationUtils";
+import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
 import { getActiveTour, getTourByTourId } from "@/services/data/tourService";
 import { createStage, setStageAvgSpeed } from "@/services/data/stageService";
@@ -9,8 +9,8 @@ function validateManualStageInput(
   stageName: string,
   startTime: Date,
   endTime: Date,
-  startingCoordinates: Coordinates | null,
-  endCoordinates: Coordinates | null,
+  startingCoordinates: MapPoint | null,
+  endCoordinates: MapPoint | null,
 ): void {
   if (!stageName || stageName.trim() === "") {
     throw new Error("Bitte gib einen Tournamen an");
@@ -29,8 +29,8 @@ async function initializeManualStage(
   stageName: string,
   startTime: Date,
   endTime: Date,
-  startingCoordinates: Coordinates,
-  endCoordinates: Coordinates,
+  startingCoordinates: MapPoint,
+  endCoordinates: MapPoint,
 ): Promise<Stage> {
   const stage: Stage = await createStage(
     tourId,
@@ -55,8 +55,8 @@ async function initializeManualStage(
 
 export async function createManualStage(
   stageName: string,
-  startingCoordinates: Coordinates,
-  endCoordinates: Coordinates,
+  startingCoordinates: MapPoint,
+  endCoordinates: MapPoint,
   startTime: Date,
   endTime: Date,
   tourId?: string,

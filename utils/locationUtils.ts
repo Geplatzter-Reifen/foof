@@ -6,10 +6,6 @@ export type MapPoint = {
   latitude: number;
   longitude: number;
 };
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
 
 export function isLocationValid(location: MapPoint): boolean {
   return (
@@ -128,14 +124,4 @@ export function getCoordinateString(loc: Location) {
   const lon = toDMS(loc.longitude, "E", "W");
 
   return `${lat}, ${lon}`;
-}
-
-// Utility to parse coordinates
-export function parseCoordinates(coordinateString: string): Coordinates | null {
-  const regex =
-    /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
-  const match = coordinateString.match(regex);
-  return match
-    ? { latitude: parseFloat(match[1]), longitude: parseFloat(match[4]) }
-    : null;
 }

@@ -14,7 +14,7 @@ import CardComponent from "../../../components/Stage/CardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
-import { isFinished } from "@/services/StageConnection/stageConnection";
+import { tourIsFinished } from "@/services/StageConnection/stageConnection";
 import { getActiveTour } from "@/services/data/tourService";
 import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
@@ -184,7 +184,7 @@ export default function CreateManualStage() {
         }
       }
       const tour = await getActiveTour();
-      if (tour && (await isFinished(tour))) {
+      if (tour && (await tourIsFinished(tour))) {
         Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
       }
     }

@@ -7,7 +7,7 @@ import { updateFinishedAtFromTour } from "../data/tourService";
 const maxDistanceFromCenterFlensburg = 5;
 const maxDistanceFromCenterOberstdorf = 10;
 
-export async function isFinished(tour: Tour): Promise<boolean> {
+export async function tourIsFinished(tour: Tour): Promise<boolean> {
   const stageList = await tour.stages.fetch();
   if (stageList.length === 0) {
     return false;

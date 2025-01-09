@@ -28,7 +28,7 @@ import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
-import { isFinished } from "@/services/StageConnection/stageConnection";
+import { tourIsFinished } from "@/services/StageConnection/stageConnection";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -133,7 +133,7 @@ export default function HomeScreen() {
       initial: false,
     });
     setActiveStageId(null);
-    if (activeTour && (await isFinished(activeTour))) {
+    if (activeTour && (await tourIsFinished(activeTour))) {
       Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
   };

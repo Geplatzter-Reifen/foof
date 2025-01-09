@@ -1,3 +1,5 @@
+process.env.TZ = "UTC";
+
 module.exports = {
   setupFiles: ["<rootDir>/jest-setup.ts"],
   setupFilesAfterEnv: ["<rootDir>/after-env-jest-setup.ts"],

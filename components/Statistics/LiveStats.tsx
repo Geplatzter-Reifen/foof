@@ -72,7 +72,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
         >
           {getStageDurationString(stage)}
         </IconStat>
-        {/*Durchschnittsgeschwindigkeit*/}
+        {/*Geschwindigkeit*/}
         <IconStat
           icon="gauge-high"
           centered

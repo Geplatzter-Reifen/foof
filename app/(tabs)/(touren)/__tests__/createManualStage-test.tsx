@@ -1,7 +1,8 @@
 import React from "react";
 import { Alert } from "react-native";
 import { render, fireEvent, waitFor, act } from "@/test-utils/test-utils";
-import CreateManualStage from "../../createManualStage";
+import CreateManualStage from "../createManualStage";
+import Touruebersicht from "@/app/(tabs)/(touren)";
 
 // Mock RNMapbox Maps
 jest.mock("@rnmapbox/maps", () => ({
@@ -39,20 +40,19 @@ describe("CreateManualStage Component", () => {
     jest.clearAllMocks();
   });
 
-  test("matches snapshot", () => {
-    const { toJSON } = render(<CreateManualStage />);
-    expect(toJSON()).toMatchSnapshot();
+  test("matches snapshot", async () => {
+    const view = render(<CreateManualStage />);
+    expect(view).toMatchSnapshot();
   });
 
   test("displays coordinates input when compass button is pressed", async () => {
     const view = render(<CreateManualStage />);
 
-    // Simulate pressing the "coords" (compass) button
     const compassButton = view.getByTestId("compass");
     await act(async () => {
-      fireEvent.press(compassButton); // Event that triggers state update
+      fireEvent.press(compassButton);
     });
-    // Wait for the coordinate inputs to appear
+
     await waitFor(() => {
       expect(view.getByTestId("start-input")).toBeTruthy();
       expect(view.getByTestId("end-input")).toBeTruthy();
@@ -61,25 +61,23 @@ describe("CreateManualStage Component", () => {
 
   test("calls back function when cancel button is pressed", async () => {
     const view = render(<CreateManualStage />);
-    // Simulate pressing the cancel button
     const cancelButton = view.getByTestId("cancel-button");
+
     await act(async () => {
-      fireEvent.press(cancelButton); // Event that triggers state update
+      fireEvent.press(cancelButton);
     });
-    // Verify back function is called
+
     expect(mockedGoBack).toHaveBeenCalledTimes(1);
   });
 
   test("shows alert when dates are invalid", async () => {
     const { getByTestId } = render(<CreateManualStage />);
-
-    // Simulate pressing the create button
     const createButton = getByTestId("ok-button");
+
     await act(async () => {
-      fireEvent.press(createButton); // Event that triggers state update
+      fireEvent.press(createButton);
     });
 
-    // Wait for the alert to be called
     await waitFor(() => {
       expect(Alert.alert).toHaveBeenCalledWith(
         "Ungültige Eingabe",

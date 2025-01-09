@@ -1,7 +1,10 @@
 import React from "react";
 import { Alert } from "react-native";
-import { render, fireEvent, waitFor, act } from "@/test-utils/test-utils";
+import { render } from "@/test-utils/test-utils";
 import StageMapView from "../StagesMapView";
+import { waitFor } from "@testing-library/react-native";
+import { StageListForTesting as StageList } from "@/components/Tour/StageList";
+import { createTour } from "@/services/data/tourService";
 
 // Mock RNMapbox Maps
 jest.mock("@rnmapbox/maps", () => ({
@@ -40,7 +43,8 @@ describe("StageMapView Component", () => {
   });
 
   test("matches snapshot", async () => {
-    const view = render(<StageMapView />);
+    const tour = await createTour("Test Tour");
+    const view = await waitFor(() => render(<StageMapView tourId={tour.id} />));
     expect(view).toMatchSnapshot();
   });
 });

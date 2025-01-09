@@ -2,17 +2,6 @@ import React from "react";
 import { Alert } from "react-native";
 import { render, fireEvent, waitFor, act } from "@/test-utils/test-utils";
 import CreateManualStage from "../createManualStage";
-import Touruebersicht from "@/app/(tabs)/(touren)";
-
-// Mock RNMapbox Maps
-jest.mock("@rnmapbox/maps", () => ({
-  MapView: ({ children }: { children?: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
-  Marker: () => <div>Mocked Marker</div>,
-  Camera: () => <div>Mocked Camera</div>,
-  SymbolLayer: () => <div>Mocked SymbolLayer</div>,
-}));
 
 // Mock Router and Navigation
 const mockedNavigate = jest.fn();

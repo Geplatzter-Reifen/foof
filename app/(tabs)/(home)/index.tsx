@@ -12,27 +12,21 @@ import {
 
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
-import {
-  ButtonGroup,
-  Layout,
-  Spinner,
-  TopNavigation,
-  Divider,
-  Text,
-} from "@ui-kitten/components";
+import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
-import { Tour } from "@/database/model/model";
+import { Stage, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
+import MapStatisticsBox from "@/components/Statistics/LiveStats";
 import {
   CenterButton,
   EnhancedRouteButton,
 } from "@/components/Buttons/MapButtons";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
@@ -50,6 +44,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true); // Ladezustand
 
   const [activeTour, setActiveTour] = useState<Tour>();
+  const [activeStage, setActiveStage] = useState<Stage | null>();
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
@@ -93,14 +88,7 @@ export default function HomeScreen() {
             color="white"
           />
         }
-        onPress={() => {
-          setButtonState(ButtonStates.Cycling);
-          startAutomaticTracking().then(() =>
-            getActiveStage().then((stage) => {
-              setActiveStageId(stage?.id!);
-            }),
-          );
-        }}
+        onPress={onStartButtonPress}
       />
     );
   };
@@ -116,9 +104,27 @@ export default function HomeScreen() {
     );
   };
 
+  const onStartButtonPress = async () => {
+    setButtonState(ButtonStates.Cycling);
+    startAutomaticTracking().then(() => {
+      getActiveStage().then((stage) => {
+        setActiveStageId(stage?.id!);
+      });
+      getActiveStage().then((stage) => {
+        if (stage) {
+          setActiveStage(stage);
+        }
+      });
+    });
+  };
+
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
     const isFinished = await stopAutomaticTracking();
+    setActiveStageId(null);
+    setActiveStage(null);
+    router.navigate({ pathname: "../(touren)" });
+    await timeout(10);
     // @ts-ignore Typescript erwartet "never"
     navigation.navigate("(touren)", {
       screen: "stage",
@@ -167,15 +173,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <Layout style={styles.container}>
-      <Layout>
-        <TopNavigation
-          title={() => <Text category="h4">Home</Text>}
-          style={[styles.header, { marginTop: insets.top }]}
-          alignment="center"
-        ></TopNavigation>
-        <Divider />
-      </Layout>
+    <Layout style={{ ...styles.container, ...{ marginTop: insets.top } }}>
       <Layout style={styles.layout}>
         {/* Karte mit Einstellungen: - keine Skala - Kompass oben rechts - Postion von "mapbox" - Position des Info-Buttons (siehe https://github.com/rnmapbox/maps/blob/main/docs/MapView.md) */}
         <MapboxGL.MapView
@@ -183,9 +181,9 @@ export default function HomeScreen() {
           scaleBarEnabled={false}
           localizeLabels={true}
           compassEnabled={true}
-          compassPosition={{ top: 8, right: 8 }}
-          logoPosition={{ top: 8, left: 8 }}
-          attributionPosition={{ top: 8, left: 96 }}
+          compassPosition={{ top: activeStage ? 113 : 8, right: 8 }}
+          logoPosition={{ top: activeStage ? 113 : 8, left: 8 }}
+          attributionPosition={{ top: activeStage ? 113 : 8, left: 96 }}
           onTouchMove={() => {
             setUserCentered(false);
           }}
@@ -209,7 +207,18 @@ export default function HomeScreen() {
           <MapboxGL.UserLocation androidRenderMode="gps" />
         </MapboxGL.MapView>
       </Layout>
-      <View style={styles.mapButtonsContainer}>
+      {activeStage && (
+        <View style={styles.statisticsBox}>
+          <MapStatisticsBox stage={activeStage} />
+        </View>
+      )}
+      <View
+        style={{
+          ...styles.mapButtonsContainer,
+          top: activeStage ? 166 : 65,
+          right: 11,
+        }}
+      >
         {/* Button zum Route anzeigen */}
         {activeTour && (
           <EnhancedRouteButton
@@ -264,7 +273,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "column",
     alignSelf: "center",
-    top: 175,
-    right: 11,
+  },
+  statisticsBox: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    right: 10,
   },
 });

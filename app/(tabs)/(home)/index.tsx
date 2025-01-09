@@ -18,7 +18,6 @@ import { getActiveTour } from "@/services/data/tourService";
 import { Stage, Tour } from "@/database/model/model";
 import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
-import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import MapStatisticsBox from "@/components/Statistics/LiveStats";
 import {
   CenterButton,
@@ -26,7 +25,8 @@ import {
 } from "@/components/Buttons/MapButtons";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router, useNavigation } from "expo-router";
+import {router, useNavigation} from "expo-router";
+import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -131,6 +131,7 @@ export default function HomeScreen() {
       params: { stageId: activeStageId },
       initial: false,
     });
+    setActiveStageId(null);
     if (isFinished) {
       Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
@@ -188,8 +189,12 @@ export default function HomeScreen() {
           }}
         >
           {/* renders the route of the active tour on the map */}
-          {activeTour && <EnhancedRenderRouteV2 tour={activeTour} />}
-          {activeStageId && <StageLine stageId={activeStageId} />}
+          {activeTour && (
+            <>
+              <EnhancedRenderRouteV2 tour={activeTour} />
+              <EnhancedStageMapLines tour={activeTour} />
+            </>
+          )}
           {/* Kamera, die dem User folgt */}
           <MapboxGL.Camera
             followZoomLevel={17}

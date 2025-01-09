@@ -110,11 +110,14 @@ export default function RouteSettingsSection() {
           buttons={
             <>
               {routeExists && (
-                <TouchableOpacity onPress={() => setShowDialog(true)}>
+                <TouchableOpacity
+                  onPress={() => setShowDialog(true)}
+                  testID={"delete-button"}
+                >
                   <DeleteIcon style={styles.iconStyle} />
                 </TouchableOpacity>
               )}
-              <TouchableOpacity onPress={importTour}>
+              <TouchableOpacity onPress={importTour} testID={"import-button"}>
                 <ImportIcon style={styles.iconStyle} />
               </TouchableOpacity>
             </>

@@ -5,7 +5,6 @@ import {
   Input,
   Text,
   ThemeType,
-  TopNavigationAction,
   useTheme,
 } from "@ui-kitten/components";
 import { ImageProps, StyleSheet, TouchableOpacity } from "react-native";
@@ -63,6 +62,7 @@ export default function TourNameSettingsSection(): React.ReactElement {
         <InlineRow
           leftComponent={
             <Input
+              testID={"tour-name-input"}
               style={styles.input}
               value={tourname}
               onChangeText={setTourname}
@@ -72,7 +72,10 @@ export default function TourNameSettingsSection(): React.ReactElement {
             />
           }
           buttons={
-            <TouchableOpacity onPress={() => updateTourname(tourname)}>
+            <TouchableOpacity
+              testID={"ok-button"}
+              onPress={() => updateTourname(tourname)}
+            >
               <OkayIcon style={styles.iconStyle} />
             </TouchableOpacity>
           }
@@ -81,7 +84,10 @@ export default function TourNameSettingsSection(): React.ReactElement {
         <InlineRow
           leftComponent={<Text category={"h6"}>{tourname}</Text>}
           buttons={
-            <TouchableOpacity onPress={() => setTitleBeingEdited(true)}>
+            <TouchableOpacity
+              testID={"edit-button"}
+              onPress={() => setTitleBeingEdited(true)}
+            >
               <EditIcon style={styles.iconStyle} />
             </TouchableOpacity>
           }

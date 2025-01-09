@@ -1,0 +1,278 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RouteSettingsSection matches the snapshot on initial render 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "marginBottom": 15,
+      },
+    ]
+  }
+>
+  <Text
+    appearance="default"
+    category="s2"
+    status="basic"
+    style={
+      [
+        {
+          "color": "#222B45",
+          "fontFamily": "System",
+          "fontSize": 13,
+          "fontWeight": "600",
+        },
+        {
+          "color": "#C5CEE0",
+        },
+      ]
+    }
+  >
+    Geplante Route
+  </Text>
+  <View
+    appearance="default"
+    style={
+      [
+        {
+          "backgroundColor": "#EDF1F7",
+          "height": 1,
+        },
+        {
+          "alignSelf": "stretch",
+          "backgroundColor": "#E4E9F2",
+          "height": 1,
+          "marginVertical": 3,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginVertical": 10,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "width": "70%",
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="h6"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#222B45",
+              "fontFamily": "System",
+              "fontSize": 18,
+              "fontWeight": "800",
+            },
+            undefined,
+          ]
+        }
+      >
+        GeoJSON-Datei
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "gap": 10,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="import-button"
+      >
+        MockedIcon(file-import)
+      </View>
+    </View>
+  </View>
+  <View>
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#C5CEE0",
+            "marginTop": 5,
+          },
+        ]
+      }
+    >
+      Die geplante Route wird als graue Linie auf der Karte dargestellt und kann während dem Fahren zur Navigation benutzt werden. Falls du eine eigene Route erstellen möchtest, gehe wie folgt vor:
+    </Text>
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#C5CEE0",
+            "marginTop": 5,
+          },
+        ]
+      }
+    >
+      •
+       Besuche
+       
+      <Text
+        appearance="default"
+        category="p1"
+        onPress={[Function]}
+        status="basic"
+        style={
+          [
+            {
+              "color": "#222B45",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            [
+              {
+                "color": "#274BDB",
+              },
+              {
+                "textDecorationLine": "underline",
+              },
+            ],
+          ]
+        }
+      >
+        OpenRouteService
+      </Text>
+      .
+    </Text>
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#C5CEE0",
+            "marginTop": 5,
+          },
+        ]
+      }
+    >
+      •
+       Setze Punkte auf der Karte, um deine Route zu planen. Beachte, dass das Planen der Route länger dauern kann, wenn die Punkte weiter auseinander liegen.
+    </Text>
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#C5CEE0",
+            "marginTop": 5,
+          },
+        ]
+      }
+    >
+      •
+       Exportiere die Route als Geo-JSON Datei auf dein Gerät.
+    </Text>
+    <Text
+      appearance="default"
+      category="p1"
+      status="basic"
+      style={
+        [
+          {
+            "color": "#222B45",
+            "fontFamily": "System",
+            "fontSize": 15,
+            "fontWeight": "400",
+          },
+          {
+            "color": "#C5CEE0",
+            "marginTop": 5,
+          },
+        ]
+      }
+    >
+      •
+       Importiere die Datei hier, um sie zu verwenden.
+    </Text>
+  </View>
+</View>
+`;

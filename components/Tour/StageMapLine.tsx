@@ -1,10 +1,12 @@
-import { Location } from "@/database/model/model";
+import { Location, Stage, Tour } from "@/database/model/model";
 import MapboxGL from "@rnmapbox/maps";
 import { lineString, point, featureCollection } from "@turf/helpers";
 import { useTheme } from "@ui-kitten/components";
-import React from "react";
+import { useEffect, useState } from "react";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 import { length } from "@turf/turf";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { getAllLocationsByStageId } from "@/services/data/locationService";
 
 /**
  * Converts degrees to radians.
@@ -57,57 +59,53 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
   return [toDegrees(Lon), toDegrees(Lat)];
 };
 
-/**
- * StageMapLine Component
- *
- * This component renders a dynamic line on a Mapbox map, representing a stage route.
- * The line can include a gradient effect if the `active` prop is set to `true`.
- * It also displays start and end points using CircleLayer.
- *
- * @component
- * @param {Object} props - The props for the StageMapLine component.
- * @param {Object[]} props.locations - An array of location objects, each containing `latitude` and `longitude`.
- * @param {string} props.stageId - A unique identifier for the stage, used for layer and source IDs.
- * @param {boolean} [props.active=false] - Determines whether the line should include a gradient effect or display statically.
- * @param {string} [props.lineColor] - Custom color for the line.
- * @param {string} [props.circleColor] - Custom color for the circles at the start and end points.
- * @param {string} [props.circleStrokeColor] - Custom stroke color for the circles at the start and end points.
- * @returns {JSX.Element} A Mapbox line and optionally styled start/end points.
- */
 type StageMapLineProps = {
-  locations: Location[];
-  stageId: string;
-  active?: boolean;
+  stage: Stage;
+  stageLocations?: Location[];
   lineColor?: string;
   circleColor?: string;
   circleStrokeColor?: string;
 };
 
-const StageMapLine = ({
-  locations,
-  stageId,
-  active = false,
+/**
+ * This component renders a dynamic line on a Mapbox map, representing a stage route.
+ * The line includes a gradient effect if the stage is active.
+ * It also displays start and end points using CircleLayer.
+ */
+export const StageMapLine = ({
+  stage,
+  stageLocations,
   lineColor,
   circleColor,
   circleStrokeColor,
 }: StageMapLineProps) => {
   const theme = useTheme();
+  const [locations, setLocations] = useState<Location[]>([]);
+  const stageId = stage.id;
+  const active = stage.isActive;
+
+  useEffect(() => {
+    const fetchStageLocations = async () => {
+      const locations = await getAllLocationsByStageId(stage.id);
+      setLocations(locations);
+    };
+    if (stageLocations) {
+      setLocations(stageLocations);
+    } else {
+      fetchStageLocations();
+    }
+  }, [stage, stageLocations]);
+
+  if (locations.length <= 1) {
+    return null;
+  }
 
   // Fallback to default theme colors if none are provided
   lineColor = lineColor || theme["color-primary-500"];
   circleColor = circleColor || theme["color-primary-100"];
   circleStrokeColor = circleStrokeColor || theme["color-primary-500"];
 
-  // Unpack location coordinates
-  const locationsUnpacked = locations.map((loc) => ({
-    latitude: loc.latitude,
-    longitude: loc.longitude,
-  }));
-
-  let coords = locationsUnpacked.map((location) => [
-    location.longitude,
-    location.latitude,
-  ]);
+  let coords = locations.map((loc) => [loc.longitude, loc.latitude]);
 
   // Gradient start and end points for active stages
   let gradientStart = 0;
@@ -130,21 +128,23 @@ const StageMapLine = ({
   }
 
   // Create GeoJSON features
-  const stage: Feature<LineString> = lineString(coords, { name: "Stage" });
+  const stageLine: Feature<LineString> = lineString(coords, {
+    name: "StageLine",
+  });
   const firstPoint: Feature<Point> = point(coords[0], { name: "Start" });
   const lastPoint: Feature<Point> = point(coords[coords.length - 1], {
     name: "End",
   });
 
   const collection: FeatureCollection = active
-    ? featureCollection<Point | LineString>([stage, firstPoint])
-    : featureCollection<Point | LineString>([stage, firstPoint, lastPoint]);
+    ? featureCollection<Point | LineString>([stageLine, firstPoint])
+    : featureCollection<Point | LineString>([stageLine, firstPoint, lastPoint]);
 
   return (
     <MapboxGL.ShapeSource
       id={`lineSource-${stageId}`}
       shape={collection}
-      lineMetrics={true}
+      lineMetrics
     >
       <MapboxGL.LineLayer
         id={`lineLayer-${stageId}`}
@@ -165,7 +165,15 @@ const StageMapLine = ({
                 ],
               }
             : {
-                lineColor: lineColor,
+                lineGradient: [
+                  "interpolate",
+                  ["linear"],
+                  ["line-progress"],
+                  0,
+                  lineColor,
+                  1,
+                  lineColor,
+                ],
               }),
           lineWidth: 4,
           lineOpacity: 1,
@@ -197,4 +205,39 @@ const StageMapLine = ({
   );
 };
 
-export default React.memo(StageMapLine);
+const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
+  stage,
+  stageLocations: stage.locations,
+}));
+
+/**
+ * This component is a higher-order component that provides the stage and stageLocations props to the StageMapLine component.
+ * It observes the stage object and re-renders when the stage is updated or Locations are added.
+ */
+const EnhancedStageMapLine = enhance(StageMapLine);
+
+const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
+  stages: tour.stages,
+}));
+
+const StageMapLines = ({ stages }: { stages: Stage[] }) => {
+  return (
+    <>
+      {stages.map((stage) => {
+        if (stage.isActive) {
+          return <EnhancedStageMapLine key={stage.id} stage={stage} />;
+        } else {
+          return <StageMapLine key={stage.id} stage={stage} />;
+        }
+      })}
+    </>
+  );
+};
+
+/**
+ * This component is a higher-order component that provides the tour prop to the StageMapLines component.
+ * The StageMapLines component renders a StageMapLine component for each stage in a tour
+ * and re-renders when a stage is added or removed from the tour table.
+ * Active stages are observed a second time to update when the stage changes or a Location is added.
+ */
+export const EnhancedStageMapLines = enhanceV2(StageMapLines);

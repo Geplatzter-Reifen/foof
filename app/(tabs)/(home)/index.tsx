@@ -193,7 +193,7 @@ export default function HomeScreen() {
           {activeTour && (
             <>
               <EnhancedRenderRouteV2 tour={activeTour} />
-              <EnhancedStageMapLines tour={activeTour} showActive />
+              <EnhancedStageMapLines tour={activeTour} showActiveStage />
             </>
           )}
           {/* Kamera, die dem User folgt */}

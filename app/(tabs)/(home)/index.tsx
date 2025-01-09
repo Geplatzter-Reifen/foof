@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import { EnhancedRenderRouteV2 } from "@/components/Route/RenderRoute";
@@ -24,13 +24,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
 import { Tour } from "@/database/model/model";
+import { timeout } from "@/utils/utils";
 import { getActiveStage } from "@/services/data/stageService";
 import { StageLine } from "@/components/Stage/ActiveStageWrapper";
 import {
   CenterButton,
   EnhancedRouteButton,
 } from "@/components/Buttons/MapButtons";
-import { timeout } from "@/utils/utils";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
@@ -116,25 +116,30 @@ export default function HomeScreen() {
     );
   };
 
+  const onStopButtonPress = async () => {
+    setButtonState(ButtonStates.NotCycling);
+    const isFinished = await stopAutomaticTracking();
+    setActiveStageId(null);
+    router.navigate({ pathname: "../(touren)" });
+    await timeout(10);
+    // @ts-ignore Typescript erwartet "never"
+    navigation.navigate("(touren)", {
+      screen: "stage",
+      params: { stageId: activeStageId },
+      initial: false,
+    });
+    if (isFinished) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+    }
+  };
+
   const StopButton = () => {
     return (
       <BigRoundButton
         icon={
           <FontAwesomeIcon icon="stop" size={buttonIconSize} color="white" />
         }
-        onPress={async () => {
-          setButtonState(ButtonStates.NotCycling);
-          void stopAutomaticTracking();
-          router.navigate({ pathname: "../(touren)" });
-          await timeout(10);
-          // @ts-ignore Typescript erwartet "never"
-          navigation.navigate("(touren)", {
-            screen: "stage",
-            params: { stageId: activeStageId },
-            initial: false,
-          });
-          setActiveStageId(null);
-        }}
+        onPress={onStopButtonPress}
       />
     );
   };

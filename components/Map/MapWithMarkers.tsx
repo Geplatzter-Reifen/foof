@@ -6,6 +6,7 @@ import Marker from "@/components/Map/Marker";
 import { StyleSheet } from "react-native";
 import StageMapLine from "@/components/Tour/StageMapLine";
 import { Stage, Location } from "@/database/model/model";
+import { foofTheme } from "@/constants/custom-theme";
 
 type MapWithMarkerProps = {
   markerIndex: number;
@@ -146,9 +147,9 @@ function MapWithMarkers({
               locations={stage.locations}
               stageId={stage.stage.id}
               key={stage.stage.id}
-              lineColor={"#b8b8b8"}
-              circleColor={"#eaeaea"}
-              circleStrokeColor={"#b8b8b8"}
+              lineColor={foofTheme["color-basic-300"]}
+              circleColor={foofTheme["color-basic-200"]}
+              circleStrokeColor={foofTheme["color-basic-300"]}
             />
           );
         })}

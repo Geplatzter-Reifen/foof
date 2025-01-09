@@ -13,6 +13,7 @@ import {
 import { createLocation } from "@/services/data/locationService";
 import { calculateDistance } from "@/utils/locationUtils";
 import { LocationObject } from "expo-location";
+import { isFinished } from "./StageConnection/stageConnection";
 
 export const LOCATION_TASK_NAME = "location-task";
 
@@ -31,6 +32,11 @@ export async function createManualStage(
     throw new Error("Bitte gib einen Tournamen an");
   }
 
+  if (startTime >= endTime) {
+    throw new Error(
+      "Die Endzeit muss nach der Startzeit liegen. Bitte überprüfe deine Eingaben.",
+    );
+  }
   const tour = tourId ? await getTourByTourId(tourId) : await getActiveTour();
 
   if (tour === null) {
@@ -42,9 +48,6 @@ export async function createManualStage(
 
   if (startingCoordinates === null || endCoordinates === null) {
     throw new Error("Ungültiges Koordinatenformat");
-  }
-  if (endTime < startTime) {
-    throw new Error("Start und Endzeit sind ungültig");
   }
 
   let stage = await createStage(
@@ -95,16 +98,24 @@ export async function startAutomaticTracking() {
   }
 }
 
-export async function stopAutomaticTracking() {
+/** Stops automatic tracking.
+ * @returns {boolean} True if the active tour is finished, false otherwise.
+ */
+export async function stopAutomaticTracking(): Promise<boolean> {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     let stage = await getActiveStage();
     await finishStage(stage!.id);
     lastActiveStageId = undefined;
     console.log("Tracking stopped.");
+    const tour = await getActiveTour();
+    if (tour) {
+      return await isFinished(tour);
+    }
   } else {
     console.log("Tracking already stopped.");
   }
+  return false;
 }
 
 function parseCoordinates(

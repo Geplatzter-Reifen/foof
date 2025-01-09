@@ -22,11 +22,10 @@ export function TourProgressBar(props: TourProgressBarProps) {
       <Text
         style={{
           position: "absolute",
-          top: "28%",
           left: (progress < 0.18
-            ? `${((progress + 0.04) * 100).toFixed(2)}%`
+            ? `${((progress + 0.015) * 100).toFixed(2)}%`
             : progress < 1
-              ? `${((progress - 0.125) * 100).toFixed(2)}%`
+              ? `${((progress - 0.145) * 100).toFixed(2)}%`
               : "44%") as DimensionValue,
           color: progress < 0.18 ? theme["text-basic-color"] : "#fff",
           fontSize: 19,

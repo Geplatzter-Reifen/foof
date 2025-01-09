@@ -16,6 +16,7 @@ export function isLocationValid(location: MapPoint): boolean {
   );
 }
 
+/** Calculates the distance between two point in km */
 export function calculateDistance(
   location1: MapPoint,
   location2: MapPoint,

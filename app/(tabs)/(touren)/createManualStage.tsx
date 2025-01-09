@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { createManualStage as createManualStageFn } from "@/services/tracking";
 import { ButtonSwitch } from "@/components/Buttons/ButtonSwitch";
+import { isFinished } from "@/services/StageConnection/stageConnection";
+import { getActiveTour } from "@/services/data/tourService";
 import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
 import DateTimeModal from "@/components/Modal/DateTimeModal";
@@ -23,6 +25,7 @@ import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { getAllStagesByTourId } from "@/services/data/stageService";
 import { Location, Stage } from "@/database/model/model";
 import { roundNumber } from "@/utils/utils";
+import React from "react";
 
 type TopTapBarProps = {
   selectedIndex: number;
@@ -153,6 +156,14 @@ export default function CreateManualStage() {
    * If an error occurs, it displays an alert with the error message.
    */
   const submitStage = async () => {
+    if (startDate.current >= endDate.current) {
+      Alert.alert(
+        "Ungültige Eingabe",
+        "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
+      );
+      return;
+    }
+
     try {
       await createManualStageFn(
         stageTitle,
@@ -169,6 +180,10 @@ export default function CreateManualStage() {
       } else {
         Alert.alert("Unknown Error", "An unexpected error occurred.");
       }
+    }
+    const tour = await getActiveTour();
+    if (tour && (await isFinished(tour))) {
+      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
   };
 

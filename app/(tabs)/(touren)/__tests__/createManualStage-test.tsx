@@ -37,10 +37,12 @@ jest.spyOn(Alert, "alert");
 
 describe("CreateManualStage Component", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    const fakeDate = new Date("2024-01-01T12:00:00Z"); // Your desired fake date
-    jest.useFakeTimers(); // Enable Jest's fake timers
-    jest.setSystemTime(fakeDate); // Set the fake system time
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2024-01-01T12:00:00Z")); // Fixed UTC time
+  });
+
+  afterEach(() => {
+    jest.useRealTimers(); // Restore timers
   });
   test("matches snapshot", async () => {
     const view = render(<CreateManualStage />);

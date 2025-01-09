@@ -25,7 +25,7 @@ import {
 } from "@/components/Buttons/MapButtons";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {router, useNavigation} from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);

@@ -4,7 +4,7 @@ import { Layout, useTheme } from "@ui-kitten/components";
 import MapboxGL from "@rnmapbox/maps";
 import Marker from "@/components/Map/Marker";
 import { StyleSheet } from "react-native";
-import StageMapLine from "@/components/Tour/StageMapLine";
+import { StageMapLine } from "@/components/Tour/StageMapLine";
 import { Stage, Location } from "@/database/model/model";
 import { foofTheme } from "@/constants/custom-theme";
 

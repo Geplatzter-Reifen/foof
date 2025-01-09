@@ -1,9 +1,8 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Alert } from "react-native";
 import { render } from "@/test-utils/test-utils";
 import StageMapView from "../StagesMapView";
 import { waitFor } from "@testing-library/react-native";
-import { createTour } from "@/services/data/tourService";
 
 // Mock RNMapbox Maps
 jest.mock("@rnmapbox/maps", () => ({

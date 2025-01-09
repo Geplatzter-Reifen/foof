@@ -119,7 +119,9 @@ describe("TourNameSettingsSection", () => {
 
     // Wait for the input to disappear and the new name to appear
     await waitFor(() => {
-      expect(queryByTestId("@tour-name-input/input")).toBeNull();
+      // Check that the input is no longer visible
+      expect(queryByTestId("@tour-name-input/input")).toBeFalsy();
+      // Check that the new tour name is displayed
       expect(getByText("New Tour Name")).toBeTruthy();
     });
   });

@@ -38,7 +38,7 @@ jest.spyOn(Alert, "alert");
 describe("CreateManualStage Component", () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.setSystemTime(new Date("2024-01-01T12:00:00Z")); // Fixed UTC time
+    jest.setSystemTime(new Date("2024-01-01T13:00:00Z")); // Fixed UTC time
   });
 
   afterEach(() => {

@@ -12,7 +12,13 @@ import {
 
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
-import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
+import {
+  ButtonGroup,
+  Layout,
+  Spinner,
+  Text,
+  Button,
+} from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
 import { getActiveTour } from "@/services/data/tourService";
@@ -28,6 +34,8 @@ import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
+import * as Location from "expo-location";
+import { openSettings } from "expo-linking";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -47,6 +55,8 @@ export default function HomeScreen() {
   const [activeStage, setActiveStage] = useState<Stage | null>();
   const [activeStageId, setActiveStageId] = useState<string | null>();
 
+  const [hasPermission, setHasPermission] = useState<boolean>();
+
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
 
@@ -55,6 +65,8 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const prepare = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      setHasPermission(status === "granted");
       await Notifications.requestPermissionsAsync({
         ios: {
           allowAlert: true,
@@ -168,6 +180,18 @@ export default function HomeScreen() {
     return (
       <Layout level="2" style={styles.loadingContainer}>
         <Spinner size="giant" />
+      </Layout>
+    );
+  }
+
+  if (!hasPermission) {
+    return (
+      <Layout level="2" style={styles.loadingContainer}>
+        <Text>
+          Für die Aufzeichnung benötigt diese App die Erlaubnis, den Standort
+          des Gerätes abzurufen.
+        </Text>
+        <Button onPress={openSettings}>Einstellungen öffnen</Button>
       </Layout>
     );
   }

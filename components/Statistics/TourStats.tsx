@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DateFormat, formatDate } from "@/utils/dateUtils";
 import { ThemeType, useTheme } from "@ui-kitten/components";
 import { Stage, Tour } from "@/database/model/model";
 import {
   getTourAverageSpeedString,
-  getTourDistance,
   getTourDistanceString,
   getTourDurationString,
+  getTourProgress,
 } from "@/services/statisticsService";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { TourProgressBar } from "@/components/Statistics/TourProgressBar";
@@ -24,8 +24,15 @@ function TourStats({
 }) {
   const theme = useTheme();
   const styles = makeStyles(theme);
+  const [progress, setProgress] = useState(0);
 
-  const progress = getTourDistance(stages) / 1001;
+  useEffect(() => {
+    const calculateProgress = async () => {
+      setProgress(await getTourProgress(stages));
+    };
+
+    void calculateProgress();
+  }, [stages]);
 
   return (
     <View style={styles.container}>

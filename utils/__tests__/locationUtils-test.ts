@@ -1,6 +1,7 @@
 import * as locationUtil from "../locationUtils";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import { point, lineString, featureCollection } from "@turf/helpers";
+import { getCorrectedLatitude } from "../locationUtils";
 describe("LocationUtil", () => {
   describe("calculateDistance", () => {
     const wiesbaden = {
@@ -98,6 +99,17 @@ describe("LocationUtil", () => {
       expect(() => locationUtil.calculateBounds(invalidGeoJson)).toThrow(
         "No valid coordinates found",
       );
+    });
+  });
+  describe("getCorrectedLatitude", () => {
+    it("should correct latitudes north of Flensburg", () => {
+      expect(getCorrectedLatitude(60)).toEqual(54.789356);
+    });
+    it("should correct latitudes south of Oberstdorf", () => {
+      expect(getCorrectedLatitude(40)).toEqual(47.408333325);
+    });
+    it("should not correct latitudes between Flensburg and Oberstdorf", () => {
+      expect(getCorrectedLatitude(50.3)).toEqual(50.3);
     });
   });
 });

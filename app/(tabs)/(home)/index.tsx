@@ -8,7 +8,8 @@ import {
   LOCATION_TASK_NAME,
   startAutomaticTracking,
   stopAutomaticTracking,
-} from "@/services/tracking";
+} from "@/services/trackingService";
+
 import MapboxGL, { Camera, UserTrackingMode } from "@rnmapbox/maps";
 
 import { ButtonGroup, Layout, Spinner } from "@ui-kitten/components";
@@ -71,7 +72,6 @@ export default function HomeScreen() {
           setActiveTour(tour);
         }
       });
-
       setLoading(false);
     };
     void prepare();

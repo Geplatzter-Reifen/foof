@@ -7,8 +7,8 @@ import {
 } from "@/services/data/stageService";
 import { StageCardForTest as StageCard } from "../StageCard";
 import { createTour } from "@/services/data/tourService";
-import { createManualStage } from "@/services/tracking";
 import { waitFor } from "@testing-library/react-native";
+import { createManualStage } from "@/services/manualStageInputService";
 
 describe("StageCard", () => {
   beforeEach(() => {
@@ -44,8 +44,8 @@ describe("StageCard", () => {
     const tour = await createTour("Test Tour");
     const manualStage = await createManualStage(
       "Manual Stage",
-      "50.3, 8.9",
-      "50.8, 8.1",
+      { latitude: 50.3, longitude: 8.9 },
+      { latitude: 50.8, longitude: 8.1 },
       new Date("2024-12-03 8:13"),
       new Date("2024-12-03 16:49"),
       tour.id,

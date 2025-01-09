@@ -20,12 +20,10 @@ import type { Position } from "geojson";
 import MapWithMarkers from "@/components/Map/MapWithMarkers";
 import DateTimeModal from "@/components/Modal/DateTimeModal";
 import { MapState } from "@rnmapbox/maps";
-import { getAllLocationsByStageId } from "@/services/data/locationService";
-import { getAllStagesByTourId } from "@/services/data/stageService";
-import { Location, Stage } from "@/database/model/model";
 import { roundNumber } from "@/utils/utils";
 import React from "react";
 import { createManualStage as createManualStageFn } from "@/services/manualStageInputService";
+import { Tour } from "@/database/model/model";
 
 type TopTapBarProps = {
   selectedIndex: number;
@@ -52,6 +50,7 @@ const TopTapBar = ({ selectedIndex, onSelect }: TopTapBarProps) => {
 
 export default function CreateManualStage() {
   const { tourId } = useLocalSearchParams<{ tourId: string }>();
+  const [tour, setTour] = useState<Tour>();
   // changing the title of the page
   const navigation = useNavigation();
   //switches title from plain text to the input field
@@ -76,10 +75,6 @@ export default function CreateManualStage() {
   const zoomLevel = useRef<number>();
   const heading = useRef<number>();
   const pitch = useRef<number>();
-
-  const [stagesWithLocations, setStagesWithLocations] = useState<
-    { stage: Stage; locations: Location[] }[]
-  >([]);
 
   const titleInput = useMemo(
     () => (
@@ -133,21 +128,17 @@ export default function CreateManualStage() {
   ]);
 
   useEffect(() => {
-    const fetchStagesWithLocations = async () => {
-      const stages = await getAllStagesByTourId(tourId);
-      const finishedStages = stages.filter((stage) => {
-        return !stage.isActive;
-      });
-      const upgradedStages = await Promise.all(
-        finishedStages.map(async (stage) => {
-          const locations = await getAllLocationsByStageId(stage.id);
-          return { stage, locations };
-        }),
-      );
-      setStagesWithLocations(upgradedStages); // Set the resolved array
+    const fetchTour = async () => {
+      const tour = await getActiveTour();
+      if (!tour) {
+        Alert.alert("Fehler", "Keine aktive Tour gefunden.");
+        router.back();
+      } else {
+        setTour(tour);
+      }
     };
-    fetchStagesWithLocations();
-  }, [tourId]);
+    fetchTour();
+  }, [router, tourId]);
 
   /**
    * Submits the stage to the database.
@@ -161,29 +152,41 @@ export default function CreateManualStage() {
         "Ungültige Eingabe",
         "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
       );
-      return;
-    }
-
-    try {
-      await createManualStageFn(
-        stageTitle,
-        { latitude: startLatitude.current, longitude: startLongitude.current },
-        { latitude: endLatitude.current, longitude: endLongitude.current },
-        startDate.current,
-        endDate.current,
-        tourId,
-      );
-      router.back();
-    } catch (err) {
-      if (err instanceof Error) {
-        Alert.alert("Error", err.message);
-      } else {
-        Alert.alert("Unknown Error", "An unexpected error occurred.");
+    } else if (
+      startLatitude.current === undefined ||
+      startLongitude.current === undefined
+    ) {
+      Alert.alert("Ungültige Eingabe", "Bitte gib Startkoordinaten an.");
+    } else if (
+      endLatitude.current === undefined ||
+      endLongitude.current === undefined
+    ) {
+      Alert.alert("Ungültige Eingabe", "Bitte gib Endkoordinaten an.");
+    } else {
+      try {
+        await createManualStageFn(
+          stageTitle,
+          {
+            latitude: startLatitude.current,
+            longitude: startLongitude.current,
+          },
+          { latitude: endLatitude.current, longitude: endLongitude.current },
+          startDate.current,
+          endDate.current,
+          tourId,
+        );
+        router.back();
+      } catch (err) {
+        if (err instanceof Error) {
+          Alert.alert("Error", err.message);
+        } else {
+          Alert.alert("Unknown Error", "An unexpected error occurred.");
+        }
       }
-    }
-    const tour = await getActiveTour();
-    if (tour && (await isFinished(tour))) {
-      Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+      const tour = await getActiveTour();
+      if (tour && (await isFinished(tour))) {
+        Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
+      }
     }
   };
 
@@ -291,18 +294,20 @@ export default function CreateManualStage() {
               selectedIndex={selectedTopTapBarIndex}
               onSelect={setSelectedTopTapBarIndex}
             />
-            <MapWithMarkers
-              markerIndex={selectedTopTapBarIndex}
-              onCoordinateChange={setCoordinate}
-              initialStartCoordinate={initialStartCoordinate}
-              initialEndCoordinate={initialEndCoordinate}
-              centerCoordinate={centerCoordinate.current}
-              zoomLevel={zoomLevel.current}
-              heading={heading.current}
-              pitch={pitch.current}
-              onMapIdle={handleMapIdle}
-              stagesWithLocations={stagesWithLocations}
-            />
+            {tour && (
+              <MapWithMarkers
+                markerIndex={selectedTopTapBarIndex}
+                onCoordinateChange={setCoordinate}
+                initialStartCoordinate={initialStartCoordinate}
+                initialEndCoordinate={initialEndCoordinate}
+                centerCoordinate={centerCoordinate.current}
+                zoomLevel={zoomLevel.current}
+                heading={heading.current}
+                pitch={pitch.current}
+                onMapIdle={handleMapIdle}
+                tour={tour}
+              />
+            )}
             <DateTimeModal
               modalVisible={timeModalVisible}
               onClose={() => setTimeModalVisible(false)}

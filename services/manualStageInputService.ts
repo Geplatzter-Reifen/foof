@@ -81,8 +81,8 @@ export async function createManualStage(
     stageName,
     startTime,
     endTime,
-    startingCoordinates!,
-    endCoordinates!,
+    startingCoordinates,
+    endCoordinates,
   );
 }
 

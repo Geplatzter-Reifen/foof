@@ -28,6 +28,7 @@ import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
+import { isFinished } from "@/services/StageConnection/stageConnection";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -120,7 +121,7 @@ export default function HomeScreen() {
 
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
-    const isFinished = await stopAutomaticTracking();
+    await stopAutomaticTracking();
     setActiveStageId(null);
     setActiveStage(null);
     router.navigate({ pathname: "../(touren)" });
@@ -132,7 +133,7 @@ export default function HomeScreen() {
       initial: false,
     });
     setActiveStageId(null);
-    if (isFinished) {
+    if (activeTour && (await isFinished(activeTour))) {
       Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
   };
@@ -192,7 +193,7 @@ export default function HomeScreen() {
           {activeTour && (
             <>
               <EnhancedRenderRouteV2 tour={activeTour} />
-              <EnhancedStageMapLines tour={activeTour} />
+              <EnhancedStageMapLines tour={activeTour} showActive />
             </>
           )}
           {/* Kamera, die dem User folgt */}

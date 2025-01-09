@@ -96,6 +96,14 @@ export const updateFinishedAtFromTour = async (
   });
 };
 
+export const removeFinishedAtFromTour = async (tour: Tour) => {
+  await database.write(async () => {
+    await tour.update(() => {
+      tour.finishedAt = undefined;
+    });
+  });
+};
+
 // DELETE
 
 export const deleteTour = (tourId: string) => {

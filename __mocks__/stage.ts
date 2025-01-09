@@ -6,7 +6,7 @@ type StageMockConstructorArgs = {
   distance: number;
   avgSpeed: number;
   tour: { id: string; name: string };
-  locations: [{ id: string; latitude: number; longitude: number }];
+  locations: { id: string; latitude: number; longitude: number }[];
   collections: any;
 };
 
@@ -47,6 +47,6 @@ export class MockStage {
   distance: number;
   avgSpeed: number;
   tour: { id: string; name: string };
-  locations: [{ id: string; latitude: number; longitude: number }];
+  locations: { id: string; latitude: number; longitude: number }[];
   collections;
 }

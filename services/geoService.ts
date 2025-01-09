@@ -11,7 +11,7 @@ export const fetchPlaceName = async (location: Location): Promise<string> => {
   const accessToken = process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null;
   const lon: number = location.longitude;
   const lat: number = location.latitude;
-  const url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${lon}&latitude=${lat}&access_token=${accessToken}`;
+  const url = `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${lon}&latitude=${lat}&language=de&access_token=${accessToken}`;
 
   try {
     const response = await fetch(url);

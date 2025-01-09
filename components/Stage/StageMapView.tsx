@@ -1,14 +1,14 @@
-import { Location } from "@/database/model/model";
+import { Location, Stage } from "@/database/model/model";
 import MapboxGL from "@rnmapbox/maps";
-import StageMapLine from "@/components/Tour/StageMapLine";
+import { StageMapLine } from "@/components/Tour/StageMapLine";
 import { StyleSheet } from "react-native";
 import customStyles from "@/constants/styles";
 
 export default function StageMapView({
-  stageId,
+  stage,
   locations,
 }: {
-  stageId: string;
+  stage: Stage;
   locations: Location[];
 }) {
   // Find the outermost coordinates & set as bounds
@@ -45,9 +45,7 @@ export default function StageMapView({
         }}
       />
       {/* Linie, die die gefahrene Strecke der Etappe anzeigt */}
-      {locations.length > 1 && (
-        <StageMapLine locations={locations} stageId={stageId} key={stageId} />
-      )}
+      <StageMapLine stage={stage} stageLocations={locations} key={stage.id} />
     </MapboxGL.MapView>
   );
 }

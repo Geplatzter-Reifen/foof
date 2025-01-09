@@ -1,9 +1,8 @@
+import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import TourNameSettingsSection from "@/components/Settings/TourNameSettingsSection";
-import RouteSettingsSection from "@/components/Settings/RouteSettingsSection";
-import React from "react";
 
 // Mock SingleSettingLayout
 jest.mock("@/components/Settings/SingleSettingLayout", () => {
@@ -52,7 +51,9 @@ jest.mock("expo-router", () => ({
 
 // Mock updateTourNameById
 jest.mock("@/services/data/tourService", () => ({
-  updateTourNameById: jest.fn().mockResolvedValue(true),
+  updateTourNameById: jest.fn().mockImplementation(
+    () => new Promise((resolve) => setTimeout(() => resolve(true), 500)), // Simulate delay
+  ),
 }));
 
 jest.mock("@ui-kitten/components", () => {
@@ -61,6 +62,12 @@ jest.mock("@ui-kitten/components", () => {
     ...originalModule,
     Icon: jest.fn(({ name }) => `MockedIcon(${name})`), // Mock Icon rendering
   };
+});
+
+// Reset mocks after each test
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.restoreAllMocks();
 });
 
 describe("TourNameSettingsSection", () => {
@@ -73,6 +80,7 @@ describe("TourNameSettingsSection", () => {
 
     expect(toJSON()).toMatchSnapshot(); // Save the snapshot for initial render
   });
+
   it("displays the initial tour name", async () => {
     const { findByText } = render(
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -98,7 +106,7 @@ describe("TourNameSettingsSection", () => {
     fireEvent.press(editButton);
 
     // Verify input and OK button appear
-    const input = getByTestId("@tour-name-input/input"); // Match UI Kitten's structure
+    const input = await waitFor(() => getByTestId("@tour-name-input/input"));
     const okButton = getByTestId("ok-button");
     expect(input).toBeTruthy();
     expect(okButton).toBeTruthy();
@@ -109,8 +117,10 @@ describe("TourNameSettingsSection", () => {
     // Click the OK button
     fireEvent.press(okButton);
 
-    // Wait for the new name to be set
-    await waitFor(() => expect(queryByTestId("tour-name-input")).toBeNull()); // Input should disappear
-    expect(getByText("New Tour Name")).toBeTruthy(); // New name should appear
+    // Wait for the input to disappear and the new name to appear
+    await waitFor(() => {
+      expect(queryByTestId("@tour-name-input/input")).toBeNull();
+      expect(getByText("New Tour Name")).toBeTruthy();
+    });
   });
 });

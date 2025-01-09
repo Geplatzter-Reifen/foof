@@ -272,13 +272,13 @@ export default function CreateManualStage() {
         return (
           <>
             <CardComponent
-              testID={"start-input"}
               title="Start"
+              testID={"start-input"}
               form={renderStartCoordinateInput}
             />
             <CardComponent
-              testID={"end-input"}
               title="Ende"
+              testID={"end-input"}
               form={renderEndCoordinateInput}
             />
           </>
@@ -348,19 +348,19 @@ export default function CreateManualStage() {
       <ButtonGroup>
         <Button
           style={styles.button}
-          testID={"cancel-button"}
           onPress={() => {
             router.back();
           }}
+          status="basic"
         >
-          <Text category="h1">ABBRECHEN</Text>
+          <Text category="h1" testID={"cancel-button"}>
+            ABBRECHEN
+          </Text>
         </Button>
-        <Button
-          style={styles.button}
-          testID={"ok-button"}
-          onPress={handleCreateButton}
-        >
-          <Text category="h1">ERSTELLEN</Text>
+        <Button style={styles.button} onPress={handleCreateButton}>
+          <Text category="h1" testID={"ok-button"}>
+            ERSTELLEN
+          </Text>
         </Button>
       </ButtonGroup>
     </Layout>

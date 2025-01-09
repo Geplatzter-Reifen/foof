@@ -876,7 +876,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                   ]
                 }
               >
-                19:00
+                19:13
               </Text>
               <RNSVGSvgView
                 align="xMidYMid"
@@ -1540,7 +1540,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                   ]
                 }
               >
-                19:00
+                19:13
               </Text>
               <RNSVGSvgView
                 align="xMidYMid"
@@ -1654,8 +1654,8 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
         {
           "alignItems": "center",
           "alignSelf": "center",
-          "backgroundColor": "#FF6E14",
-          "borderColor": "#FF6E14",
+          "backgroundColor": "#b8b8b8",
+          "borderColor": "#b8b8b8",
           "borderRadius": 4,
           "borderWidth": 1,
           "flex": 1,
@@ -1669,7 +1669,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
           "paddingVertical": 12,
         }
       }
-      testID="cancel-button"
     >
       <Text
         appearance="default"
@@ -1684,7 +1683,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
               "fontWeight": "800",
             },
             {
-              "color": "#FFFFFF",
+              "color": "#202020",
               "fontFamily": "System",
               "fontSize": 14,
               "fontWeight": "bold",
@@ -1692,6 +1691,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
             },
           ]
         }
+        testID="cancel-button"
       >
         ABBRECHEN
       </Text>
@@ -1743,7 +1743,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
           "paddingVertical": 12,
         }
       }
-      testID="ok-button"
     >
       <Text
         appearance="default"
@@ -1766,6 +1765,7 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
             },
           ]
         }
+        testID="ok-button"
       >
         ERSTELLEN
       </Text>

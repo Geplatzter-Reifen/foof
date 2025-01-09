@@ -47,7 +47,7 @@ exports[`TourStats should render correctly 1`] = `
             "backgroundColor": "#FF6E14",
             "borderRadius": 6,
             "height": 27,
-            "width": "19.980019980019982%",
+            "width": "0%",
           }
         }
       />
@@ -65,15 +65,15 @@ exports[`TourStats should render correctly 1`] = `
             "fontWeight": "400",
           },
           {
-            "color": "#fff",
+            "color": "#000000",
             "fontSize": 19,
-            "left": "5.48%",
+            "left": "1.50%",
             "position": "absolute",
           },
         ]
       }
     >
-      20.0%
+      0.0%
     </Text>
   </View>
   <View

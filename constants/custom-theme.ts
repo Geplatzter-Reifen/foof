@@ -60,6 +60,8 @@ export const foofTheme = {
   "color-basic-900": "#171717",
   "color-basic-1000": "#101010",
   "color-basic-1100": "#000000",
+
+  "color-primary-transparent-500": "rgba(255, 110, 20, 0.22)",
 };
 
 export const foofLightTheme = {
@@ -71,7 +73,6 @@ export const foofLightTheme = {
   "color-basic-transparent-400": "rgba(126, 126, 126, 0.32)",
   "color-basic-transparent-500": "rgba(126, 126, 126, 0.4)",
   "color-basic-transparent-600": "rgba(126, 126, 126, 0.48)",
-  "color-primary-transparent-500": "rgba(255, 110, 20, 0.26)",
 
   // Custom background color
   "background-basic-color-1": "$color-basic-100",
@@ -81,7 +82,7 @@ export const foofLightTheme = {
 
   // Custom text colors
   "text-basic-color": "#000000",
-  "text-hint-color": "$color-basic-600",
+  "text-hint-color": "$color-basic-500",
 };
 
 export const foofDarkTheme = {
@@ -114,5 +115,5 @@ export const foofDarkTheme = {
 
   // Custom text colors
   "text-basic-color": "#FFFFFF",
-  "text-hint-color": "$color-basic-500",
+  "text-hint-color": "$color-basic-900",
 };

@@ -41,7 +41,7 @@ export class MockTour {
   isActive: boolean;
   startedAt: number;
   finishedAt?: number;
-  stages;
-  routes;
-  collections;
+  stages: MockStage[];
+  routes: any;
+  collections: any;
 }

@@ -4,16 +4,16 @@ exports[`TourStats should render correctly 1`] = `
 <View
   style={
     {
-      "backgroundColor": "rgba(51, 102, 255, 0.40)",
+      "backgroundColor": "rgba(255, 110, 20, 0.22)",
+      "paddingHorizontal": 20,
+      "paddingVertical": 10,
     }
   }
 >
   <View
     style={
       {
-        "margin": 10,
-        "marginBottom": 0,
-        "padding": 8,
+        "marginVertical": 8,
       }
     }
   >
@@ -33,10 +33,9 @@ exports[`TourStats should render correctly 1`] = `
             "overflow": "hidden",
           },
           {
-            "backgroundColor": "#282828",
+            "backgroundColor": "#eaeaea",
             "borderRadius": 6,
             "height": 27,
-            "indicatorColor": "#FF6E14",
           },
         ]
       }
@@ -48,11 +47,7 @@ exports[`TourStats should render correctly 1`] = `
             "backgroundColor": "#FF6E14",
             "borderRadius": 6,
             "height": 27,
-            "transform": [
-              {
-                "translateX": -0,
-              },
-            ],
+            "width": "19.980019980019982%",
           }
         }
       />
@@ -64,300 +59,417 @@ exports[`TourStats should render correctly 1`] = `
       style={
         [
           {
-            "color": "#FFFFFF",
+            "color": "#000000",
             "fontFamily": "System",
             "fontSize": 15,
             "fontWeight": "400",
           },
           {
-            "color": "#FFFFFF",
+            "color": "#fff",
             "fontSize": 19,
-            "left": "4.00%",
+            "left": "5.48%",
             "position": "absolute",
-            "top": "28%",
           },
         ]
       }
     >
-      0.0%
+      20.0%
     </Text>
   </View>
   <View
     style={
       {
-        "alignItems": "center",
         "flexDirection": "row",
         "height": "auto",
-        "paddingBottom": 10,
-        "paddingHorizontal": 20,
+        "justifyContent": "space-between",
+        "marginTop": 8,
       }
     }
   >
     <View
       style={
         {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flex": 1,
-          "justifyContent": "flex-start",
+          "gap": 4,
         }
       }
+      testID="container"
     >
       <View
+        collapsable={false}
         style={
           {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
           }
         }
       >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
         <Text
-          appearance="default"
-          category="p1"
-          status="basic"
+          allowFontScaling={false}
+          selectable={false}
           style={
             [
               {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
+                "color": undefined,
+                "fontSize": 30,
               },
-              undefined,
+              {
+                "color": "#FF6E14",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
             ]
           }
         >
-          0.0 km
+          
         </Text>
       </View>
-      <View
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
         style={
-          {
-            "alignItems": "center",
-            "flexDirection": "row",
-          }
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 20,
+              "marginHorizontal": 8,
+            },
+          ]
         }
       >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              undefined,
-            ]
-          }
-        >
-          0 m
-        </Text>
-      </View>
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              undefined,
-            ]
-          }
-        >
-          0.0 km/h
-        </Text>
-      </View>
-      <View
-        style={
-          {
-            "alignItems": "center",
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
-        <Text
-          appearance="default"
-          category="p1"
-          status="basic"
-          style={
-            [
-              {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
-              },
-              undefined,
-            ]
-          }
-        >
-          0 kcal
-        </Text>
-      </View>
+        200.0 km
+      </Text>
     </View>
     <View
       style={
         {
-          "alignItems": "flex-start",
+          "alignItems": "center",
           "flex": 1,
-          "justifyContent": "flex-start",
+          "gap": 4,
         }
       }
+      testID="container"
     >
       <View
+        collapsable={false}
         style={
           {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
           }
         }
       >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
         <Text
-          appearance="default"
-          category="p1"
-          status="basic"
+          allowFontScaling={false}
+          selectable={false}
           style={
             [
               {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
+                "color": undefined,
+                "fontSize": 30,
               },
-              undefined,
+              {
+                "color": "#FF6E14",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
             ]
           }
         >
-          03.12.2024
+          
         </Text>
       </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 20,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        11h 0m
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "gap": 4,
+        }
+      }
+      testID="container"
+    >
       <View
+        collapsable={false}
         style={
           {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
           }
         }
       >
-        <View
-          collapsable={false}
-          style={
-            {
-              "transform": [
-                {
-                  "scale": 1,
-                },
-              ],
-            }
-          }
-        >
-          <Text />
-        </View>
         <Text
-          appearance="default"
-          category="p1"
-          status="basic"
+          allowFontScaling={false}
+          selectable={false}
           style={
             [
               {
-                "color": "#FFFFFF",
-                "fontFamily": "System",
-                "fontSize": 15,
-                "fontWeight": "400",
+                "color": undefined,
+                "fontSize": 30,
               },
-              undefined,
+              {
+                "color": "#FF6E14",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": 30,
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
             ]
           }
         >
-          00:00 h
+          
         </Text>
       </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 20,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        18.2 km/h
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "height": "auto",
+        "justifyContent": "space-between",
+        "marginBottom": 3,
+        "marginHorizontal": 2,
+        "marginTop": 14,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+        }
+      }
+      testID="container"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": undefined,
+                "fontSize": 22,
+              },
+              {
+                "color": "#000000",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": "auto",
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Regular",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "400",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 18,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        01.01.2024
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "flex": 1,
+          "flexDirection": "row-reverse",
+        }
+      }
+      testID="container"
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "transform": [
+              {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": undefined,
+                "fontSize": 22,
+              },
+              {
+                "color": "#000000",
+                "textAlign": "center",
+                "textAlignVertical": "center",
+                "width": "auto",
+              },
+              {
+                "fontFamily": "FontAwesome6Free-Regular",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "400",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        appearance="default"
+        category="p1"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 15,
+              "fontWeight": "400",
+            },
+            {
+              "flexShrink": 1,
+              "flexWrap": "wrap",
+              "fontSize": 18,
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+      >
+        --
+      </Text>
     </View>
   </View>
 </View>

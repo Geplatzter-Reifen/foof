@@ -1,19 +1,15 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Alert } from "react-native";
 import { render } from "@/test-utils/test-utils";
 import StageMapView from "../StagesMapView";
 import { waitFor } from "@testing-library/react-native";
-import { StageListForTesting as StageList } from "@/components/Tour/StageList";
 import { createTour } from "@/services/data/tourService";
 
 // Mock RNMapbox Maps
 jest.mock("@rnmapbox/maps", () => ({
-  MapView: ({ children }: { children?: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
+  MapView: (children: ReactElement) => <div>{children}</div>,
   Marker: () => <div>Mocked Marker</div>,
   Camera: () => <div>Mocked Camera</div>,
-  SymbolLayer: () => <div>Mocked SymbolLayer</div>,
 }));
 
 // Mock Router and Navigation

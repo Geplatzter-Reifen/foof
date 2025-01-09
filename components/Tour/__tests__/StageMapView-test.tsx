@@ -7,9 +7,15 @@ import { createTour } from "@/services/data/tourService";
 
 // Mock RNMapbox Maps
 jest.mock("@rnmapbox/maps", () => ({
-  MapView: (children: ReactElement) => <div>{children}</div>,
+  MapView: ({ children }: { children?: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
   Marker: () => <div>Mocked Marker</div>,
   Camera: () => <div>Mocked Camera</div>,
+  locationManager: {
+    start: jest.fn(),
+    stop: jest.fn(),
+  },
 }));
 
 // Mock Router and Navigation
@@ -39,8 +45,9 @@ describe("StageMapView Component", () => {
   });
 
   test("matches snapshot", async () => {
-    const tour = await createTour("Test Tour");
-    const view = await waitFor(() => render(<StageMapView tourId={tour.id} />));
-    expect(view).toMatchSnapshot();
+    const view = await waitFor(() =>
+      render(<StageMapView tourId="test-tour-id" />),
+    );
+    expect(view.toJSON()).toMatchSnapshot();
   });
 });

@@ -7,6 +7,17 @@ import CreateManualStage from "../createManualStage";
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
 
+jest.mock("@rnmapbox/maps", () => ({
+  MapView: ({ children }: { children?: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  Marker: () => <div>Mocked Marker</div>,
+  Camera: () => <div>Mocked Camera</div>,
+  locationManager: {
+    start: jest.fn(),
+    stop: jest.fn(),
+  },
+}));
 jest.mock("expo-router", () => ({
   useLocalSearchParams: () => ({ tourId: "123" }),
   useRouter: () => ({

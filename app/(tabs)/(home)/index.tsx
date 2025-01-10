@@ -18,6 +18,7 @@ import {
   Spinner,
   Text,
   Button,
+  Icon,
 } from "@ui-kitten/components";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import BigRoundButton from "@/components/Buttons/BigRoundButton";
@@ -86,6 +87,7 @@ export default function HomeScreen() {
       });
       setLoading(false);
     };
+
     void prepare();
   }, [activeTour]);
 
@@ -186,10 +188,11 @@ export default function HomeScreen() {
 
   if (!hasPermission) {
     return (
-      <Layout level="2" style={styles.loadingContainer}>
-        <Text>
-          Für die Aufzeichnung benötigt diese App die Erlaubnis, den Standort
-          des Gerätes abzurufen.
+      <Layout level="2" style={styles.permissionContainer}>
+        <Icon name={"location-dot"} style={styles.permissionIcon}></Icon>
+        <Text style={styles.permissionText}>
+          Für die Etappenaufzeichnung benötigt diese App die Erlaubnis, den
+          Standort des Gerätes abzurufen.
         </Text>
         <Button onPress={openSettings}>Einstellungen öffnen</Button>
       </Layout>
@@ -265,6 +268,21 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  permissionIcon: {
+    height: 80,
+    width: "auto",
+  },
+  permissionText: {
+    textAlign: "center",
+    margin: 15,
+    fontSize: 16,
+  },
+  permissionContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 15,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",

@@ -24,6 +24,7 @@ import { roundNumber } from "@/utils/utils";
 import React from "react";
 import { createManualStage as createManualStageFn } from "@/services/manualStageInputService";
 import { Tour } from "@/database/model/model";
+import { validateUndefinedCoordinates } from "@/utils/locationUtils";
 
 type TopTapBarProps = {
   selectedIndex: number;
@@ -147,30 +148,28 @@ export default function CreateManualStage() {
    * If an error occurs, it displays an alert with the error message.
    */
   const submitStage = async () => {
+    const result = validateUndefinedCoordinates(
+      startLatitude.current,
+      startLongitude.current,
+      endLatitude.current,
+      endLongitude.current,
+    );
     if (startDate.current >= endDate.current) {
       Alert.alert(
         "Ungültige Eingabe",
         "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
       );
-    } else if (
-      startLatitude.current === undefined ||
-      startLongitude.current === undefined
-    ) {
-      Alert.alert("Ungültige Eingabe", "Bitte gib Startkoordinaten an.");
-    } else if (
-      endLatitude.current === undefined ||
-      endLongitude.current === undefined
-    ) {
-      Alert.alert("Ungültige Eingabe", "Bitte gib Endkoordinaten an.");
+    } else if (typeof result === "string") {
+      Alert.alert("Ungültige Eingabe", result);
     } else {
       try {
         await createManualStageFn(
           stageTitle,
           {
-            latitude: startLatitude.current,
-            longitude: startLongitude.current,
+            latitude: result.startLatitude,
+            longitude: result.startLongitude,
           },
-          { latitude: endLatitude.current, longitude: endLongitude.current },
+          { latitude: result.endLatitude, longitude: result.endLongitude },
           startDate.current,
           endDate.current,
           tourId,
@@ -178,7 +177,7 @@ export default function CreateManualStage() {
         router.back();
       } catch (err) {
         if (err instanceof Error) {
-          Alert.alert("Error", err.message);
+          Alert.alert("Ungültige Eingabe", err.message);
         } else {
           Alert.alert("Unknown Error", "An unexpected error occurred.");
         }

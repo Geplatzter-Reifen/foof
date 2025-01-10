@@ -255,9 +255,12 @@ export const StageMapLines = ({
   );
 };
 
-const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
-  stages: tour.stages,
-}));
+const enhanceWithTourStages = withObservables(
+  ["tour"],
+  ({ tour }: { tour: Tour }) => ({
+    stages: tour.stages,
+  }),
+);
 
 /**
  * This component is a higher-order component that provides the tour prop to the StageMapLines component.
@@ -265,4 +268,4 @@ const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
  * and re-renders when a stage is added or removed from the tour table.
  * Active stages are observed a second time to update when the stage changes or a Location is added.
  */
-export const EnhancedStageMapLines = enhanceV2(StageMapLines);
+export const EnhancedStageMapLines = enhanceWithTourStages(StageMapLines);

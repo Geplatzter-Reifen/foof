@@ -9,14 +9,17 @@ function validateManualStageInput(
   stageName: string,
   startTime: Date,
   endTime: Date,
-  startingCoordinates: MapPoint | null,
-  endCoordinates: MapPoint | null,
+  startCoordinate: MapPoint,
+  endCoordinate: MapPoint,
 ): void {
   if (!stageName || stageName.trim() === "") {
     throw new Error("Bitte gib einen Tournamen an");
   }
-  if (startingCoordinates === null || endCoordinates === null) {
-    throw new Error("Ungültiges Koordinatenformat");
+  if (
+    startCoordinate.longitude === endCoordinate.longitude &&
+    startCoordinate.latitude === startCoordinate.latitude
+  ) {
+    throw new Error("Die Start- und Endposition dürfen nicht identisch sein.");
   }
   if (endTime < startTime) {
     throw new Error("Start und Endzeit sind ungültig");

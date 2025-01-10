@@ -125,3 +125,38 @@ export function getCoordinateString(loc: Location) {
 
   return `${lat}, ${lon}`;
 }
+
+type Locations = {
+  startLongitude: number;
+  startLatitude: number;
+  endLongitude: number;
+  endLatitude: number;
+};
+
+/**
+ * Validates the coordinates and returns an error message if they are undefined.
+ * Else, it returns the coordinates.
+ */
+export const validateUndefinedCoordinates = (
+  startLongitude: number | undefined,
+  startLatitude: number | undefined,
+  endLongitude: number | undefined,
+  endLatitude: number | undefined,
+): string | Locations => {
+  if (
+    (startLongitude === undefined || startLatitude === undefined) &&
+    (endLongitude === undefined || endLatitude === undefined)
+  ) {
+    return "Bitte gib eine gültige Start- und Endposition an.";
+  } else if (startLongitude === undefined || startLatitude === undefined) {
+    return "Bitte gib eine gültige Startposition an.";
+  } else if (endLongitude === undefined || endLatitude === undefined) {
+    return "Bitte gib eine gültige Endposition an.";
+  }
+  return {
+    startLongitude,
+    startLatitude,
+    endLongitude,
+    endLatitude,
+  };
+};

@@ -30,16 +30,16 @@ describe("validateManualStageInputForTesting", () => {
     ).toThrow("Bitte gib einen Tournamen an");
   });
 
-  it("should throw an error for invalid coordinates", () => {
+  it("should throw an error for identical start and end coordinates", () => {
     expect(() =>
       validateManualStageInputForTesting(
         "Stage Name",
         mockStartTime,
         mockEndTime,
-        null,
+        { latitude: 51.0, longitude: 9.0 },
         { latitude: 51.0, longitude: 9.0 },
       ),
-    ).toThrow("Ungültiges Koordinatenformat");
+    ).toThrow("Die Start- und Endposition dürfen nicht identisch sein.");
   });
 
   it("should throw an error for invalid times", () => {

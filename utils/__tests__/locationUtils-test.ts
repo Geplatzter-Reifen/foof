@@ -2,7 +2,10 @@ import * as locationUtil from "../locationUtils";
 import type { FeatureCollection, LineString, Point } from "geojson";
 import { point, lineString, featureCollection } from "@turf/helpers";
 
-import { getCorrectedLatitude } from "../locationUtils";
+import {
+  getCorrectedLatitude,
+  validateUndefinedCoordinates,
+} from "../locationUtils";
 describe("LocationUtil", () => {
   describe("calculateDistance", () => {
     const wiesbaden = {
@@ -111,6 +114,45 @@ describe("LocationUtil", () => {
     });
     it("should not correct latitudes between Flensburg and Oberstdorf", () => {
       expect(getCorrectedLatitude(50.3)).toEqual(50.3);
+    });
+
+    describe("validateUndefinedCoordinates", () => {
+      it("should return an error message if all coordinates are undefined", () => {
+        const result = validateUndefinedCoordinates(
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        );
+        expect(result).toBe(
+          "Bitte gib eine gültige Start- und Endposition an.",
+        );
+      });
+
+      it("should return an error message if start coordinates are undefined", () => {
+        const result = validateUndefinedCoordinates(undefined, 50.0, 8.0, 50.0);
+        expect(result).toBe("Bitte gib eine gültige Startposition an.");
+      });
+
+      it("should return an error message if end coordinates are undefined", () => {
+        const result = validateUndefinedCoordinates(
+          8.0,
+          50.0,
+          undefined,
+          undefined,
+        );
+        expect(result).toBe("Bitte gib eine gültige Endposition an.");
+      });
+
+      it("should return the coordinates if all are defined", () => {
+        const result = validateUndefinedCoordinates(8.0, 50.0, 9.0, 51.0);
+        expect(result).toEqual({
+          startLongitude: 8.0,
+          startLatitude: 50.0,
+          endLongitude: 9.0,
+          endLatitude: 51.0,
+        });
+      });
     });
   });
 });

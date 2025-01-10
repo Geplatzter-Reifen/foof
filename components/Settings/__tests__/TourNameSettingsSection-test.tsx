@@ -1,13 +1,12 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@/test-utils/test-utils";
-import * as eva from "@eva-design/eva";
 import TourNameSettingsSection from "@/components/Settings/TourNameSettingsSection";
 
 // Mock SingleSettingLayout
 jest.mock("@/components/Settings/SingleSettingLayout", () => {
   const React = require("react");
   const { View, Text } = require("react-native");
-  return ({
+  const SingleSettingLayout = ({
     settingName,
     children,
   }: {
@@ -19,13 +18,15 @@ jest.mock("@/components/Settings/SingleSettingLayout", () => {
       {children}
     </View>
   );
+  SingleSettingLayout.displayName = "SingleSettingLayout";
+  return SingleSettingLayout;
 });
 
 // Mock InlineRow
 jest.mock("@/components/Settings/InlineRow", () => {
   const React = require("react");
   const { View } = require("react-native");
-  return ({
+  const InlineRow = ({
     leftComponent,
     buttons,
   }: {
@@ -37,6 +38,8 @@ jest.mock("@/components/Settings/InlineRow", () => {
       <View>{buttons}</View>
     </View>
   );
+  InlineRow.displayName = "InlineRow";
+  return InlineRow;
 });
 
 // Mock updateTourNameById

@@ -183,7 +183,6 @@ export default function CreateManualStage() {
           Alert.alert("Unknown Error", "An unexpected error occurred.");
         }
       }
-      const tour = await getActiveTour();
       if (tour && (await tourIsFinished(tour))) {
         Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
       }

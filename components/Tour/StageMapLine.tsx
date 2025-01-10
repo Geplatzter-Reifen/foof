@@ -242,7 +242,7 @@ export const StageMapLines = ({
       {stages.map((stage) => {
         if (showActiveStage && stage.isActive) {
           return <EnhancedStageMapLine key={stage.id} stage={stage} />;
-        } else {
+        } else if (!stage.isActive) {
           return (
             <StageMapLine
               key={stage.id}

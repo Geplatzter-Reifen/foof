@@ -37,6 +37,7 @@ import { router, useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 import * as Location from "expo-location";
 import { openSettings } from "expo-linking";
+import { tourIsFinished } from "@/services/StageConnection/stageConnection";
 
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY ?? null);
 
@@ -134,7 +135,7 @@ export default function HomeScreen() {
 
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
-    const isFinished = await stopAutomaticTracking();
+    await stopAutomaticTracking();
     setActiveStageId(null);
     setActiveStage(null);
     router.navigate({ pathname: "../(touren)" });
@@ -146,7 +147,7 @@ export default function HomeScreen() {
       initial: false,
     });
     setActiveStageId(null);
-    if (isFinished) {
+    if (activeTour && (await tourIsFinished(activeTour))) {
       Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }
   };
@@ -219,7 +220,7 @@ export default function HomeScreen() {
           {activeTour && (
             <>
               <EnhancedRenderRouteV2 tour={activeTour} />
-              <EnhancedStageMapLines tour={activeTour} />
+              <EnhancedStageMapLines tour={activeTour} showActiveStage />
             </>
           )}
           {/* Kamera, die dem User folgt */}

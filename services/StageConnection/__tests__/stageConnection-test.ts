@@ -2,7 +2,7 @@ import { createLocationWithRecordedAt } from "../../data/locationService";
 import { createStage } from "../../data/stageService";
 import { createTour, getTourByTourId } from "../../data/tourService";
 import {
-  isFinished,
+  tourIsFinished,
   areHeadAndTailInFlensburgAndOberstdorf,
   isLocationInRadius,
   getFirstLocation,
@@ -41,7 +41,7 @@ describe("stageConnection", () => {
       );
 
       // Act
-      const result = await isFinished(tour);
+      const result = await tourIsFinished(tour);
 
       // Assert
       expect(result).toBeTruthy();
@@ -59,7 +59,7 @@ describe("stageConnection", () => {
       );
 
       // Act
-      const result = await isFinished(tour);
+      const result = await tourIsFinished(tour);
 
       // Assert
       expect(result).toBeTruthy();
@@ -94,7 +94,7 @@ describe("stageConnection", () => {
         wiesbaden,
       );
       // Act
-      const result = await isFinished(tour);
+      const result = await tourIsFinished(tour);
 
       // Assert
       expect(result).toBeTruthy();
@@ -112,7 +112,7 @@ describe("stageConnection", () => {
       );
 
       // Act
-      const status = await isFinished(tour);
+      const status = await tourIsFinished(tour);
 
       // Assert
       expect(status).toBe(false);
@@ -123,7 +123,7 @@ describe("stageConnection", () => {
       // Arrange
 
       // Act
-      const status = isFinished(tour);
+      const status = tourIsFinished(tour);
 
       // Assert
       expect(status).resolves.toBeFalsy();

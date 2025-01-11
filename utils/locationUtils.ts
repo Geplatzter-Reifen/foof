@@ -134,24 +134,25 @@ type Locations = {
 };
 
 /**
- * Validates the coordinates and returns an error message if they are undefined.
- * Else, it returns the coordinates.
+ * Validates the coordinates and throws an error if they are undefined.
+ * @throws Error if coordinates are undefined
+ * @returns The coordinates if they are all defined
  */
 export const validateUndefinedCoordinates = (
   startLongitude: number | undefined,
   startLatitude: number | undefined,
   endLongitude: number | undefined,
   endLatitude: number | undefined,
-): string | Locations => {
+): Locations => {
   if (
     (startLongitude === undefined || startLatitude === undefined) &&
     (endLongitude === undefined || endLatitude === undefined)
   ) {
-    return "Bitte gib eine gültige Start- und Endposition an.";
+    throw new Error("Bitte gib eine gültige Start- und Endposition an.");
   } else if (startLongitude === undefined || startLatitude === undefined) {
-    return "Bitte gib eine gültige Startposition an.";
+    throw new Error("Bitte gib eine gültige Startposition an.");
   } else if (endLongitude === undefined || endLatitude === undefined) {
-    return "Bitte gib eine gültige Endposition an.";
+    throw new Error("Bitte gib eine gültige Endposition an.");
   }
   return {
     startLongitude,

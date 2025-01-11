@@ -148,21 +148,19 @@ export default function CreateManualStage() {
    * If an error occurs, it displays an alert with the error message.
    */
   const submitStage = async () => {
-    const result = validateUndefinedCoordinates(
-      startLatitude.current,
-      startLongitude.current,
-      endLatitude.current,
-      endLongitude.current,
-    );
     if (startDate.current >= endDate.current) {
       Alert.alert(
         "Ungültige Eingabe",
         "Der Startzeitpunkt muss vor dem Endzeitpunkt liegen.",
       );
-    } else if (typeof result === "string") {
-      Alert.alert("Ungültige Eingabe", result);
     } else {
       try {
+        const result = validateUndefinedCoordinates(
+          startLatitude.current,
+          startLongitude.current,
+          endLatitude.current,
+          endLongitude.current,
+        );
         await createManualStageFn(
           stageTitle,
           {

@@ -17,14 +17,13 @@ import { foofDarkTheme, foofLightTheme } from "@/constants/custom-theme";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { fab } from "@fortawesome/free-brands-svg-icons";
 import mockSafeAreaContext from "react-native-safe-area-context/jest/mock";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
 
 // Iconpacks laden
-library.add(far, fas, fab);
+library.add(far, fas);
 
 // ModalService wird verwendet, um die Modal-Positionierung zu steuern
 ModalService.setShouldUseTopInsets = true;

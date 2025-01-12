@@ -9,7 +9,6 @@ import {
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { fab } from "@fortawesome/free-brands-svg-icons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/database/model/database_functions";
@@ -20,7 +19,7 @@ import { default as mapping } from "@/mapping.json";
 import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-library.add(far, fas, fab);
+library.add(far, fas);
 
 // enables additional status bar offset for UI Kitten measurable elements like Modal and Popover
 ModalService.setShouldUseTopInsets = true;

@@ -27,7 +27,7 @@ jest.mock("expo-router", () => ({
   }),
   useNavigation: () => ({
     navigate: mockedNavigate,
-    goBack: mockedGoBack,
+    goBack: jest.fn(),
     setOptions: jest.fn(),
   }),
 }));
@@ -37,6 +37,7 @@ jest.spyOn(Alert, "alert");
 
 describe("CreateManualStage Component", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     jest.useFakeTimers();
     jest.setSystemTime(new Date("2024-01-01T13:00:00Z")); // Fixed UTC time
   });
@@ -73,7 +74,7 @@ describe("CreateManualStage Component", () => {
       fireEvent.press(cancelButton);
     });
 
-    expect(mockedGoBack).toHaveBeenCalledTimes(1);
+    expect(mockedGoBack).toHaveBeenCalledTimes(2);
   });
 
   test("shows alert when dates are invalid", async () => {

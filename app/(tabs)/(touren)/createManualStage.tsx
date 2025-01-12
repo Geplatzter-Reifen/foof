@@ -270,8 +270,16 @@ export default function CreateManualStage() {
       case 0:
         return (
           <>
-            <CardComponent title="Start" form={renderStartCoordinateInput} />
-            <CardComponent title="Ende" form={renderEndCoordinateInput} />
+            <CardComponent
+              title="Start"
+              testID={"start-input"}
+              form={renderStartCoordinateInput}
+            />
+            <CardComponent
+              title="Ende"
+              testID={"end-input"}
+              form={renderEndCoordinateInput}
+            />
           </>
         );
       // Map input
@@ -328,10 +336,10 @@ export default function CreateManualStage() {
         }}
         selectedIndex={selectedIndex}
       >
-        <Button style={styles.button}>
+        <Button style={styles.button} testID={"compass"}>
           <FontAwesomeIcon icon="compass" size={25} />
         </Button>
-        <Button style={styles.button}>
+        <Button style={styles.button} testID={"map-pin"}>
           <FontAwesomeIcon icon="map-pin" size={25} />
         </Button>
       </ButtonSwitch>

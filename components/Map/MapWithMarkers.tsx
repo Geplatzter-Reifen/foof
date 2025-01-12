@@ -4,9 +4,9 @@ import { Layout, useTheme } from "@ui-kitten/components";
 import MapboxGL from "@rnmapbox/maps";
 import Marker from "@/components/Map/Marker";
 import { StyleSheet } from "react-native";
-import { StageMapLine } from "@/components/Tour/StageMapLine";
-import { Stage, Location } from "@/database/model/model";
+import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
 import { foofTheme } from "@/constants/custom-theme";
+import { Tour } from "@/database/model/model";
 
 type MapWithMarkerProps = {
   markerIndex: number;
@@ -18,7 +18,7 @@ type MapWithMarkerProps = {
   zoomLevel?: number;
   heading?: number;
   pitch?: number;
-  stagesWithLocations?: { stage: Stage; locations: Location[] }[];
+  tour: Tour;
 };
 
 function MapWithMarkers({
@@ -31,7 +31,7 @@ function MapWithMarkers({
   zoomLevel,
   heading,
   pitch,
-  stagesWithLocations,
+  tour,
 }: MapWithMarkerProps) {
   const theme = useTheme();
   centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
@@ -140,19 +140,12 @@ function MapWithMarkers({
           />
         )}
         {/** StageMapLine component that displays the lines from already existing stages. */}
-        {stagesWithLocations?.map((stage) => {
-          if (stage.locations.length <= 1) return;
-          return (
-            <StageMapLine
-              locations={stage.locations}
-              stageId={stage.stage.id}
-              key={stage.stage.id}
-              lineColor={foofTheme["color-basic-300"]}
-              circleColor={foofTheme["color-basic-200"]}
-              circleStrokeColor={foofTheme["color-basic-300"]}
-            />
-          );
-        })}
+        <EnhancedStageMapLines
+          tour={tour}
+          lineColor={foofTheme["color-basic-300"]}
+          circleColor={foofTheme["color-basic-200"]}
+          circleStrokeColor={foofTheme["color-basic-300"]}
+        />
       </MapboxGL.MapView>
     </Layout>
   );

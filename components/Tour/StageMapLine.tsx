@@ -59,12 +59,15 @@ const calculateLastPoint = (coord1: number[], coord2: number[]): number[] => {
   return [toDegrees(Lon), toDegrees(Lat)];
 };
 
-type StageMapLineProps = {
-  stage: Stage;
-  stageLocations?: Location[];
+type StageColor = {
   lineColor?: string;
   circleColor?: string;
   circleStrokeColor?: string;
+};
+
+type StageMapLineProps = StageColor & {
+  stage: Stage;
+  stageLocations?: Location[];
 };
 
 /**
@@ -216,23 +219,48 @@ const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
  */
 const EnhancedStageMapLine = enhance(StageMapLine);
 
-const enhanceV2 = withObservables(["tour"], ({ tour }: { tour: Tour }) => ({
-  stages: tour.stages,
-}));
+type StageMapLinesProps = StageColor & {
+  stages: Stage[];
+  showActiveStage?: boolean;
+};
 
-const StageMapLines = ({ stages }: { stages: Stage[] }) => {
+/**
+ * This component renders a StageMapLine component for each stage.
+ * It also renders an EnhancedStageMapLine component for active stages.
+ * Active stages are observed to update when the stage changes or a Location is added.
+ * The Color props are optional and change the appearance of the lines and points for non-active stages.
+ */
+export const StageMapLines = ({
+  stages,
+  showActiveStage = false,
+  lineColor,
+  circleColor,
+  circleStrokeColor,
+}: StageMapLinesProps) => {
   return (
     <>
       {stages.map((stage) => {
-        if (stage.isActive) {
+        if (showActiveStage && stage.isActive) {
           return <EnhancedStageMapLine key={stage.id} stage={stage} />;
-        } else {
-          return <StageMapLine key={stage.id} stage={stage} />;
+        } else if (!stage.isActive) {
+          return (
+            <StageMapLine
+              key={stage.id}
+              {...{ stage, lineColor, circleColor, circleStrokeColor }}
+            />
+          );
         }
       })}
     </>
   );
 };
+
+const enhanceWithTourStages = withObservables(
+  ["tour"],
+  ({ tour }: { tour: Tour }) => ({
+    stages: tour.stages,
+  }),
+);
 
 /**
  * This component is a higher-order component that provides the tour prop to the StageMapLines component.
@@ -240,4 +268,4 @@ const StageMapLines = ({ stages }: { stages: Stage[] }) => {
  * and re-renders when a stage is added or removed from the tour table.
  * Active stages are observed a second time to update when the stage changes or a Location is added.
  */
-export const EnhancedStageMapLines = enhanceV2(StageMapLines);
+export const EnhancedStageMapLines = enhanceWithTourStages(StageMapLines);

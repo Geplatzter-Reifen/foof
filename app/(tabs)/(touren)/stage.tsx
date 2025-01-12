@@ -19,7 +19,7 @@ import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
 import StageMapView from "@/components/Stage/StageMapView";
 import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
-import { isFinished } from "@/services/StageConnection/stageConnection";
+import { tourIsFinished } from "@/services/StageConnection/stageConnection";
 import { getActiveTour } from "@/services/data/tourService";
 
 export default function StageScreen() {
@@ -63,7 +63,7 @@ export default function StageScreen() {
       deleteStage(stageId).then(() => {
         getActiveTour().then(async (tour) => {
           if (tour != null) {
-            isFinished(tour).then((result) => {
+            tourIsFinished(tour).then((result) => {
               if (result) {
                 Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
               }

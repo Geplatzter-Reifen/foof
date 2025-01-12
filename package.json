@@ -11,7 +11,9 @@
     "testDebug": "jest -o --watch --coverage=false",
     "testFinal": "jest",
     "updateSnapshot": "jest -u",
-    "lint": "expo lint",
+    "lint": "npm run lint:expo && npm run lint:tsc",
+    "lint:tsc": "tsc --noEmit",
+    "lint:expo": "expo lint",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js .",
     "postinstall": "patch-package"
   },

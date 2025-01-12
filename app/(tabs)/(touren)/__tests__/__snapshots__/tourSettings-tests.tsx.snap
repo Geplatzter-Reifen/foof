@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TourSettings renders correctly 1`] = `
+<View
+  appearance="default"
+  level="1"
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+      {
+        "flex": 1,
+      },
+    ]
+  }
+  testID="layout"
+>
+  <View
+    appearance="default"
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "minHeight": 56,
+          "paddingHorizontal": 8,
+          "paddingVertical": 8,
+        },
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        {
+          "justifyContent": "space-between",
+        },
+        {
+          "marginTop": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "zIndex": 1,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <Text
+        appearance="default"
+        category="h4"
+        status="basic"
+        style={
+          [
+            {
+              "color": "#000000",
+              "fontFamily": "System",
+              "fontSize": 26,
+              "fontWeight": "800",
+            },
+            undefined,
+          ]
+        }
+      >
+        Touren
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "flexDirection": "row",
+            "zIndex": 1,
+          },
+          undefined,
+        ]
+      }
+    />
+  </View>
+  <View
+    appearance="default"
+    style={
+      [
+        {
+          "backgroundColor": "#b8b8b8",
+          "height": 1,
+        },
+        undefined,
+      ]
+    }
+  />
+  <View
+    appearance="default"
+    level="2"
+    style={
+      [
+        {
+          "backgroundColor": "#eaeaea",
+        },
+        {
+          "flex": 1,
+        },
+      ]
+    }
+    testID="layout"
+  >
+    <View
+      appearance="default"
+      level="2"
+      style={
+        [
+          {
+            "backgroundColor": "#eaeaea",
+          },
+          {
+            "flex": 1,
+          },
+        ]
+      }
+      testID="layout"
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": true,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignSelf": "flex-start",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7e7e7e",
+            "borderRadius": 8,
+            "borderWidth": 1,
+            "marginHorizontal": 10,
+            "marginTop": 10,
+            "opacity": 1,
+            "overflow": "hidden",
+            "paddingHorizontal": 15,
+            "shadowColor": "#000",
+          }
+        }
+        testID="card"
+      >
+        <View
+          style={
+            {
+              "backgroundColor": undefined,
+              "height": 0,
+            }
+          }
+        />
+        <View
+          style={
+            [
+              {
+                "flexShrink": 1,
+              },
+              {
+                "paddingHorizontal": 24,
+                "paddingVertical": 16,
+              },
+            ]
+          }
+        >
+          <TourNameSettingsSection />
+          <RouteSettingsSection />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

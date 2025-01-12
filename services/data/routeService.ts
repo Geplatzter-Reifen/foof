@@ -46,3 +46,16 @@ export const getTourRoute = async (tourId: string) => {
   }
   return route[0];
 };
+
+/** Deletes a Tour's Route
+ * @param tourId The id of the tour
+ */
+export const deleteRoute = async (tourId: string) => {
+  void database.write(async () => {
+    const routes = await database
+      .get<Route>("routes")
+      .query(Q.where("tour_id", tourId))
+      .fetch();
+    routes.forEach((r) => r.destroyPermanently());
+  });
+};

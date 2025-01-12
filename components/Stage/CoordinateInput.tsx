@@ -44,7 +44,6 @@ function CoordinateInput(props: CoordinateInputProps) {
           value={latitude}
           style={styles.input}
           label="Latitude"
-          accessibilityLabel={"Latitude"}
           onChangeText={(nextValue) => {
             if (!isNaN(Number(nextValue))) {
               setLatitude(nextValue.trim());
@@ -62,7 +61,6 @@ function CoordinateInput(props: CoordinateInputProps) {
           value={longitude}
           style={styles.input}
           label="Longitude"
-          accessibilityLabel={"Longitude"}
           onChangeText={(nextValue) => {
             if (!isNaN(Number(nextValue))) {
               setLongitude(nextValue.trim());

@@ -58,14 +58,16 @@ describe("CreateManualStage Component", () => {
     });
 
     await waitFor(() => {
-      expect(view.getByTestId("start-input")).toBeTruthy();
-      expect(view.getByTestId("end-input")).toBeTruthy();
+      expect(view.getByText("Start")).toBeTruthy();
+      expect(view.getByText("Ende")).toBeTruthy();
+      expect(view.getByText("ERSTELLEN")).toBeTruthy();
+      expect(view.getByText("ABBRECHEN")).toBeTruthy();
     });
   });
 
   test("calls back function when cancel button is pressed", async () => {
     const view = render(<CreateManualStage />);
-    const cancelButton = view.getByTestId("cancel-button");
+    const cancelButton = view.getByText("ABBRECHEN");
 
     await act(async () => {
       fireEvent.press(cancelButton);
@@ -75,8 +77,8 @@ describe("CreateManualStage Component", () => {
   });
 
   test("shows alert when dates are invalid", async () => {
-    const { getByTestId } = render(<CreateManualStage />);
-    const createButton = getByTestId("ok-button");
+    const { getByText } = render(<CreateManualStage />);
+    const createButton = getByText("ERSTELLEN");
 
     await act(async () => {
       fireEvent.press(createButton);

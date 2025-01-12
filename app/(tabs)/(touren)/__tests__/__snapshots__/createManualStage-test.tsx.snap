@@ -501,7 +501,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                 }
               >
                 <TextInput
-                  accessibilityLabel="Latitude"
                   appearance="default"
                   editable={true}
                   keyboardType="numeric"
@@ -624,7 +623,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                 }
               >
                 <TextInput
-                  accessibilityLabel="Longitude"
                   appearance="default"
                   editable={true}
                   keyboardType="numeric"
@@ -1165,7 +1163,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                 }
               >
                 <TextInput
-                  accessibilityLabel="Latitude"
                   appearance="default"
                   editable={true}
                   keyboardType="numeric"
@@ -1288,7 +1285,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
                 }
               >
                 <TextInput
-                  accessibilityLabel="Longitude"
                   appearance="default"
                   editable={true}
                   keyboardType="numeric"
@@ -1691,7 +1687,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
             },
           ]
         }
-        testID="cancel-button"
       >
         ABBRECHEN
       </Text>
@@ -1765,7 +1760,6 @@ exports[`CreateManualStage Component matches snapshot 1`] = `
             },
           ]
         }
-        testID="ok-button"
       >
         ERSTELLEN
       </Text>

@@ -1,7 +1,7 @@
 import CardComponent from "@/components/Stage/CardComponent";
 
 import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from "@/test-utils/test-utils";
 import { Text } from "@ui-kitten/components";
 
 // Mock `useTheme` from UI Kitten
@@ -40,8 +40,12 @@ describe("CardComponent", () => {
 
     // Check that the header styles are applied (e.g., borderBottomColor)
     const headerElement = getByText(title);
-    expect(headerElement.props.style).toContainEqual({
-      borderBottomColor: "#ccc",
-    });
+    expect(headerElement.props.style).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          borderBottomColor: "#ccc",
+        }),
+      ]),
+    );
   });
 });

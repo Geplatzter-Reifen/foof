@@ -353,14 +353,10 @@ export default function CreateManualStage() {
           }}
           status="basic"
         >
-          <Text category="h1" testID={"cancel-button"}>
-            ABBRECHEN
-          </Text>
+          <Text category="h1">ABBRECHEN</Text>
         </Button>
         <Button style={styles.button} onPress={handleCreateButton}>
-          <Text category="h1" testID={"ok-button"}>
-            ERSTELLEN
-          </Text>
+          <Text category="h1">ERSTELLEN</Text>
         </Button>
       </ButtonGroup>
     </Layout>

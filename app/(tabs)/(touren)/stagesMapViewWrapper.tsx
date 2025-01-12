@@ -5,6 +5,9 @@ import StagesMapView from "../../../components/Tour/StagesMapView";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import renderBackAction from "@/components/TopNavigation/renderBackAction";
 
+type localParams = {
+  tourId?: string;
+};
 /**
  * This wrapper component acts as a bridge to inject the `tourId` parameter into the `StagesMapView` component.
  * It extracts the `tourId` parameter from the URL using `useLocalSearchParams`.
@@ -15,10 +18,6 @@ import renderBackAction from "@/components/TopNavigation/renderBackAction";
  * - An error message if `tourId` is missing.
  * - The `StagesMapView` component with the `tourId` prop if it's available.
  */
-type localParams = {
-  tourId?: string;
-};
-
 export default function StagesMapViewWrapper() {
   const insets = useSafeAreaInsets();
   const { tourId } = useLocalSearchParams<localParams>(); // Get tourId from URL

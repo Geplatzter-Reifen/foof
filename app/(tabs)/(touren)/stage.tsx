@@ -17,8 +17,8 @@ import { getAllLocationsByStageId } from "@/services/data/locationService";
 import { Location, Stage } from "@/database/model/model";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import StageStatCard from "@/components/Stage/StageStatCard";
-import StageMapView from "@/components/Stage/StageMapView";
-import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
+import StageMapView from "@/components/Map/StageMapView";
+import ConfirmDialog from "@/components/Modal/ConfirmDialog";
 import { tourIsFinished } from "@/services/StageConnection/stageConnection";
 import { getActiveTour } from "@/services/data/tourService";
 

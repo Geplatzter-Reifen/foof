@@ -10,7 +10,7 @@ import {
 import { StyleSheet } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import renderBackAction from "@/components/TopNavigation/renderBackAction";
+import renderBackAction from "@/components/Navigation/renderBackAction";
 import customStyles from "@/constants/styles";
 import TourNameSettingsSection from "@/components/Settings/TourNameSettingsSection";
 import RouteSettingsSection from "@/components/Settings/RouteSettingsSection";

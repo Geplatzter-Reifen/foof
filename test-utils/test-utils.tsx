@@ -5,7 +5,7 @@ import {
   RenderOptions,
   RenderResult,
 } from "@testing-library/react-native";
-import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
+import { FontAwesomeIconsPack } from "@/components/Icons/iconRegistry";
 import { mapping } from "@eva-design/eva";
 import {
   IconRegistry,

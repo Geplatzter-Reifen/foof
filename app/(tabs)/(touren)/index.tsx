@@ -16,7 +16,7 @@ import {
 import { withObservables } from "@nozbe/watermelondb/react";
 import RNFadedScrollView from "rn-faded-scrollview";
 import { hexToRgba } from "@/utils/colorUtils";
-import { StageList } from "@/components/Tour/StageList";
+import { StageList } from "@/components/Stage/StageList";
 import TourStats from "@/components/Statistics/TourStats";
 import { getActiveTour } from "@/services/data/tourService";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";

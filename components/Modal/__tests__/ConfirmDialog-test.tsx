@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@/test-utils/test-utils";
-import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/Modal/ConfirmDialog";
 
 describe("ConfirmDialog", () => {
   it("is not visible when requested", () => {

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Input, Layout } from "@ui-kitten/components";
-import DateTimeButton from "@/components/Modal/DateTimeButton";
+import DateTimeButton from "@/components/Buttons/DateTimeButton";
 import { useState } from "react";
 import { toStr } from "@/utils/utils";
 

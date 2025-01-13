@@ -1,6 +1,6 @@
 import { createTour } from "@/services/data/tourService";
 import { render } from "@/test-utils/test-utils";
-import { StageListForTesting as StageList } from "@/components/Tour/StageList";
+import { StageListForTesting as StageList } from "@/components/Stage/StageList";
 import {
   createStage,
   getAllStagesByTourId,

@@ -3,7 +3,7 @@ import { Stage, Route } from "@/database/model/model";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { getAllStagesByTourIdQuery } from "@/services/data/stageService";
 import MapboxGL from "@rnmapbox/maps";
-import { StageMapLine } from "@/components/Tour/StageMapLine";
+import { StageMapLine } from "@/components/Map/StageMapLine";
 import { RenderRoute } from "@/components/Route/RenderRoute";
 import { getTourRoute } from "@/services/data/routeService";
 

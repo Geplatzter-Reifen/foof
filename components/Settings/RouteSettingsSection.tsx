@@ -25,7 +25,7 @@ import * as FileSystem from "expo-file-system";
 import * as Gjv from "geojson-validation";
 import SingleSettingLayout from "@/components/Settings/SingleSettingLayout";
 import InlineRow from "@/components/Settings/InlineRow";
-import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
+import ConfirmDialog from "@/components/Modal/ConfirmDialog";
 
 /**
  * RouteSettingsSection

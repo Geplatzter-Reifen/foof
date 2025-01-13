@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@/test-utils/test-utils";
-import DateTimeButton from "@/components/Modal/DateTimeButton";
+import DateTimeButton from "@/components/Buttons/DateTimeButton";
 import { formatDate, DateFormat } from "@/utils/dateUtils";
 
 describe("DateTimeButton Component", () => {

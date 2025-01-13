@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Button, Layout, Text, Modal, Card } from "@ui-kitten/components";
-import DateTimeButton from "@/components/Modal/DateTimeButton";
+import DateTimeButton from "@/components/Buttons/DateTimeButton";
 import { useState } from "react";
 import customStyles from "@/constants/styles";
 

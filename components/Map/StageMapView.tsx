@@ -1,6 +1,6 @@
 import { Location, Stage } from "@/database/model/model";
 import MapboxGL from "@rnmapbox/maps";
-import { StageMapLine } from "@/components/Tour/StageMapLine";
+import { StageMapLine } from "@/components/Map/StageMapLine";
 import { StyleSheet } from "react-native";
 import customStyles from "@/constants/styles";
 

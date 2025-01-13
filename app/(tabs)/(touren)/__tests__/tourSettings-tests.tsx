@@ -2,7 +2,7 @@ import React from "react";
 import { render, cleanup } from "@/test-utils/test-utils";
 import TourSettings from "./../tourSettings"; // Adjust the path as needed
 
-jest.mock("@/components/TopNavigation/renderBackAction", () => jest.fn());
+jest.mock("@/components/Navigation/renderBackAction", () => jest.fn());
 jest.mock(
   "@/components/Settings/TourNameSettingsSection",
   () => "TourNameSettingsSection",

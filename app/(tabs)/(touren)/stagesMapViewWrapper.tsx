@@ -1,9 +1,9 @@
 // Wrapper component that extracts `tourId` and passes it as a prop
 import { useLocalSearchParams } from "expo-router";
 import { Divider, Layout, Text, TopNavigation } from "@ui-kitten/components";
-import StagesMapView from "../../../components/Tour/StagesMapView";
+import StagesMapView from "../../../components/Map/StagesMapView";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import renderBackAction from "@/components/TopNavigation/renderBackAction";
+import renderBackAction from "@/components/Navigation/renderBackAction";
 
 type localParams = {
   tourId?: string;

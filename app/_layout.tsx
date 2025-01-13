@@ -12,7 +12,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { initializeDatabase } from "@/database/model/database_functions";
-import { FontAwesomeIconsPack } from "@/components/Font/fontAwesome";
+import { FontAwesomeIconsPack } from "@/components/Icons/iconRegistry";
 import * as Font from "expo-font";
 import Icon from "@expo/vector-icons/FontAwesome6";
 import { default as mapping } from "@/mapping.json";

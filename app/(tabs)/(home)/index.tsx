@@ -34,7 +34,7 @@ import {
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useNavigation } from "expo-router";
-import { EnhancedStageMapLines } from "@/components/Tour/StageMapLine";
+import { EnhancedStageMapLines } from "@/components/Map/StageMapLine";
 import * as Location from "expo-location";
 import { openSettings } from "expo-linking";
 import { tourIsFinished } from "@/services/StageConnection/stageConnection";

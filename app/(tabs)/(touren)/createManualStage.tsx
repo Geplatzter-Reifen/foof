@@ -210,10 +210,10 @@ export default function CreateManualStage() {
   const handleCreateButton = async () => {
     switch (selectedIndex) {
       case 0:
-        await submitStage();
+        setTimeModalVisible(true);
         break;
       case 1:
-        setTimeModalVisible(true);
+        await submitStage();
         break;
     }
   };
@@ -266,24 +266,8 @@ export default function CreateManualStage() {
   /** Render the content based on the selected index */
   const renderContent = () => {
     switch (selectedIndex) {
-      // Coordinate input
-      case 0:
-        return (
-          <>
-            <CardComponent
-              title="Start"
-              testID={"start-input"}
-              form={renderStartCoordinateInput}
-            />
-            <CardComponent
-              title="Ende"
-              testID={"end-input"}
-              form={renderEndCoordinateInput}
-            />
-          </>
-        );
       // Map input
-      case 1:
+      case 0:
         const initialStartCoordinate: Position = [
           startLongitude.current ?? NaN,
           startLatitude.current ?? NaN,
@@ -320,6 +304,22 @@ export default function CreateManualStage() {
               onEndDateChange={(date) => (endDate.current = date)}
               initialStartDate={startDate.current}
               initialEndDate={endDate.current}
+            />
+          </>
+        );
+      // Coordinate input
+      case 1:
+        return (
+          <>
+            <CardComponent
+              title="Start"
+              testID={"start-input"}
+              form={renderStartCoordinateInput}
+            />
+            <CardComponent
+              title="Ende"
+              testID={"end-input"}
+              form={renderEndCoordinateInput}
             />
           </>
         );

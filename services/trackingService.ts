@@ -10,7 +10,7 @@ import {
   setStageDistance,
   startStage,
 } from "@/services/data/stageService";
-import { createLocation } from "@/services/data/locationService";
+import { createLocationWithRecordedAt } from "@/services/data/locationService";
 import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
 
@@ -105,10 +105,11 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
   };
-  await createLocation(
+  await createLocationWithRecordedAt(
     activeStage.id,
     currentLocation.latitude,
     currentLocation.longitude,
+    location.timestamp,
   );
 
   if (lastLocation && lastActiveStageId === activeStage.id) {
@@ -126,23 +127,30 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   lastLocation = location;
 }
 
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
-  if (error) {
-    console.error("Error in location task:", error.message);
-    throw error;
-  }
+type TaskData = {
+  locations?: LocationObject[];
+};
 
-  // @ts-ignore
-  if (data && data.locations) {
-    // @ts-ignore
-    const [location]: LocationObject[] = data.locations;
-    try {
-      await processLocationUpdate(location);
-    } catch (err) {
-      // @ts-ignore
-      console.error("Error processing location update:", err.message);
+TaskManager.defineTask<TaskData>(
+  LOCATION_TASK_NAME,
+  async ({ data, error }) => {
+    if (error) {
+      console.error("Error in location task:", error.message);
+      throw error;
     }
-  } else {
-    console.warn("No data received in location task.");
-  }
-});
+
+    if (data.locations) {
+      for (const location of data.locations) {
+        try {
+          await processLocationUpdate(location);
+        } catch (err) {
+          if (err instanceof Error) {
+            console.error("Error processing location update:", err.message);
+          }
+        }
+      }
+    } else {
+      console.warn("No data received in location task.");
+    }
+  },
+);

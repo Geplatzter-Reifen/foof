@@ -336,11 +336,11 @@ export default function CreateManualStage() {
         }}
         selectedIndex={selectedIndex}
       >
-        <Button style={styles.button} testID={"compass"}>
-          <FontAwesomeIcon icon="compass" size={25} />
-        </Button>
         <Button style={styles.button} testID={"map-pin"}>
           <FontAwesomeIcon icon="map-pin" size={25} />
+        </Button>
+        <Button style={styles.button} testID={"compass"}>
+          <FontAwesomeIcon icon="compass" size={25} />
         </Button>
       </ButtonSwitch>
       <Layout style={styles.cardsContainer} level="2">

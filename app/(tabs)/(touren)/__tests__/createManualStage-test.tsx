@@ -78,9 +78,13 @@ describe("CreateManualStage Component", () => {
   });
 
   test("shows alert when dates are invalid", async () => {
-    const { getByText } = render(<CreateManualStage />);
+    const { getByText, getByTestId } = render(<CreateManualStage />);
     const createButton = getByText("ERSTELLEN");
 
+    const compassButton = getByTestId("compass");
+    await act(async () => {
+      fireEvent.press(compassButton);
+    });
     await act(async () => {
       fireEvent.press(createButton);
     });

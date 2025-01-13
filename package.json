@@ -1,7 +1,7 @@
 {
   "name": "1001km",
   "main": "expo-router/entry",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",

@@ -210,10 +210,10 @@ export default function CreateManualStage() {
   const handleCreateButton = async () => {
     switch (selectedIndex) {
       case 0:
-        await submitStage();
+        setTimeModalVisible(true);
         break;
       case 1:
-        setTimeModalVisible(true);
+        await submitStage();
         break;
     }
   };
@@ -266,24 +266,8 @@ export default function CreateManualStage() {
   /** Render the content based on the selected index */
   const renderContent = () => {
     switch (selectedIndex) {
-      // Coordinate input
-      case 0:
-        return (
-          <>
-            <CardComponent
-              title="Start"
-              testID={"start-input"}
-              form={renderStartCoordinateInput}
-            />
-            <CardComponent
-              title="Ende"
-              testID={"end-input"}
-              form={renderEndCoordinateInput}
-            />
-          </>
-        );
       // Map input
-      case 1:
+      case 0:
         const initialStartCoordinate: Position = [
           startLongitude.current ?? NaN,
           startLatitude.current ?? NaN,
@@ -323,6 +307,22 @@ export default function CreateManualStage() {
             />
           </>
         );
+      // Coordinate input
+      case 1:
+        return (
+          <>
+            <CardComponent
+              title="Start"
+              testID={"start-input"}
+              form={renderStartCoordinateInput}
+            />
+            <CardComponent
+              title="Ende"
+              testID={"end-input"}
+              form={renderEndCoordinateInput}
+            />
+          </>
+        );
       default:
         return null;
     }
@@ -336,11 +336,11 @@ export default function CreateManualStage() {
         }}
         selectedIndex={selectedIndex}
       >
-        <Button style={styles.button} testID={"compass"}>
-          <FontAwesomeIcon icon="compass" size={25} />
-        </Button>
         <Button style={styles.button} testID={"map-pin"}>
           <FontAwesomeIcon icon="map-pin" size={25} />
+        </Button>
+        <Button style={styles.button} testID={"compass"}>
+          <FontAwesomeIcon icon="compass" size={25} />
         </Button>
       </ButtonSwitch>
       <Layout style={styles.cardsContainer} level="2">

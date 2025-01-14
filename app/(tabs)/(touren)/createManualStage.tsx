@@ -255,7 +255,7 @@ export default function CreateManualStage() {
    * Updates the camera properties based on the current map state.
    * @param state - The current state of the map.
    */
-  const handleMapIdle = (state: MapState) => {
+  const handleCameraChanged = (state: MapState) => {
     const properties = state.properties;
     centerCoordinate.current = properties.center;
     zoomLevel.current = properties.zoom;
@@ -292,7 +292,7 @@ export default function CreateManualStage() {
                 zoomLevel={zoomLevel.current}
                 heading={heading.current}
                 pitch={pitch.current}
-                onMapIdle={handleMapIdle}
+                onCameraChanged={handleCameraChanged}
                 tour={tour}
               />
             )}

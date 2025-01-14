@@ -32,7 +32,7 @@ export default function StageMapView({
       scaleBarEnabled={false}
       style={{ ...styles.map, ...customStyles.basicCard }}
     >
-      {/* Kamera hält sich an die Bounds */}
+      {/* Camera stays within bounds */}
       <MapboxGL.Camera
         minZoomLevel={5}
         animationMode="none"
@@ -44,7 +44,7 @@ export default function StageMapView({
           paddingRight: 60,
         }}
       />
-      {/* Linie, die die gefahrene Strecke der Etappe anzeigt */}
+      {/* line that shows the driven route of the stage */}
       <StageMapLine stage={stage} stageLocations={locations} key={stage.id} />
     </MapboxGL.MapView>
   );

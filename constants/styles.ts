@@ -6,12 +6,12 @@ const customStyles = StyleSheet.create({
     borderWidth: 0,
   },
   basicShadow: {
-    // Schatten für iOS
+    // shadow for iOS
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 2,
-    // Schatten für Android
+    // shadow for Android
     elevation: 3,
   },
 });

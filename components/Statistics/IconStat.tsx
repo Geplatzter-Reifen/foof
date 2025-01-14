@@ -19,7 +19,7 @@ export default function IconStat(props: IconStatPropType) {
   const centered = props.centered ?? false;
   const reversed = props.reversed ?? false;
 
-  // Iconfarbe wird durch den EvaStatus (oder "text") bestimmt
+  // icon color is determined by the EvaStatus (or "text")
   const theme = useTheme();
   function getColorStringByStatus(iconStatus: EvaStatus): string {
     switch (iconStatus) {

@@ -21,7 +21,7 @@ const ShareIcon = (props?: Partial<ImageProps>): IconElement => (
   />
 );
 
-// Header der Kachel: Titel, Datum, Teilen-Button
+// header of the tile: title, date, share button
 const Header = ({ date, stage }: { date: string; stage: Stage }) => {
   return (
     <View style={styles.header}>
@@ -43,7 +43,7 @@ const Header = ({ date, stage }: { date: string; stage: Stage }) => {
   );
 };
 
-// Start- und Zieladressen, Start- und Endzeitpunkt
+// start und destination addresses, start and end times
 const StartEnd = ({
   startName,
   endName,
@@ -87,7 +87,7 @@ const StartEnd = ({
   );
 };
 
-// Distanz, Dauer, Durchschnittsgeschwindigkeit
+// distance, duration, average speed
 const Stats = ({
   distance,
   duration,
@@ -119,7 +119,7 @@ export default function StageStatCard({
   stage: Stage;
   locations: Location[];
 }) {
-  // Display Strings für das Startdatum, Dauer, Distanz und Durchschnittsgeschwindigkeit
+  // display strings for the start date, duration, distance and average speed
   const date: string = formatDate(stage.startedAt, DateFormat.DATE);
   const durationString: string = getStageDurationString(stage);
   const distanceString: string = getStageDistanceString(stage);

@@ -24,7 +24,7 @@ export default function TourSettings() {
   return (
     <Layout testID="layout" style={styles.container}>
       <TopNavigation
-        title={() => <Text category={"h4"}>Touren</Text>}
+        title={() => <Text category={"h4"}>Toureinstellungen</Text>}
         accessoryLeft={renderBackAction}
         alignment={"center"}
         style={{ marginTop: insets.top }}

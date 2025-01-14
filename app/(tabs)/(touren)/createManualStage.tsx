@@ -156,8 +156,8 @@ export default function CreateManualStage() {
     } else {
       try {
         const result = validateUndefinedCoordinates(
-          startLatitude.current,
           startLongitude.current,
+          startLatitude.current,
           endLatitude.current,
           endLongitude.current,
         );

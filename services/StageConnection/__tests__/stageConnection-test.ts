@@ -1,4 +1,4 @@
-import { createLocationWithRecordedAt } from "../../data/locationService";
+import { createLocation } from "../../data/locationService";
 import { createStage } from "../../data/stageService";
 import { createTour, getTourByTourId } from "../../data/tourService";
 import {
@@ -260,13 +260,13 @@ async function createStageWithTwoLocations(
     true,
   );
 
-  await createLocationWithRecordedAt(
+  await createLocation(
     stage.id,
     start.latitude,
     start.longitude,
     new Date("2024-01-01T20:30:00.000").getTime(),
   );
-  await createLocationWithRecordedAt(
+  await createLocation(
     stage.id,
     stop.latitude,
     stop.longitude,

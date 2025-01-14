@@ -2,12 +2,18 @@ import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
 import { Location, Stage } from "@/database/model/model";
 
-// CREATE
-
+/**
+ * Creates a new location for a stage
+ * @param stageId - The id of the stage
+ * @param latitude - The latitude of the location
+ * @param longitude - The longitude of the location
+ * @param recordedAt - If not provided, the current time is used
+ */
 export const createLocation = async (
   stageId: string,
   latitude: number,
   longitude: number,
+  recordedAt?: number,
 ): Promise<Location> => {
   return database.write(async () => {
     const stage = await database.get<Stage>("stages").find(stageId);
@@ -15,24 +21,7 @@ export const createLocation = async (
       location.stage.set(stage);
       location.latitude = latitude;
       location.longitude = longitude;
-      location.recordedAt = Date.now();
-    });
-  });
-};
-
-export const createLocationWithRecordedAt = async (
-  stageId: string,
-  latitude: number,
-  longitude: number,
-  recordedAt: number,
-): Promise<Location> => {
-  return database.write(async () => {
-    const stage = await database.get<Stage>("stages").find(stageId);
-    return database.get<Location>("locations").create((location) => {
-      location.stage.set(stage);
-      location.latitude = latitude;
-      location.longitude = longitude;
-      location.recordedAt = recordedAt;
+      location.recordedAt = recordedAt ?? Date.now();
     });
   });
 };

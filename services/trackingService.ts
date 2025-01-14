@@ -100,10 +100,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   if (!activeStage) {
     throw new Error("No active stage set");
   }
-  const currentLocation: MapPoint = {
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
-  };
+  const currentLocation = toMapPoint(location);
   await activeStage.addLocation(
     currentLocation.latitude,
     currentLocation.longitude,
@@ -111,10 +108,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   );
 
   if (lastLocation && lastActiveStageId === activeStage.id) {
-    const latestLocation: MapPoint = {
-      latitude: lastLocation.coords.latitude,
-      longitude: lastLocation.coords.longitude,
-    };
+    const latestLocation = toMapPoint(lastLocation);
     const updatedDistance =
       activeStage.distance + calculateDistance(latestLocation, currentLocation);
     await setStageDistance(activeStage.id, updatedDistance);
@@ -123,6 +117,55 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
   lastActiveStageId = activeStage.id;
   lastLocation = location;
+}
+
+// Process multiple location updates
+async function processLocationUpdates(
+  locations: LocationObject[],
+): Promise<void> {
+  if (locations.length === 0) {
+    return;
+  }
+  if (locations.length === 1) {
+    await processLocationUpdate(locations[0]);
+    return;
+  }
+  const activeStage: Stage | null = await getActiveStage();
+  if (!activeStage) {
+    throw new Error("No active stage set");
+  }
+  const sortedLocations = locations.sort((a, b) => a.timestamp - b.timestamp);
+
+  let distance = activeStage.distance;
+  const updateDistancePromise = async () => {
+    let lastLocationMapPoint = toMapPoint(sortedLocations[0]);
+    if (lastLocation && lastActiveStageId === activeStage.id) {
+      lastLocationMapPoint = toMapPoint(lastLocation);
+    }
+    for (const location of sortedLocations) {
+      const locationMapPoint = toMapPoint(location);
+      distance += calculateDistance(lastLocationMapPoint, locationMapPoint);
+      lastLocationMapPoint = locationMapPoint;
+    }
+  };
+
+  await Promise.all([
+    activeStage.addLocations(sortedLocations),
+    updateDistancePromise(),
+  ]);
+
+  await setStageDistance(activeStage.id, distance);
+
+  await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
+  lastActiveStageId = activeStage.id;
+  lastLocation = sortedLocations[sortedLocations.length - 1];
+}
+
+function toMapPoint(location: LocationObject): MapPoint {
+  return {
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+  };
 }
 
 type TaskData = {
@@ -138,15 +181,7 @@ TaskManager.defineTask<TaskData>(
     }
 
     if (data.locations) {
-      for (const location of data.locations) {
-        try {
-          await processLocationUpdate(location);
-        } catch (err) {
-          if (err instanceof Error) {
-            console.error("Error processing location update:", err.message);
-          }
-        }
-      }
+      await processLocationUpdates(data.locations);
     } else {
       console.warn("No data received in location task.");
     }

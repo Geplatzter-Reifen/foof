@@ -7,6 +7,7 @@ import {
   children,
 } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
+import { LocationObject } from "expo-location";
 
 class Tour extends Model {
   static table = "tours"; // bind the model to specific table
@@ -87,6 +88,24 @@ class Stage extends Model {
       location.recordedAt = recordedAt ?? Date.now();
       location.stage.set(this);
     });
+  }
+  // @ts-ignore
+  @writer async addLocations(locations: LocationObject[]) {
+    const locationCollection = this.collections.get<Location>("locations");
+    const batchActions: Location[] = [];
+
+    for (const location of locations) {
+      batchActions.push(
+        locationCollection.prepareCreate((dbLocation) => {
+          dbLocation.latitude = location.coords.latitude;
+          dbLocation.longitude = location.coords.longitude;
+          dbLocation.recordedAt = location.timestamp;
+          dbLocation.stage.set(this);
+        }),
+      );
+    }
+
+    return this.database.batch(batchActions);
   }
 }
 

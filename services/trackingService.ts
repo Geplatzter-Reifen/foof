@@ -10,7 +10,6 @@ import {
   setStageDistance,
   startStage,
 } from "@/services/data/stageService";
-import { createLocation } from "@/services/data/locationService";
 import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
 
@@ -105,8 +104,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
   };
-  await createLocation(
-    activeStage.id,
+  await activeStage.addLocation(
     currentLocation.latitude,
     currentLocation.longitude,
     location.timestamp,

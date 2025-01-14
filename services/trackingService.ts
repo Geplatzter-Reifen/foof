@@ -181,7 +181,13 @@ TaskManager.defineTask<TaskData>(
     }
 
     if (data.locations) {
-      await processLocationUpdates(data.locations);
+      try {
+        await processLocationUpdates(data.locations);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Error processing locations update:", err.message);
+        }
+      }
     } else {
       console.warn("No data received in location task.");
     }

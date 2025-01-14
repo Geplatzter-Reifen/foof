@@ -8,6 +8,20 @@ import {
   getTourDurationString,
 } from "@/services/statisticsService";
 import { formatDate, DateFormat } from "@/utils/dateUtils";
+
+/**
+ * Generates a shareable message for a stage.
+ *
+ * @param {string} title - Stage title.
+ * @param {string} distance - Stage distance in kilometers.
+ * @param {string} avgSpeed - Stage average speed in km/h.
+ * @param {string} duration - Stage duration.
+ * @param {string} startedAtDate - Start date of the stage.
+ * @param {string} startedAtTime - Start time of the stage.
+ * @param {string} [finishedAtDate] - Optional finish date of the stage.
+ * @param {string} [finishedAtTime] - Optional finish time of the stage.
+ * @returns {string} Shareable message for the stage.
+ */
 const shareStageMaker = (
   title: string,
   distance: string,
@@ -28,6 +42,19 @@ const shareStageMaker = (
   ].join("");
 };
 
+/**
+ * Generates a shareable message for a tour.
+ *
+ * @param {string} title - Tour title.
+ * @param {string} distance - Tour distance in kilometers.
+ * @param {string} avgSpeed - Tour average speed in km/h.
+ * @param {string} duration - Tour duration.
+ * @param {string} startedAtDate - Start date of the tour.
+ * @param {string} startedAtTime - Start time of the tour.
+ * @param {string} [finishedAtDate] - Optional finish date of the tour.
+ * @param {string} [finishedAtTime] - Optional finish time of the tour.
+ * @returns {string} Shareable message for the tour.
+ */
 const shareTourMaker = (
   title: string,
   distance: string,
@@ -48,6 +75,12 @@ const shareTourMaker = (
   ].join("");
 };
 
+/**
+ * Shares details of a single stage.
+ *
+ * @param {Stage} stage - The stage to share.
+ * @returns {Promise<void>} Resolves when the share is completed or fails.
+ */
 export const shareStage = async (stage: Stage) => {
   const stageTitle = stage.title;
   const stageDistance = stage.distance.toFixed(2);
@@ -81,6 +114,13 @@ export const shareStage = async (stage: Stage) => {
     .catch((err) => err && console.log(err));
 };
 
+/**
+ * Shares details of a tour.
+ *
+ * @param {string} [uri] - Optional URI to attach to the share.
+ * @throws {Error} If there is no active tour or required data is missing.
+ * @returns {Promise<void>} Resolves when the share is completed or fails.
+ */
 export const shareTour = async (uri?: string) => {
   const tour: Tour | null = await getActiveTour();
   if (!tour) throw new Error("No active Tour");

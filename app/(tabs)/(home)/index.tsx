@@ -33,7 +33,7 @@ import {
 } from "@/components/Buttons/MapButtons";
 import { fitRouteInCam } from "@/utils/camUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { router, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import { EnhancedStageMapLines } from "@/components/Map/StageMapLine";
 import * as Location from "expo-location";
 import { openSettings } from "expo-linking";
@@ -136,10 +136,6 @@ export default function HomeScreen() {
   const onStopButtonPress = async () => {
     setButtonState(ButtonStates.NotCycling);
     await stopAutomaticTracking();
-    setActiveStageId(null);
-    setActiveStage(null);
-    router.navigate({ pathname: "../(touren)" });
-    await timeout(10);
     // @ts-ignore Typescript erwartet "never"
     navigation.navigate("(touren)", {
       screen: "stage",
@@ -147,6 +143,7 @@ export default function HomeScreen() {
       initial: false,
     });
     setActiveStageId(null);
+    setActiveStage(null);
     if (activeTour && (await tourIsFinished(activeTour))) {
       Alert.alert("Tour beendet", "Herzlichen Glückwunsch!");
     }

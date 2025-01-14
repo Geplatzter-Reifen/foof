@@ -28,7 +28,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
         },
         (location) => {
           const speed = location.coords.speed || 0;
-          setSpeed(msToKmh(speed).toFixed(2));
+          setSpeed(msToKmh(speed).toFixed(1));
         },
       );
     };
@@ -81,7 +81,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
           iconWidth={30}
           iconHeight={30}
         >
-          {speed}
+          {speed} km/h
         </IconStat>
       </View>
     </Card>

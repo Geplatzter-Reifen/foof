@@ -156,10 +156,10 @@ export default function CreateManualStage() {
     } else {
       try {
         const result = validateUndefinedCoordinates(
-          startLatitude.current,
           startLongitude.current,
-          endLatitude.current,
+          startLatitude.current,
           endLongitude.current,
+          endLatitude.current,
         );
         await createManualStageFn(
           stageTitle,

@@ -76,7 +76,7 @@ exports[`TourSettings renders correctly 1`] = `
           ]
         }
       >
-        Touren
+        Toureinstellungen
       </Text>
     </View>
     <View

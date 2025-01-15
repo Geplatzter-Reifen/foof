@@ -7,4 +7,4 @@ export const database = new Database({
   adapter,
   modelClasses: [Tour, Stage, Location, Route],
 });
-// database.write(() => database.unsafeResetDatabase()); // Für Troubleshooting mit der Datenbank
+// database.write(() => database.unsafeResetDatabase()); // Comment in to reset the database

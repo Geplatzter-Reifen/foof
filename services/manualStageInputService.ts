@@ -4,7 +4,16 @@ import { getActiveTour, getTourByTourId } from "@/services/data/tourService";
 import { createStage, setStageAvgSpeed } from "@/services/data/stageService";
 import { getStageAvgSpeedInKmh } from "@/services/statisticsService";
 
-// Validate input for manual stage creation
+/**
+ * Validates the input for manually creating a stage.
+ *
+ * @param {string} stageName - The name of the stage.
+ * @param {Date} startTime - The start time of the stage.
+ * @param {Date} endTime - The end time of the stage.
+ * @param {MapPoint} startCoordinate - The starting coordinates.
+ * @param {MapPoint} endCoordinate - The ending coordinates.
+ * @throws {Error} - Throws an error if input is invalid.
+ */
 function validateManualStageInput(
   stageName: string,
   startTime: Date,
@@ -26,7 +35,17 @@ function validateManualStageInput(
   }
 }
 
-// Create a new stage and save locations
+/**
+ * Initializes a new stage with given data.
+ *
+ * @param {string} tourId - The ID of the tour.
+ * @param {string} stageName - The name of the stage.
+ * @param {Date} startTime - The start time of the stage.
+ * @param {Date} endTime - The end time of the stage.
+ * @param {MapPoint} startingCoordinates - The starting coordinates.
+ * @param {MapPoint} endCoordinates - The ending coordinates.
+ * @returns {Promise<Stage>} The created stage.
+ */
 async function initializeManualStage(
   tourId: string,
   stageName: string,
@@ -56,6 +75,18 @@ async function initializeManualStage(
   return stage;
 }
 
+/**
+ * Creates a manual stage for a tour.
+ *
+ * @param {string} stageName - The name of the stage.
+ * @param {MapPoint} startingCoordinates - The starting coordinates.
+ * @param {MapPoint} endCoordinates - The ending coordinates.
+ * @param {Date} startTime - The start time of the stage.
+ * @param {Date} endTime - The end time of the stage.
+ * @param {string} [tourId] - Optional ID of the tour. Defaults to the active tour.
+ * @returns {Promise<Stage>} The created stage.
+ * @throws {Error} Throws an error if no active tour is set or input is invalid.
+ */
 export async function createManualStage(
   stageName: string,
   startingCoordinates: MapPoint,

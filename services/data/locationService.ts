@@ -38,6 +38,7 @@ export const createLocationWithRecordedAt = async (
 };
 
 // READ
+
 export const getAllLocationsByStageIdQuery = (stageId: string) => {
   return database
     .get<Location>("locations")

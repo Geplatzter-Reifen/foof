@@ -41,7 +41,7 @@ export function calculateDistance(
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  // Entfernung in Kilometern
+  // distance in kilometres
   return R * c;
 }
 

@@ -8,7 +8,7 @@ const StageListComponent = ({ stages }: { stages: Stage[] }) => {
   return (
     <View style={styles.list}>
       {
-        // Falls keine Etappe existiert, returne eine Text-Komponente
+        // if no stage exists, return a text component
         stages.length === 0 ? (
           <Text style={styles.noStageText}>Starte eine Etappe!</Text>
         ) : (
@@ -23,7 +23,7 @@ const StageListComponent = ({ stages }: { stages: Stage[] }) => {
   );
 };
 
-// enhancen, um auf DB-Änderungen zu reagieren
+// enhance to be able to react to database changes
 const enhance = withObservables(["stages"], ({ stages }) => ({ stages }));
 const StageList = enhance(StageListComponent);
 export { StageList, StageListComponent as StageListForTesting };

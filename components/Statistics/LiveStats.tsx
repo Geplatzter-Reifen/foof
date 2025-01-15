@@ -50,7 +50,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
       }}
     >
       <View style={styles.statsRow}>
-        {/*Distanz*/}
+        {/*Distance*/}
         <IconStat
           icon="arrows-left-right"
           centered
@@ -61,7 +61,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
         >
           {getStageDistanceString(stage)}
         </IconStat>
-        {/*Dauer*/}
+        {/*Duration*/}
         <IconStat
           icon="clock-rotate-left"
           centered
@@ -72,7 +72,7 @@ function MapStatisticsBox({ stage }: { stage: Stage }) {
         >
           {getStageDurationString(stage)}
         </IconStat>
-        {/*Geschwindigkeit*/}
+        {/*Speed*/}
         <IconStat
           icon="gauge-high"
           centered

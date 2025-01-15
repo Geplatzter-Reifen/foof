@@ -19,7 +19,12 @@ export const LOCATION_TASK_NAME = "location-task";
 let lastLocation: LocationObject | undefined = undefined;
 let lastActiveStageId: string | undefined = undefined;
 
-// Check and request necessary permissions
+/**
+ * Ensures that the necessary location permissions are granted.
+ *
+ * @throws {Error} If location permissions are not granted by the user.
+ * @returns {Promise<void>} A promise that resolves if permissions are granted, or rejects with an error if not.
+ */
 export async function ensurePermissions(): Promise<void> {
   const { status: foregroundStatus } =
     await Location.requestForegroundPermissionsAsync();
@@ -28,7 +33,12 @@ export async function ensurePermissions(): Promise<void> {
   }
 }
 
-// Start location updates
+/**
+ * Starts location updates for the given tour.
+ *
+ * @param {Tour} activeTour - The active tour for which location updates are started.
+ * @returns {Promise<void>} A promise that resolves when location updates are successfully started.
+ */
 async function startLocationUpdates(activeTour: Tour): Promise<void> {
   await startStage(activeTour.id);
   await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
@@ -41,6 +51,13 @@ async function startLocationUpdates(activeTour: Tour): Promise<void> {
   console.log("Tracking started.");
 }
 
+/**
+ * Starts automatic location tracking for the active tour.
+ *
+ * @throws {Error} If location permissions are not granted or no active tour is set.
+ * @returns {Promise<void>} A promise that resolves when tracking starts successfully
+ * or logs a message if tracking is already active.
+ */
 export async function startAutomaticTracking(): Promise<void> {
   await ensurePermissions();
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
@@ -54,6 +71,12 @@ export async function startAutomaticTracking(): Promise<void> {
   await startLocationUpdates(activeTour);
 }
 
+/**
+ * Stops automatic location tracking if it is currently active.
+ *
+ * @returns {Promise<void>} A promise that resolves when tracking is successfully stopped
+ * or logs a message if tracking is already inactive.
+ */
 export async function stopAutomaticTracking(): Promise<void> {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
@@ -66,7 +89,13 @@ export async function stopAutomaticTracking(): Promise<void> {
   }
 }
 
-// Process a single location update
+/**
+ * Processes a single location update by storing the location and updating stage distance.
+ *
+ * @param {LocationObject} location - The current location data.
+ * @throws {Error} If no active stage is set.
+ * @returns {Promise<void>} Resolves after processing the location update.
+ */
 async function processLocationUpdate(location: LocationObject): Promise<void> {
   const activeStage: Stage | null = await getActiveStage();
   if (!activeStage) {

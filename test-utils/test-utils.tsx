@@ -22,17 +22,17 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
 
-// Iconpacks laden
+// load icon packs
 library.add(far, fas);
 
-// ModalService wird verwendet, um die Modal-Positionierung zu steuern
+// ModalService is used to control the modal positioning
 ModalService.setShouldUseTopInsets = true;
 
 type Props = {
   children: React.ReactNode;
   use_dark_theme?: boolean;
 };
-// Der Wrapper wird verwendet, um die Provider zu umschließen, die für die Komponenten notwendig sind
+// The wrapper is used to enclose the providers that are necessary for the components
 const AllTheProviders = ({ children, use_dark_theme = false }: Props) => {
   const theme = use_dark_theme
     ? { ...eva.dark, ...foofDarkTheme }
@@ -47,7 +47,7 @@ const AllTheProviders = ({ children, use_dark_theme = false }: Props) => {
   );
 };
 
-// Erstellt einen Custom-Render, der die Provider um die Komponenten wickelt
+// Creates a custom render that wraps the providers around the components
 const customRender = (
   component: React.ReactElement,
   options?: Omit<RenderOptions, "wrapper">,
@@ -55,6 +55,6 @@ const customRender = (
   return render(component, { wrapper: AllTheProviders, ...options });
 };
 
-// Exportiert alle Funktionen der Testing Library, weswegen man diese dann auch von dieser Datei importieren kann
+// Exports all functions of the Testing Library, which is why you can then also import them from this file
 export * from "@testing-library/react-native";
 export { customRender as render };

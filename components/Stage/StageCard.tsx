@@ -22,7 +22,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
   const distanceString: string = getStageDistanceString(stage);
   const avgSpeedString: string = getStageAvgSpeedString(stage);
 
-  // Header der Kachel
+  // Header of the tile
   const Header = () => {
     return (
       <Text category="h5" style={styles.title}>
@@ -31,7 +31,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
     );
   };
 
-  // Body mit Distanz, Dauer und Durchschnittsgeschwindigkeit
+  // Body with distance, duration and average speed
   const Body = () => {
     return (
       <View style={styles.body}>
@@ -48,7 +48,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
     );
   };
 
-  // Footer: Startzeitpunkt der Stage
+  // Footer: start time of the stage
   const Footer = () => {
     return (
       <Text appearance="hint" style={styles.date}>
@@ -83,7 +83,7 @@ function StageCardComponent({ stage }: { stage: Stage }) {
   );
 }
 
-// Observe die reingegebene Prop "stage"und reagiere auf änderungen
+// observe the provided prop "stage" and react to changes
 const enhance = withObservables(["stage"], ({ stage }) => ({ stage }));
 const StageCard = enhance(StageCardComponent);
 

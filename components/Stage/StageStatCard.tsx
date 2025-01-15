@@ -43,7 +43,7 @@ const Header = ({ date, stage }: { date: string; stage: Stage }) => {
   );
 };
 
-// start und destination addresses, start and end times
+// start and destination addresses, start and end times
 const StartEnd = ({
   startName,
   endName,

@@ -44,7 +44,7 @@
 
 ### APK erstellen
    ```bash
-   npx expo prebuild
+   npx expo prebuild --platform android
    ```
    ```bash
    cd android

@@ -62,6 +62,8 @@ export default function HomeScreen() {
   const [buttonState, setButtonState] = useState(ButtonStates.NotCycling);
   const [userCentered, setUserCentered] = useState(true); // Status: Ist die Kamera grade auf dem User zentriert?
 
+  const [userLocation, setUserLocation] = useState<MapboxGL.Location>();
+
   const camera = useRef<Camera>(null);
   const buttonIconSize = 60;
 
@@ -232,12 +234,18 @@ export default function HomeScreen() {
             ref={camera}
           />
           {/* Blauer Punkt */}
-          <MapboxGL.UserLocation androidRenderMode="gps" />
+          <MapboxGL.UserLocation
+            androidRenderMode="gps"
+            onUpdate={setUserLocation}
+          />
         </MapboxGL.MapView>
       </Layout>
-      {activeStage && (
+      {activeStage && userLocation && (
         <View style={styles.statisticsBox}>
-          <MapStatisticsBox stage={activeStage} />
+          <MapStatisticsBox
+            stage={activeStage}
+            speed={userLocation.coords.speed}
+          />
         </View>
       )}
       <View

@@ -1,4 +1,4 @@
-import * as Location from "expo-location";
+import * as ExpoLocation from "expo-location";
 import { LocationObject } from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import { getActiveTour } from "@/services/data/tourService";
@@ -11,16 +11,14 @@ import {
   startStage,
 } from "@/services/data/stageService";
 import { calculateDistance, MapPoint } from "@/utils/locationUtils";
-import { Stage, Tour } from "@/database/model/model";
+import { Stage, Tour, Location } from "@/database/model/model";
 import {
   createLocation,
   createLocations,
+  getLocationBeforeTimestamp,
 } from "@/services/data/locationService";
 
 export const LOCATION_TASK_NAME = "location-task";
-
-let lastLocation: LocationObject | undefined = undefined;
-let lastActiveStageId: string | undefined = undefined;
 
 /**
  * Ensures that the necessary location permissions are granted.
@@ -30,7 +28,7 @@ let lastActiveStageId: string | undefined = undefined;
  */
 export async function ensurePermissions(): Promise<void> {
   const { status: foregroundStatus } =
-    await Location.requestForegroundPermissionsAsync();
+    await ExpoLocation.requestForegroundPermissionsAsync();
   if (foregroundStatus !== "granted") {
     throw new Error("Location permissions not granted");
   }
@@ -44,8 +42,8 @@ export async function ensurePermissions(): Promise<void> {
  */
 async function startLocationUpdates(activeTour: Tour): Promise<void> {
   await startStage(activeTour.id);
-  await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-    accuracy: Location.Accuracy.Highest,
+  await ExpoLocation.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+    accuracy: ExpoLocation.Accuracy.Highest,
     foregroundService: {
       notificationTitle: "Tracking aktiv",
       notificationBody: "Viel Spaß beim Radeln!",
@@ -82,10 +80,9 @@ export async function startAutomaticTracking(): Promise<void> {
  */
 export async function stopAutomaticTracking(): Promise<void> {
   if (await TaskManager.isTaskRegisteredAsync(LOCATION_TASK_NAME)) {
-    await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+    await ExpoLocation.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     const stage: Stage | null = await getActiveStage();
     if (stage) await finishStage(stage.id);
-    lastActiveStageId = undefined;
     console.log("Tracking stopped.");
   } else {
     console.log("Tracking already stopped.");
@@ -95,40 +92,41 @@ export async function stopAutomaticTracking(): Promise<void> {
 /**
  * Processes a single location update by storing the location and updating stage distance.
  * @param location - The current location data.
- * @throws {Error} If no active stage is set or the location data is invalid.
+ * @throws {Error} If no active stage is set
  */
 async function processLocationUpdate(location: LocationObject) {
   const activeStage: Stage | null = await getActiveStage();
   if (!activeStage) {
     throw new Error("No active stage set");
   }
-  if (lastLocation && lastLocation.timestamp > location.timestamp) {
-    throw new Error("Last location is newer than current location");
-  }
-  const currentLocation = toMapPoint(location);
-  await createLocation(
-    activeStage.id,
-    location.coords.latitude,
-    location.coords.longitude,
-    location.timestamp,
-  );
+  const currentLocation = locationObjectToMapPoint(location);
 
-  if (lastLocation && lastActiveStageId === activeStage.id) {
-    const latestLocation = toMapPoint(lastLocation);
+  const result = await Promise.all([
+    createLocation(
+      activeStage.id,
+      location.coords.latitude,
+      location.coords.longitude,
+      location.timestamp,
+    ),
+    getLocationBeforeTimestamp(activeStage.id, location.timestamp),
+  ]);
+  const lastLocation = result[1];
+
+  if (lastLocation) {
+    const lastLocationMapPoint = locationToMapPoint(lastLocation);
     const updatedDistance =
-      activeStage.distance + calculateDistance(latestLocation, currentLocation);
+      activeStage.distance +
+      calculateDistance(lastLocationMapPoint, currentLocation);
     await setStageDistance(activeStage.id, updatedDistance);
   }
 
   await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
-  lastActiveStageId = activeStage.id;
-  lastLocation = location;
 }
 
 /**
  * Processes a batch of location updates by storing the locations and updating stage distance.
  * @param locations - The array of location data.
- * @throws {Error} If no active stage is set or the location data is invalid.
+ * @throws {Error} If no active stage is set
  */
 async function processLocationUpdates(locations: LocationObject[]) {
   if (locations.length === 0) {
@@ -143,18 +141,19 @@ async function processLocationUpdates(locations: LocationObject[]) {
     throw new Error("No active stage set");
   }
   const sortedLocations = locations.sort((a, b) => a.timestamp - b.timestamp);
-  if (lastLocation && lastLocation.timestamp > sortedLocations[0].timestamp) {
-    throw new Error("Last location is newer than first location in batch");
-  }
 
   let distance = activeStage.distance;
   const updateDistancePromise = async () => {
-    let lastLocationMapPoint = toMapPoint(sortedLocations[0]);
-    if (lastLocation && lastActiveStageId === activeStage.id) {
-      lastLocationMapPoint = toMapPoint(lastLocation);
+    const lastLocation = await getLocationBeforeTimestamp(
+      activeStage.id,
+      sortedLocations[0].timestamp,
+    );
+    let lastLocationMapPoint = locationObjectToMapPoint(sortedLocations[0]);
+    if (lastLocation) {
+      lastLocationMapPoint = locationToMapPoint(lastLocation);
     }
     for (const location of sortedLocations) {
-      const locationMapPoint = toMapPoint(location);
+      const locationMapPoint = locationObjectToMapPoint(location);
       distance += calculateDistance(lastLocationMapPoint, locationMapPoint);
       lastLocationMapPoint = locationMapPoint;
     }
@@ -168,14 +167,19 @@ async function processLocationUpdates(locations: LocationObject[]) {
   await setStageDistance(activeStage.id, distance);
 
   await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
-  lastActiveStageId = activeStage.id;
-  lastLocation = sortedLocations[sortedLocations.length - 1];
 }
 
-function toMapPoint(location: LocationObject): MapPoint {
+function locationObjectToMapPoint(location: LocationObject): MapPoint {
   return {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
+  };
+}
+
+function locationToMapPoint(location: Location): MapPoint {
+  return {
+    latitude: location.latitude,
+    longitude: location.longitude,
   };
 }
 

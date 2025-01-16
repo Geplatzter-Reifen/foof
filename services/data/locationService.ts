@@ -86,3 +86,25 @@ export const getAllLocationsByStageId = (
 ) => {
   return getAllLocationsByStageIdQuery(stageId, sortOrder).fetch();
 };
+
+/**
+ * Returns the location before a given timestamp
+ * @param stageId - The id of the stage
+ * @param timestamp - The timestamp to search for
+ */
+export const getLocationBeforeTimestamp = async (
+  stageId: string,
+  timestamp: number,
+) => {
+  const locationCollection = database.get<Location>("locations");
+  const locations = await locationCollection
+    .query(
+      Q.where("stage_id", stageId),
+      Q.where("recorded_at", Q.lt(timestamp)),
+      Q.sortBy("recorded_at", Q.desc),
+      Q.take(1),
+    )
+    .fetch();
+
+  return locations.length > 0 ? locations[0] : null;
+};

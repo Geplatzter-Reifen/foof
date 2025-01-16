@@ -37,7 +37,7 @@ describe("StageCard", () => {
     const activeStage = await startStage(tour.id);
     const view = await waitFor(() => render(<StageCard stage={activeStage} />));
     expect(view).toMatchSnapshot();
-    expect(screen.getByText("0h 0m")).toBeTruthy(); // seit erstellen (Date.now()) und Dauerberechnung (Date.now()) ist noch kaum Zeit vergangen
+    expect(screen.getByText("0m")).toBeTruthy(); // seit erstellen (Date.now()) und Dauerberechnung (Date.now()) ist noch kaum Zeit vergangen
   });
 
   it("renders correctly for manually created stage", async () => {

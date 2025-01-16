@@ -574,7 +574,7 @@ exports[`Touruebersicht should render correctly 1`] = `
             ]
           }
         >
-          0h 0m
+          0m
         </Text>
       </View>
       <View

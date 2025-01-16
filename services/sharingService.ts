@@ -35,7 +35,7 @@ const shareStageMaker = (
   return [
     `Hier ist meine gefahrene Etappe "${title}".\n`,
     `Gestartet bin ich am ${startedAtDate} um ${startedAtTime} Uhr.\n`,
-    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h\n`,
+    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h.\n`,
     finishedAtTime && finishedAtDate
       ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}\n`
       : "",
@@ -68,7 +68,7 @@ const shareTourMaker = (
   return [
     `Hier ist meine gefahrene Tour "${title}".\n`,
     `Gestartet bin ich am ${startedAtDate} um ${startedAtTime} Uhr.\n`,
-    `Ich bin ${distance} km in ${duration} h gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h\n`,
+    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed}.\n`,
     finishedAtTime && finishedAtDate
       ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}\n`
       : "",
@@ -96,22 +96,23 @@ export const shareStage = async (stage: Stage) => {
   const stageFinishedAtTime = stage.finishedAt
     ? formatDate(stage.finishedAt, DateFormat.TIME)
     : undefined;
-
-  Share.open({
-    title: "Share Stage",
-    message: shareStageMaker(
-      stageTitle,
-      stageDistance,
-      stageAverageSpeed,
-      stageDuration,
-      stageStartedAtDate,
-      stageStartedAtTime,
-      stageFinishedAtDate,
-      stageFinishedAtTime,
-    ),
-  })
-    .then()
-    .catch((err) => err && console.log(err));
+  try {
+    await Share.open({
+      title: "Share Stage",
+      message: shareStageMaker(
+        stageTitle,
+        stageDistance,
+        stageAverageSpeed,
+        stageDuration,
+        stageStartedAtDate,
+        stageStartedAtTime,
+        stageFinishedAtDate,
+        stageFinishedAtTime,
+      ),
+    });
+  } catch (error) {
+    error && console.log(error);
+  }
 };
 
 /**

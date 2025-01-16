@@ -3,6 +3,7 @@ import { Stage, Tour } from "@/database/model/model";
 import { getActiveTour, getTourByTourId } from "@/services/data/tourService";
 import { createStage, setStageAvgSpeed } from "@/services/data/stageService";
 import { getStageAvgSpeedInKmh } from "@/services/statisticsService";
+import { createLocation } from "@/services/data/locationService";
 
 /**
  * Validates the input for manually creating a stage.
@@ -62,11 +63,16 @@ async function initializeManualStage(
     false,
     calculateDistance(startingCoordinates, endCoordinates),
   );
-  await stage.addLocation(
+  await createLocation(
+    stage.id,
     startingCoordinates.latitude,
     startingCoordinates.longitude,
   );
-  await stage.addLocation(endCoordinates?.latitude, endCoordinates?.longitude);
+  await createLocation(
+    stage.id,
+    endCoordinates.latitude,
+    endCoordinates.longitude,
+  );
 
   let speed = getStageAvgSpeedInKmh(stage);
 

@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 import { length } from "@turf/turf";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { getAllLocationsByStageId } from "@/services/data/locationService";
+import {
+  getAllLocationsByStageId,
+  getAllLocationsByStageIdQuery,
+} from "@/services/data/locationService";
 
 /**
  * Converts degrees to radians.
@@ -210,7 +213,7 @@ export const StageMapLine = ({
 
 const enhance = withObservables(["stage"], ({ stage }: { stage: Stage }) => ({
   stage,
-  stageLocations: stage.locations,
+  stageLocations: getAllLocationsByStageIdQuery(stage.id),
 }));
 
 /**

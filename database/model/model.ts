@@ -1,4 +1,4 @@
-import { Model } from "@nozbe/watermelondb";
+import { Model, Query, Relation } from "@nozbe/watermelondb";
 import {
   field,
   text,
@@ -23,9 +23,9 @@ class Tour extends Model {
   // @ts-ignore
   @field("finished_at") finishedAt?: number;
   // @ts-ignore
-  @children("stages") stages;
+  @children("stages") stages: Query<Stage>;
   // @ts-ignore
-  @children("routes") routes;
+  @children("routes") routes: Query<Route>;
 
   //@ts-ignore
   @writer async addStage(
@@ -70,24 +70,11 @@ class Stage extends Model {
   // @ts-ignore
   @field("avg_speed") avgSpeed: number;
   // @ts-ignore
-  @relation("tours", "tour_id") tour;
+  @relation("tours", "tour_id") tour: Relation<Tour>;
   // @ts-ignore
-  @children("locations") locations;
+  @children("locations") locations: Query<Location>;
   // @ts-ignore
-  @children("routes") routes;
-  // @ts-ignore
-  @writer async addLocation(
-    latitude: number,
-    longitude: number,
-    recordedAt?: number,
-  ) {
-    return this.collections.get<Location>("locations").create((location) => {
-      location.latitude = latitude;
-      location.longitude = longitude;
-      location.recordedAt = recordedAt ?? Date.now();
-      location.stage.set(this);
-    });
-  }
+  @children("routes") routes: Query<Route>;
 }
 
 class Location extends Model {
@@ -100,9 +87,9 @@ class Location extends Model {
   // @ts-ignore
   @field("longitude") longitude: number;
   // @ts-ignore
-  @field("recorded_at") recordedAt?: number;
+  @field("recorded_at") recordedAt: number;
   // @ts-ignore
-  @relation("stages", "stage_id") stage;
+  @relation("stages", "stage_id") stage: Relation<Stage>;
 }
 
 class Route extends Model {
@@ -114,9 +101,9 @@ class Route extends Model {
   // @ts-ignore
   @field("geojson") geoJson: string;
   // @ts-ignore
-  @relation("tours", "tour_id") tour;
+  @relation("tours", "tour_id") tour: Relation<Tour>;
   // @ts-ignore
-  @relation("stages", "stage_id") stage;
+  @relation("stages", "stage_id") stage: Relation<Stage>;
 }
 
 export { Tour, Stage, Location, Route };

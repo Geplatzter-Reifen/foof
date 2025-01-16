@@ -13,7 +13,7 @@ type MapWithMarkerProps = {
   onCoordinateChange: (coordinates: Position) => void;
   initialStartCoordinate?: Position;
   initialEndCoordinate?: Position;
-  onMapIdle?: (state: MapboxGL.MapState) => void;
+  onCameraChanged?: (state: MapboxGL.MapState) => void;
   centerCoordinate?: Position;
   zoomLevel?: number;
   heading?: number;
@@ -26,7 +26,7 @@ function MapWithMarkers({
   onCoordinateChange,
   initialStartCoordinate,
   initialEndCoordinate,
-  onMapIdle,
+  onCameraChanged,
   centerCoordinate,
   zoomLevel,
   heading,
@@ -104,7 +104,7 @@ function MapWithMarkers({
         style={styles.map}
         onPress={handleMapPress}
         localizeLabels={true}
-        onMapIdle={onMapIdle}
+        onCameraChanged={onCameraChanged}
         scaleBarEnabled={false}
         compassEnabled={true}
       >

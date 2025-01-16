@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const schema = appSchema({
-  version: 6,
+  version: 7,
   tables: [
     tableSchema({
       name: "tours",
@@ -29,7 +29,7 @@ export const schema = appSchema({
       columns: [
         { name: "latitude", type: "number" },
         { name: "longitude", type: "number" },
-        { name: "recorded_at", type: "number", isOptional: true },
+        { name: "recorded_at", type: "number", isIndexed: true },
         { name: "stage_id", type: "string", isIndexed: true },
       ],
     }),

@@ -10,9 +10,12 @@ import {
   setStageDistance,
   startStage,
 } from "@/services/data/stageService";
-import { createLocation } from "@/services/data/locationService";
 import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
+import {
+  createLocation,
+  createLocations,
+} from "@/services/data/locationService";
 
 export const LOCATION_TASK_NAME = "location-task";
 
@@ -91,31 +94,27 @@ export async function stopAutomaticTracking(): Promise<void> {
 
 /**
  * Processes a single location update by storing the location and updating stage distance.
- *
- * @param {LocationObject} location - The current location data.
- * @throws {Error} If no active stage is set.
- * @returns {Promise<void>} Resolves after processing the location update.
+ * @param location - The current location data.
+ * @throws {Error} If no active stage is set or the location data is invalid.
  */
-async function processLocationUpdate(location: LocationObject): Promise<void> {
+async function processLocationUpdate(location: LocationObject) {
   const activeStage: Stage | null = await getActiveStage();
   if (!activeStage) {
     throw new Error("No active stage set");
   }
-  const currentLocation: MapPoint = {
-    latitude: location.coords.latitude,
-    longitude: location.coords.longitude,
-  };
+  if (lastLocation && lastLocation.timestamp > location.timestamp) {
+    throw new Error("Last location is newer than current location");
+  }
+  const currentLocation = toMapPoint(location);
   await createLocation(
     activeStage.id,
-    currentLocation.latitude,
-    currentLocation.longitude,
+    location.coords.latitude,
+    location.coords.longitude,
+    location.timestamp,
   );
 
   if (lastLocation && lastActiveStageId === activeStage.id) {
-    const latestLocation: MapPoint = {
-      latitude: lastLocation.coords.latitude,
-      longitude: lastLocation.coords.longitude,
-    };
+    const latestLocation = toMapPoint(lastLocation);
     const updatedDistance =
       activeStage.distance + calculateDistance(latestLocation, currentLocation);
     await setStageDistance(activeStage.id, updatedDistance);
@@ -126,23 +125,82 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   lastLocation = location;
 }
 
-TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
-  if (error) {
-    console.error("Error in location task:", error.message);
-    throw error;
+/**
+ * Processes a batch of location updates by storing the locations and updating stage distance.
+ * @param locations - The array of location data.
+ * @throws {Error} If no active stage is set or the location data is invalid.
+ */
+async function processLocationUpdates(locations: LocationObject[]) {
+  if (locations.length === 0) {
+    return;
+  }
+  if (locations.length === 1) {
+    await processLocationUpdate(locations[0]);
+    return;
+  }
+  const activeStage: Stage | null = await getActiveStage();
+  if (!activeStage) {
+    throw new Error("No active stage set");
+  }
+  const sortedLocations = locations.sort((a, b) => a.timestamp - b.timestamp);
+  if (lastLocation && lastLocation.timestamp > sortedLocations[0].timestamp) {
+    throw new Error("Last location is newer than first location in batch");
   }
 
-  // @ts-ignore
-  if (data && data.locations) {
-    // @ts-ignore
-    const [location]: LocationObject[] = data.locations;
-    try {
-      await processLocationUpdate(location);
-    } catch (err) {
-      // @ts-ignore
-      console.error("Error processing location update:", err.message);
+  let distance = activeStage.distance;
+  const updateDistancePromise = async () => {
+    let lastLocationMapPoint = toMapPoint(sortedLocations[0]);
+    if (lastLocation && lastActiveStageId === activeStage.id) {
+      lastLocationMapPoint = toMapPoint(lastLocation);
     }
-  } else {
-    console.warn("No data received in location task.");
-  }
-});
+    for (const location of sortedLocations) {
+      const locationMapPoint = toMapPoint(location);
+      distance += calculateDistance(lastLocationMapPoint, locationMapPoint);
+      lastLocationMapPoint = locationMapPoint;
+    }
+  };
+
+  await Promise.all([
+    createLocations(activeStage.id, sortedLocations),
+    updateDistancePromise(),
+  ]);
+
+  await setStageDistance(activeStage.id, distance);
+
+  await setStageAvgSpeed(activeStage.id, getStageAvgSpeedInKmh(activeStage));
+  lastActiveStageId = activeStage.id;
+  lastLocation = sortedLocations[sortedLocations.length - 1];
+}
+
+function toMapPoint(location: LocationObject): MapPoint {
+  return {
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
+  };
+}
+
+type TaskData = {
+  locations?: LocationObject[];
+};
+
+TaskManager.defineTask<TaskData>(
+  LOCATION_TASK_NAME,
+  async ({ data, error }) => {
+    if (error) {
+      console.error("Error in location task:", error.message);
+      throw error;
+    }
+
+    if (data.locations) {
+      try {
+        await processLocationUpdates(data.locations);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Error processing locations update:", err.message);
+        }
+      }
+    } else {
+      console.warn("No data received in location task.");
+    }
+  },
+);

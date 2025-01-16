@@ -35,7 +35,14 @@ export function getDurationMsFormatted(ms: number) {
   const days = Math.floor(totalMinutes / 1440); // 1 Tag = 1440 Minuten
   const hours = Math.floor((totalMinutes % 1440) / 60);
   const minutes = totalMinutes % 60;
-
-  const dayPart = days >= 1 ? `${days}d ` : ""; // Nur anzeigen, wenn Tage >= 1
-  return `${dayPart}${hours}h ${minutes}m`;
+  let dayPart = "";
+  let hoursPart = "";
+  if (hours >= 1) {
+    hoursPart = `${hours}h `;
+  }
+  if (days >= 1) {
+    dayPart = `${days}d `;
+    hoursPart = `${hours}h `;
+  }
+  return `${dayPart}${hoursPart}${minutes}m`;
 }

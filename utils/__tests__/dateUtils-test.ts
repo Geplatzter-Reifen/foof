@@ -39,6 +39,15 @@ describe("dateUtil", () => {
     });
   });
   describe("getDurationMsFormatted", () => {
+    it("should format duration correctly for 0", () => {
+      expect(dateUtil.getDurationMsFormatted(0)).toBe("0m");
+    });
+    it("should format duraction correctly for < 1h", () => {
+      expect(dateUtil.getDurationMsFormatted(120000)).toBe("2m");
+    });
+    it("should format duration correctly for 1h", () => {
+      expect(dateUtil.getDurationMsFormatted(3600000)).toBe("1h 0m");
+    });
     it("should format duration correctly for < 24h", () => {
       expect(dateUtil.getDurationMsFormatted(54420123)).toBe("15h 7m");
     });

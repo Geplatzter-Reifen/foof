@@ -619,7 +619,7 @@ exports[`StageCard renders correctly for active stage 1`] = `
             ]
           }
         >
-          0h 0m
+          0m
         </Text>
       </View>
       <View

@@ -100,6 +100,9 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   if (!activeStage) {
     throw new Error("No active stage set");
   }
+  if (lastLocation && lastLocation.timestamp > location.timestamp) {
+    throw new Error("Last location is newer than current location");
+  }
   const currentLocation = toMapPoint(location);
   await activeStage.addLocation(
     currentLocation.latitude,

@@ -120,9 +120,7 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
 }
 
 // Process multiple location updates
-async function processLocationUpdates(
-  locations: LocationObject[],
-): Promise<void> {
+async function processLocationUpdates(locations: LocationObject[]) {
   if (locations.length === 0) {
     return;
   }
@@ -135,6 +133,9 @@ async function processLocationUpdates(
     throw new Error("No active stage set");
   }
   const sortedLocations = locations.sort((a, b) => a.timestamp - b.timestamp);
+  if (lastLocation && lastLocation.timestamp > sortedLocations[0].timestamp) {
+    throw new Error("Last location is newer than first location in batch");
+  }
 
   let distance = activeStage.distance;
   const updateDistancePromise = async () => {

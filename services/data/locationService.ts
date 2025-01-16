@@ -26,25 +26,33 @@ export const createLocation = async (
   });
 };
 
-// READ
-
-export const getAllLocationsByStageIdQuery = (stageId: string) => {
-  return database
-    .get<Location>("locations")
-    .query(Q.where("stage_id", stageId));
-};
-export const getAllLocationsByStageId = (stageId: string) => {
-  return getAllLocationsByStageIdQuery(stageId).fetch();
-};
-
-//gets the location of a stage the has the earliest "startedAt" timestamp
-export const getFirstLocationByTourId = async (tourId: string) => {
-  const stages = await database
-    .get<Stage>("stages")
-    .query(Q.where("tour_id", tourId))
-    .fetch();
-  const stage = stages.reduce((prev, current) =>
-    prev.startedAt < current.startedAt ? prev : current,
+/**
+ * Returns a query for all locations of a stage
+ * @param stageId - The id of the stage
+ * @param sortOrder - The order of the locations (asc or desc or none) (default: asc)
+ */
+export const getAllLocationsByStageIdQuery = (
+  stageId: string,
+  sortOrder: "asc" | "desc" | "none" = "asc",
+) => {
+  const locationCollection = database.get<Location>("locations");
+  if (sortOrder === "none") {
+    return locationCollection.query(Q.where("stage_id", stageId));
+  }
+  return locationCollection.query(
+    Q.where("stage_id", stageId),
+    Q.sortBy("recorded_at", sortOrder),
   );
-  return getAllLocationsByStageId(stage.id);
+};
+
+/**
+ * Returns all locations of a stage
+ * @param stageId - The id of the stage
+ * @param sortOrder - The order of the locations (asc or desc or none) (default: asc)
+ */
+export const getAllLocationsByStageId = (
+  stageId: string,
+  sortOrder: "asc" | "desc" | "none" = "asc",
+) => {
+  return getAllLocationsByStageIdQuery(stageId, sortOrder).fetch();
 };

@@ -49,7 +49,7 @@ function MapStatisticsBox({ stage, speed }: { stage: Stage; speed: number }) {
           iconWidth={30}
           iconHeight={30}
         >
-          {speed} km/h
+          {speed.toFixed(2)} km/h
         </IconStat>
       </View>
     </Card>

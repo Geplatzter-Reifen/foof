@@ -26,6 +26,11 @@ export const createLocation = async (
   });
 };
 
+/**
+ * Creates multiple locations as a batch for a stage
+ * @param stageId - The id of the stage
+ * @param locations - The array of location objects
+ */
 export const createLocations = async (
   stageId: string,
   locations: LocationObject[],

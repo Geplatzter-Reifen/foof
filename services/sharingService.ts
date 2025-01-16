@@ -2,6 +2,8 @@ import Share from "react-native-share";
 import { getActiveTour } from "./data/tourService";
 import { Stage, Tour } from "@/database/model/model";
 import {
+  getStageAvgSpeedString,
+  getStageDistanceString,
   getStageDurationString,
   getTourAverageSpeedString,
   getTourDistanceString,
@@ -35,9 +37,9 @@ const shareStageMaker = (
   return [
     `Hier ist meine gefahrene Etappe "${title}".\n`,
     `Gestartet bin ich am ${startedAtDate} um ${startedAtTime} Uhr.\n`,
-    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed} km/h.\n`,
+    `Ich bin ${distance} in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed}.\n`,
     finishedAtTime && finishedAtDate
-      ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}\n`
+      ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}.\n`
       : "",
   ].join("");
 };
@@ -68,9 +70,9 @@ const shareTourMaker = (
   return [
     `Hier ist meine gefahrene Tour "${title}".\n`,
     `Gestartet bin ich am ${startedAtDate} um ${startedAtTime} Uhr.\n`,
-    `Ich bin ${distance} km in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed}.\n`,
+    `Ich bin ${distance} in ${duration} gefahren mit einer Durchschnittsgeschwindigkeit von ${avgSpeed}.\n`,
     finishedAtTime && finishedAtDate
-      ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}\n`
+      ? `Angekommen bin ich am ${finishedAtDate} um ${finishedAtTime}.\n`
       : "",
   ].join("");
 };
@@ -83,8 +85,8 @@ const shareTourMaker = (
  */
 export const shareStage = async (stage: Stage) => {
   const stageTitle = stage.title;
-  const stageDistance = stage.distance.toFixed(2);
-  const stageAverageSpeed = stage.avgSpeed.toFixed(2);
+  const stageDistance = getStageDistanceString(stage);
+  const stageAverageSpeed = getStageAvgSpeedString(stage);
   const stageDuration = getStageDurationString(stage);
 
   const stageStartedAtDate = formatDate(stage.startedAt, DateFormat.DATE);
@@ -111,7 +113,10 @@ export const shareStage = async (stage: Stage) => {
       ),
     });
   } catch (error) {
-    error && console.log(error);
+    if (error instanceof Error) {
+      if (error.message === "User did not share") return;
+      console.error(error.message);
+    }
   }
 };
 
@@ -142,20 +147,25 @@ export const shareTour = async (uri?: string) => {
     ? formatDate(tour.finishedAt, DateFormat.DATE)
     : undefined;
 
-  Share.open({
-    title: "Share Tour",
-    message: shareTourMaker(
-      tourTitle,
-      tourDistance,
-      tourAverageSpeed,
-      tourDuration,
-      tourStartedAtDate,
-      tourStartedAtTime,
-      tourFinishedAtDate,
-      tourFinishedAtTime,
-    ),
-    url: uri,
-  })
-    .then()
-    .catch((err) => err && console.log(err));
+  try {
+    await Share.open({
+      title: "Share Tour",
+      message: shareTourMaker(
+        tourTitle,
+        tourDistance,
+        tourAverageSpeed,
+        tourDuration,
+        tourStartedAtDate,
+        tourStartedAtTime,
+        tourFinishedAtDate,
+        tourFinishedAtTime,
+      ),
+      url: uri,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message === "User did not share") return;
+      console.error(error.message);
+    }
+  }
 };

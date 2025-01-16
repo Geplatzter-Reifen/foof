@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Feature, Position } from "geojson";
 import { Layout, useTheme } from "@ui-kitten/components";
 import MapboxGL from "@rnmapbox/maps";
@@ -36,6 +36,7 @@ function MapWithMarkers({
   const theme = useTheme();
   centerCoordinate = centerCoordinate || [10.4515, 51.1657]; // Zentrum von Deutschland
   zoomLevel = zoomLevel || 5; // Zoom-Level für Deutschland
+  const mapIsReady = useRef(false);
 
   /**
    * The start coordinate is initialized if coordinates are provided and are numbers.
@@ -104,7 +105,14 @@ function MapWithMarkers({
         style={styles.map}
         onPress={handleMapPress}
         localizeLabels={true}
-        onCameraChanged={onCameraChanged}
+        onCameraChanged={(state) => {
+          if (onCameraChanged && mapIsReady.current) {
+            onCameraChanged(state);
+          }
+        }}
+        onDidFinishLoadingMap={() => {
+          mapIsReady.current = true;
+        }}
         scaleBarEnabled={false}
         compassEnabled={true}
       >

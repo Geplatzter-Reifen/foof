@@ -90,12 +90,10 @@ export async function stopAutomaticTracking(): Promise<void> {
 
 /**
  * Processes a single location update by storing the location and updating stage distance.
- *
- * @param {LocationObject} location - The current location data.
- * @throws {Error} If no active stage is set.
- * @returns {Promise<void>} Resolves after processing the location update.
+ * @param location - The current location data.
+ * @throws {Error} If no active stage is set or the location data is invalid.
  */
-async function processLocationUpdate(location: LocationObject): Promise<void> {
+async function processLocationUpdate(location: LocationObject) {
   const activeStage: Stage | null = await getActiveStage();
   if (!activeStage) {
     throw new Error("No active stage set");
@@ -122,7 +120,11 @@ async function processLocationUpdate(location: LocationObject): Promise<void> {
   lastLocation = location;
 }
 
-// Process multiple location updates
+/**
+ * Processes a batch of location updates by storing the locations and updating stage distance.
+ * @param locations - The array of location data.
+ * @throws {Error} If no active stage is set or the location data is invalid.
+ */
 async function processLocationUpdates(locations: LocationObject[]) {
   if (locations.length === 0) {
     return;

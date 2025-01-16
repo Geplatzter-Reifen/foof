@@ -1,6 +1,7 @@
 import { database } from "@/database";
 import { Q } from "@nozbe/watermelondb";
-import { Location, Stage } from "@/database/model/model";
+import { Location } from "@/database/model/model";
+import { LocationObject } from "expo-location";
 
 /**
  * Creates a new location for a stage
@@ -16,15 +17,39 @@ export const createLocation = async (
   recordedAt?: number,
 ): Promise<Location> => {
   return database.write(async () => {
-    const stage = await database.get<Stage>("stages").find(stageId);
     return database.get<Location>("locations").create((location) => {
-      location.stage.set(stage);
+      location.stage.id = stageId;
       location.latitude = latitude;
       location.longitude = longitude;
       location.recordedAt = recordedAt ?? Date.now();
     });
   });
 };
+
+export const createLocations = async (
+  stageId: string,
+  locations: LocationObject[],
+) => {
+  return database.write(async () => {
+    const locationCollection = database.get<Location>("locations");
+    const batchActions: Location[] = [];
+
+    for (const location of locations) {
+      batchActions.push(
+        locationCollection.prepareCreate((dbLocation) => {
+          dbLocation.stage.id = stageId;
+          dbLocation.latitude = location.coords.latitude;
+          dbLocation.longitude = location.coords.longitude;
+          dbLocation.recordedAt = location.timestamp;
+        }),
+      );
+    }
+
+    return database.batch(batchActions);
+  });
+};
+
+export type sortOrder = "asc" | "desc" | "none";
 
 /**
  * Returns a query for all locations of a stage
@@ -33,7 +58,7 @@ export const createLocation = async (
  */
 export const getAllLocationsByStageIdQuery = (
   stageId: string,
-  sortOrder: "asc" | "desc" | "none" = "asc",
+  sortOrder: sortOrder = "asc",
 ) => {
   const locationCollection = database.get<Location>("locations");
   if (sortOrder === "none") {
@@ -52,7 +77,7 @@ export const getAllLocationsByStageIdQuery = (
  */
 export const getAllLocationsByStageId = (
   stageId: string,
-  sortOrder: "asc" | "desc" | "none" = "asc",
+  sortOrder: sortOrder = "asc",
 ) => {
   return getAllLocationsByStageIdQuery(stageId, sortOrder).fetch();
 };

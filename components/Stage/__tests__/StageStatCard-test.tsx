@@ -8,7 +8,10 @@ import {
   setStageDistance,
 } from "@/services/data/stageService";
 import { waitFor } from "@testing-library/react-native";
-import { getAllLocationsByStageId } from "@/services/data/locationService";
+import {
+  createLocation,
+  getAllLocationsByStageId,
+} from "@/services/data/locationService";
 import { MockStage } from "@/__mocks__/stage";
 
 jest.mock("../../../services/geoService", () => ({
@@ -44,8 +47,18 @@ describe("StageStatCard", () => {
     );
     await setStageDistance(stage.id, 79.345);
     await setStageAvgSpeed(stage.id, 10.9379);
-    await stage.addLocation(50.3, 8.9, new Date("2024-12-01T10:28").getTime());
-    await stage.addLocation(50.8, 8.1, new Date("2024-12-01T17:43").getTime());
+    await createLocation(
+      stage.id,
+      50.3,
+      8.9,
+      new Date("2024-12-01T10:28").getTime(),
+    );
+    await createLocation(
+      stage.id,
+      50.8,
+      8.1,
+      new Date("2024-12-01T17:43").getTime(),
+    );
     const locations = await getAllLocationsByStageId(stage.id);
 
     const view = await waitFor(() =>

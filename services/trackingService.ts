@@ -12,6 +12,10 @@ import {
 } from "@/services/data/stageService";
 import { calculateDistance, MapPoint } from "@/utils/locationUtils";
 import { Stage, Tour } from "@/database/model/model";
+import {
+  createLocation,
+  createLocations,
+} from "@/services/data/locationService";
 
 export const LOCATION_TASK_NAME = "location-task";
 
@@ -102,9 +106,10 @@ async function processLocationUpdate(location: LocationObject) {
     throw new Error("Last location is newer than current location");
   }
   const currentLocation = toMapPoint(location);
-  await activeStage.addLocation(
-    currentLocation.latitude,
-    currentLocation.longitude,
+  await createLocation(
+    activeStage.id,
+    location.coords.latitude,
+    location.coords.longitude,
     location.timestamp,
   );
 
@@ -156,7 +161,7 @@ async function processLocationUpdates(locations: LocationObject[]) {
   };
 
   await Promise.all([
-    activeStage.addLocations(sortedLocations),
+    createLocations(activeStage.id, sortedLocations),
     updateDistancePromise(),
   ]);
 

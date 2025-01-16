@@ -114,8 +114,9 @@ export const shareStage = async (stage: Stage) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message === "User did not share") return;
-      console.error(error.message);
+      if (error.message !== "User did not share") {
+        console.error(error.message);
+      }
     }
   }
 };
@@ -164,8 +165,9 @@ export const shareTour = async (uri?: string) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message === "User did not share") return;
-      console.error(error.message);
+      if (error.message !== "User did not share") {
+        console.error(error.message);
+      }
     }
   }
 };
